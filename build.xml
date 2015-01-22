@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build">
- <target name="build" depends="prepare,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
+ <target name="build" depends="prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -8,7 +8,16 @@
   <delete dir="${basedir}/build/logs"/>
   <delete dir="${basedir}/build/pdepend"/>
   <delete dir="${basedir}/build/phpdox"/>
+  <delete file="${basedir}/composer.lock"/>
+  <delete dir="${basedir}/vendor"/>
   <property name="clean.done" value="true"/>
+ </target>
+
+ <target name="composer" depends="clean" unless="composer.noupdate" description="Run composer install">
+  <exec executable="php">
+   <arg value="${basedir}/build/tools/composer.phar"/>
+   <arg value="install"/>
+  </exec>
  </target>
 
  <target name="prepare" unless="prepare.done" depends="clean" description="Prepare for build">
@@ -117,7 +126,7 @@
   </exec>
  </target>
 
- <target name="phpunit" depends="prepare" description="Run unit tests with PHPUnit">
+ <target name="phpunit" depends="prepare,composer" description="Run unit tests with PHPUnit">
   <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
    <arg path="${basedir}/build/phpunit.xml"/>
