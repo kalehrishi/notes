@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<phpunit xmlns="http://schema.phpunit.de/coverage/1.0">
+  <file name="UserMapper.php">
+    <totals>
+      <lines total="69" comments="0" code="69" executable="54" executed="0" percent="0.00%"/>
+      <methods count="3" tested="0" percent="0.00%"/>
+      <functions count="0" tested="0" percent=""/>
+      <classes count="1" tested="0" percent="0.00%"/>
+      <traits count="0" tested="0" percent=""/>
+    </totals>
+    <class name="UserMapper" start="9" executable="54" executed="0" crap="20">
+      <package full="" name="" sub="" category=""/>
+      <namespace name="Notes\Mappers"/>
+      <method name="read" signature="read($id)" start="11" end="29" crap="2" executable="18" executed="0" coverage="0"/>
+      <method name="create" signature="create($input)" start="30" end="45" crap="2" executable="15" executed="0" coverage="0"/>
+      <method name="update" signature="update($input)" start="46" end="68" crap="6" executable="21" executed="0" coverage="0"/>
+    </class>
+  </file>
+</phpunit>

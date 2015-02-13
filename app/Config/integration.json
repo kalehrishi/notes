@@ -1,0 +1,6 @@
+{
+        "dbHost":"localhost",
+        "dbName":"test_amit",
+        "dbUser":"developer",
+        "dbPassword":"test123"
+}

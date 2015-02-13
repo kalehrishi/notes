@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Notes" tests="10" assertions="10" failures="0" errors="0" time="0.332356">
+    <testsuite name="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.006932">
+      <testcase name="test" class="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" line="6" assertions="1" time="0.006932"/>
+    </testsuite>
+    <testsuite name="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" tests="9" assertions="9" failures="0" errors="0" time="0.325424">
+      <testcase name="testCanCreateObject" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="24" assertions="1" time="0.070814"/>
+      <testcase name="testCanReadRecord" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="30" assertions="1" time="0.047154"/>
+      <testcase name="testCanReadUserByOnePlaceholder" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="44" assertions="1" time="0.027277"/>
+      <testcase name="testCanReadUserByTwoPlaceholders" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="61" assertions="1" time="0.027330"/>
+      <testcase name="testCanUpdateRecordCheckedByNumberOfAffectedRow" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="80" assertions="1" time="0.026765"/>
+      <testcase name="testUpdatingRecordFailed" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="96" assertions="1" time="0.025957"/>
+      <testcase name="testCanInsertRecordCheckedById" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="112" assertions="1" time="0.026649"/>
+      <testcase name="testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="130" assertions="1" time="0.039091"/>
+      <testcase name="testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="150" assertions="1" time="0.034387"/>
+    </testsuite>
+    <testsuite name="Notes\NoteTest" file="/vagrant/New folder/notes/tests/Notes/NoteTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
+    <testsuite name="Notes\SessionTest" file="/vagrant/New folder/notes/tests/Notes/SessionTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
+    <testsuite name="Notes\TagTest" file="/vagrant/New folder/notes/tests/Notes/TagTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
+    <testsuite name="Notes\UserTest" file="/vagrant/New folder/notes/tests/Notes/UserTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
+  </testsuite>
+</testsuites>

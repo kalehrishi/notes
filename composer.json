@@ -1,5 +1,5 @@
 {
-"autoload": {
-        "psr-4":  { "Notes\\": "src/Notes/" }
+    "autoload": {
+        "psr-4": {"Notes\\": "app/"}
     }
 }
