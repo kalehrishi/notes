@@ -1,23 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Notes" tests="10" assertions="10" failures="0" errors="0" time="0.332356">
-    <testsuite name="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.006932">
-      <testcase name="test" class="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" line="6" assertions="1" time="0.006932"/>
+  <testsuite name="Notes" tests="10" assertions="2" failures="0" errors="8" time="0.280028">
+    <testsuite name="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.006422">
+      <testcase name="test" class="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" line="6" assertions="1" time="0.006422"/>
     </testsuite>
-    <testsuite name="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" tests="9" assertions="9" failures="0" errors="0" time="0.325424">
-      <testcase name="testCanCreateObject" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="24" assertions="1" time="0.070814"/>
-      <testcase name="testCanReadRecord" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="30" assertions="1" time="0.047154"/>
-      <testcase name="testCanReadUserByOnePlaceholder" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="44" assertions="1" time="0.027277"/>
-      <testcase name="testCanReadUserByTwoPlaceholders" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="61" assertions="1" time="0.027330"/>
-      <testcase name="testCanUpdateRecordCheckedByNumberOfAffectedRow" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="80" assertions="1" time="0.026765"/>
-      <testcase name="testUpdatingRecordFailed" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="96" assertions="1" time="0.025957"/>
-      <testcase name="testCanInsertRecordCheckedById" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="112" assertions="1" time="0.026649"/>
-      <testcase name="testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="130" assertions="1" time="0.039091"/>
-      <testcase name="testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="150" assertions="1" time="0.034387"/>
+    <testsuite name="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" tests="9" assertions="1" failures="0" errors="8" time="0.273606">
+      <testcase name="testCanCreateObject" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="24" assertions="1" time="0.069644"/>
+      <testcase name="testCanReadRecord" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="30" assertions="0" time="0.026718">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanReadRecord
+PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'notes.db_test' doesn't exist
+
+/vagrant/New folder/notes/app/Database/Database.php:37
+/vagrant/New folder/notes/tests/Database/DatabaseTest.php:41
+</error>
+      </testcase>
+      <testcase name="testCanReadUserByOnePlaceholder" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="44" assertions="0" time="0.026047">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder
+PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'notes.db_test' doesn't exist
+
+/vagrant/New folder/notes/app/Database/Database.php:37
+/vagrant/New folder/notes/tests/Database/DatabaseTest.php:57
+</error>
+      </testcase>
+      <testcase name="testCanReadUserByTwoPlaceholders" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="61" assertions="0" time="0.024473">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders
+PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'notes.db_test' doesn't exist
+
+/vagrant/New folder/notes/app/Database/Database.php:37
+/vagrant/New folder/notes/tests/Database/DatabaseTest.php:76
+</error>
+      </testcase>
+      <testcase name="testCanUpdateRecordCheckedByNumberOfAffectedRow" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="80" assertions="0" time="0.025158">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow
+PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'notes.db_test' doesn't exist
+
+/vagrant/New folder/notes/app/Database/Database.php:47
+/vagrant/New folder/notes/tests/Database/DatabaseTest.php:93
+</error>
+      </testcase>
+      <testcase name="testUpdatingRecordFailed" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="96" assertions="0" time="0.025236">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testUpdatingRecordFailed
+PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'notes.db_test' doesn't exist
+
+/vagrant/New folder/notes/app/Database/Database.php:47
+/vagrant/New folder/notes/tests/Database/DatabaseTest.php:108
+</error>
+      </testcase>
+      <testcase name="testCanInsertRecordCheckedById" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="112" assertions="0" time="0.025449">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanInsertRecordCheckedById
+PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'notes.db_test' doesn't exist
+
+/vagrant/New folder/notes/app/Database/Database.php:47
+/vagrant/New folder/notes/tests/Database/DatabaseTest.php:126
+</error>
+      </testcase>
+      <testcase name="testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="130" assertions="0" time="0.025467">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile
+PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'notes.db_test' doesn't exist
+
+/vagrant/New folder/notes/app/Database/Database.php:47
+/vagrant/New folder/notes/tests/Database/DatabaseTest.php:144
+</error>
+      </testcase>
+      <testcase name="testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="150" assertions="0" time="0.025414">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile
+PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'notes.db_test' doesn't exist
+
+/vagrant/New folder/notes/app/Database/Database.php:47
+/vagrant/New folder/notes/tests/Database/DatabaseTest.php:163
+</error>
+      </testcase>
     </testsuite>
-    <testsuite name="Notes\NoteTest" file="/vagrant/New folder/notes/tests/Notes/NoteTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
-    <testsuite name="Notes\SessionTest" file="/vagrant/New folder/notes/tests/Notes/SessionTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
-    <testsuite name="Notes\TagTest" file="/vagrant/New folder/notes/tests/Notes/TagTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
-    <testsuite name="Notes\UserTest" file="/vagrant/New folder/notes/tests/Notes/UserTest.php" tests="0" assertions="0" failures="0" errors="0" time="0.000000"/>
   </testsuite>
 </testsuites>

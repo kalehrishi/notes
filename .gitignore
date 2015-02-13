@@ -1,1 +1,9 @@
-vendor
+.vagrant
+vendor/
+build/api/
+build/coverage/
+build/logs/
+build/pdepend/
+build/phpdox/
+cache.properties
+app/Config/config.json

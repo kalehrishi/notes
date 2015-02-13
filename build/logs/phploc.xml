@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phploc>
-  <directories>7</directories>
-  <files>11</files>
-  <loc>404</loc>
-  <lloc>146</lloc>
+  <directories>6</directories>
+  <files>7</files>
+  <loc>373</loc>
+  <lloc>138</lloc>
   <llocClasses>42</llocClasses>
   <llocFunctions>83</llocFunctions>
-  <llocGlobal>21</llocGlobal>
+  <llocGlobal>13</llocGlobal>
   <cloc>5</cloc>
   <ccn>1</ccn>
   <ccnMethods>1</ccnMethods>
@@ -26,9 +26,9 @@
   <constants>0</constants>
   <classConstants>0</classConstants>
   <globalConstants>0</globalConstants>
-  <testClasses>7</testClasses>
+  <testClasses>3</testClasses>
   <testMethods>10</testMethods>
-  <ccnByLloc>0.0068493150684932</ccnByLloc>
+  <ccnByLloc>0.0072463768115942</ccnByLloc>
   <ccnByNom>1.125</ccnByNom>
   <llocByNoc>10.5</llocByNoc>
   <llocByNom>5.25</llocByNom>
@@ -43,6 +43,6 @@
   <globalVariableAccesses>0</globalVariableAccesses>
   <superGlobalVariableAccesses>0</superGlobalVariableAccesses>
   <globalConstantAccesses>0</globalConstantAccesses>
-  <namespaces>6</namespaces>
-  <ncloc>399</ncloc>
+  <namespaces>5</namespaces>
+  <ncloc>368</ncloc>
 </phploc>

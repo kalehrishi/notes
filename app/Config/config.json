@@ -1,6 +1,6 @@
 {
         "dbHost":"localhost",
-        "dbName":"test_amit",
+        "dbName":"notes",
         "dbUser":"developer",
         "dbPassword":"test123"
 }
