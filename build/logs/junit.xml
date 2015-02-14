@@ -1,19 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Notes" tests="10" assertions="10" failures="0" errors="0" time="0.360291">
-    <testsuite name="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.006925">
-      <testcase name="test" class="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" line="6" assertions="1" time="0.006925"/>
+  <testsuite name="Notes" tests="10" assertions="1" failures="0" errors="9" time="0.162459">
+    <testsuite name="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.006583">
+      <testcase name="test" class="Notes\Config\ConfigTest" file="/vagrant/New folder/notes/tests/Config/ConfigTest.php" line="6" assertions="1" time="0.006583"/>
     </testsuite>
-    <testsuite name="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" tests="9" assertions="9" failures="0" errors="0" time="0.353366">
-      <testcase name="testCanCreateObject" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="31" assertions="1" time="0.071792"/>
-      <testcase name="testCanReadRecord" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="37" assertions="1" time="0.046370"/>
-      <testcase name="testCanReadUserByOnePlaceholder" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="51" assertions="1" time="0.027286"/>
-      <testcase name="testCanReadUserByTwoPlaceholders" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="68" assertions="1" time="0.028403"/>
-      <testcase name="testCanUpdateRecordCheckedByNumberOfAffectedRow" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="87" assertions="1" time="0.030981"/>
-      <testcase name="testUpdatingRecordFailed" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="103" assertions="1" time="0.028214"/>
-      <testcase name="testCanInsertRecordCheckedById" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="119" assertions="1" time="0.027979"/>
-      <testcase name="testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="138" assertions="1" time="0.050570"/>
-      <testcase name="testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="164" assertions="1" time="0.041771"/>
+    <testsuite name="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" tests="9" assertions="0" failures="0" errors="9" time="0.155876">
+      <testcase name="testCanCreateObject" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="24" assertions="0" time="0.050872">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanCreateObject
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
+      <testcase name="testCanReadRecord" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="30" assertions="0" time="0.012994">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanReadRecord
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
+      <testcase name="testCanReadUserByOnePlaceholder" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="44" assertions="0" time="0.012771">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
+      <testcase name="testCanReadUserByTwoPlaceholders" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="61" assertions="0" time="0.012835">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
+      <testcase name="testCanUpdateRecordCheckedByNumberOfAffectedRow" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="80" assertions="0" time="0.014081">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
+      <testcase name="testUpdatingRecordFailed" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="96" assertions="0" time="0.014134">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testUpdatingRecordFailed
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
+      <testcase name="testCanInsertRecordCheckedById" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="112" assertions="0" time="0.012729">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanInsertRecordCheckedById
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
+      <testcase name="testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="131" assertions="0" time="0.012459">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
+      <testcase name="testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile" class="Notes\Database\DatabaseTest" file="/vagrant/New folder/notes/tests/Database/DatabaseTest.php" line="154" assertions="0" time="0.013001">
+        <error type="PHPUnit_Framework_ExceptionWrapper">Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile
+PHPUnit_Extensions_Database_Operation_Exception: COMPOSITE[TRUNCATE] operation failed on query: 
+                TRUNCATE `Users`
+             using args: Array
+(
+)
+ [SQLSTATE[42000]: Syntax error or access violation: 1701 Cannot truncate a table referenced in a foreign key constraint (`notes`.`UserTags`, CONSTRAINT `fk1_users_userId` FOREIGN KEY (`userId`) REFERENCES `notes`.`Users` (`id`))]
+
+</error>
+      </testcase>
     </testsuite>
   </testsuite>
 </testsuites>

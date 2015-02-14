@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <crap_result>
   <project/>
-  <timestamp>2015-02-13 13:03:24</timestamp>
+  <timestamp>2015-02-14 08:52:50</timestamp>
   <stats>
     <name>Method Crap Stats</name>
     <methodCount>12</methodCount>
     <crapMethodCount>0</crapMethodCount>
     <crapLoad>0</crapLoad>
-    <totalCrap>24</totalCrap>
+    <totalCrap>32</totalCrap>
     <crapMethodPercent>0</crapMethodPercent>
   </stats>
   <methods>
@@ -17,9 +17,9 @@
       <methodName>__construct</methodName>
       <methodSignature>__construct()</methodSignature>
       <fullMethod>__construct()</fullMethod>
-      <crap>1</crap>
+      <crap>2</crap>
       <complexity>1</complexity>
-      <coverage>100</coverage>
+      <coverage>0</coverage>
       <crapLoad>0</crapLoad>
     </method>
     <method>
@@ -28,9 +28,9 @@
       <methodName>get</methodName>
       <methodSignature>get()</methodSignature>
       <fullMethod>get()</fullMethod>
-      <crap>1</crap>
+      <crap>2</crap>
       <complexity>1</complexity>
-      <coverage>100</coverage>
+      <coverage>0</coverage>
       <crapLoad>0</crapLoad>
     </method>
     <method>
@@ -39,9 +39,9 @@
       <methodName>__construct</methodName>
       <methodSignature>__construct()</methodSignature>
       <fullMethod>__construct()</fullMethod>
-      <crap>2</crap>
+      <crap>6</crap>
       <complexity>2</complexity>
-      <coverage>92.31</coverage>
+      <coverage>0</coverage>
       <crapLoad>0</crapLoad>
     </method>
     <method>
@@ -50,9 +50,9 @@
       <methodName>get</methodName>
       <methodSignature>get($input)</methodSignature>
       <fullMethod>get($input)</fullMethod>
-      <crap>1</crap>
+      <crap>2</crap>
       <complexity>1</complexity>
-      <coverage>100</coverage>
+      <coverage>0</coverage>
       <crapLoad>0</crapLoad>
     </method>
     <method>
@@ -61,9 +61,9 @@
       <methodName>post</methodName>
       <methodSignature>post($input)</methodSignature>
       <fullMethod>post($input)</fullMethod>
-      <crap>1</crap>
+      <crap>2</crap>
       <complexity>1</complexity>
-      <coverage>100</coverage>
+      <coverage>0</coverage>
       <crapLoad>0</crapLoad>
     </method>
     <method>

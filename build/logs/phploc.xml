@@ -2,12 +2,12 @@
 <phploc>
   <directories>6</directories>
   <files>7</files>
-  <loc>389</loc>
+  <loc>379</loc>
   <lloc>142</lloc>
   <llocClasses>42</llocClasses>
   <llocFunctions>87</llocFunctions>
   <llocGlobal>13</llocGlobal>
-  <cloc>8</cloc>
+  <cloc>5</cloc>
   <ccn>1</ccn>
   <ccnMethods>1</ccnMethods>
   <interfaces>0</interfaces>
@@ -44,5 +44,5 @@
   <superGlobalVariableAccesses>0</superGlobalVariableAccesses>
   <globalConstantAccesses>0</globalConstantAccesses>
   <namespaces>5</namespaces>
-  <ncloc>381</ncloc>
+  <ncloc>374</ncloc>
 </phploc>

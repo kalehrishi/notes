@@ -1,57 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1423832604">
-  <project timestamp="1423832604">
+<coverage generated="1423903970">
+  <project timestamp="1423903970">
     <package name="Notes\Config">
       <file name="/vagrant/New folder/notes/app/Config/Config.php">
         <class name="Config" namespace="Notes\Config">
-          <metrics methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+          <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="8" coveredelements="0"/>
         </class>
-        <line num="9" type="method" name="__construct" crap="1" count="9"/>
-        <line num="12" type="stmt" count="9"/>
-        <line num="13" type="stmt" count="9"/>
-        <line num="14" type="method" name="get" crap="1" count="9"/>
-        <line num="16" type="stmt" count="9"/>
-        <metrics loc="19" ncloc="19" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+        <line num="9" type="method" name="__construct" crap="2" count="0"/>
+        <line num="10" type="stmt" count="0"/>
+        <line num="12" type="stmt" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <line num="14" type="method" name="get" crap="2" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <metrics loc="19" ncloc="19" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="8" coveredelements="0"/>
       </file>
     </package>
     <package name="Notes\Database">
       <file name="/vagrant/New folder/notes/app/Database/Database.php">
         <class name="Database" namespace="Notes\Database">
-          <metrics methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="25" elements="32" coveredelements="27"/>
+          <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="0" elements="41" coveredelements="0"/>
         </class>
-        <line num="10" type="method" name="__construct" crap="2.00" count="9"/>
-        <line num="14" type="stmt" count="9"/>
-        <line num="15" type="stmt" count="9"/>
-        <line num="16" type="stmt" count="9"/>
-        <line num="17" type="stmt" count="9"/>
-        <line num="20" type="stmt" count="9"/>
-        <line num="21" type="stmt" count="9"/>
-        <line num="22" type="stmt" count="9"/>
-        <line num="23" type="stmt" count="9"/>
-        <line num="24" type="stmt" count="9"/>
-        <line num="25" type="stmt" count="9"/>
-        <line num="26" type="stmt" count="9"/>
+        <line num="10" type="method" name="__construct" crap="6" count="0"/>
+        <line num="11" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
         <line num="27" type="stmt" count="0"/>
-        <line num="30" type="stmt" count="9"/>
-        <line num="32" type="method" name="get" crap="1" count="3"/>
-        <line num="34" type="stmt" count="3"/>
-        <line num="35" type="stmt" count="3"/>
-        <line num="36" type="stmt" count="3"/>
-        <line num="37" type="stmt" count="3"/>
-        <line num="38" type="stmt" count="3"/>
-        <line num="39" type="stmt" count="3"/>
-        <line num="42" type="method" name="post" crap="1" count="5"/>
-        <line num="44" type="stmt" count="5"/>
-        <line num="45" type="stmt" count="5"/>
-        <line num="46" type="stmt" count="5"/>
-        <line num="47" type="stmt" count="5"/>
-        <line num="49" type="stmt" count="5"/>
-        <line num="50" type="stmt" count="5"/>
-        <line num="51" type="stmt" count="5"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="32" type="method" name="get" crap="2" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="42" type="method" name="post" crap="2" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="48" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
         <line num="54" type="method" name="close" crap="2" count="0"/>
+        <line num="55" type="stmt" count="0"/>
         <line num="56" type="stmt" count="0"/>
         <line num="57" type="stmt" count="0"/>
-        <metrics loc="58" ncloc="58" classes="1" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="25" elements="32" coveredelements="27"/>
+        <metrics loc="58" ncloc="58" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="0" elements="41" coveredelements="0"/>
       </file>
     </package>
     <package name="Notes\Mappers">
@@ -149,6 +161,6 @@
         <metrics loc="31" ncloc="24" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="10" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="5" loc="193" ncloc="186" classes="5" methods="12" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="96" coveredstatements="28" elements="108" coveredelements="32"/>
+    <metrics files="5" loc="193" ncloc="186" classes="5" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="108" coveredstatements="0" elements="120" coveredelements="0"/>
   </project>
 </coverage>

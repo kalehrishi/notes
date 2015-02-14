@@ -2,52 +2,17 @@
 <phpunit xmlns="http://schema.phpunit.de/coverage/1.0">
   <file name="Config.php">
     <totals>
-      <lines total="19" comments="0" code="19" executable="3" executed="3" percent="100.00%"/>
-      <methods count="2" tested="2" percent="100.00%"/>
+      <lines total="19" comments="0" code="19" executable="6" executed="0" percent="0.00%"/>
+      <methods count="2" tested="0" percent="0.00%"/>
       <functions count="0" tested="0" percent=""/>
-      <classes count="1" tested="1" percent="100.00%"/>
+      <classes count="1" tested="0" percent="0.00%"/>
       <traits count="0" tested="0" percent=""/>
     </totals>
-    <class name="Config" start="5" executable="3" executed="3" crap="2">
+    <class name="Config" start="5" executable="6" executed="0" crap="6">
       <package full="" name="" sub="" category=""/>
       <namespace name="Notes\Config"/>
-      <method name="__construct" signature="__construct()" start="9" end="13" crap="1" executable="2" executed="2" coverage="100"/>
-      <method name="get" signature="get()" start="14" end="18" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="__construct" signature="__construct()" start="9" end="13" crap="2" executable="3" executed="0" coverage="0"/>
+      <method name="get" signature="get()" start="14" end="18" crap="2" executable="3" executed="0" coverage="0"/>
     </class>
-    <coverage>
-      <line nr="12">
-        <covered by="Notes\Database\DatabaseTest::testCanCreateObject"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadRecord"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders"/>
-        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow"/>
-        <covered by="Notes\Database\DatabaseTest::testUpdatingRecordFailed"/>
-        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedById"/>
-        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile"/>
-        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile"/>
-      </line>
-      <line nr="13">
-        <covered by="Notes\Database\DatabaseTest::testCanCreateObject"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadRecord"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders"/>
-        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow"/>
-        <covered by="Notes\Database\DatabaseTest::testUpdatingRecordFailed"/>
-        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedById"/>
-        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile"/>
-        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile"/>
-      </line>
-      <line nr="16">
-        <covered by="Notes\Database\DatabaseTest::testCanCreateObject"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadRecord"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder"/>
-        <covered by="Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders"/>
-        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow"/>
-        <covered by="Notes\Database\DatabaseTest::testUpdatingRecordFailed"/>
-        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedById"/>
-        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile"/>
-        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile"/>
-      </line>
-    </coverage>
   </file>
 </phpunit>

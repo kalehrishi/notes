@@ -13,13 +13,13 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
         
         $pdo = new \PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
         return $this->createDefaultDBConnection($pdo, $dbName);
-       // $pdo->exec("set foreign_key_checks=0");
+       
     }
     
     public function getDataSet()
     {
 
-        return $this->createXMLDataSet(dirname(__FILE__) . '/user_seed.xml');
+        return $this->createXMLDataSet(dirname(__FILE__).'/_files/user_seed.xml');
     }
     public function testCanCreateObject()
     {
