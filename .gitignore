@@ -1,4 +1,4 @@
-.vagrant
+.vagrant/
 vendor/
 build/api/
 build/coverage/

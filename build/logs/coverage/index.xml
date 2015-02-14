@@ -3,11 +3,19 @@
   <project name="/vagrant/New folder/notes/app">
     <tests>
       <test name="Notes\Database\DatabaseTest::testCanCreateObject" result="0" status="PASSED"/>
+      <test name="Notes\Database\DatabaseTest::testCanReadRecord" result="0" status="PASSED"/>
+      <test name="Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder" result="0" status="PASSED"/>
+      <test name="Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders" result="0" status="PASSED"/>
+      <test name="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow" result="0" status="PASSED"/>
+      <test name="Notes\Database\DatabaseTest::testUpdatingRecordFailed" result="0" status="PASSED"/>
+      <test name="Notes\Database\DatabaseTest::testCanInsertRecordCheckedById" result="0" status="PASSED"/>
+      <test name="Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile" result="0" status="PASSED"/>
+      <test name="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile" result="0" status="PASSED"/>
     </tests>
     <directory name="/vagrant/New folder/notes/app">
       <totals>
-        <lines total="193" comments="7" code="186" executable="96" executed="15" percent="15.62%"/>
-        <methods count="12" tested="2" percent="16.67%"/>
+        <lines total="193" comments="7" code="186" executable="96" executed="28" percent="29.17%"/>
+        <methods count="12" tested="4" percent="33.33%"/>
         <functions count="0" tested="0" percent=""/>
         <classes count="5" tested="1" percent="20.00%"/>
         <traits count="0" tested="0" percent=""/>
@@ -41,16 +49,16 @@
       </file>
       <directory name="Database">
         <totals>
-          <lines total="58" comments="0" code="58" executable="28" executed="12" percent="42.86%"/>
-          <methods count="4" tested="0" percent="0.00%"/>
+          <lines total="58" comments="0" code="58" executable="28" executed="25" percent="89.29%"/>
+          <methods count="4" tested="2" percent="50.00%"/>
           <functions count="0" tested="0" percent=""/>
           <classes count="1" tested="0" percent="0.00%"/>
           <traits count="0" tested="0" percent=""/>
         </totals>
         <file name="Database.php" href="Database/Database.php.xml">
           <totals>
-            <lines total="58" comments="0" code="58" executable="28" executed="12" percent="42.86%"/>
-            <methods count="4" tested="0" percent="0.00%"/>
+            <lines total="58" comments="0" code="58" executable="28" executed="25" percent="89.29%"/>
+            <methods count="4" tested="2" percent="50.00%"/>
             <functions count="0" tested="0" percent=""/>
             <classes count="1" tested="0" percent="0.00%"/>
             <traits count="0" tested="0" percent=""/>
@@ -59,8 +67,8 @@
       </directory>
       <file name="Database.php" href="Database/Database.php.xml">
         <totals>
-          <lines total="58" comments="0" code="58" executable="28" executed="12" percent="42.86%"/>
-          <methods count="4" tested="0" percent="0.00%"/>
+          <lines total="58" comments="0" code="58" executable="28" executed="25" percent="89.29%"/>
+          <methods count="4" tested="2" percent="50.00%"/>
           <functions count="0" tested="0" percent=""/>
           <classes count="1" tested="0" percent="0.00%"/>
           <traits count="0" tested="0" percent=""/>

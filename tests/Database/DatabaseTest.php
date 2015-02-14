@@ -7,20 +7,20 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     public function getConnection()
     {
         $dbHost     = "localhost";
-        $dbName     = "test_amit";
+        $dbName     = "notes";
         $dbUser     = "developer";
         $dbPassword = "test123";
         
         $pdo = new \PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
         return $this->createDefaultDBConnection($pdo, $dbName);
+       // $pdo->exec("set foreign_key_checks=0");
     }
     
     public function getDataSet()
     {
-        
+
         return $this->createXMLDataSet(dirname(__FILE__) . '/user_seed.xml');
     }
-    
     public function testCanCreateObject()
     {
         $database = new Database();
@@ -31,7 +31,7 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $database = new Database();
         
-        $query       = "select dbId,firstName,lastName,isdeleted from db_test";
+        $query       = "select id,firstName,lastName,email,password,createdOn from Users";
         $placeholder = null;
         
         $params = array(
@@ -45,7 +45,7 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $database = new Database();
         
-        $query       = "select dbId,firstName,lastName,isdeleted from db_test where dbId=:id";
+        $query       = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
         $placeholder = array(
             ':id' => '1'
         );
@@ -59,11 +59,11 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('harry', $user[0]['firstName']);
     }
     public function testCanReadUserByTwoPlaceholders()
-    {
+    {   
         $database    = new Database();
         $id          = 2;
         $name        = 'joy';
-        $query       = "select dbId,firstName,lastName,isdeleted from db_test where dbId=:id and firstName=:name";
+        $query       = "select id,firstName,lastName,email,password,createdOn from Users where id=:id and firstName=:name";
         $placeholder = array(
             ':id' => $id,
             ':name' => $name
@@ -81,10 +81,10 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $database = new Database();
         
-        $query  = "update db_test set isdeleted=:value where dbId=:id";
+        $query  = "update Users set firstName=:name where id=:id";
         $placeholder = array(
             ':id' => 1,
-            ':value' => 1
+            ':name' =>"amit" 
         );
         $params = array(
             'dataQuery' => $query,
@@ -94,12 +94,12 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(1, $result['rowCount']);
     }
     public function testUpdatingRecordFailed()
-    {
+    {   
         $database = new Database();
-        $query    = "update db_test set isdeleted=:value where dbId=:id";
+        $query    = "update Users set firstName=:name where id=:id";
         $placeholder = array(
             ':id' => 4,
-            ':value' =>1
+            ':name' =>'amit'
         );
         $params   = array(
             'dataQuery' => $query,
@@ -110,13 +110,14 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(0, $result['rowCount']);
     }
     public function testCanInsertRecordCheckedById()
-    {
+    {   
         $database    = new Database();
-        $query       = "insert into db_test(firstName,lastName,isDeleted) values(:firstName,:lastName,:isDeleted)";
+        $query       = "insert into Users(firstName,lastName,email,password) values(:firstName,:lastName,:email,:password)";
         $placeholder = array(
-            ':firstName' => 'Jk',
-            ':lastName' => 'mark',
-            ':isDeleted' => 0
+            ':firstName' => 'krish',
+            ':lastName' => 'rajesh',
+            ':email' => 'abc@xyz.com',
+            ':password'=>"678910"
         );
         
         $params = array(
@@ -131,11 +132,12 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $database = new Database();
         
-        $query  = "insert into db_test(firstName,lastName,isDeleted) values(:firstName,:lastName,:isDeleted)";
+        $query  = "insert into Users(firstName,lastName,email,password) values(:firstName,:lastName,:email,:password)";
         $placeholder = array(
-            ':firstName' => 'moses',
-            ':lastName' => 'dark',
-            ':isDeleted' => 0
+            ':firstName' => 'krish',
+            ':lastName' => 'rajesh',
+            ':email' => 'abc@xyz.com',
+            ':password'=>"678910"
         );
         $params = array(
             'dataQuery' => $query,
@@ -143,18 +145,20 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $user   = $database->post($params);
 
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__).'/user_after_insert.xml');
-        $actualDataSet = $this->getConnection()->createDataSet(array('db_test'));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__).'/_files/user_after_insert.xml');
+        $actualDataSet = $this->getConnection()->createDataSet(array('Users'));
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($actualDataSet);
+        $filterDataSet->setExcludeColumnsForTable('Users', array('createdOn'));
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
     public function testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile()
     {
         $database = new Database();
-        
-        $query  = "update db_test set isdeleted=:value where dbId=:id";
+       
+        $query  = "update Users set firstName=:name where id=:id";
         $placeholder = array(
             ':id' => 2,
-            ':value' =>1
+            ':name' =>'amit'
         );
         $params = array(
             'dataQuery' => $query,
@@ -162,8 +166,10 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $user   = $database->post($params);
 
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__).'/user_after_update.xml');
-        $actualDataSet = $this->getConnection()->createDataSet(array('db_test'));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__).'/_files/user_after_update.xml');
+        $actualDataSet = $this->getConnection()->createDataSet(array('Users'));
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($actualDataSet);
+        $filterDataSet->setExcludeColumnsForTable('Users', array('createdOn'));
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
 }

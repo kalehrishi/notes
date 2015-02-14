@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <crap_result>
   <project/>
-  <timestamp>2015-02-13 09:24:22</timestamp>
+  <timestamp>2015-02-13 13:03:24</timestamp>
   <stats>
     <name>Method Crap Stats</name>
     <methodCount>12</methodCount>
     <crapMethodCount>0</crapMethodCount>
     <crapLoad>0</crapLoad>
-    <totalCrap>26</totalCrap>
+    <totalCrap>24</totalCrap>
     <crapMethodPercent>0</crapMethodPercent>
   </stats>
   <methods>
@@ -50,9 +50,9 @@
       <methodName>get</methodName>
       <methodSignature>get($input)</methodSignature>
       <fullMethod>get($input)</fullMethod>
-      <crap>2</crap>
+      <crap>1</crap>
       <complexity>1</complexity>
-      <coverage>0</coverage>
+      <coverage>100</coverage>
       <crapLoad>0</crapLoad>
     </method>
     <method>
@@ -61,9 +61,9 @@
       <methodName>post</methodName>
       <methodSignature>post($input)</methodSignature>
       <fullMethod>post($input)</fullMethod>
-      <crap>2</crap>
+      <crap>1</crap>
       <complexity>1</complexity>
-      <coverage>0</coverage>
+      <coverage>100</coverage>
       <crapLoad>0</crapLoad>
     </method>
     <method>

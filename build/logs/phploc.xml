@@ -2,12 +2,12 @@
 <phploc>
   <directories>6</directories>
   <files>7</files>
-  <loc>373</loc>
-  <lloc>138</lloc>
+  <loc>389</loc>
+  <lloc>142</lloc>
   <llocClasses>42</llocClasses>
-  <llocFunctions>83</llocFunctions>
+  <llocFunctions>87</llocFunctions>
   <llocGlobal>13</llocGlobal>
-  <cloc>5</cloc>
+  <cloc>8</cloc>
   <ccn>1</ccn>
   <ccnMethods>1</ccnMethods>
   <interfaces>0</interfaces>
@@ -28,14 +28,14 @@
   <globalConstants>0</globalConstants>
   <testClasses>3</testClasses>
   <testMethods>10</testMethods>
-  <ccnByLloc>0.0072463768115942</ccnByLloc>
+  <ccnByLloc>0.0070422535211268</ccnByLloc>
   <ccnByNom>1.125</ccnByNom>
   <llocByNoc>10.5</llocByNoc>
   <llocByNom>5.25</llocByNom>
   <llocByNof>0</llocByNof>
-  <methodCalls>40</methodCalls>
+  <methodCalls>42</methodCalls>
   <staticMethodCalls>0</staticMethodCalls>
-  <instanceMethodCalls>40</instanceMethodCalls>
+  <instanceMethodCalls>42</instanceMethodCalls>
   <attributeAccesses>18</attributeAccesses>
   <staticAttributeAccesses>0</staticAttributeAccesses>
   <instanceAttributeAccesses>18</instanceAttributeAccesses>
@@ -44,5 +44,5 @@
   <superGlobalVariableAccesses>0</superGlobalVariableAccesses>
   <globalConstantAccesses>0</globalConstantAccesses>
   <namespaces>5</namespaces>
-  <ncloc>368</ncloc>
+  <ncloc>381</ncloc>
 </phploc>

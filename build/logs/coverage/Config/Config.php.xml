@@ -17,12 +17,36 @@
     <coverage>
       <line nr="12">
         <covered by="Notes\Database\DatabaseTest::testCanCreateObject"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadRecord"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders"/>
+        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow"/>
+        <covered by="Notes\Database\DatabaseTest::testUpdatingRecordFailed"/>
+        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedById"/>
+        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile"/>
+        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile"/>
       </line>
       <line nr="13">
         <covered by="Notes\Database\DatabaseTest::testCanCreateObject"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadRecord"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders"/>
+        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow"/>
+        <covered by="Notes\Database\DatabaseTest::testUpdatingRecordFailed"/>
+        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedById"/>
+        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile"/>
+        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile"/>
       </line>
       <line nr="16">
         <covered by="Notes\Database\DatabaseTest::testCanCreateObject"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadRecord"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadUserByOnePlaceholder"/>
+        <covered by="Notes\Database\DatabaseTest::testCanReadUserByTwoPlaceholders"/>
+        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByNumberOfAffectedRow"/>
+        <covered by="Notes\Database\DatabaseTest::testUpdatingRecordFailed"/>
+        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedById"/>
+        <covered by="Notes\Database\DatabaseTest::testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile"/>
+        <covered by="Notes\Database\DatabaseTest::testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile"/>
       </line>
     </coverage>
   </file>
