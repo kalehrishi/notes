@@ -6,3 +6,4 @@ build/phpdox
 build/pdepend
 cache.properties
 app/Config/config.json
+.vagrant
