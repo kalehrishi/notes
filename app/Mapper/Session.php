@@ -38,7 +38,7 @@ class Session
         $session->userId    = $input['userId'];
         $session->createdOn = $input['createdOn'];
         $session->expiredOn = $input['expiredOn'];
-        $query              = "INSERT INTO Sessions (userId,createdOn,expiredOn) VALUES (:userId,:createdOn,:expiredOn)";
+        $query              = "INSERT INTO Sessions (userId,createdOn,expiredOn)VALUES(:userId,:createdOn,:expiredOn)";
         $placeholder        = $input;
         $params             = array(
             'dataQuery' => $query,
