@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="DbTest">
+        <column>id</column>
+        <column>firstName</column>
+        <column>lastName</column>
+        <column>isDeleted</column>
+        <row>
+            <value>1</value>
+            <value>John</value>
+            <value>Doe</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Jerry</value>
+            <value>Tom</value>
+            <value>0</value>
+        </row>
+    </table>
+</dataset>
