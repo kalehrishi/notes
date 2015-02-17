@@ -15,13 +15,9 @@ class Database extends \PHPUnit_Framework_TestCase
         $configData = $config->get();
         $dbHost     = $configData['dbHost'];
         $dbName     = $configData['dbName'];
-
+        $hostString = "mysql:host=$dbHost;dbname=$dbName";
         try {
-            $this->connection = new \PDO(
-                "mysql:host=$dbHost;dbname=$dbName",
-                $configData['dbUser'],
-                $configData['dbPassword']
-            );
+            $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
             $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
@@ -49,6 +45,15 @@ class Database extends \PHPUnit_Framework_TestCase
             'rowCount' => $queryStatement->rowCount(),
             'lastInsertId' => $this->connection->lastInsertId()
         );
+    }
+    
+    public function delete($input)
+    {
+        $queryString    = $input['dataQuery'];
+        $data           = $input['placeholder'];
+        $queryStatement = $this->connection->prepare($queryString);
+        $resultset      = $queryStatement->execute($data);
+        return $resultset;
     }
     
     public function update($input)

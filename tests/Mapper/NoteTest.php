@@ -31,6 +31,17 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_seed.xml');
     }
     
+    public function testCanUpdateEntryByTitleAndBody()
+    {
+        $noteMapper    = new NoteMapper();
+        $resultset     = $noteMapper->update('1');
+        $query         = "select id, title, body from Notes";
+        $queryTable    = $this->getConnection()->createQueryTable('Notes', $query);
+        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
+        ->getTable("Notes");
+        $this->assertTablesEqual($expectedTable, $queryTable);
+    }
+    
     public function testAddEntry()
     {
         $input         = array(
@@ -57,14 +68,14 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         ->getTable("Notes");
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
-
+    
     public function testCanFailedForInvalidId()
     {
         $noteMapper = new NoteMapper();
         $resultset  = $noteMapper->delete('4');
         $this->assertEquals(0, $resultset['rowCount']);
     }
-
+    
     public function testCanReadByTitle()
     {
         $noteMapper = new NoteMapper();
