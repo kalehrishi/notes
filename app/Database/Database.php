@@ -35,7 +35,7 @@ class Database extends \PHPUnit_Framework_TestCase
         $data           = $input['placeholder'];
         $queryStatement = $this->connection->prepare($queryString);
         $queryStatement->execute($data);
-        $resultset = $queryStatement->fetchAll(\PDO::FETCH_NAMED);
+        $resultset = $queryStatement->fetchAll(\PDO::FETCH_ASSOC);
         return $resultset;
     }
     
@@ -49,6 +49,15 @@ class Database extends \PHPUnit_Framework_TestCase
             'rowCount' => $queryStatement->rowCount(),
             'lastInsertId' => $this->connection->lastInsertId()
         );
+    }
+    
+    public function update($input)
+    {
+        $queryString    = $input['dataQuery'];
+        $data           = $input['placeholder'];
+        $queryStatement = $this->connection->prepare($queryString);
+        $resultset      = $queryStatement->execute($data);
+        return $resultset;
     }
     
     public function close()
