@@ -114,7 +114,6 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
 
         $resultset     = $database->post($params);
 
-        
         $this->assertEquals(0, $resultset['rowCount']);
     }
 }
