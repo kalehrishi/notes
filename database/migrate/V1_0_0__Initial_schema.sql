@@ -46,7 +46,7 @@ CREATE TABLE `Notes` (
   `body` varchar(1024) DEFAULT NULL,
   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   `lastUpdateOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-  `isDeleted` bit(1) NOT NULL DEFAULT 0,
+  `isDeleted` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `fk_users_userId_idx` (`userId`),
   CONSTRAINT `fk_users_userId` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION

@@ -1,51 +1,57 @@
 <?php
-
 namespace Notes\Database;
+
+use Notes\Config\Config as Configuration;
 
 class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
 {
+    private $connection;
+    
     public function getConnection()
     {
-        $dbHost     = "localhost";
-        $dbName     = "notes";
-        $dbUser     = "developer";
-        $dbPassword = "test123";
+        $config     = new Configuration();
+        $configData = $config->get();
+        $dbHost     = $configData['dbHost'];
+        $dbName     = $configData['dbName'];
+        $hostString = "mysql:host=$dbHost;dbname=$dbName";
         
-        $pdo = new \PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
-        return $this->createDefaultDBConnection($pdo, $dbName);
-       
+        try {
+            $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
+            return $this->createDefaultDBConnection($this->connection, $dbName);
+        } catch (\PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+        
     }
     
     public function getDataSet()
     {
-
-        return $this->createXMLDataSet(dirname(__FILE__).'/_files/user_seed.xml');
+        return $this->createXMLDataSet(dirname(__FILE__).'/_files/note_seed.xml');
     }
     public function testCanCreateObject()
     {
         $database = new Database();
         $this->assertInstanceOf('Notes\Database\Database', $database);
-        
     }
     public function testCanReadRecord()
     {
         $database = new Database();
         
-        $query       = "select id,firstName,lastName,email,password,createdOn from Users";
+        $query       = "select id,userId,title,body,createdOn,lastUpdateOn,isDeleted from Notes";
         $placeholder = null;
         
         $params = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $user   = $database->get($params);
-        $this->assertEquals('2', count($user));
+        $note   = $database->get($params);
+        $this->assertEquals('2', count($note));
     }
-    public function testCanReadUserByOnePlaceholder()
+    public function testCanReadNoteByOnePlaceholder()
     {
         $database = new Database();
         
-        $query       = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
+        $query       = "select id,userId,title,body,createdOn,lastUpdateOn,isDeleted from Notes where id=:id";
         $placeholder = array(
             ':id' => '1'
         );
@@ -54,19 +60,20 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $user   = $database->get($params);
+        $note   = $database->get($params);
         
-        $this->assertEquals('harry', $user[0]['firstName']);
+        $this->assertEquals('PHP', $note[0]['title']);
     }
-    public function testCanReadUserByTwoPlaceholders()
-    {   
+    public function testCanReadNoteByTwoPlaceholders()
+    {
         $database    = new Database();
         $id          = 2;
-        $name        = 'joy';
-        $query       = "select id,firstName,lastName,email,password,createdOn from Users where id=:id and firstName=:name";
+        $title        = 'PHP5';
+        $query       = "select id,userId,title,body,createdOn,lastUpdateOn,isDeleted 
+        from Notes where id=:id and title=:title";
         $placeholder = array(
             ':id' => $id,
-            ':name' => $name
+            ':title' => $title
         );
         
         $params = array(
@@ -74,32 +81,15 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
             'placeholder' => $placeholder
         );
         $user   = $database->get($params);
-        $this->assertEquals('kris', $user[0]['lastName']);
+        $this->assertEquals('Server scripting language.', $user[0]['body']);
     }
-    
-    public function testCanUpdateRecordCheckedByNumberOfAffectedRow()
+    public function testDeletingRecordFailed()
     {
         $database = new Database();
-        
-        $query  = "update Users set firstName=:name where id=:id";
-        $placeholder = array(
-            ':id' => 1,
-            ':name' =>"amit" 
-        );
-        $params = array(
-            'dataQuery' => $query,
-            'placeholder' =>$placeholder
-        );
-        $result   = $database->post($params);
-        $this->assertEquals(1, $result['rowCount']);
-    }
-    public function testUpdatingRecordFailed()
-    {   
-        $database = new Database();
-        $query    = "update Users set firstName=:name where id=:id";
+        $query    = "update Notes set isDeleted=:isDeleted where id=:id";
         $placeholder = array(
             ':id' => 4,
-            ':name' =>'amit'
+            ':isDeleted' => 1
         );
         $params   = array(
             'dataQuery' => $query,
@@ -108,68 +98,5 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
         $result     = $database->post($params);
         
         $this->assertEquals(0, $result['rowCount']);
-    }
-    public function testCanInsertRecordCheckedById()
-    {   
-        $database    = new Database();
-        $query       = "insert into Users(firstName,lastName,email,password) values(:firstName,:lastName,:email,:password)";
-        $placeholder = array(
-            ':firstName' => 'krish',
-            ':lastName' => 'rajesh',
-            ':email' => 'abc@xyz.com',
-            ':password'=>"678910"
-        );
-        
-        $params = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $result   = $database->post($params);
-        
-        $this->assertEquals(3, $result['lastInsertId']);
-    }
-    public function testCanInsertRecordCheckedByComparingActualDatabaseAndXmlFile()
-    {
-        $database = new Database();
-        
-        $query  = "insert into Users(firstName,lastName,email,password) values(:firstName,:lastName,:email,:password)";
-        $placeholder = array(
-            ':firstName' => 'krish',
-            ':lastName' => 'rajesh',
-            ':email' => 'abc@xyz.com',
-            ':password'=>"678910"
-        );
-        $params = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $user   = $database->post($params);
-
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__).'/_files/user_after_insert.xml');
-        $actualDataSet = $this->getConnection()->createDataSet(array('Users'));
-        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($actualDataSet);
-        $filterDataSet->setExcludeColumnsForTable('Users', array('createdOn'));
-        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
-    }
-    public function testCanUpdateRecordCheckedByComparingActualDatabaseAndXmlFile()
-    {
-        $database = new Database();
-       
-        $query  = "update Users set firstName=:name where id=:id";
-        $placeholder = array(
-            ':id' => 2,
-            ':name' =>'amit'
-        );
-        $params = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $user   = $database->post($params);
-
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__).'/_files/user_after_update.xml');
-        $actualDataSet = $this->getConnection()->createDataSet(array('Users'));
-        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($actualDataSet);
-        $filterDataSet->setExcludeColumnsForTable('Users', array('createdOn'));
-        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
 }
