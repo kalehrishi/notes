@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<dataset>
+    
+
+    <table name="Users">
+        <column>id</column>
+        <column>firstName</column>
+        <column>lastName</column>
+        <column>email</column>
+        <column>password</column>
+        <column>createdOn</column>
+       
+        <row>
+            <value>1</value>
+            <value>John</value>
+            <value>Doe</value>
+            <value>john@doe.com</value>
+            <value>password@123</value>
+             <value>2015-01-01 00:00:01</value>
+
+        </row>
+
+        <row>
+            <value>2</value>
+            <value>Gauri</value>
+            <value>Bhapkar</value>
+            <value>gauri@bhapkar.com</value>
+            <value>password@123</value>
+             <value>2015-01-01 11:00:01</value>
+
+        </row>
+
+         <row>
+            <value>3</value>
+            <value>Gaurav</value>
+            <value>Bhapkar</value>
+            <value>gaurav@bhapkar.com</value>
+            <value>password@123</value>
+             <value>2015-01-01 12:00:01</value>
+         </row>
+
+
+
+    </table>
+        <table name="Sessions">
+       <column>id</column>
+        <column>userId</column>
+        <column>createdOn</column>
+        <column>expiredOn</column>
+        <column>isExpired</column>
+          <row>
+            <value>1</value>
+            <value>1</value>
+            <value>2015-01-01 00:00:01</value>
+            <value>2015-01-01 10:00:01</value>
+            <value>1</value>
+        </row>
+       <row>
+            <value>2</value>
+            <value>2</value>
+            <value>2015-01-01 11:00:01</value>
+            <value>2015-01-10 01:01:01</value>
+            <value>1</value>
+        </row>
+    </table>
+</dataset>

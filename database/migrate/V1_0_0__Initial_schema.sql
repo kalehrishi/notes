@@ -65,7 +65,7 @@ CREATE TABLE `Sessions` (
   `userId` bigint(20) unsigned NOT NULL,
   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   `expiredOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-  `isExpired` bit(1) NOT NULL DEFAULT 0,
+  `isExpired` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `fk2_users_userId_idx` (`userId`),
   CONSTRAINT `fk2_users_userId` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION

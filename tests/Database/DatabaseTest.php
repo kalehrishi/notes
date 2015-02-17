@@ -20,7 +20,8 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
             $this->connection->exec("set foreign_key_checks=0");
             
             return $this->createDefaultDBConnection($this->connection, $dbName);
-        } catch (\PDOException $e) {
+        }
+        catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
         
@@ -28,7 +29,7 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function getDataSet()
     {
-        return $this->createXMLDataSet(dirname(__FILE__).'/_files/note_seed.xml');
+        return $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_seed.xml');
     }
     public function testCanCreateObject()
     {
@@ -70,7 +71,7 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $database    = new Database();
         $id          = 2;
-        $title        = 'PHP5';
+        $title       = 'PHP5';
         $query       = "select id,userId,title,body,createdOn,lastUpdateOn,isDeleted 
         from Notes where id=:id and title=:title";
         $placeholder = array(
@@ -87,17 +88,17 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     }
     public function testDeletingRecordFailed()
     {
-        $database = new Database();
-        $query    = "update Notes set isDeleted=:isDeleted where id=:id";
+        $database    = new Database();
+        $query       = "update Notes set isDeleted=:isDeleted where id=:id";
         $placeholder = array(
             ':id' => 4,
             ':isDeleted' => 1
         );
-        $params   = array(
+        $params      = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $result     = $database->post($params);
+        $result      = $database->post($params);
         
         $this->assertEquals(0, $result['rowCount']);
     }
