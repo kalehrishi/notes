@@ -18,6 +18,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
         try {
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
+            $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
         } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
