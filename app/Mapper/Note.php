@@ -20,6 +20,7 @@ class Note
         );
         $db        = new Database();
         $resultset = $db->post($params);
+        return $resultset;
     }
     
     public function delete($id)
@@ -37,7 +38,25 @@ class Note
             'dataQuery' => $sql,
             'placeholder' => $input
         );
-        $resultset            = $db->update($params);
+        $resultset            = $db->delete($params);
+        return $resultset;
+    }
+    
+    public function update($id)
+    {
+        $noteModel = new NoteModel();
+        $noteModel->id = $id;
+        $input     = array(
+            'id' => $noteModel->id,
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.'
+        );
+        $db        = new Database();
+        $sql       = "UPDATE Notes SET body=:body WHERE id=:id";
+        $params    = array(
+            'dataQuery' => $sql,
+            'placeholder' => $input
+        );
+        $resultset = $db->update($params);
         return $resultset;
     }
     
@@ -56,7 +75,7 @@ class Note
         );
         $resultset        = $db->get($params);
         $noteModel->title = $resultset[0]['title'];
-        $noteModel->body = $resultset[0]['body'];
+        $noteModel->body  = $resultset[0]['body'];
         return $noteModel;
     }
 }
