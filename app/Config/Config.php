@@ -6,10 +6,9 @@ class Config
 {
     private $obj;
     
-    public function __construct()
+    public function __construct($path)
     {
-        
-        $this->obj = json_decode(file_get_contents(dirname(__FILE__) . '/config.json'), true);
+        $this->obj = json_decode(file_get_contents($path), true);
     }
     public function get()
     {
