@@ -45,8 +45,9 @@ class Note
     public function update($id)
     {
         $noteModel = new NoteModel();
+        $noteModel->id = $id;
         $input     = array(
-            'id' => $id,
+            'id' => $noteModel->id,
             'body' => 'PHP is a powerful tool for making dynamic Web pages.'
         );
         $db        = new Database();
