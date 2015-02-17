@@ -11,7 +11,7 @@ class Database extends \PHPUnit_Framework_TestCase
     {
         
         
-        $config     = new Configuration();
+        $config     = new Configuration("app/Config/config.json");
         $configData = $config->get();
         $dbHost     = $configData['dbHost'];
         $dbName     = $configData['dbName'];
