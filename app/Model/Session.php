@@ -9,5 +9,4 @@ class Session
     public $createdOn;
     public $expiredOn;
     public $isExpired;
-
 }
