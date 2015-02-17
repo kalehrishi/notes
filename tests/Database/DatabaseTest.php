@@ -28,7 +28,7 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function getDataSet()
     {
-        return $this->createXMLDataSet(dirname(__FILE__).'/_files/note_seed.xml');
+        return $this->createXMLDataSet(dirname(__FILE__).'/_files/database_seed.xml');
     }
     public function testCanCreateObject()
     {
@@ -39,7 +39,7 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $database = new Database();
         
-        $query       = "select id,userId,title,body,createdOn,lastUpdateOn,isDeleted from Notes";
+        $query       = "select id,firstName,lastName,isDeleted from DbTest";
         $placeholder = null;
         
         $params = array(
@@ -49,11 +49,11 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
         $note   = $database->get($params);
         $this->assertEquals('2', count($note));
     }
-    public function testCanReadNoteByOnePlaceholder()
+    public function testCanReadByOnePlaceholder()
     {
         $database = new Database();
         
-        $query       = "select id,userId,title,body,createdOn,lastUpdateOn,isDeleted from Notes where id=:id";
+        $query       = "select id,firstName,lastName,isDeleted from DbTest where id=:id";
         $placeholder = array(
             ':id' => '1'
         );
@@ -62,33 +62,36 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $note   = $database->get($params);
-        
-        $this->assertEquals('PHP', $note[0]['title']);
+        $resultset   = $database->get($params);
+        $this->assertEquals('1', count($resultset));
+        $this->assertEquals(1, $resultset[0]['id']);
+        $this->assertEquals('John', $resultset[0]['firstName']);
+        $this->assertEquals('Doe', $resultset[0]['lastName']);
+        $this->assertEquals(1, $resultset[0]['isDeleted']);
     }
-    public function testCanReadNoteByTwoPlaceholders()
+    public function testCanReadByTwoPlaceholders()
     {
         $database    = new Database();
         $id          = 2;
-        $title        = 'PHP5';
-        $query       = "select id,userId,title,body,createdOn,lastUpdateOn,isDeleted 
-        from Notes where id=:id and title=:title";
+        $firstName        = 'Jerry';
+        $query       = "select id,firstName,lastName,isDeleted from DbTest where id=:id and firstName=:firstName";
         $placeholder = array(
             ':id' => $id,
-            ':title' => $title
+            ':firstName' => $firstName
         );
         
         $params = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $user   = $database->get($params);
-        $this->assertEquals('Server scripting language.', $user[0]['body']);
+        $resultset   = $database->get($params);
+        $this->assertEquals('Tom', $resultset[0]['lastName']);
+        $this->assertEquals(0, $resultset[0]['isDeleted']);
     }
     public function testDeletingRecordFailed()
     {
         $database = new Database();
-        $query    = "update Notes set isDeleted=:isDeleted where id=:id";
+        $query    = "update DbTest set isDeleted=:isDeleted where id=:id";
         $placeholder = array(
             ':id' => 4,
             ':isDeleted' => 1
@@ -97,8 +100,8 @@ class DatabaseTest extends \PHPUnit_Extensions_Database_TestCase
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $result     = $database->post($params);
+        $resultset     = $database->post($params);
         
-        $this->assertEquals(0, $result['rowCount']);
+        $this->assertEquals(0, $resultset['rowCount']);
     }
 }
