@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -10,10 +10,33 @@
   <delete dir="${basedir}/build/phpdox"/>
   <delete file="${basedir}/composer.lock"/>
   <delete dir="${basedir}/vendor"/>
+  <delete file="${basedir}/app/Config/config.json"/>
+  
   <property name="clean.done" value="true"/>
  </target>
+ 
+ <target name="copy-config" depends="clean">
+  <property environment="env.APP_ENV"/>
+  <condition property="env.APP_ENV" value="${env.APP_ENV}" else="dev">
+   <isset property="env.APP_ENV" />
+  </condition>
+  <property name="env.APP_ENV" value="dev"/>
+  <echo message="Configuring app environment to ${env.APP_ENV}."/>
+  <copy file="${basedir}/app/Config/config_${env.APP_ENV}.json" tofile="${basedir}/app/Config/config.json"/>
+  
+ </target>
+ 
+ <target name="replace-config-dbname" depends="copy-config">
+  <property environment="env.GIT_BRANCH"/>
+  <condition property="env.GIT_BRANCH" value="${env.GIT_BRANCH}" else="master">
+   <isset property="env.GIT_BRANCH" />
+  </condition>
+  <property name="" value="master"/>
+  <echo message="Using database name notes-${env.GIT_BRANCH} for this build."/>
+  <replace file="${basedir}/app/Config/config.json" token="@GIT_BRANCH" value="${env.GIT_BRANCH}"/>
+ </target>
 
- <target name="migrate-db" unless="migrate-db.done" description="Cleanup db and build from scratch">
+ <target name="migrate-db" depends="replace-config-dbname" unless="migrate-db.done" description="Cleanup db and build from scratch">
        <taskdef uri="antlib:org.flywaydb.ant" resource="org/flywaydb/ant/antlib.xml">
            <classpath>
                <pathelement location="${basedir}/build/tools/flyway-ant-3.1/flyway-core-3.1.jar"/>
@@ -27,7 +50,7 @@
        <property name="flyway.locations" value="filesystem:${basedir}/database/migrate"/>
        <property name="flyway.user" value="developer"/>
        <property name="flyway.password" value="test123"/>
-       <property name="flyway.schemas" value="notes"/>
+       <property name="flyway.schemas" value="notes-${env.GIT_BRANCH}"/>
        <property name="flyway.url" value="jdbc:mysql://localhost:3306"/>
        <flyway:clean/>
        <flyway:migrate/>
