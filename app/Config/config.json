@@ -1,6 +1,0 @@
-{
-        "dbHost":"localhost",
-        "dbName":"notes-master",
-        "dbUser":"developer",
-        "dbPassword":"test123"
-}
