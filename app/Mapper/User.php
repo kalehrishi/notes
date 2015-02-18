@@ -48,29 +48,22 @@ class User
         return $user;
     }
     
-    public function update($input)
+    public function update($id)
     {
-        $user            = new UserModel();
-        $user->id        = $input['id'];
-        $user->firstName = $input['firstName'];
-        $query           = "update Users set firstName=:firstName where id=:id";
-        $placeholder     = array(
-            ':firstName' => $input['firstName'],
-            ':id' => $input['id']
+        $user      = new UserModel();
+        $input     = array(
+            'id' => $id,
+            'firstName' => 'anusha'
         );
-        $params          = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
+        $db        = new Database();
+        $sql       = "UPDATE Users SET firstName=:firstName WHERE id=:id";
+        $params    = array(
+            'dataQuery' => $sql,
+            'placeholder' => $input
         );
-        $database        = new Database();
-        $result          = $database->post($params);
-        if ($result['rowCount'] > 0) {
-            return "Record Successfully Updated";
-        } else {
-            return "Record Not Updated";
-        }
-        
-        
-        
+        $resultset = $db->update($params);
+        return $resultset;
     }
+    
+    
 }

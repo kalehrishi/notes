@@ -3,7 +3,7 @@ namespace Notes\Mapper;
 
 use Notes\Config\Config as Configuration;
 
-//use Notes\Mapper\User as UserMapper;
+use Notes\Mapper\User as UserMapper;
 
 class UserTest extends \PHPUnit_Extensions_Database_TestCase
 {
@@ -31,7 +31,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     }
     public function testCanReadRecordById()
     {
-        $userMapper = new User();
+        $userMapper = new UserMapper();
         $user       = $userMapper->read(1);
         $this->assertEquals('anusha', $user->firstName);
     }
@@ -44,7 +44,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'password' => 'sfhsk1223',
             'createdOn' => '2014-10-31 20:59:59'
         );
-        $userMapper = new User();
+        $userMapper = new UserMapper();
         $userMapper->create($input);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_insert.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -54,25 +54,13 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     }
     public function testCanUpdateRecord()
     {
-        $input         = array(
-            'id' => 1,
-            'firstName' => 'anusha'
-            
-        );
-        $userMapper    = new User();
-        $actualDataSet = $userMapper->update($input);
-        $this->assertEquals("Record Successfully Updated", $actualDataSet);
+        $query         = "select id, firstName,lastName,email,password,createdOn from Users";
+        $queryTable    = $this->getConnection()->createQueryTable('Users', $query);
+        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/user_after_update.xml')->getTable("Users");
+        $this->assertTablesEqual($expectedTable, $queryTable);
+        
     }
-    public function testFailedToUpdateRecord()
-    {
-        $input         = array(
-            'id' => 1,
-            'firstName' => 'anusha'
-        );
-        $userMapper    = new User();
-        $actualDataSet = $userMapper->update($input);
-        $this->assertEquals("Record Not Updated", $actualDataSet);
-    }
-   
+    
+    
     
 }
