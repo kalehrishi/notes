@@ -1,98 +1,78 @@
 <?php
 namespace Notes\Mapper;
 
-use Notes\Model\User as UserModel;
+use Notes\Config\Config as Configuration;
 
-use Notes\Database\Database as Database;
+//use Notes\Mapper\User as UserMapper;
 
-class User
+class UserTest extends \PHPUnit_Extensions_Database_TestCase
 {
-    
-    public function create($input)
+    public function getConnection()
     {
-        $user            = new UserModel();
-        $user->firstName = $input['firstName '];
-        $user->lastName  = $input['lastName '];
-        $user->email     = $input['email '];
-        $user->password  = $input['password'];
-        $user->createdOn = $input['createdOn'];
-        $query           = "INSERT INTO Users (firstName,lastName,email,password,createdOn) VALUES (:firstName,:lastName,:email,:password,:createdOn)";
-        $placeholder     = $input;
-        $params          = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $database        = new DataBase();
-        $result          = $database->post($params);
-        $user->userid    = $result['lastInsertId'];
-        return $user->userid;
-    }
-    public function read($id)
-    {
-        $user            = new UserModel();
-        $user->id        = $id;
-        $query           = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
-        $placeholder     = array(
-            ':id' => $id
-        );
-        $params          = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $database        = new DataBase();
-        $resultset       = $database->get($params);
-        $user->id        = $resultset[0]['id'];
-        $user->firstName = $resultset[0]['firstName'];
-        $user->lastName  = $resultset[0]['lastName'];
-        $user->email     = $resultset[0]['email'];
-        $user->password  = $resultset[0]['password'];
-        $user->createdOn = $resultset[0]['createdOn'];
-        return $user;
-    }
-    
-    public function update($input)
-    {
-        $user            = new UserModel();
-        $user->firstName = $input['firstName'];
-        $user->id        = $input['id'];
-        $query           = "update Users set firstName=:firstName where id=:id";
-        $placeholder     = array(
-            ':firstName' => $input['firstName'],
-            ':id' => $input['id']
-        );
-        $params          = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $database        = new Database();
-        $result          = $database->post($params);
-        if ($result['rowCount'] > 0) {
-            return "Record Successfully Updated";
-        } else {
-            return "Record Not Updated";
+        $config     = new Configuration();
+        $configData = $config->get();
+        $dbHost     = $configData['dbHost'];
+        $dbName     = $configData['dbName'];
+        $hostString = "mysql:host=$dbHost;dbname=$dbName";
+        
+        try {
+            $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
+            $this->connection->exec("set foreign_key_checks=0");
+            return $this->createDefaultDBConnection($this->connection, $dbName);
+        }
+        catch (\PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
         }
         
     }
-    public function delete($input)
+    public function getDataSet()
     {
-        $user            = new UserModel();
-        $user->firstName = $input['firstName'];
-        $user->id        = $input['id'];
-        $query           = "DELETE from Users where id=:id";
-        $placeholder     = array(
-            ':firstName' => $input['firstName'],
-            ':id' => $input['id']
-        );
-        $params          = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $database        = new Database();
-        $result          = $database->post($params);
-        if ($result['rowCount'] > 0) {
-            return "Record Successfully Deleted";
-        } else {
-            return "Record Not Deleted";
-        }
+        return $this->createXMLDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
     }
+    public function testCanReadRecordById()
+    {
+        $userMapper = new User();
+        $user       = $userMapper->read(1);
+        $this->assertEquals('anusha', $user->firstName);
+    }
+    public function testCanInsertRecord()
+    {
+        $input      = array(
+            'firstName' => 'anusha',
+            'lastName' => 'hiremath',
+            'email' => 'anusha@gmail.com',
+            'password' => 'sfhsk1223',
+            'createdOn' => '2014-10-31 20:59:59'
+        );
+        $userMapper = new User();
+        $userMapper->create($input);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_insert.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'Users'
+        ));
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+    }
+    public function testCanUpdateRecord()
+    {
+        $input         = array(
+            'id' => 1,
+            'firstName' => 'anusha'
+            
+        );
+        $userMapper    = new User();
+        $actualDataSet = $userMapper->update($input);
+        $this->assertEquals("Record Successfully Updated", $actualDataSet);
+    }
+    public function testFailedToUpdateRecord()
+    {
+        $input         = array(
+            'id' => 1,
+            'firstName' => 'anusha'
+        );
+        $userMapper    = new User();
+        $actualDataSet = $userMapper->update($input);
+        $this->assertEquals("Record Not Updated", $actualDataSet);
+    }
+   
+    
 }

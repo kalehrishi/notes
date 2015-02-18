@@ -7,7 +7,6 @@ use Notes\Database\Database as Database;
 
 class User
 {
-    
     public function create($input)
     {
         $user            = new UserModel();
@@ -24,8 +23,7 @@ class User
         );
         $database        = new DataBase();
         $result          = $database->post($params);
-        $user->userid    = $result['lastInsertId'];
-        return $user->userid;
+        return $result;
     }
     public function read($id)
     {
@@ -53,8 +51,8 @@ class User
     public function update($input)
     {
         $user            = new UserModel();
-        $user->firstName = $input['firstName'];
         $user->id        = $input['id'];
+        $user->firstName = $input['firstName'];
         $query           = "update Users set firstName=:firstName where id=:id";
         $placeholder     = array(
             ':firstName' => $input['firstName'],
@@ -72,27 +70,7 @@ class User
             return "Record Not Updated";
         }
         
-    }
-    public function delete($input)
-    {
-        $user            = new UserModel();
-        $user->firstName = $input['firstName'];
-        $user->id        = $input['id'];
-        $query           = "DELETE from Users where id=:id";
-        $placeholder     = array(
-            ':firstName' => $input['firstName'],
-            ':id' => $input['id']
-        );
-        $params          = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $database        = new Database();
-        $result          = $database->post($params);
-        if ($result['rowCount'] > 0) {
-            return "Record Successfully Deleted";
-        } else {
-            return "Record Not Deleted";
-        }
+        
+        
     }
 }
