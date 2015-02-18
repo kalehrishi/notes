@@ -8,5 +8,5 @@ class User
     public $lastName;
     public $email;
     public $password;
-    public $createdOn;    
+    public $createdOn;
 }
