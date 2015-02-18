@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="Notes">
+        <column>id</column>
+        <column>userId</column>
+        <column>title</column>
+        <column>body</column>
+        <column>createdOn</column>
+        <column>lastUpdateOn</column>
+        <column>isDeleted</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>PHP</value>
+            <value>Preprocessor Hypertext</value>
+            <value>2015-02-16 08:56:44</value>
+            <value>2015-02-16 08:56:44</value>
+            <value>0</value>
+        </row>
+    </table>
+    <table name="UserTags">
+        <column>id</column>
+        <column>userId</column>
+        <column>tag</column>
+        <column>isDeleted</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>Import package</value>
+            <value>0</value>
+        </row>
+    </table>
+    <table name="NoteTags">
+        <column>id</column>
+        <column>noteId</column>
+        <column>userTagId</column>
+        <row>
+            <value>1</value>
+            <value>4</value>
+            <value>3</value>
+        </row>
+    </table>
+</dataset>
