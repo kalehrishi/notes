@@ -15,7 +15,8 @@ class User
         $user->email     = $input['email'];
         $user->password  = $input['password'];
         $user->createdOn = $input['createdOn'];
-        $query           = "INSERT INTO Users (firstName,lastName,email,password,createdOn) VALUES (:firstName,:lastName,:email,:password,:createdOn)";
+        $query           = "INSERT INTO Users (firstName,lastName,email,password,createdOn)
+         VALUES (:firstName,:lastName,:email,:password,:createdOn)";
         $placeholder     = $input;
         $params          = array(
             'dataQuery' => $query,
@@ -64,6 +65,5 @@ class User
         $resultset = $db->update($params);
         return $resultset;
     }
-    
     
 }
