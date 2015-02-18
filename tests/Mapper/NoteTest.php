@@ -2,6 +2,7 @@
 namespace Notes;
 
 use Notes\Mapper\Note as NoteMapper;
+use Notes\Model\Note as NoteModel;
 use Notes\Config\Config as Configuration;
 
 class NoteTest extends \PHPUnit_Extensions_Database_TestCase
@@ -33,8 +34,15 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function testCanUpdateEntryByTitleAndBody()
     {
-        $noteMapper    = new NoteMapper();
-        $resultset     = $noteMapper->update('1');
+        
+        $input      = array(
+            'id' => 1,
+            'title' => 'Web',
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.'
+        );
+        $noteMapper = new NoteMapper();
+        $noteModel  = new NoteModel($input);
+        $noteMapper->update($noteModel);
         $query         = "select id, title, body from Notes";
         $queryTable    = $this->getConnection()->createQueryTable('Notes', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
@@ -44,13 +52,16 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function testAddEntry()
     {
-        $input         = array(
+        $input      = array(
             'userId' => 1,
             'title' => 'Exception',
             'body' => 'Creating a custom exception handler is quite simple.'
         );
-        $noteMapper    = new NoteMapper();
-        $resultset     = $noteMapper->create($input);
+        $noteMapper = new NoteMapper();
+        
+        $noteModel = new NoteModel($input);
+        $noteMapper->create($noteModel);
+        
         $query         = "select id, userId, title, body,isDeleted from Notes";
         $queryTable    = $this->getConnection()->createQueryTable('Notes', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_insert.xml')
@@ -58,10 +69,27 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
     
+    public function testCanFailedForAddEntry()
+    {
+        $input      = array(
+            'userId' => 1,
+            'body' => 'Insert Data Into MySQL Using PDO'
+        );
+        $noteMapper = new NoteMapper();
+        
+        $noteModel = new NoteModel($input);
+        $this->assertEquals("Title Parameter Missing", $noteMapper->create($noteModel));
+    }
+    
     public function testDeleteEntry()
     {
-        $noteMapper    = new NoteMapper();
-        $resultset     = $noteMapper->delete('2');
+        $input      = array(
+            'id' => 2,
+            'isDeleted' => 1
+        );
+        $noteMapper = new NoteMapper();
+        $noteModel  = new NoteModel($input);
+        $noteMapper->delete($noteModel);
         $query         = "select id, userId, title, body,isDeleted from Notes";
         $queryTable    = $this->getConnection()->createQueryTable('Notes', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_delete.xml')
@@ -69,17 +97,25 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
     
-    public function testCanFailedForInvalidId()
-    {
-        $noteMapper = new NoteMapper();
-        $resultset  = $noteMapper->delete('4');
-        $this->assertEquals(0, $resultset['rowCount']);
-    }
-    
     public function testCanReadByTitle()
     {
+        $input      = array(
+            'id' => 2
+        );
         $noteMapper = new NoteMapper();
-        $resultset  = $noteMapper->read('2');
+        $noteModel  = new NoteModel($input);
+        $resultset  = $noteMapper->read($noteModel);
         $this->assertEquals("PHP5", $resultset->title);
+    }
+    
+    public function testCanFailedByNotExistId()
+    {
+        $input      = array(
+            'id' => 4
+        );
+        $noteMapper = new NoteMapper();
+        $noteModel  = new NoteModel($input);
+        $resultset  = $noteMapper->read($noteModel);
+        $this->assertEquals("Note Id Does Not Exists", $resultset);
     }
 }
