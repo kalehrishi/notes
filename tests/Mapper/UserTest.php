@@ -19,8 +19,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
             $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
         
@@ -56,9 +55,9 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $query         = "select id, firstName,lastName,email,password,createdOn from Users";
         $queryTable    = $this->getConnection()->createQueryTable('Users', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/user_after_update.xml')->getTable("Users");
+        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/user_after_update.xml')
+        ->getTable("Users");
         $this->assertTablesEqual($expectedTable, $queryTable);
         
     }
-    
 }

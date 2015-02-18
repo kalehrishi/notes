@@ -65,5 +65,4 @@ class User
         $resultset = $db->update($params);
         return $resultset;
     }
-    
 }

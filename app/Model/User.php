@@ -1,5 +1,4 @@
 <?php
-
 namespace Notes\Model;
 
 class User
@@ -9,7 +8,5 @@ class User
     public $lastName;
     public $email;
     public $password;
-    public $createdOn;
-    
-    
+    public $createdOn;    
 }
