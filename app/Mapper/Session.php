@@ -47,7 +47,7 @@ class Session
         );
         $database           = new DataBase();
         $result             = $database->post($params);
-        $session->id = $result['lastInsertId'];
+        $session->id        = $result['lastInsertId'];
         return $session->id;
     }
     
@@ -69,33 +69,29 @@ class Session
         $resultset               = $db->update($params);
         return $resultset;
     }
-
-
-   public function update($input)
+    
+    
+    public function update($input)
     {
         $session         = new SessionModel();
-        $session->userId   = $input['userId'];
-        $session->id    = $input['id'];
-        $query    = "update Sessions set userId=:userId where id=:id";
-        $placeholder=array(
+        $session->userId = $input['userId'];
+        $session->id     = $input['id'];
+        $query           = "update Sessions set userId=:userId where id=:id";
+        $placeholder     = array(
             ':userId' => $input['userId'],
             ':id' => $input['id']
-            );
-        $params   = array(
+        );
+        $params          = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $database = new Database();
-        $result     = $database->post($params);
-        if ($result['rowCount']>0) {
+        $database        = new Database();
+        $result          = $database->post($params);
+        if ($result['rowCount'] > 0) {
             return "Record Successfully Updated";
         } else {
             return "Record Not Update";
         }
     }
-
-
-
+    
 }
-
-
