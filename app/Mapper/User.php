@@ -7,62 +7,79 @@ use Notes\Database\Database as Database;
 
 class User
 {
-    public function create($input)
+    public function create(UserModel $userModel)
     {
-        $user            = new UserModel();
-        $user->firstName = $input['firstName'];
-        $user->lastName  = $input['lastName'];
-        $user->email     = $input['email'];
-        $user->password  = $input['password'];
-        $user->createdOn = $input['createdOn'];
-        $query           = "INSERT INTO Users (firstName,lastName,email,password,createdOn)
+        try {
+            $input     = array(
+                'firstName' => $userModel->firstName,
+                'lastName' => $userModel->lastName,
+                'email' => $userModel->email,
+                'password' => $userModel->password,
+                'createdOn' => $userModel->createdOn
+            );
+            $query     = "INSERT INTO Users (firstName,lastName,email,password,createdOn)
          VALUES (:firstName,:lastName,:email,:password,:createdOn)";
-        $placeholder     = $input;
-        $params          = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $database        = new DataBase();
-        $result          = $database->post($params);
-        return $result;
+            $params    = array(
+                'dataQuery' => $query,
+                'placeholder' => $input
+            );
+            $database  = new Database();
+            $resultset = $database->post($params);
+            return $resultset;
+        } catch (\PDOException $e) {
+            $e = "Missing parameters";
+            return $e;
+        }
+        
+        
     }
-    public function read($id)
+    public function read(UserModel $userModel)
     {
-        $user            = new UserModel();
-        $user->id        = $id;
-        $query           = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
-        $placeholder     = array(
-            ':id' => $id
+        
+        $input = array(
+            'id' => $userModel->id
         );
-        $params          = array(
+        
+        $database  = new Database();
+        $query     = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
+        $params    = array(
             'dataQuery' => $query,
-            'placeholder' => $placeholder
+            'placeholder' => $input
         );
-        $database        = new DataBase();
-        $resultset       = $database->get($params);
-        $user->id        = $resultset[0]['id'];
-        $user->firstName = $resultset[0]['firstName'];
-        $user->lastName  = $resultset[0]['lastName'];
-        $user->email     = $resultset[0]['email'];
-        $user->password  = $resultset[0]['password'];
-        $user->createdOn = $resultset[0]['createdOn'];
-        return $user;
+        $resultset = $database->get($params);
+        if (!empty($resultset)) {
+            $userModel->id        = $resultset[0]['id'];
+            $userModel->firstName = $resultset[0]['firstName'];
+            $userModel->lastName  = $resultset[0]['lastName'];
+            $userModel->email     = $resultset[0]['email'];
+            $userModel->password  = $resultset[0]['password'];
+            $userModel->createdOn = $resultset[0]['createdOn'];
+            return $userModel;
+        } else {
+            return "User Does Not Exists";
+        }
     }
     
-    public function update($id)
+    
+    public function update(UserModel $userModel)
     {
-        $user      = new UserModel();
-        $input     = array(
-            'id' => $id,
-            'firstName' => 'anusha'
+        $input = array(
+            'id' => $userModel->id,
+            'firstName' => $userModel->firstName,
+            'lastName' => $userModel->lastName,
+            'email' => $userModel->email,
+            'password' => $userModel->password,
+            'createdOn' => $userModel->createdOn
         );
-        $db        = new Database();
-        $sql       = "UPDATE Users SET firstName=:firstName WHERE id=:id";
+        
+        $database  = new Database();
+        $sql       = "UPDATE Users SET id=:id,firstName=:firstName,lastName=:lastName,email=:email,
+        password=:password  WHERE id=:id";
         $params    = array(
             'dataQuery' => $sql,
             'placeholder' => $input
         );
-        $resultset = $db->update($params);
+        $resultset = $database->update($params);
         return $resultset;
     }
 }
