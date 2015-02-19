@@ -6,13 +6,12 @@ use Notes\Database\Database as Database;
 
 class UserTag
 {
-    
-    public function create($model)
+    public function create($data)
     {
         $query       = "INSERT INTO UserTags(userId,tag) VALUES (:userId,:tag)";
         $placeholder = array(
-            ':userId' => $model['id'],
-            'tag' => $model['tag']
+            ':userId' => $data->userId,
+            ':tag' => $data->tag
         );
         $params      = array(
             'dataQuery' => $query,
@@ -21,17 +20,18 @@ class UserTag
         $database    = new Database();
         $result      = $database->post($params);
         if ($result['rowCount'] == 1) {
-            return $result['lastInsertId'];
+            $data->id = $result['lastInsertId'];
+            return $data;
         } else {
-            return "Inserting Failed";
+            throw new \Exception("Column 'userId' cannot be null");
         }
     }
     
-    public function read($model)
+    public function read($data)
     {
         $query       = " SELECT id,userId,tag,isDeleted FROM UserTags WHERE id=:id";
         $placeholder = array(
-            ':id' => $model['id']
+            ':id' => $data->id
         );
         $params      = array(
             'dataQuery' => $query,
@@ -40,18 +40,22 @@ class UserTag
         $database    = new Database();
         $resultset   = $database->get($params);
         if (!empty($resultset)) {
-            return $resultset;
+            $data->id        = $resultset[0]['id'];
+            $data->userId    = $resultset[0]['userId'];
+            $data->tag       = $resultset[0]['tag'];
+            $data->isDeleted = $resultset[0]['isDeleted'];
+            return $data;
         } else {
-            return "UserTag is not Exit";
+            throw new \Exception("UserTagId Does Not Present");
         }
     }
     
-    public function update($model)
+    public function update($data)
     {
         $query       = " UPDATE UserTags SET tag=:tag  WHERE id=:id";
         $placeholder = array(
-            ':id' => $model['id'],
-            ':tag' => $model['tag']
+            ':id' => $data->id,
+            ':tag' => $data->tag
         );
         $params      = array(
             'dataQuery' => $query,
@@ -59,19 +63,19 @@ class UserTag
         );
         $database    = new Database();
         $result      = $database->post($params);
-        if ($result['rowCount'] > 0) {
+        if ($result['rowCount'] == 1) {
             return "Successfuly Updated";
         } else {
-            return "Updation Failed";
+            throw new \Exception("Updation Failed");
         }
         
     }
     
-    public function delete($model)
+    public function delete($data)
     {
         $query       = " UPDATE UserTags SET isDeleted=1  WHERE id=:id";
         $placeholder = array(
-            ':id' => $model['id']
+            ':id' => $data->id
         );
         $params      = array(
             'dataQuery' => $query,
@@ -79,10 +83,10 @@ class UserTag
         );
         $database    = new Database();
         $result      = $database->post($params);
-        if ($result['rowCount'] > 0) {
+        if ($result['rowCount'] == 1) {
             return "Successfuly deleted";
         } else {
-            return "Deletion Failed";
+            throw new \Exception("UserTagId Does Not Present");
         }
         
     }

@@ -4,6 +4,7 @@ namespace Notes\Mapper;
 
 use Notes\Config\Config as Configuration;
 
+use Notes\Model\NoteTag as NoteTagModel;
 
 class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
 {
@@ -29,44 +30,91 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function getDataSet()
     {
-        return $this->createXMLDataSet(dirname(__FILE__).'/_files/noteTags_seed.xml');
+        return $this->createXMLDataSet(dirname(__FILE__) . '/_files/noteTags_seed.xml');
     }
-
-
-    public function testCanReadRecordById()
-     {
-        $model=['id'=>1];
-        $notetag=new NoteTag();
-        $result=$notetag->read($model);
-
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__).'/_files/noteTag_read.xml');
-        $actualDataSet = $this->getConnection()->createDataSet(array('NoteTags'));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals('4',$result[0]['noteId']); 
-        $this->assertEquals('3',$result[0]['userTagId']);     	 
-     }
     
-    public function testRecordNotExit()
-     {
-        $model=['id'=>2];
-        $tag=new NoteTag();
-        $result=$tag->read($model);
-        $this->assertEquals('NoteTag is not Exit',$result);          
-     }
-     public function testCanInsertRecord()
+    
+    public function testCanReadRecordById()
     {
-        $model      = array(
-            'noteId' => 1,
-            'userTagId' =>1
+        $input        = array(
+            'id' => 1
         );
-
-        $notetag=new NoteTag();
-        $result=$notetag->create($model);
-
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__).'/_files/noteTags_after_insert.xml');
-        $actualDataSet = $this->getConnection()->createDataSet(array('NoteTags'));
-        $this->assertEquals(2,$result); 
+        $noteTagModel = new NoteTagModel($input);
+        
+        $noteTagMapper = new NoteTag();
+        $result         = $noteTagMapper->read($noteTagModel);
+        
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTag_read.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'NoteTags'
+        ));
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $this->assertEquals('1', $result->id);
+        $this->assertEquals('4', $result->noteId);
+        $this->assertEquals('3', $result->userTagId);
+    }
+    /**
+    * @expectedException              Exception
+    * @expectedExceptionMessage       NoteTagId Does Not Present
+    */
+    public function testNotTagIdDoesNotExist()
+    {
+        $input        = array(
+            'id' => 2
+        );
+        $noteTagModel = new NoteTagModel($input);
+        
+        $noteTagMapper = new NoteTag();
+        $result        = $noteTagMapper->read($noteTagModel);
+        
+    }
+    public function testCanInsertRecord()
+    {
+        $input        = array(
+            'noteId' => 1,
+            'userTagId' => 1
+        );
+        $noteTagModel = new NoteTagModel($input);
+        
+        $noteTagMapper = new NoteTag();
+        $result         = $noteTagMapper->create($noteTagModel);
+        
+        
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTags_after_insert.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'NoteTags'
+        ));
+        $this->assertEquals(2, $result->id);
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
-  
+    /**
+    * @expectedException              Exception
+    * @expectedExceptionMessage       Column 'noteId' cannot be null
+    */
+    public function testInsertFailedWhenParameterMissing()
+    {
+        $input        = array(
+            'userTagId' => 1
+        );
+        $noteTagModel = new NoteTagModel($input);
+        
+        $noteTagMapper = new NoteTag();
+        $result        = $noteTagMapper->create($noteTagModel);
+    }
+    
+    /**
+    * @expectedException              PDOException
+    * @expectedExceptionMessage       Column 'noteId' cannot be null
+    */
+    public function testInsertFailedWhenParameterIsMismached()
+    {
+        $input        = array(
+            'note' => 1,
+            'userTagId' => 1
+        );
+        $noteTagModel = new NoteTagModel($input);
+        
+        $noteTagMapper = new NoteTag();
+        $result        = $noteTagMapper->create($noteTagModel);
+    }
 }
