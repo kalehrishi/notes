@@ -43,11 +43,28 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper = new NoteMapper();
         $noteModel  = new NoteModel($input);
         $noteMapper->update($noteModel);
-        $query         = "select id, title, body from Notes";
-        $queryTable    = $this->getConnection()->createQueryTable('Notes', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
+        $query             = "select id, title, body from Notes";
+        $actualResultset   = $this->getConnection()->createQueryTable('Notes', $query);
+        $expectedResultset = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
         ->getTable("Notes");
-        $this->assertTablesEqual($expectedTable, $queryTable);
+        $this->assertTablesEqual($expectedResultset, $actualResultset);
+    }
+    
+    /**
+     * @expectedException PDOException
+     * @expectedMessage Note Id Parameter Missing
+     */
+    public function testCanFailedToUpdateByNotPassingNoteId()
+    {
+        
+        $input      = array(
+            'title' => 'Web',
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.'
+        );
+        $noteMapper = new NoteMapper();
+        $noteModel  = new NoteModel($input);
+        $noteMapper->update($noteModel);
+        
     }
     
     public function testAddEntry()
@@ -62,13 +79,17 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel = new NoteModel($input);
         $noteMapper->create($noteModel);
         
-        $query         = "select id, userId, title, body,isDeleted from Notes";
-        $queryTable    = $this->getConnection()->createQueryTable('Notes', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_insert.xml')
+        $query             = "select id, userId, title, body,isDeleted from Notes";
+        $actualResultset   = $this->getConnection()->createQueryTable('Notes', $query);
+        $expectedResultset = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_insert.xml')
         ->getTable("Notes");
-        $this->assertTablesEqual($expectedTable, $queryTable);
+        $this->assertTablesEqual($expectedResultset, $actualResultset);
     }
     
+    /**
+     * @expectedException PDOException
+     * @expectedMessage Parameter Missing
+     */
     public function testCanFailedForAddEntry()
     {
         $input      = array(
@@ -78,7 +99,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper = new NoteMapper();
         
         $noteModel = new NoteModel($input);
-        $this->assertEquals("Title Parameter Missing", $noteMapper->create($noteModel));
+        $noteMapper->create($noteModel);
     }
     
     public function testDeleteEntry()
@@ -90,24 +111,50 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper = new NoteMapper();
         $noteModel  = new NoteModel($input);
         $noteMapper->delete($noteModel);
-        $query         = "select id, userId, title, body,isDeleted from Notes";
-        $queryTable    = $this->getConnection()->createQueryTable('Notes', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_delete.xml')
+        $query             = "select id, userId, title, body,isDeleted from Notes";
+        $actualResultset   = $this->getConnection()->createQueryTable('Notes', $query);
+        $expectedResultset = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_delete.xml')
         ->getTable("Notes");
-        $this->assertTablesEqual($expectedTable, $queryTable);
+        $this->assertTablesEqual($expectedResultset, $actualResultset);
+    }
+    
+    /**
+     * @expectedException PDOException
+     * @expectedMessage Note Id Parameter Missing For Delete
+     */
+    public function testCanFailedForDeleteByNotPassingNoteId()
+    {
+        $input      = array(
+            'isDeleted' => 1
+        );
+        $noteMapper = new NoteMapper();
+        
+        $noteModel = new NoteModel($input);
+        $noteMapper->delete($noteModel);
     }
     
     public function testCanReadByTitle()
     {
-        $input      = array(
+        $input             = array(
             'id' => 2
         );
-        $noteMapper = new NoteMapper();
-        $noteModel  = new NoteModel($input);
-        $resultset  = $noteMapper->read($noteModel);
-        $this->assertEquals("PHP5", $resultset->title);
+        $expectedResultset = array(
+            0 => array(
+                'id' => 2,
+                'title' => 'PHP5',
+                'body' => 'Server scripting language.'
+            )
+        );
+        $noteMapper        = new NoteMapper();
+        $noteModel         = new NoteModel($input);
+        $actualResultset   = $noteMapper->read($noteModel);
+        $this->assertEquals($expectedResultset, $actualResultset);
     }
     
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage   Object does not exist, cannot read
+     */
     public function testCanFailedByNotExistId()
     {
         $input      = array(
@@ -115,7 +162,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $noteMapper = new NoteMapper();
         $noteModel  = new NoteModel($input);
-        $resultset  = $noteMapper->read($noteModel);
-        $this->assertEquals("Note Id Does Not Exists", $resultset);
+        $noteMapper->read($noteModel);
     }
 }

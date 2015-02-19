@@ -1,7 +1,7 @@
 <?php
 namespace Notes\Model;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class NoteTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateObject()
     {
