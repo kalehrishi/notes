@@ -10,7 +10,28 @@ class Session
 {
     
     
-    public function read(SessionModel $sessionModel)
+    
+    
+    
+    public function create(SessionModel $sessionModel)
+    {
+        $input     = array(
+            'userId' => $sessionModel->userId,
+            'createdOn' => $sessionModel->createdOn,
+            'expiredOn' => $sessionModel->expiredOn
+        );
+        $query     = "INSERT INTO Sessions(userId,createdOn,expiredOn) VALUES (:userId, :createdOn, :expiredOn)";
+        $params    = array(
+            'dataQuery' => $query,
+            'placeholder' => $input
+        );
+        $database  = new Database();
+        $resultset = $database->post($params);
+        
+        return $sessionModel;
+    }
+    
+  public function read(SessionModel $sessionModel)
     {
         $input = array(
             'id' => $sessionModel->id
@@ -36,26 +57,7 @@ class Session
         }
         
     }
-    
-    
-    public function create(SessionModel $sessionModel)
-    {
-        $input     = array(
-            'userId' => $sessionModel->userId,
-            'createdOn' => $sessionModel->createdOn,
-            'expiredOn' => $sessionModel->expiredOn
-        );
-        $query     = "INSERT INTO Sessions(userId,createdOn,expiredOn) VALUES (:userId, :createdOn, :expiredOn)";
-        $params    = array(
-            'dataQuery' => $query,
-            'placeholder' => $input
-        );
-        $database  = new Database();
-        $resultset = $database->post($params);
-        
-        return $resultset;
-    }
-    
+
     public function delete(SessionModel $sessionModel)
     {
         $input = array(
@@ -74,8 +76,7 @@ class Session
             );
             $resultset = $db->update($params);
             
-            
-            return $resultset;
+            return $sessionModel;
         }
         
     }
@@ -99,7 +100,7 @@ class Session
                 'placeholder' => $input
             );
             $resultset = $database->update($params);
-            return $resultset;
+            return $sessionModel;
         }
     }
 }
