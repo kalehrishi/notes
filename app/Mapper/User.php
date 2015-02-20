@@ -9,35 +9,34 @@ class User
 {
     public function create(UserModel $userModel)
     {
-        try {
-            $input     = array(
-                'firstName' => $userModel->firstName,
-                'lastName' => $userModel->lastName,
-                'email' => $userModel->email,
-                'password' => $userModel->password,
-                'createdOn' => $userModel->createdOn
-            );
-            $query     = "INSERT INTO Users (firstName,lastName,email,password,createdOn)
-         VALUES (:firstName,:lastName,:email,:password,:createdOn)";
-            $params    = array(
-                'dataQuery' => $query,
-                'placeholder' => $input
-            );
-            $database  = new Database();
-            $resultset = $database->post($params);
-            return $resultset;
-        } catch (\PDOException $e) {
-            $e = "Missing parameters";
-            return $e;
-        }
+        $input = array(
+            'firstName' => $userModel->getFirstName(),
+            'lastName' => $userModel->getLastName(),
+            'email' => $userModel->getEmail(),
+            'password' => $userModel->getPassword(),
+            'createdOn' => $userModel->getCreatedOn()
+        );
         
+        $query     = "INSERT INTO Users (firstName,lastName,email,password,createdOn)
+         VALUES (:firstName,:lastName,:email,:password,:createdOn)";
+        $params    = array(
+            'dataQuery' => $query,
+            'placeholder' => $input
+        );
+        $database  = new Database();
+        $resultset = $database->post($params);
+        if ($resultset['rowCount'] == 1) {
+            $userModel->setId($resultset['lastInsertId']);
+            return $userModel;
+        } else {
+            return "User not found";
+        }
         
     }
     public function read(UserModel $userModel)
     {
-        
         $input = array(
-            'id' => $userModel->id
+            'id' => $userModel->getId()
         );
         
         $database  = new Database();
@@ -48,12 +47,12 @@ class User
         );
         $resultset = $database->get($params);
         if (!empty($resultset)) {
-            $userModel->id        = $resultset[0]['id'];
-            $userModel->firstName = $resultset[0]['firstName'];
-            $userModel->lastName  = $resultset[0]['lastName'];
-            $userModel->email     = $resultset[0]['email'];
-            $userModel->password  = $resultset[0]['password'];
-            $userModel->createdOn = $resultset[0]['createdOn'];
+            $userModel->setId($resultset[0]['id']);
+            $userModel->setFirstName($resultset[0]['firstName']);
+            $userModel->setLastName($resultset[0]['lastName']);
+            $userModel->setEmail($resultset[0]['email']);
+            $userModel->setPassword($resultset[0]['password']);
+            $userModel->setCreatedOn($resultset[0]['createdOn']);
             return $userModel;
         } else {
             return "User Does Not Exists";
@@ -64,22 +63,26 @@ class User
     public function update(UserModel $userModel)
     {
         $input = array(
-            'id' => $userModel->id,
-            'firstName' => $userModel->firstName,
-            'lastName' => $userModel->lastName,
-            'email' => $userModel->email,
-            'password' => $userModel->password,
-            'createdOn' => $userModel->createdOn
+            'firstName' => $userModel->getFirstName(),
+            'lastName' => $userModel->getLastName(),
+            'email' => $userModel->getEmail(),
+            'password' => $userModel->getPassword(),
+            'createdOn' => $userModel->getCreatedOn()
         );
         
         $database  = new Database();
-        $sql       = "UPDATE Users SET id=:id,firstName=:firstName,lastName=:lastName,email=:email,
+        $sql       = "UPDATE Users SET firstName=:firstName,lastName=:lastName,email=:email,
         password=:password  WHERE id=:id";
         $params    = array(
             'dataQuery' => $sql,
             'placeholder' => $input
         );
         $resultset = $database->update($params);
-        return $resultset;
+        if ($resultset['rowCount'] == 1) {
+            return $this->read($userModel);
+            ;
+        } else {
+            return "User Not Found";
+        }
     }
 }

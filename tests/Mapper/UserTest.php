@@ -21,7 +21,8 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
             $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
-        } catch (\PDOException $e) {
+        }
+        catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
         
@@ -35,87 +36,25 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $input      = array(
             'id' => 1
         );
+        $userModel  = new UserModel();
         $userMapper = new UserMapper();
-        $userModel  = new UserModel($input);
-        $resultset  = $userMapper->read($userModel);
-        print_r($resultset);
-    }
-    public function testCanInsertRecord()
-    {
-        $input      = array(
-            'firstName' => 'kirti',
-            'lastName' => 'ramani',
-            'email' => 'kirti.6@gmail.com',
-            'password' => 'sfhsk1226',
-            'createdOn' => '2014-10-31 20:59:59'
-        );
-        $userMapper = new UserMapper();
-        $userModel  = new UserModel($input);
-        $userMapper->create($userModel);
+        $userModel->setId($input['id']);
+        $userModel       = $userMapper->read($userModel);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'Users'
+        ));
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $this->assertEquals('1', $userModel->getId());
+        $this->assertEquals('anusha', $userModel->getFirstName());
+        $this->assertEquals('hiremath', $userModel->getLastName());
+        $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
+        $this->assertEquals('sfhsk1223', $userModel->getPassword());
+        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
-        $query         = "select id, firstName,lastName,email,password,createdOn from Users";
-        $queryTable    = $this->getConnection()->createQueryTable('Users', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/user_after_insert.xml')
-        ->getTable("Users");
-        $this->assertTablesEqual($expectedTable, $queryTable);
     }
     
     
-    public function testCanUpdateRecord()
-    {
-        $input      = array(
-            'id' => 1,
-            'firstName' => 'anusha',
-            'lastName' => 'hiremath',
-            'email' => 'anusha@gmail.com',
-            'password' => 'sfhsk1223',
-            'createdOn' => '2014-10-31 20:59:59'
-        );
-        $userMapper = new UserMapper();
-        $userModel  = new UserModel($input);
-        $userMapper->update($userModel);
-        $query         = "select id,firstName,lastName,email,password,createdOn from Users";
-        $queryTable    = $this->getConnection()->
-        createQueryTable('Users', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/user_after_update.xml')->
-        getTable("Users");
-        $this->assertTablesEqual($expectedTable, $queryTable);
-    }
-    public function testCanUpdateRecordByFirstNameAndLastName()
-    {
-        
-        $input      = array(
-            'id' => 1,
-            'firstName' => 'anusha',
-            'lastName' => 'hiremath'
-        );
-        $userMapper = new UserMapper();
-        $userModel  = new UserModel($input);
-        $userMapper->update($userModel);
-        $query         = "select id,firstName,lastName,email,
-        password,createdOn from Users";
-        $queryTable    = $this->getConnection()->createQueryTable('Users', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/user_after_update.xml')->
-        getTable("Users");
-        $this->assertTablesEqual($expectedTable, $queryTable);
-        
-    }
-    public function testCanUpdateRecordByEmailAndPassword()
-    {
-        $userMapper = new UserMapper();
-        $input      = array(
-            'id' => 1,
-            'email' => 'anusha@gmail.com',
-            'password' => 'sfhsk1223'
-        );
-        $userMapper = new UserMapper();
-        $userModel  = new UserModel($input);
-        $userMapper->update($userModel);
-        $query         = "select id,firstName,lastName,email,password,createdOn from Users";
-        $queryTable    = $this->getConnection()->createQueryTable('Users', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/user_after_update.xml')->
-        getTable("Users");
-        $this->assertTablesEqual($expectedTable, $queryTable);
-        
-    }
+    
 }
