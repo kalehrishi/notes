@@ -34,7 +34,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function testCanUpdateEntryByTitleAndBody()
     {
-        
         $input      = array(
             'id' => 1,
             'title' => 'Web',
@@ -42,28 +41,25 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $noteMapper = new NoteMapper();
         $noteModel  = new NoteModel($input);
-        $noteMapper->update($noteModel);
+        $actualResultset = $noteMapper->update($noteModel);
+        $this->assertEquals("Updated Successfully", $actualResultset);
         $query             = "select id, title, body from Notes";
-        $actualResultset   = $this->getConnection()->createQueryTable('Notes', $query);
-        $expectedResultset = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
+        $actualDataSet   = $this->getConnection()->createQueryTable('Notes', $query);
+        $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
         ->getTable("Notes");
-        $this->assertTablesEqual($expectedResultset, $actualResultset);
+        $this->assertTablesEqual($expectedDataSet, $actualDataSet);
     }
     
-    /**
-     * @expectedException PDOException
-     * @expectedMessage Note Id Parameter Missing
-     */
     public function testCanFailedToUpdateByNotPassingNoteId()
     {
-        
         $input      = array(
             'title' => 'Web',
             'body' => 'PHP is a powerful tool for making dynamic Web pages.'
         );
         $noteMapper = new NoteMapper();
         $noteModel  = new NoteModel($input);
-        $noteMapper->update($noteModel);
+        $actualResultset = $noteMapper->update($noteModel);
+        $this->assertEquals("No query results for Note model.", $actualResultset);
         
     }
     
@@ -77,19 +73,11 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper = new NoteMapper();
         
         $noteModel = new NoteModel($input);
-        $noteMapper->create($noteModel);
-        
-        $query             = "select id, userId, title, body,isDeleted from Notes";
-        $actualResultset   = $this->getConnection()->createQueryTable('Notes', $query);
-        $expectedResultset = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_insert.xml')
-        ->getTable("Notes");
-        $this->assertTablesEqual($expectedResultset, $actualResultset);
+        $actualResultset = $noteMapper->create($noteModel);
+        $expectedResultset = 3;
+        $this->assertEquals($expectedResultset, $actualResultset->id);
     }
     
-    /**
-     * @expectedException PDOException
-     * @expectedMessage Parameter Missing
-     */
     public function testCanFailedForAddEntry()
     {
         $input      = array(
@@ -99,7 +87,8 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper = new NoteMapper();
         
         $noteModel = new NoteModel($input);
-        $noteMapper->create($noteModel);
+        $actualResultset = $noteMapper->create($noteModel);
+        $this->assertEquals("No query results for Note model.", $actualResultset);
     }
     
     public function testDeleteEntry()
@@ -110,18 +99,16 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $noteMapper = new NoteMapper();
         $noteModel  = new NoteModel($input);
-        $noteMapper->delete($noteModel);
-        $query             = "select id, userId, title, body,isDeleted from Notes";
-        $actualResultset   = $this->getConnection()->createQueryTable('Notes', $query);
-        $expectedResultset = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_delete.xml')
+        $actualResultset = $noteMapper->delete($noteModel);
+        $this->assertEquals(1, $actualResultset->isDeleted);
+        
+        $query             = "select id,userId, title, body, isDeleted from Notes";
+        $actualDataSet   = $this->getConnection()->createQueryTable('Notes', $query);
+        $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_delete.xml')
         ->getTable("Notes");
-        $this->assertTablesEqual($expectedResultset, $actualResultset);
+        $this->assertTablesEqual($expectedDataSet, $actualDataSet);
     }
     
-    /**
-     * @expectedException PDOException
-     * @expectedMessage Note Id Parameter Missing For Delete
-     */
     public function testCanFailedForDeleteByNotPassingNoteId()
     {
         $input      = array(
@@ -130,7 +117,8 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper = new NoteMapper();
         
         $noteModel = new NoteModel($input);
-        $noteMapper->delete($noteModel);
+        $actualResultset = $noteMapper->delete($noteModel);
+        $this->assertEquals("No query results for Note model.", $actualResultset);
     }
     
     public function testCanReadByTitle()
@@ -138,23 +126,17 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $input             = array(
             'id' => 2
         );
-        $expectedResultset = array(
-            0 => array(
-                'id' => 2,
-                'title' => 'PHP5',
-                'body' => 'Server scripting language.'
-            )
-        );
+        $expectedResultset = "PHP5";
         $noteMapper        = new NoteMapper();
         $noteModel         = new NoteModel($input);
         $actualResultset   = $noteMapper->read($noteModel);
-        $this->assertEquals($expectedResultset, $actualResultset);
+        $expectedResultset = 'PHP5';
+        $this->assertEquals(2, $actualResultset->id);
+        $this->assertEquals('PHP5', $actualResultset->title);
+        $this->assertEquals('Server scripting language.', $actualResultset->body);
+        $this->assertEquals('PHP5', $actualResultset->title);
     }
     
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage   Object does not exist, cannot read
-     */
     public function testCanFailedByNotExistId()
     {
         $input      = array(
@@ -162,6 +144,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $noteMapper = new NoteMapper();
         $noteModel  = new NoteModel($input);
-        $noteMapper->read($noteModel);
+        $actualResultset = $noteMapper->read($noteModel);
+        $this->assertEquals("No query results for Note model.", $actualResultset);
     }
 }

@@ -12,6 +12,7 @@ class Note
     public $lastUpdatedOn;
     public $isDeleted;
     
+    
     public function __construct($params)
     {
         foreach ($params as $key => $val) {

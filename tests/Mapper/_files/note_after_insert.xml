@@ -7,20 +7,6 @@
         <column>body</column>
         <column>isDeleted</column>
         <row>
-            <value>1</value>
-            <value>1</value>
-            <value>PHP</value>
-            <value>Preprocessor Hypertext</value>
-            <value>0</value>
-        </row>
-        <row>
-            <value>2</value>
-            <value>1</value>
-            <value>PHP5</value>
-            <value>Server scripting language.</value>
-            <value>0</value>
-        </row>
-        <row>
             <value>3</value>
             <value>1</value>
             <value>Exception</value>
