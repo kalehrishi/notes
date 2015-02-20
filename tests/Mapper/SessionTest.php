@@ -53,8 +53,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
-
-public function testDeleteSession()
+    public function testDeleteSession()
     {
          $input      = array(
             'id' => 1,
@@ -68,7 +67,6 @@ public function testDeleteSession()
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml')->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
-
 
     public function testUpdateSession()
     {
@@ -90,8 +88,6 @@ public function testDeleteSession()
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
     
-
-
     public function testCanReadById()
     {   
         $input = array('id' => 2);
@@ -105,8 +101,6 @@ public function testDeleteSession()
                     'isExpired' => '1'
                     )
             );
-    
-
         $sessionMapper = new SessionMapper();
         $sessionModel  = new SessionModel($input);
         $resultset     =  $sessionMapper->read($sessionModel);
@@ -115,7 +109,7 @@ public function testDeleteSession()
 
 
       
-/**
+    /**
      * @expectedException        InvalidArgumentException
      * @expectedExceptionMessage invalid user
      */
