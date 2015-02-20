@@ -9,10 +9,6 @@ use Notes\Database\Database as Database;
 class Session
 {
     
-    
-    
-    
-    
     public function create(SessionModel $sessionModel)
     {
         $input     = array(
@@ -31,7 +27,7 @@ class Session
         return $sessionModel;
     }
     
-  public function read(SessionModel $sessionModel)
+    public function read(SessionModel $sessionModel)
     {
         $input = array(
             'id' => $sessionModel->id
@@ -56,7 +52,7 @@ class Session
             throw new \InvalidArgumentException('invalid user');
         }
         
-    }
+  }
 
     public function delete(SessionModel $sessionModel)
     {
