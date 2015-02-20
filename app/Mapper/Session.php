@@ -52,7 +52,7 @@ class Session
             throw new \InvalidArgumentException('invalid user');
         }
         
-  }
+    }
 
     public function delete(SessionModel $sessionModel)
     {
