@@ -51,15 +51,16 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
             'NoteTags'
         ));
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals('1', $noteTagModel->getId());
-        $this->assertEquals('4', $noteTagModel->getNoteId());
-        $this->assertEquals('3', $noteTagModel->getUserTagId());
+        $this->assertEquals(1, $noteTagModel->getId());
+        $this->assertEquals(4, $noteTagModel->getNoteId());
+        $this->assertEquals(3, $noteTagModel->getuserTagId());
+        $this->assertEquals(0, $noteTagModel->getIsDeleted());
     }
     /**
      * @expectedException              Exception
      * @expectedExceptionMessage       NoteTagId Does Not Present
      */
-    public function testNotTagIdDoesNotExist()
+    public function testNoteTagIdDoesNotExist()
     {
         $input        = array(
             'id' => 2
@@ -94,6 +95,8 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(2, $noteTagModel->getId());
         $this->assertEquals(1, $noteTagModel->getNoteId());
         $this->assertEquals(1, $noteTagModel->getUserTagId());
+        $this->assertEquals(0, $noteTagModel->getIsDeleted());
+
         
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
@@ -112,5 +115,55 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         $noteTagMapper = new NoteTag();
         $noteTagModel  = $noteTagMapper->create($noteTagModel);
+    }
+
+    public function testCanDeleteRecord()
+    {
+        $input        = array(
+            'id' => 1,
+            'noteId'=>4,
+            'userTagId' =>3,
+            'isDeleted'=>0
+        );
+        $noteTagModel = new NoteTagModel();
+        $noteTagModel->setId($input['id']);
+        $noteTagModel->setNoteId($input['noteId']);
+        $noteTagModel->setUserTagId($input['userTagId']);
+        $noteTagModel->setIsDeleted($input['isDeleted']);
+        
+        $noteTagMapper = new NoteTag();
+        $noteTagModel  = $noteTagMapper->delete($noteTagModel);
+        
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTags_after_delete.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'NoteTags'
+        ));
+        $this->assertEquals(1, $noteTagModel->getId());
+        $this->assertEquals(4, $noteTagModel->getNoteId());
+        $this->assertEquals(3, $noteTagModel->getUserTagId());
+        $this->assertEquals(1, $noteTagModel->getIsDeleted());
+    
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+    }
+    /**
+     * @expectedException              Exception
+     * @expectedExceptionMessage       NoteTagId Does Not Present
+     */
+    public function testDeletionFailed()
+    {
+        $input        = array(
+            'id' => 2,
+            'noteId'=>4,
+            'userTagId' =>3,
+            'isDeleted'=>0
+        );
+        $noteTagModel = new NoteTagModel();
+        $noteTagModel->setId($input['id']);
+        $noteTagModel->setNoteId($input['noteId']);
+        $noteTagModel->setUserTagId($input['userTagId']);
+        $noteTagModel->setIsDeleted($input['isDeleted']);
+        
+        $noteTagMapper = new NoteTag();
+        $noteTagModel  = $noteTagMapper->delete($noteTagModel);
     }
 }

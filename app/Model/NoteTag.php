@@ -11,6 +11,8 @@ class NoteTag
     private $id;
     private $noteId;
     private $userTagId;
+    private $isDeleted;
+    
     
     
     public function getId()
@@ -25,6 +27,10 @@ class NoteTag
     {
         return $this->userTagId;
     }
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
     public function setId($id)
     {
         $this->id = $id;
@@ -36,5 +42,9 @@ class NoteTag
     public function setUserTagId($userTagId)
     {
         $this->userTagId = $userTagId;
+    }
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
     }
 }

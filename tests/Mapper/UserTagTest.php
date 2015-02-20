@@ -53,6 +53,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         $this->assertEquals('Import package', $userTagModel->getTag());
         $this->assertEquals('1', $userTagModel->getuserId());
+        $this->assertEquals('0', $userTagModel->getIsDeleted());
     }
     /**
      * @expectedException              Exception
@@ -117,10 +118,17 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testCanDeleteRecord()
     {
         $input        = array(
-            'id' => 1
+            'id' => 1,
+            'userId'=>1,
+            'tag'=>'Import package',
+            'isDeleted'=>0
         );
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
+        $userTagModel->setTag($input['tag']);
+        $userTagModel->setIsDeleted($input['isDeleted']);
+    
         
         $userTagMapper = new UserTag();
         $userTagModel  = $userTagMapper->delete($userTagModel);
@@ -143,10 +151,17 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testDeletionFailed()
     {
         $input        = array(
-            'id' => 2
+            'id' => 2,
+            'userId'=>1,
+            'tag'=>'Import package',
+            'isDeleted'=>0
         );
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
+        $userTagModel->setTag($input['tag']);
+        $userTagModel->setisDeleted($input['isDeleted']);
+        
         
         $userTagMapper = new UserTag();
         $userTagModel  = $userTagMapper->delete($userTagModel);
@@ -156,12 +171,16 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input = array(
             'id' => 1,
-            'tag' => "Tag Updated"
+            'userId'=>1,
+            'tag' => "Tag Updated",
+            'isDeleted'=>0
         );
         
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
         $userTagModel->setTag($input['tag']);
+        $userTagModel->setisDeleted($input['isDeleted']);
         
         $userTagMapper = new UserTag();
         $userTagModel  = $userTagMapper->update($userTagModel);
@@ -186,17 +205,18 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input = array(
             'id' => 2,
-            'tag' => "Tag Updated"
+            'userId'=>1,
+            'tag' => "Tag Updated",
+            'isDeleted'=>0
         );
         
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
         $userTagModel->setTag($input['tag']);
-        
-        
+        $userTagModel->setisDeleted($input['isDeleted']);
+                
         $userTagMapper = new UserTag();
         $userTagModel  = $userTagMapper->update($userTagModel);
-        
-        
     }
 }

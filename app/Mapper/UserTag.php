@@ -64,7 +64,7 @@ class UserTag
         $userTagModelbase = new Database();
         $result           = $userTagModelbase->post($params);
         if ($result['rowCount'] == 1) {
-            return $this->read($userTagModel);
+            return $userTagModel ;
         } else {
             throw new \Exception("Updation Failed");
         }
@@ -81,10 +81,11 @@ class UserTag
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $userTagModelbase = new Database();
-        $result           = $userTagModelbase->post($params);
+        $database = new Database();
+        $result           = $database->post($params);
         if ($result['rowCount'] == 1) {
-            return $this->read($userTagModel);
+            $userTagModel->setIsDeleted(1);
+            return $userTagModel;
         } else {
             throw new \Exception("UserTagId Does Not Present");
         }
