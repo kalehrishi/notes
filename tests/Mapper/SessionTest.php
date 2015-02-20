@@ -3,6 +3,7 @@
 namespace Notes\Mapper;
 
 use Notes\Mapper\Session as SessionMapper;
+use Notes\Model\Session as SessionModel;
 
 use Notes\Config\Config as Configuration;
 
@@ -30,9 +31,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
-    
-    
-    public function getDataSet()
+     public function getDataSet()
     {
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
     }
@@ -44,47 +43,92 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'userId' => '1',
             'createdOn' => '2015-01-01 10:00:01',
             'expiredOn' => '2015-01-01 10:00:01'
-            
         );
         $sessionMapper = new SessionMapper();
-        
-        $sessionMapper->create($input);
+        $sessionModel = new SessionModel($input);
+        $sessionMapper->create($sessionModel);
         $query         = "select id, userId,createdOn, expiredOn,isExpired from Sessions";
         $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_insert.xml')->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
-    
-    
-    public function testDeleteEntry()
+
+
+public function testDeleteSession()
     {
-        $sessionMapper    = new SessionMapper();
-        $resultset     = $sessionMapper->delete('3');
+         $input      = array(
+            'id' => 1,
+            'isExpired' => 1
+        );
+        $sessionMapper = new SessionMapper();
+        $sessionModel = new SessionModel($input);
+        $sessionMapper->delete($sessionModel);
         $query         = "select id, userId,createdOn, expiredOn,isExpired from Sessions";
         $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml')->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
+
+
     public function testUpdateSession()
     {
 
-          $input         = array(
+        $input = array(
             
-            'userId' => '3',
-            'id' => '1',
-        );
-        $sessionMapper    = new SessionMapper();
-        $sessionMapper->update($input);
+                    
+                    'id' => '1',
+                    'userId' => '1',
+                    'expiredOn' => '2015-01-01 01:00:01',
+                    'isExpired' => '1'
+                );
+        $sessionMapper = new SessionMapper();
+        $sessionModel = new SessionModel($input);
+        $sessionMapper->delete($sessionModel);
         $query         = "select id, userId,createdOn, expiredOn,isExpired from Sessions";
         $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_update.xml')->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
     
+
+
     public function testCanReadById()
-    {
+    {   
+        $input = array('id' => 2);
+
+        $expectedResultset = array(
+                    0 => array(
+                     'id' => '2',
+                    'userId' => '2',
+                    'createdOn' => '2015-01-01 11:00:01',
+                    'expiredOn' => '2015-01-10 01:01:01',
+                    'isExpired' => '1'
+                    )
+            );
+    
+
         $sessionMapper = new SessionMapper();
-        $resultset     = $sessionMapper->read('1');
-        $this->assertEquals("1", $resultset->userId);
+        $sessionModel  = new SessionModel($input);
+        $resultset     =  $sessionMapper->read($sessionModel);
+        $this->assertEquals($expectedResultset, $resultset);
     }
+
+
+      
+/**
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage invalid user
+     */
+
+     public function testFailesReadInvalidId()
+    {  
+       $input=['id'=>6];
+       $sessionMapper = new SessionMapper();
+        $sessionModel = new SessionModel($input);
+       
+        $resultset = $sessionMapper->read($sessionModel);
+        
+    }
+
+
 }
