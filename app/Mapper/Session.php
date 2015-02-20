@@ -12,7 +12,7 @@ class Session
     public function create(SessionModel $sessionModel)
     {
         $input     = array(
-            'userId' => $sessionModel->userId,
+            'userId'    => $sessionModel->userId,
             'createdOn' => $sessionModel->createdOn,
             'expiredOn' => $sessionModel->expiredOn
         );
@@ -22,13 +22,19 @@ class Session
             'placeholder' => $input
         );
         $database  = new Database();
-        $resultset = $database->post($params);
-        
-        return $sessionModel;
+        $result      = $database->post($params);
+        if ($result['rowCount'] == 1) {
+            $sessionModel->id = $result['lastInsertId'];
+            return $result;
+        } else {
+            throw new \InvalidArgumentException('parameter missing');
+        }
     }
-    
-    public function read(SessionModel $sessionModel)
+
+         public function read(SessionModel $sessionModel)
+
     {
+        
         $input = array(
             'id' => $sessionModel->id
         );
@@ -79,6 +85,7 @@ class Session
     
     public function update(SessionModel $sessionModel)
     {
+
         $input = array(
             'id' => $sessionModel->id,
             'isExpired' => $sessionModel->isExpired,

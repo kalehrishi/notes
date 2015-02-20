@@ -68,7 +68,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
-    public function testUpdateSession()
+
+    public function testUpdateSessionById()
     {
 
         $input = array(
@@ -87,8 +88,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_update.xml')->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
-    
-    public function testCanReadById()
+   public function testCanReadById()
     {   
         $input = array('id' => 2);
 
@@ -106,23 +106,53 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $resultset     =  $sessionMapper->read($sessionModel);
         $this->assertEquals($expectedResultset, $resultset);
     }
+    
 
-
-      
-    /**
+     /**
      * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage invalid user
+     * @expectedExceptionMessage Parameter Missing
      */
-
-     public function testFailesReadInvalidId()
+     public function testFailedForUpdate()
     {  
-       $input=['id'=>6];
+      $input = array(
+                    'userId' => '1',
+                    'expiredOn' => '2015-01-01 01:00:01',
+                    'isExpired' => '1'
+                );
        $sessionMapper = new SessionMapper();
         $sessionModel = new SessionModel($input);
        
-        $resultset = $sessionMapper->read($sessionModel);
+        $resultset = $sessionMapper->update($sessionModel);
         
     }
+    /*
 
+     public function testInsertionFailed()
+    {
+        $input        = array(
+            'userId' => '4',
+            'createdOn' => '2015-01-01 01:00:01',
+            'expiredOn' => '2015-01-01 01:00:01'
+        );
+        $sessionModel = new SessionModel($input);
+        
+        $sessionMapper = new Session();
+        $sessionmodel         = $sessionMapper->create($sessionModel);
+        
+    }
+*/
+     /**
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage invalid user
+     */
+     public function testFailesReadInvalidId()
+    {  
+        $input=['id'=>6];
+        $sessionMapper = new SessionMapper();
+        $sessionModel = new SessionModel($input);
+       
+        $resultset = $sessionMapper->read($sessionModel);
+      }  
+    
 
 }
