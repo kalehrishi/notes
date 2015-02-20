@@ -6,40 +6,43 @@ use Notes\Model\User as UserModel;
 
 class UserTag
 {
-    public $id;
-    public $userId;
-    public $tag;
-    public $isDeleted;
+    private $id;
+    private $userId;
+    private $tag;
+    private $isDeleted;
     
-    public function __construct()
+    
+    public function getId()
     {
-        $args = func_get_args();
-        foreach ($args as $index => $key) {
-            foreach ($key as $key => $value) {
-                switch ($key) {
-                    case 'id':
-                        $this->id = $value;
-                        break;
-                    case 'userId':
-                        $this->userId = $value;
-                        break;
-                    case 'tag':
-                        $this->tag = $value;
-                        break;
-                    case 'isDeleted':
-                        $this->isDeleted = $value;
-                        break;
-                }
-            }
-        }
+        return $this->id;
     }
-    public function get()
+    public function getUserId()
     {
-        
+        return $this->userId;
     }
-    public function set($input)
+    public function getTag()
     {
-        $this->id = $input['id'];
-        
+        return $this->tag;
+    }
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+    
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+    }
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
     }
 }

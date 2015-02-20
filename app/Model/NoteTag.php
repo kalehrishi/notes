@@ -8,36 +8,33 @@ use Notes\Model\UserTag as UserTagModel;
 
 class NoteTag
 {
-    public $id;
-    public $noteId;
-    public $userTagId;
+    private $id;
+    private $noteId;
+    private $userTagId;
     
-    public function __construct()
+    
+    public function getId()
     {
-        $args = func_get_args();
-        foreach ($args as $index => $key) {
-            foreach ($key as $key => $value) {
-                switch ($key) {
-                    case 'id':
-                        $this->id = $value;
-                        break;
-                    case 'noteId':
-                        $this->noteId = $value;
-                        break;
-                    case 'userTagId':
-                        $this->userTagId = $value;
-                        break;
-                }
-            }
-        }
+        return $this->id;
     }
-    public function get()
+    public function getNoteId()
     {
-        
+        return $this->noteId;
     }
-    public function set($input)
+    public function getUserTagId()
     {
-        $this->id = $input['id'];
-        
+        return $this->userTagId;
+    }
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    public function setNoteId($noteId)
+    {
+        $this->noteId = $noteId;
+    }
+    public function setUserTagId($userTagId)
+    {
+        $this->userTagId = $userTagId;
     }
 }

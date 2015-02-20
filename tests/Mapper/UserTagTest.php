@@ -6,7 +6,6 @@ use Notes\Model\UserTag as UserTagModel;
 
 use Notes\Config\Config as Configuration;
 
-
 class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
@@ -23,8 +22,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
             $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
         
@@ -41,19 +39,20 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'id' => 1
         );
-        $userTagModel = new UserTagModel($input);
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
         
         
         $userTagMapper = new UserTag();
-        $result         = $userTagMapper->read($userTagModel);
+        $userTagModel  = $userTagMapper->read($userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTags_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'UserTags'
         ));
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals('Import package', $result->tag);
-        $this->assertEquals('1', $result->userId);
+        $this->assertEquals('Import package', $userTagModel->getTag());
+        $this->assertEquals('1', $userTagModel->getuserId());
     }
     /**
      * @expectedException              Exception
@@ -64,11 +63,12 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'id' => 2
         );
-        $userTagModel = new UserTagModel($input);
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
         
         
         $userTagMapper = new UserTag();
-        $result        = $userTagMapper->read($userTagModel);
+        $userTagModel  = $userTagMapper->read($userTagModel);
         
     }
     
@@ -78,16 +78,22 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'userId' => 1,
             'tag' => 'Tag for record 2'
         );
-        $userTagModel = new UserTagModel($input);
+        $userTagModel = new UserTagModel();
+        $userTagModel->setUserId($input['userId']);
+        $userTagModel->setTag($input['tag']);
+        
         
         $userTagMapper = new UserTag();
-        $result         = $userTagMapper->create($userTagModel);
+        $userTagModel  = $userTagMapper->create($userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTags_after_insert.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'UserTags'
         ));
-        $this->assertEquals(2, $result->id);
+        $this->assertEquals(2, $userTagModel->getId());
+        $this->assertEquals(1, $userTagModel->getuserId());
+        $this->assertEquals('Tag for record 2', $userTagModel->getTag());
+        $this->assertEquals(0, $userTagModel->getIsDeleted());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
@@ -100,10 +106,11 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'tag' => 'Tag for record 2'
         );
-        $userTagModel = new UserTagModel($input);
+        $userTagModel = new UserTagModel();
+        $userTagModel->setTag($input['tag']);
         
         $userTagMapper = new UserTag();
-        $model         = $userTagMapper->create($userTagModel);
+        $userTagModel  = $userTagMapper->create($userTagModel);
         
     }
     
@@ -112,17 +119,21 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'id' => 1
         );
-        $userTagModel = new UserTagModel($input);
-        
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
         
         $userTagMapper = new UserTag();
-        $result        = $userTagMapper->delete($userTagModel);
+        $userTagModel  = $userTagMapper->delete($userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTags_after_delete.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'UserTags'
         ));
-        $this->assertEquals('Successfuly deleted', $result);
+        $this->assertEquals(1, $userTagModel->getId());
+        $this->assertEquals(1, $userTagModel->getUserId());
+        $this->assertEquals('Import package', $userTagModel->getTag());
+        $this->assertEquals(1, $userTagModel->getIsDeleted());
+        
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
@@ -134,11 +145,11 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'id' => 2
         );
-        $userTagModel = new UserTagModel($input);
-        
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
         
         $userTagMapper = new UserTag();
-        $result        = $userTagMapper->delete($userTagModel);
+        $userTagModel  = $userTagMapper->delete($userTagModel);
     }
     
     public function testCanUpdateRecord()
@@ -148,16 +159,22 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'tag' => "Tag Updated"
         );
         
-        $userTagModel = new UserTagModel($input);
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
+        $userTagModel->setTag($input['tag']);
         
         $userTagMapper = new UserTag();
-        $result        = $userTagMapper->update($userTagModel);
+        $userTagModel  = $userTagMapper->update($userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTags_after_update.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'UserTags'
         ));
-        $this->assertEquals('Successfuly Updated', $result);
+        $this->assertEquals(1, $userTagModel->getId());
+        $this->assertEquals(1, $userTagModel->getUserId());
+        $this->assertEquals('Tag Updated', $userTagModel->getTag());
+        $this->assertEquals(0, $userTagModel->getIsDeleted());
+        
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
@@ -172,12 +189,14 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'tag' => "Tag Updated"
         );
         
-        $userTagModel = new UserTagModel($input);
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
+        $userTagModel->setTag($input['tag']);
+        
         
         $userTagMapper = new UserTag();
-        $result        = $userTagMapper->update($userTagModel);
+        $userTagModel  = $userTagMapper->update($userTagModel);
         
         
     }
-    
 }

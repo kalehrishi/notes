@@ -6,85 +6,85 @@ use Notes\Database\Database as Database;
 
 class UserTag
 {
-    public function create($data)
+    public function create($userTagModel)
     {
-        $query       = "INSERT INTO UserTags(userId,tag) VALUES (:userId,:tag)";
-        $placeholder = array(
-            ':userId' => $data->userId,
-            ':tag' => $data->tag
+        $query            = "INSERT INTO UserTags(userId,tag) VALUES (:userId,:tag)";
+        $placeholder      = array(
+            ':userId' => $userTagModel->getUserId(),
+            ':tag' => $userTagModel->getTag()
         );
-        $params      = array(
+        $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $database    = new Database();
-        $result      = $database->post($params);
+        $userTagModelbase = new Database();
+        $result           = $userTagModelbase->post($params);
         if ($result['rowCount'] == 1) {
-            $data->id = $result['lastInsertId'];
-            return $data;
+            $userTagModel->setId($result['lastInsertId']);
+            return $userTagModel;
         } else {
             throw new \Exception("Column 'userId' cannot be null");
         }
     }
     
-    public function read($data)
+    public function read($userTagModel)
     {
-        $query       = " SELECT id,userId,tag,isDeleted FROM UserTags WHERE id=:id";
-        $placeholder = array(
-            ':id' => $data->id
+        $query            = " SELECT id,userId,tag,isDeleted FROM UserTags WHERE id=:id";
+        $placeholder      = array(
+            ':id' => $userTagModel->getId()
         );
-        $params      = array(
+        $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $database    = new Database();
-        $resultset   = $database->get($params);
+        $userTagModelbase = new Database();
+        $resultset        = $userTagModelbase->get($params);
         if (!empty($resultset)) {
-            $data->id        = $resultset[0]['id'];
-            $data->userId    = $resultset[0]['userId'];
-            $data->tag       = $resultset[0]['tag'];
-            $data->isDeleted = $resultset[0]['isDeleted'];
-            return $data;
+            $userTagModel->setId($resultset[0]['id']);
+            $userTagModel->setUserId($resultset[0]['userId']);
+            $userTagModel->setTag($resultset[0]['tag']);
+            $userTagModel->setIsDeleted($resultset[0]['isDeleted']);
+            return $userTagModel;
         } else {
             throw new \Exception("UserTagId Does Not Present");
         }
     }
     
-    public function update($data)
+    public function update($userTagModel)
     {
-        $query       = " UPDATE UserTags SET tag=:tag  WHERE id=:id";
-        $placeholder = array(
-            ':id' => $data->id,
-            ':tag' => $data->tag
+        $query            = " UPDATE UserTags SET tag=:tag  WHERE id=:id";
+        $placeholder      = array(
+            ':id' => $userTagModel->getId(),
+            ':tag' => $userTagModel->getTag()
         );
-        $params      = array(
+        $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $database    = new Database();
-        $result      = $database->post($params);
+        $userTagModelbase = new Database();
+        $result           = $userTagModelbase->post($params);
         if ($result['rowCount'] == 1) {
-            return "Successfuly Updated";
+            return $this->read($userTagModel);
         } else {
             throw new \Exception("Updation Failed");
         }
         
     }
     
-    public function delete($data)
+    public function delete($userTagModel)
     {
-        $query       = " UPDATE UserTags SET isDeleted=1  WHERE id=:id";
-        $placeholder = array(
-            ':id' => $data->id
+        $query            = " UPDATE UserTags SET isDeleted=1  WHERE id=:id";
+        $placeholder      = array(
+            ':id' => $userTagModel->getId()
         );
-        $params      = array(
+        $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $database    = new Database();
-        $result      = $database->post($params);
+        $userTagModelbase = new Database();
+        $result           = $userTagModelbase->post($params);
         if ($result['rowCount'] == 1) {
-            return "Successfuly deleted";
+            return $this->read($userTagModel);
         } else {
             throw new \Exception("UserTagId Does Not Present");
         }

@@ -7,44 +7,44 @@ use Notes\Database\Database as Database;
 class NoteTag
 {
     
-    public function create($data)
+    public function create($noteTagModel)
     {
-        $query       = "INSERT INTO NoteTags(noteId,userTagId) VALUES (:noteId,:userTagId)";
-        $placeholder = array(
-            ':noteId' => $data->noteId,
-            ':userTagId' => $data->userTagId
+        $query            = "INSERT INTO NoteTags(noteId,userTagId) VALUES (:noteId,:userTagId)";
+        $placeholder      = array(
+            ':noteId' => $noteTagModel->getNoteId(),
+            ':userTagId' => $noteTagModel->getUserTagId()
         );
-        $params      = array(
+        $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $database    = new Database();
-        $result      = $database->post($params);
+        $noteTagModelbase = new Database();
+        $result           = $noteTagModelbase->post($params);
         if ($result['rowCount'] == 1) {
-            $data->id = $result['lastInsertId'];
-            return $data;
+            $noteTagModel->setId($result['lastInsertId']);
+            return $noteTagModel;
         } else {
             throw new \Exception("Column 'noteId' cannot be null");
         }
     }
     
-    public function read($data)
+    public function read($noteTagModel)
     {
-        $query       = " SELECT id,noteId,userTagId FROM NoteTags WHERE id=:id";
-        $placeholder = array(
-            ':id' => $data->id
+        $query            = " SELECT id,noteId,userTagId FROM NoteTags WHERE id=:id";
+        $placeholder      = array(
+            ':id' => $noteTagModel->getId()
         );
-        $params      = array(
+        $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $database    = new Database();
-        $resultset   = $database->get($params);
+        $noteTagModelbase = new Database();
+        $resultset        = $noteTagModelbase->get($params);
         if (!empty($resultset)) {
-            $data->id        = $resultset[0]['id'];
-            $data->noteId    = $resultset[0]['noteId'];
-            $data->userTagId = $resultset[0]['userTagId'];
-            return $data;
+            $noteTagModel->setId($resultset[0]['id']);
+            $noteTagModel->setNoteId($resultset[0]['noteId']);
+            $noteTagModel->setUserTagId($resultset[0]['userTagId']);
+            return $noteTagModel;
         } else {
             throw new \Exception("NoteTagId Does Not Present");
         }
