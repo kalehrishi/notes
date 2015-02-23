@@ -3,7 +3,6 @@ namespace Notes\Model;
 
 class Note
 {
-    
     public $id;
     public $userId;
     public $title;
@@ -11,7 +10,6 @@ class Note
     public $createdOn;
     public $lastUpdatedOn;
     public $isDeleted;
-    
     
     public function __construct($params)
     {

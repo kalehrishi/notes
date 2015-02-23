@@ -1,15 +1,15 @@
 <?php
 namespace Notes\Exception;
 
-use \RuntimeException;
-
-class ModelNotFoundException extends RuntimeException
+class ModelNotFoundException extends \RuntimeException
 {
     /**
+     * Name of the affected Eloquent model.
+     *
      * @var string
      */
-    public $model;
-    public $message;
+    protected $model;
+    protected $message;
     /**
      * Set the affected Eloquent model.
      *
@@ -18,15 +18,18 @@ class ModelNotFoundException extends RuntimeException
      */
     public function setModel($model)
     {
+        //print_r($model);
         $this->model   = $model;
-        $this->message = "No query results for Note model.";
-        return $this->message;
+        $this->message = "Can Not Found Given Model In Database";
+        return $this;
     }
     /**
+     * Get the affected Eloquent model.
+     *
      * @return string
      */
     public function getModel()
     {
-        return $this->message;
+        return $this->model;
     }
 }

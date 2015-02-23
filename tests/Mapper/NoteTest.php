@@ -4,6 +4,7 @@ namespace Notes;
 use Notes\Mapper\Note as NoteMapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Config\Config as Configuration;
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class NoteTest extends \PHPUnit_Extensions_Database_TestCase
 {
@@ -19,6 +20,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
         try {
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
+            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
         } catch (\PDOException $e) {
@@ -34,22 +36,26 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function testCanUpdateEntryByTitleAndBody()
     {
-        $input      = array(
+        $input           = array(
             'id' => 1,
             'title' => 'Web',
             'body' => 'PHP is a powerful tool for making dynamic Web pages.'
         );
-        $noteMapper = new NoteMapper();
-        $noteModel  = new NoteModel($input);
+        $noteMapper      = new NoteMapper();
+        $noteModel       = new NoteModel($input);
         $actualResultset = $noteMapper->update($noteModel);
         $this->assertEquals("Updated Successfully", $actualResultset);
-        $query             = "select id, title, body from Notes";
+        $query           = "select id, title, body from Notes";
         $actualDataSet   = $this->getConnection()->createQueryTable('Notes', $query);
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
         ->getTable("Notes");
         $this->assertTablesEqual($expectedDataSet, $actualDataSet);
     }
     
+    /**
+     * @expectedException        Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
+     */
     public function testCanFailedToUpdateByNotPassingNoteId()
     {
         $input      = array(
@@ -58,9 +64,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $noteMapper = new NoteMapper();
         $noteModel  = new NoteModel($input);
-        $actualResultset = $noteMapper->update($noteModel);
-        $this->assertEquals("No query results for Note model.", $actualResultset);
-        
+        $noteMapper->update($noteModel);
     }
     
     public function testAddEntry()
@@ -72,12 +76,20 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $noteMapper = new NoteMapper();
         
-        $noteModel = new NoteModel($input);
-        $actualResultset = $noteMapper->create($noteModel);
+        $noteModel         = new NoteModel($input);
+        $actualResultset   = $noteMapper->create($noteModel);
         $expectedResultset = 3;
         $this->assertEquals($expectedResultset, $actualResultset->id);
+        $query           = "select id, userId, title, body, isDeleted from Notes";
+        $actualDataSet   = $this->getConnection()->createQueryTable('Notes', $query);
+        $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_insert.xml')
+        ->getTable("Notes");
+        $this->assertTablesEqual($expectedDataSet, $actualDataSet);
     }
     
+    /**
+     * @expectedException          PDOException
+     */
     public function testCanFailedForAddEntry()
     {
         $input      = array(
@@ -87,28 +99,32 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper = new NoteMapper();
         
         $noteModel = new NoteModel($input);
-        $actualResultset = $noteMapper->create($noteModel);
-        $this->assertEquals("No query results for Note model.", $actualResultset);
+        $noteMapper->create($noteModel);
     }
+    
     
     public function testDeleteEntry()
     {
-        $input      = array(
+        $input           = array(
             'id' => 2,
             'isDeleted' => 1
         );
-        $noteMapper = new NoteMapper();
-        $noteModel  = new NoteModel($input);
+        $noteMapper      = new NoteMapper();
+        $noteModel       = new NoteModel($input);
         $actualResultset = $noteMapper->delete($noteModel);
         $this->assertEquals(1, $actualResultset->isDeleted);
         
-        $query             = "select id,userId, title, body, isDeleted from Notes";
+        $query           = "select id,userId, title, body, isDeleted from Notes";
         $actualDataSet   = $this->getConnection()->createQueryTable('Notes', $query);
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_delete.xml')
         ->getTable("Notes");
         $this->assertTablesEqual($expectedDataSet, $actualDataSet);
     }
     
+    /**
+     * @expectedException           Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage    Can Not Found Given Model In Database
+     */
     public function testCanFailedForDeleteByNotPassingNoteId()
     {
         $input      = array(
@@ -116,11 +132,9 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         );
         $noteMapper = new NoteMapper();
         
-        $noteModel = new NoteModel($input);
-        $actualResultset = $noteMapper->delete($noteModel);
-        $this->assertEquals("No query results for Note model.", $actualResultset);
+        $noteModel       = new NoteModel($input);
+        $noteMapper->delete($noteModel);
     }
-    
     public function testCanReadByTitle()
     {
         $input             = array(
@@ -137,14 +151,17 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('PHP5', $actualResultset->title);
     }
     
+    /**
+     * @expectedException Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
+     */
     public function testCanFailedByNotExistId()
     {
-        $input      = array(
+        $input           = array(
             'id' => 4
         );
-        $noteMapper = new NoteMapper();
-        $noteModel  = new NoteModel($input);
-        $actualResultset = $noteMapper->read($noteModel);
-        $this->assertEquals("No query results for Note model.", $actualResultset);
+        $noteMapper      = new NoteMapper();
+        $noteModel       = new NoteModel($input);
+        $noteMapper->read($noteModel);
     }
 }
