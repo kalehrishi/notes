@@ -23,12 +23,10 @@ class Session
         $database    = new Database();
         $result      = $database->post($params);
         $sessionModel->setId($result['lastInsertId']);
-            return $sessionModel;
+        return $sessionModel;
         
     }
     
-
-
     public function read($sessionModel)
     {
         
@@ -59,18 +57,18 @@ class Session
     public function delete($sessionModel)
     {
         
-        $query        = "UPDATE Sessions SET isExpired=:isExpired WHERE id=:id";
+        $query       = "UPDATE Sessions SET isExpired=:isExpired WHERE id=:id";
         $placeholder = array(
             ':id' => $sessionModel->getId(),
             ':isExpired' => $sessionModel->getIsExpired()
         );
-    
-        $params      = array(
+        
+        $params    = array(
             'dataQuery' => $query,
-           'placeholder' => $placeholder
+            'placeholder' => $placeholder
         );
-        $database    = new Database();
-        $resultset   = $database->post($params);
+        $database  = new Database();
+        $resultset = $database->post($params);
         if ($resultset['rowCount'] == 1) {
             return $this->read($sessionModel);
         } else {
@@ -78,19 +76,18 @@ class Session
         }
         
     }
-
-  public function update($sessionModel)
+    
+    public function update($sessionModel)
     {
-        
         $query       = "update Sessions set userId=:userId,isExpired=:isExpired,
                       expiredOn=:expiredOn where id=:id";
         $placeholder = array(
             ':id' => $sessionModel->getId(),
             ':userId' => $sessionModel->getUserId(),
             ':expiredOn' => $sessionModel->getExpiredOn(),
-            ':isExpired' => $sessionModel->getIsExpired(),
+            ':isExpired' => $sessionModel->getIsExpired()
         );
-        $params           = array(
+        $params      = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );

@@ -59,5 +59,4 @@ class Session
     {
         return $this->isExpired;
     }
-    
 }
