@@ -73,7 +73,7 @@ class Session
         );
         $database    = new Database();
         $resultset   = $database->post($params);
-      
+        
         if ($resultset['rowCount'] == 1) {
             return $this->read($sessionModel);
         } else {
@@ -81,5 +81,5 @@ class Session
             $obj->setModel($sessionModel);
             throw $obj;
         }
-}
+    }
 }

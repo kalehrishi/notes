@@ -29,16 +29,16 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             echo "Connection failed: " . $e->getMessage();
         }
         
-        }
+    }
     
-     public function getDataSet()
+    public function getDataSet()
     {
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
     }
     
     public function testCreateNewSession()
     {
-            $input  = array(
+        $input        = array(
             'userId' => 1,
             'createdOn' => '2015-01-01 10:00:01',
             'expiredOn' => '2015-01-01 10:00:01'
@@ -48,8 +48,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
         $sessionMapper = new SessionMapper();
-        $sessionModel = $sessionMapper->create($sessionModel);
-         $query         = "select id, userId,createdOn, expiredOn,isExpired from Sessions";
+        $sessionModel  = $sessionMapper->create($sessionModel);
+        $query         = "select id, userId,createdOn, expiredOn,isExpired from Sessions";
         $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_insert.xml')->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -58,17 +58,19 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2015-01-01 10:00:01', $sessionModel->getCreatedOn());
         $this->assertEquals('2015-01-01 10:00:01', $sessionModel->getExpiredOn());
     }
-   
-
+    
+    
     public function testCanReadById()
-    {   
-        $input = array('id' => 2);
-
-        $sessionModel  = new SessionModel();
+    {
+        $input = array(
+            'id' => 2
+        );
+        
+        $sessionModel = new SessionModel();
         $sessionModel->setId($input['id']);
         $sessionMapper = new SessionMapper();
         
-         $sessionModel   =  $sessionMapper->read($sessionModel);
+        $sessionModel    = $sessionMapper->read($sessionModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Sessions'
@@ -79,15 +81,15 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2015-01-01 11:00:01', $sessionModel->getCreatedOn());
         $this->assertEquals('2015-01-10 01:01:01', $sessionModel->getExpiredOn());
     }
-
-   /**
+    
+    /**
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
     public function testSessionIdDoesNotExist()
     {
         $input        = array(
-                  'id' => 5
+            'id' => 5
         );
         $sessionModel = new SessionModel();
         $sessionModel->setId($input['id']);
@@ -98,17 +100,17 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
-   public function testUpdateSession()
+    public function testUpdateSession()
     {
-
-        $input = array(
+        
+        $input        = array(
             
-                    
-                    'id' => '1',
-                    'userId' => '1',
-                    'expiredOn' => '2015-01-01 01:00:01',
-                    'isExpired' => '1'
-                );
+            
+            'id' => '1',
+            'userId' => '1',
+            'expiredOn' => '2015-01-01 01:00:01',
+            'isExpired' => '1'
+        );
         $sessionModel = new SessionModel();
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
@@ -124,30 +126,30 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('1', $sessionModel->getUserId());
         $this->assertEquals('2015-01-01 01:00:01', $sessionModel->getExpiredOn());
         $this->assertEquals('1', $sessionModel->getIsExpired());
-
+        
     }
-
+    
     /**
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
     public function testFailedForUpdate()
-    {  
-      $input = array(
-                    'id' => '5',
-                    'userId' => '2',
-                    'expiredOn' => '2015-01-01 01:00:01',
-                    'isExpired' => '1'
-                );
-
+    {
+        $input = array(
+            'id' => '5',
+            'userId' => '2',
+            'expiredOn' => '2015-01-01 01:00:01',
+            'isExpired' => '1'
+        );
+        
         $sessionModel = new SessionModel();
-         $sessionModel->setId($input['id']);
+        $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setExpiredOn($input['expiredOn']);
         $sessionModel->setisExpired($input['isExpired']);
-
+        
         $sessionMapper = new SessionMapper();
-        $sessionModel = $sessionMapper->update($sessionModel);
-               
+        $sessionModel  = $sessionMapper->update($sessionModel);
+        
     }
-     }
+}
