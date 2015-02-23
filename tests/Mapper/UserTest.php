@@ -44,7 +44,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'Users'
         ));
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals('1', $userModel->getId());
+        $this->assertEquals(1, $userModel->getId());
         $this->assertEquals('anusha', $userModel->getFirstName());
         $this->assertEquals('hiremath', $userModel->getLastName());
         $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
@@ -87,6 +87,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
         ));
+        $this->assertEquals(3, $userModel->getId());
         $this->assertEquals('kirti', $userModel->getFirstName());
         $this->assertEquals('ramani', $userModel->getLastName());
         $this->assertEquals('kirti.6@gmail.com', $userModel->getEmail());
@@ -107,7 +108,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         );
         
         
-        $userModel  = new UserModel();
+        $userModel  = new UserModel($input);
         $userMapper = new UserMapper();
         
         $userModel->setFirstName($input['firstName']);
@@ -115,7 +116,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setEmail($input['email']);
         $userModel->setPassword($input['password']);
         $userModel->setCreatedOn($input['createdOn']);
-        
+        $userModel = $userMapper->create($userModel);
         
     }
     
@@ -142,6 +143,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
         ));
+        $this->assertEquals(3, $userModel->getId());
         $this->assertEquals('anusha', $userModel->getFirstName());
         $this->assertEquals('hiremath', $userModel->getLastName());
         $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
@@ -162,7 +164,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         );
         
         
-        $userModel  = new UserModel();
+        $userModel  = new UserModel($input);
         $userMapper = new UserMapper();
         
         $userModel->setFirstName($input['firstName']);
@@ -172,5 +174,6 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setCreatedOn($input['createdOn']);
         
         
+             
     }
 }

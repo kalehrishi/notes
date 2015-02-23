@@ -3,12 +3,12 @@ namespace Notes\Model;
 
 class User
 {
-    public $id;
-    public $firstName;
-    public $lastName;
-    public $email;
-    public $password;
-    public $createdOn;
+    protected $id;
+    protected $firstName;
+    protected $lastName;
+    protected $email;
+    protected $password;
+    protected $createdOn;
     
     public function setId($id)
     {
