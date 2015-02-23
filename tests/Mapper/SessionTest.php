@@ -4,8 +4,8 @@ namespace Notes\Mapper;
 
 use Notes\Mapper\Session as SessionMapper;
 use Notes\Model\Session as SessionModel;
-
 use Notes\Config\Config as Configuration;
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 
 class SessionTest extends \PHPUnit_Extensions_Database_TestCase
@@ -81,8 +81,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
    /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       invalid user
+     * @expectedException        Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
      */
     public function testSessionIdDoesNotExist()
     {
@@ -129,10 +129,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
    
      /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Updation Failed
-    */
-    
+     * @expectedException        Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
+     */
     public function testFailedForUpdate()
     {  
       $input = array(
@@ -152,5 +151,4 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel = $sessionMapper->update($sessionModel);
                
     }
-     
-}
+     }
