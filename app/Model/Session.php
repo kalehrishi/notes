@@ -4,37 +4,60 @@ namespace Notes\Model;
 
 class Session
 {
-    public $id;
-    public $userId;
-    public $createdOn;
-    public $expiredOn;
-    public $isExpired;
-/*
-public function __construct($value)
-{
-if (isset($id)) {
-   $this->id=$value['id'];
- }
-if (isset($userId)) {
-$this->userId=$value['userId'];
-}
-if (isset($createdOn)){
-$this->createdOn=$value['createdOn'];
-}
-if (isset($expiredOn)){
-$this->expiredOn=$value['expiredOn'];
-}
-if (isset($isExpired))
-{
-$this->isExpired=$value['isExpired'];
-}
-}*/
-public function __construct($params)
+    private $id;
+    private $userId;
+    private $createdOn;
+    private $expiredOn;
+    private $isExpired;
+    
+    public function setId($id)
     {
-        foreach ($params as $key => $val) {
-            if (isset($key)) {
-                $this->{$key} = $val;
-            }
-        }
+        $this->id = $id;
     }
+    
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+    
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+    
+    public function setCreatedOn($createdOn)
+    {
+        $this->createdOn = $createdOn;
+    }
+    
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+    
+    public function setExpiredOn($expiredOn)
+    {
+        $this->expiredOn = $expiredOn;
+    }
+    
+    public function getExpiredOn()
+    {
+        return $this->expiredOn;
+    }
+    
+    public function setIsExpired($isExpired)
+    {
+        $this->isExpired = $isExpired;
+    }
+    
+    public function getIsExpired()
+    {
+        return $this->isExpired;
+    }
+    
 }

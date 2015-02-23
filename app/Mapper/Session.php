@@ -2,108 +2,105 @@
 
 namespace Notes\Mapper;
 
-use Notes\Model\Session as SessionModel;
-
 use Notes\Database\Database as Database;
 
 class Session
 {
     
-    public function create(SessionModel $sessionModel)
+    public function create($sessionModel)
     {
-        $input     = array(
-            'userId'    => $sessionModel->userId,
-            'createdOn' => $sessionModel->createdOn,
-            'expiredOn' => $sessionModel->expiredOn
+        
+        $query       = "INSERT INTO Sessions(userId,createdOn,expiredOn) VALUES (:userId, :createdOn, :expiredOn)";
+        $placeholder = array(
+            ':userId' => $sessionModel->getUserId(),
+            ':createdOn' => $sessionModel->getCreatedOn(),
+            ':expiredOn' => $sessionModel->getExpiredOn()
         );
-        $query     = "INSERT INTO Sessions(userId,createdOn,expiredOn) VALUES (:userId, :createdOn, :expiredOn)";
-        $params    = array(
+        $params      = array(
             'dataQuery' => $query,
-            'placeholder' => $input
+            'placeholder' => $placeholder
         );
-        $database  = new Database();
+        $database    = new Database();
         $result      = $database->post($params);
-        if ($result['rowCount'] == 1) {
-            $sessionModel->id = $result['lastInsertId'];
-            return $result;
-        } else {
-            throw new \InvalidArgumentException('parameter missing');
-        }
+        $sessionModel->setId($result['lastInsertId']);
+            return $sessionModel;
+        
     }
+    
 
-         public function read(SessionModel $sessionModel)
 
+    public function read($sessionModel)
     {
         
-        $input = array(
-            'id' => $sessionModel->id
+        $query       = "select id,userId,createdOn,expiredOn,isExpired from Sessions where id=:id";
+        $placeholder = array(
+            ':id' => $sessionModel->getId()
         );
-        
-        $database  = new Database();
-        $query     = "select id,userId,createdOn,expiredOn,isExpired from Sessions where id=:id";
-        $params    = array(
+        $params      = array(
             'dataQuery' => $query,
-            'placeholder' => $input
+            'placeholder' => $placeholder
         );
-        $resultset = $database->get($params);
+        $database    = new Database();
+        $resultset   = $database->get($params);
         if (!empty($resultset)) {
-            $sessionModel->id        = $resultset[0]['id'];
-            $sessionModel->userId    = $resultset[0]['userId'];
-            $sessionModel->createdOn = $resultset[0]['createdOn'];
-            $sessionModel->expiredOn = $resultset[0]['expiredOn'];
-            $sessionModel->isExpired = $resultset[0]['isExpired'];
-            
-            return $resultset;
-        } else {
-            throw new \InvalidArgumentException('invalid user');
-        }
-        
-    }
-
-    public function delete(SessionModel $sessionModel)
-    {
-        $input = array(
-            'id' => $sessionModel->id,
-            'isExpired' => $sessionModel->isExpired
-        );
-        if (!isset($input['id'])) {
-            throw new \InvalidArgumentException('id does not present');
-        } else {
-            $db = new Database();
-            
-            $sql       = "UPDATE Sessions SET isExpired=:isExpired WHERE id=:id";
-            $params    = array(
-                'dataQuery' => $sql,
-                'placeholder' => $input
-            );
-            $resultset = $db->update($params);
+            $sessionModel->setId($resultset[0]['id']);
+            $sessionModel->setUserId($resultset[0]['userId']);
+            $sessionModel->setCreatedOn($resultset[0]['createdOn']);
+            $sessionModel->setExpiredOn($resultset[0]['expiredOn']);
+            $sessionModel->setIsExpired($resultset[0]['isExpired']);
             
             return $sessionModel;
+        } else {
+            throw new \Exception('invalid user');
         }
         
     }
     
-    public function update(SessionModel $sessionModel)
+    public function delete($sessionModel)
     {
-
-        $input = array(
-            'id' => $sessionModel->id,
-            'isExpired' => $sessionModel->isExpired,
-            'userId' => $sessionModel->userId
-        );
         
-        if (!isset($input['id'])) {
-            throw new \InvalidArgumentException('Parameter Missing');
+        $query        = "UPDATE Sessions SET isExpired=:isExpired WHERE id=:id";
+        $placeholder = array(
+            ':id' => $sessionModel->getId(),
+            ':isExpired' => $sessionModel->getIsExpired()
+        );
+    
+        $params      = array(
+            'dataQuery' => $query,
+           'placeholder' => $placeholder
+        );
+        $database    = new Database();
+        $resultset   = $database->post($params);
+        if ($resultset['rowCount'] == 1) {
+            return $this->read($sessionModel);
         } else {
-            $database  = new Database();
-            $query     = "update Sessions set userId=:userId,isExpired=:isExpired,
-                          expiredOn=:expiredOn where id=:id";
-            $params    = array(
-                'dataQuery' => $sql,
-                'placeholder' => $input
-            );
-            $resultset = $database->update($params);
-            return $sessionModel;
+            throw new \Exception('User not found');
         }
+        
+    }
+
+  public function update($sessionModel)
+    {
+        
+        $query       = "update Sessions set userId=:userId,isExpired=:isExpired,
+                      expiredOn=:expiredOn where id=:id";
+        $placeholder = array(
+            ':id' => $sessionModel->getId(),
+            ':userId' => $sessionModel->getUserId(),
+            ':expiredOn' => $sessionModel->getExpiredOn(),
+            ':isExpired' => $sessionModel->getIsExpired(),
+        );
+        $params           = array(
+            'dataQuery' => $query,
+            'placeholder' => $placeholder
+        );
+        $database    = new Database();
+        $resultset   = $database->post($params);
+        if ($resultset['rowCount'] == 1) {
+            return $this->read($sessionModel);
+        } else {
+            throw new \InvalidArgumentException("Updation Failed");
+        }
+        
     }
 }
