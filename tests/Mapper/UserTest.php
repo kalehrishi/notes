@@ -53,6 +53,10 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
+     /**
+     * @expectedException Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
+     */
     public function testUserIdDoesNotExist()
     {
         
@@ -87,7 +91,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
         ));
-        $this->assertEquals(3, $userModel->getId());        
+        $this->assertEquals(3, $userModel->getId());
         $this->assertEquals('kirti', $userModel->getFirstName());
         $this->assertEquals('ramani', $userModel->getLastName());
         $this->assertEquals('kirti.6@gmail.com', $userModel->getEmail());
@@ -96,29 +100,8 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
-    public function testInsertionFailed()
-    {
-        
-        $input = array(
-            'firstName' => 'priyanka',
-            'lastName' => 'kumar',
-            'email' => 'kumar.6@gmail.com',
-            'password' => 'sfhsk1229',
-            'createdOn' => '2014-10-30 20:59:59'
-        );
-        
-        
-        $userModel  = new UserModel($input);
-        $userMapper = new UserMapper();
-        
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userModel->setCreatedOn($input['createdOn']);
-        $userModel = $userMapper->create($userModel);
-        
-    }
+     
+
     
     
     public function testCanUpdateRecord()
@@ -144,7 +127,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_update.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
-        ));   
+        ));
         $this->assertEquals(1, $resultset->getId());
         $this->assertEquals('julie', $resultset->getFirstName());
         $this->assertEquals('shah', $resultset->getLastName());
@@ -154,6 +137,10 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
+     /**
+     * @expectedException        Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
+     */
     public function testUpdationFailed()
     {
         
@@ -168,13 +155,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
         $userModel  = new UserModel($input);
         $userMapper = new UserMapper();
-        
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userModel->setCreatedOn($input['createdOn']);
-        
+        $resultset       = $userMapper->update($userModel);
         
              
     }
