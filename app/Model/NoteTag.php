@@ -13,8 +13,6 @@ class NoteTag
     private $userTagId;
     private $isDeleted;
     
-    
-    
     public function getId()
     {
         return $this->id;

@@ -120,10 +120,10 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testCanDeleteRecord()
     {
         $input        = array(
-            'id' => 1,
+            'id'=>1,
             'noteId'=>4,
             'userTagId' =>3,
-            'isDeleted'=>0
+            'isDeleted'=>1
         );
         $noteTagModel = new NoteTagModel();
         $noteTagModel->setId($input['id']);
@@ -132,7 +132,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $noteTagModel->setIsDeleted($input['isDeleted']);
         
         $noteTagMapper = new NoteTag();
-        $noteTagModel  = $noteTagMapper->delete($noteTagModel);
+        $noteTagModel  = $noteTagMapper->update($noteTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTags_after_delete.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -155,7 +155,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 2,
             'noteId'=>4,
             'userTagId' =>3,
-            'isDeleted'=>0
+            'isDeleted'=>1
         );
         $noteTagModel = new NoteTagModel();
         $noteTagModel->setId($input['id']);
@@ -164,6 +164,6 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $noteTagModel->setIsDeleted($input['isDeleted']);
         
         $noteTagMapper = new NoteTag();
-        $noteTagModel  = $noteTagMapper->delete($noteTagModel);
+        $noteTagModel  = $noteTagMapper->update($noteTagModel);
     }
 }

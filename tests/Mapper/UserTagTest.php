@@ -121,7 +121,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 1,
             'userId'=>1,
             'tag'=>'Import package',
-            'isDeleted'=>0
+            'isDeleted'=>1
         );
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
@@ -131,7 +131,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     
         
         $userTagMapper = new UserTag();
-        $userTagModel  = $userTagMapper->delete($userTagModel);
+        $userTagModel  = $userTagMapper->update($userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTags_after_delete.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -146,7 +146,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
     /**
      * @expectedException              Exception
-     * @expectedExceptionMessage       UserTagId Does Not Present
+     * @expectedExceptionMessage       Failed
      */
     public function testDeletionFailed()
     {
@@ -154,7 +154,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 2,
             'userId'=>1,
             'tag'=>'Import package',
-            'isDeleted'=>0
+            'isDeleted'=>1
         );
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
@@ -164,7 +164,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $userTagMapper = new UserTag();
-        $userTagModel  = $userTagMapper->delete($userTagModel);
+        $userTagModel  = $userTagMapper->update($userTagModel);
     }
     
     public function testCanUpdateRecord()
@@ -198,7 +198,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
     /**
      * @expectedException              Exception
-     * @expectedExceptionMessage       Updation Failed
+     * @expectedExceptionMessage       Failed
      */
     
     public function testUpdationFailed()

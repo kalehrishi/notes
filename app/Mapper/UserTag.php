@@ -52,10 +52,12 @@ class UserTag
     
     public function update($userTagModel)
     {
-        $query            = " UPDATE UserTags SET tag=:tag  WHERE id=:id";
+        $query            = " UPDATE UserTags SET tag=:tag,userId=:userId,isDeleted=:isDeleted WHERE id=:id" ;
         $placeholder      = array(
             ':id' => $userTagModel->getId(),
-            ':tag' => $userTagModel->getTag()
+            ':tag' => $userTagModel->getTag(),
+            'userId'=> $userTagModel->getUserId(),
+            'isDeleted'=>$userTagModel->getIsDeleted(),
         );
         $params           = array(
             'dataQuery' => $query,
@@ -66,29 +68,7 @@ class UserTag
         if ($result['rowCount'] == 1) {
             return $userTagModel ;
         } else {
-            throw new \Exception("Updation Failed");
+            throw new \Exception("Failed");
         }
-        
-    }
-    
-    public function delete($userTagModel)
-    {
-        $query            = " UPDATE UserTags SET isDeleted=1  WHERE id=:id";
-        $placeholder      = array(
-            ':id' => $userTagModel->getId()
-        );
-        $params           = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $database = new Database();
-        $result           = $database->post($params);
-        if ($result['rowCount'] == 1) {
-            $userTagModel->setIsDeleted(1);
-            return $userTagModel;
-        } else {
-            throw new \Exception("UserTagId Does Not Present");
-        }
-        
     }
 }
