@@ -29,7 +29,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             echo "Connection failed: " . $e->getMessage();
         }
         
-    }
+        }
     
      public function getDataSet()
     {
@@ -53,6 +53,10 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_insert.xml')->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
+        $this->assertEquals('3', $sessionModel->getId());
+        $this->assertEquals('1', $sessionModel->getUserId());
+        $this->assertEquals('2015-01-01 10:00:01', $sessionModel->getCreatedOn());
+        $this->assertEquals('2015-01-01 10:00:01', $sessionModel->getExpiredOn());
     }
    
 
@@ -70,6 +74,10 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'Sessions'
         ));
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $this->assertEquals('2', $sessionModel->getId());
+        $this->assertEquals('2', $sessionModel->getUserId());
+        $this->assertEquals('2015-01-01 11:00:01', $sessionModel->getCreatedOn());
+        $this->assertEquals('2015-01-10 01:01:01', $sessionModel->getExpiredOn());
     }
 
    /**
@@ -90,46 +98,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
-
-   public function testDeleteSession()
-    {
-         $input      = array(
-            'id' => 1,
-            'isExpired' => 0
-        );
-        
-        $sessionModel = new SessionModel();
-        $sessionModel->setId($input['id']);
-        $sessionModel->setIsExpired($input['isExpired']);
-
-        $sessionMapper = new SessionMapper();
-        $sessionModel = $sessionMapper->delete($sessionModel);
-        $query         = "select id, userId,createdOn, expiredOn,isExpired from Sessions";
-        $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
-        $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml')->getTable("Sessions");
-        $this->assertTablesEqual($expectedTable, $queryTable);
-    }
- 
-
-   /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       User not found
-     */
-    public function testDeletionFailed()
-    {
-        $input        = array(
-            'id' => 5,
-            'isExpired' => 1
-        );
-        $sessionModel = new SessionModel();
-        $sessionModel->setId($input['id']);
-        $sessionModel->setIsExpired($input['isExpired']);
-        $sessionMapper = new SessionMapper();
-        $sessionModel  = $sessionMapper->delete($sessionModel);
-    }
-
-
-    public function testUpdateSession()
+   public function testUpdateSession()
     {
 
         $input = array(
@@ -151,6 +120,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_update.xml')->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
+        $this->assertEquals('1', $sessionModel->getId());
+        $this->assertEquals('1', $sessionModel->getUserId());
+        $this->assertEquals('2015-01-01 01:00:01', $sessionModel->getExpiredOn());
+        $this->assertEquals('1', $sessionModel->getIsExpired());
+
     }
 
    
@@ -179,5 +153,4 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
                
     }
      
-
 }

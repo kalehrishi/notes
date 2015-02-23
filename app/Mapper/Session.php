@@ -54,29 +54,6 @@ class Session
         
     }
     
-    public function delete($sessionModel)
-    {
-        
-        $query       = "UPDATE Sessions SET isExpired=:isExpired WHERE id=:id";
-        $placeholder = array(
-            ':id' => $sessionModel->getId(),
-            ':isExpired' => $sessionModel->getIsExpired()
-        );
-        
-        $params    = array(
-            'dataQuery' => $query,
-            'placeholder' => $placeholder
-        );
-        $database  = new Database();
-        $resultset = $database->post($params);
-        if ($resultset['rowCount'] == 1) {
-            return $this->read($sessionModel);
-        } else {
-            throw new \Exception('User not found');
-        }
-        
-    }
-    
     public function update($sessionModel)
     {
         $query       = "update Sessions set userId=:userId,isExpired=:isExpired,
