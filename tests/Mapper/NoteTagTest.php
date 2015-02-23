@@ -53,7 +53,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         $this->assertEquals(1, $noteTagModel->getId());
         $this->assertEquals(4, $noteTagModel->getNoteId());
-        $this->assertEquals(3, $noteTagModel->getuserTagId());
+        $this->assertEquals(3, $noteTagModel->getUserTagId());
         $this->assertEquals(0, $noteTagModel->getIsDeleted());
     }
     /**

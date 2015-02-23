@@ -57,7 +57,7 @@ class NoteTag
         $placeholder      = array(
             ':id' => $noteTagModel->getId(),
             ':noteId'=>$noteTagModel->getNoteId(),
-            ':userTagId'=>$noteTagModel->getuserTagId(),
+            ':userTagId'=>$noteTagModel->getUserTagId(),
             ':isDeleted'=>$noteTagModel->getIsDeleted(),
         );
         $params           = array(

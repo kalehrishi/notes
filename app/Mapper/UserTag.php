@@ -56,8 +56,8 @@ class UserTag
         $placeholder      = array(
             ':id' => $userTagModel->getId(),
             ':tag' => $userTagModel->getTag(),
-            'userId'=> $userTagModel->getUserId(),
-            'isDeleted'=>$userTagModel->getIsDeleted(),
+            ':userId'=> $userTagModel->getUserId(),
+            ':isDeleted'=>$userTagModel->getIsDeleted(),
         );
         $params           = array(
             'dataQuery' => $query,
