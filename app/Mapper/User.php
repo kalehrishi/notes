@@ -63,6 +63,7 @@ class User
     public function update(UserModel $userModel)
     {
         $input = array(
+            'id'       => $userModel->getId(),
             'firstName' => $userModel->getFirstName(),
             'lastName' => $userModel->getLastName(),
             'email' => $userModel->getEmail(),
@@ -72,7 +73,7 @@ class User
         
         $database  = new Database();
         $sql       = "UPDATE Users SET firstName=:firstName,lastName=:lastName,email=:email,
-        password=:password  WHERE id=:id";
+        password=:password,createdOn=:createdOn  WHERE id=:id";
         $params    = array(
             'dataQuery' => $sql,
             'placeholder' => $input

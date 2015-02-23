@@ -132,18 +132,19 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'createdOn' => '2014-10-31 20:59:59'
         );
         $userModel = new UserModel($input);
+        $userModel->setId($input['id']);
         $userModel->setFirstName($input['firstName']);
         $userModel->setLastName($input['lastName']);
         $userModel->setEmail($input['email']);
         $userModel->setPassword($input['password']);
         $userModel->setCreatedOn($input['createdOn']);
         $userMapper      = new UserMapper();
-        $resultset       = $userMapper->create($userModel);
+        $resultset       = $userMapper->update($userModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_update.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
         ));
-        $this->assertEquals(3, $userModel->getId());
+        $this->assertEquals(1, $userModel->getId());
         $this->assertEquals('anusha', $userModel->getFirstName());
         $this->assertEquals('hiremath', $userModel->getLastName());
         $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
