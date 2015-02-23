@@ -29,7 +29,7 @@ class User
             $userModel->setId($resultset['lastInsertId']);
             return $userModel;
         } else {
-            return "User not found";
+            return "User Id cannot be null";
         }
         
     }
@@ -55,7 +55,7 @@ class User
             $userModel->setCreatedOn($resultset[0]['createdOn']);
             return $userModel;
         } else {
-            return "User Does Not Exists";
+            return "User Id Does Not Exists";
         }
     }
     
@@ -80,9 +80,9 @@ class User
         $resultset = $database->update($params);
         if ($resultset['rowCount'] == 1) {
             return $this->read($userModel);
-            ;
+            
         } else {
-            return "User Not Found";
+            return "Updation Record Failed";
         }
     }
 }
