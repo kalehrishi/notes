@@ -52,7 +52,8 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         ));
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         $this->assertEquals('Import package', $userTagModel->getTag());
-        $this->assertEquals('1', $userTagModel->getuserId());
+        $this->assertEquals('1', $userTagModel->getUserId());
+        $this->assertEquals('0', $userTagModel->getIsDeleted());
     }
     /**
      * @expectedException              Exception
@@ -91,7 +92,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'UserTags'
         ));
         $this->assertEquals(2, $userTagModel->getId());
-        $this->assertEquals(1, $userTagModel->getuserId());
+        $this->assertEquals(1, $userTagModel->getUserId());
         $this->assertEquals('Tag for record 2', $userTagModel->getTag());
         $this->assertEquals(0, $userTagModel->getIsDeleted());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
@@ -117,13 +118,20 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testCanDeleteRecord()
     {
         $input        = array(
-            'id' => 1
+            'id' => 1,
+            'userId'=>1,
+            'tag'=>'Import package',
+            'isDeleted'=>1
         );
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
+        $userTagModel->setTag($input['tag']);
+        $userTagModel->setIsDeleted($input['isDeleted']);
+    
         
         $userTagMapper = new UserTag();
-        $userTagModel  = $userTagMapper->delete($userTagModel);
+        $userTagModel  = $userTagMapper->update($userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTags_after_delete.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -138,30 +146,41 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
     /**
      * @expectedException              Exception
-     * @expectedExceptionMessage       UserTagId Does Not Present
+     * @expectedExceptionMessage       Failed
      */
     public function testDeletionFailed()
     {
         $input        = array(
-            'id' => 2
+            'id' => 2,
+            'userId'=>1,
+            'tag'=>'Import package',
+            'isDeleted'=>1
         );
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
+        $userTagModel->setTag($input['tag']);
+        $userTagModel->setIsDeleted($input['isDeleted']);
+        
         
         $userTagMapper = new UserTag();
-        $userTagModel  = $userTagMapper->delete($userTagModel);
+        $userTagModel  = $userTagMapper->update($userTagModel);
     }
     
     public function testCanUpdateRecord()
     {
         $input = array(
             'id' => 1,
-            'tag' => "Tag Updated"
+            'userId'=>1,
+            'tag' => "Tag Updated",
+            'isDeleted'=>0
         );
         
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
         $userTagModel->setTag($input['tag']);
+        $userTagModel->setIsDeleted($input['isDeleted']);
         
         $userTagMapper = new UserTag();
         $userTagModel  = $userTagMapper->update($userTagModel);
@@ -179,24 +198,25 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
     /**
      * @expectedException              Exception
-     * @expectedExceptionMessage       Updation Failed
+     * @expectedExceptionMessage       Failed
      */
     
     public function testUpdationFailed()
     {
         $input = array(
             'id' => 2,
-            'tag' => "Tag Updated"
+            'userId'=>1,
+            'tag' => "Tag Updated",
+            'isDeleted'=>0
         );
         
         $userTagModel = new UserTagModel();
         $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
         $userTagModel->setTag($input['tag']);
-        
-        
+        $userTagModel->setIsDeleted($input['isDeleted']);
+                
         $userTagMapper = new UserTag();
         $userTagModel  = $userTagMapper->update($userTagModel);
-        
-        
     }
 }

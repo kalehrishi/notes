@@ -30,7 +30,7 @@ class NoteTag
     
     public function read($noteTagModel)
     {
-        $query            = " SELECT id,noteId,userTagId FROM NoteTags WHERE id=:id";
+        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE id=:id";
         $placeholder      = array(
             ':id' => $noteTagModel->getId()
         );
@@ -44,9 +44,33 @@ class NoteTag
             $noteTagModel->setId($resultset[0]['id']);
             $noteTagModel->setNoteId($resultset[0]['noteId']);
             $noteTagModel->setUserTagId($resultset[0]['userTagId']);
+            $noteTagModel->setIsDeleted($resultset[0]['isDeleted']);
             return $noteTagModel;
         } else {
             throw new \Exception("NoteTagId Does Not Present");
         }
+    }
+
+    public function update($noteTagModel)
+    {
+        $query= " UPDATE NoteTags SET id=:id,noteId=:noteId,userTagId=:userTagId,isDeleted=:isDeleted WHERE id=:id";
+        $placeholder      = array(
+            ':id' => $noteTagModel->getId(),
+            ':noteId'=>$noteTagModel->getNoteId(),
+            ':userTagId'=>$noteTagModel->getUserTagId(),
+            ':isDeleted'=>$noteTagModel->getIsDeleted(),
+        );
+        $params           = array(
+            'dataQuery' => $query,
+            'placeholder' => $placeholder
+        );
+        $database = new Database();
+        $result   = $database->post($params);
+        if ($result['rowCount'] == 1) {
+            return $noteTagModel;
+        } else {
+            throw new \Exception("NoteTagId Does Not Present");
+        }
+        
     }
 }
