@@ -127,8 +127,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
     }
 
-   
-     /**
+    /**
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
