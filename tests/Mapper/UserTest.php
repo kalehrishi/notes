@@ -87,7 +87,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
         ));
-        $this->assertEquals(3, $userModel->getId());
+        $this->assertEquals(3, $userModel->getId());        
         $this->assertEquals('kirti', $userModel->getFirstName());
         $this->assertEquals('ramani', $userModel->getLastName());
         $this->assertEquals('kirti.6@gmail.com', $userModel->getEmail());
