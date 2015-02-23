@@ -3,6 +3,7 @@
 namespace Notes\Mapper;
 
 use Notes\Database\Database as Database;
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class Session
 {
@@ -49,7 +50,9 @@ class Session
             
             return $sessionModel;
         } else {
-            throw new \Exception('invalid user');
+            $obj = new ModelNotFoundException();
+            $obj->setModel($sessionModel);
+            throw $obj;
         }
         
     }
@@ -70,11 +73,13 @@ class Session
         );
         $database    = new Database();
         $resultset   = $database->post($params);
+      
         if ($resultset['rowCount'] == 1) {
             return $this->read($sessionModel);
         } else {
-            throw new \InvalidArgumentException("Updation Failed");
+            $obj = new ModelNotFoundException();
+            $obj->setModel($sessionModel);
+            throw $obj;
         }
-        
-    }
+}
 }
