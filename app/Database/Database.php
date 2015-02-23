@@ -22,7 +22,6 @@ class Database extends \PHPUnit_Framework_TestCase
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
-        
     }
     
     public function get($input)
@@ -47,22 +46,14 @@ class Database extends \PHPUnit_Framework_TestCase
         );
     }
     
-    public function delete($input)
-    {
-        $queryString    = $input['dataQuery'];
-        $data           = $input['placeholder'];
-        $queryStatement = $this->connection->prepare($queryString);
-        $resultset      = $queryStatement->execute($data);
-        return $resultset;
-    }
-    
     public function update($input)
     {
         $queryString    = $input['dataQuery'];
         $data           = $input['placeholder'];
         $queryStatement = $this->connection->prepare($queryString);
-        $resultset      = $queryStatement->execute($data);
-        return $resultset;
+        $queryStatement->execute($data);
+        $affectedRows   = $queryStatement->rowCount();
+        return $affectedRows;
     }
     
     public function close()
