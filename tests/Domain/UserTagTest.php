@@ -41,8 +41,8 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     /**
-     * @expectedException        Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
+     * @expectedException        Exception
+     * @expectedExceptionMessage Column 'tag' cannot be null
      */
     public function testthrowsExceptionWhenTagDoesNotPresent()
     {
@@ -61,9 +61,9 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     /**
-     * @expectedException        Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
-     */
+    * @expectedException        Exception
+    * @expectedExceptionMessage Column 'userId' cannot be null
+    */
     public function testthrowsExceptionWhenUserIdDoesNotPresent()
     {
         $input = array(
@@ -165,8 +165,8 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * @expectedException     Exception   
-     * @expectedExceptionMessage Failed
+    * @expectedException         Notes\Exception\ModelNotFoundException
+    * @expectedExceptionMessage  Can Not Found Given Model In Database
     */
     public function testTagUpdationFaild()
     {

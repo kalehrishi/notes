@@ -15,15 +15,11 @@ class UserTag
         $tag=$userTagModel->getTag();
         $userId=$userTagModel->getUserId();
         if (empty($tag)) {
-            $obj = new ModelNotFoundException();
-            $obj->setModel($userTagModel);
-            throw $obj;
+            throw new \Exception("Column 'tag' cannot be null");
         }
         
         if (empty($userId)) {
-            $obj = new ModelNotFoundException();
-            $obj->setModel($userTagModel);
-            throw $obj;
+            throw new \Exception("Column 'userId' cannot be null");
         }
 
         return $userTagModel;
