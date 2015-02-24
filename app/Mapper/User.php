@@ -5,6 +5,8 @@ use Notes\Model\User as UserModel;
 
 use Notes\Database\Database as Database;
 
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
 class User
 {
     public function create(UserModel $userModel)
@@ -28,8 +30,7 @@ class User
         if ($resultset['rowCount'] == 1) {
             $userModel->setId($resultset['lastInsertId']);
             return $userModel;
-        } else {
-            return "User Id cannot be null";
+                     
         }
         
     }
@@ -45,7 +46,13 @@ class User
             'dataQuery' => $query,
             'placeholder' => $input
         );
-        $resultset = $database->get($params);
+        try {
+            $database  = new Database();
+            $resultset = $database->get($params);
+        } catch (\PDOException $e) {
+            $e->getMessage();
+        }
+        
         if (!empty($resultset)) {
             $userModel->setId($resultset[0]['id']);
             $userModel->setFirstName($resultset[0]['firstName']);
@@ -55,14 +62,15 @@ class User
             $userModel->setCreatedOn($resultset[0]['createdOn']);
             return $userModel;
         } else {
-            return "User Id Does Not Exists";
+            $obj = new ModelNotFoundException();
+            $obj->setModel($userModel);
+            throw $obj;
         }
     }
     
     
     public function update(UserModel $userModel)
-    {        
-    
+    {
         $database  = new Database();
         $sql       = "UPDATE Users SET firstName=:firstName,lastName=:lastName,email=:email,
         password=:password,createdOn=:createdOn  WHERE id=:id";
@@ -77,13 +85,19 @@ class User
         $params    = array(
             'dataQuery' => $sql,
             'placeholder' => $input
-        );
-        $resultset = $database->post($params);
-        if ($resultset['rowCount'] == 1) {
-           return $userModel;
-            
+        );try {
+            $database  = new Database();
+            $resultset = $database->update($params);
+        } catch (\PDOException $e) {
+            $e->getMessage();
+        }
+        
+        if (!empty($resultset)) {
+            return $userModel;
         } else {
-            return "Updation Record Failed";
+            $obj = new ModelNotFoundException();
+            $obj->setModel($userModel);
+            throw $obj;
         }
     }
 }

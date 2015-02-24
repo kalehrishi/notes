@@ -29,7 +29,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('hiremath', $userModel->getLastName());
         $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
         $this->assertEquals('sfhsk1223', $userModel->getPassword());
-        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());       
+        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
       
     }
     
