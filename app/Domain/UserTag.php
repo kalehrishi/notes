@@ -38,21 +38,4 @@ class UserTag
         $userTagModel = $userTagMpper->read($userTagModel);
         return $userTagModel;
     }
-
-    public function update($userTagModel)
-    {
-        $this->validation($userTagModel);
-        $userTagMpper = new UserTagMapper();
-        $userTagModel = $userTagMpper->update($userTagModel);
-        return $userTagModel;
-    }
-    public function delete($userTagModel)
-    {
-        $this->validation($userTagModel);
-        $userTagModel->setIsDeleted(1);
-        $userTagMpper = new UserTagMapper();
-        $userTagModel = $userTagMpper->update($userTagModel);
-        //Update NoteTag Domain
-        return $userTagModel;
-    }
 }
