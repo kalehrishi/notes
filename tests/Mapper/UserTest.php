@@ -57,7 +57,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
-    public function testUserIdDoesNotExist()
+    public function testUserCanThrowModelNotFoundExceptionWhenUserIdDoesNotExist()
     {
         
         $input = array(
@@ -141,7 +141,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
-    public function testUpdationFailed()
+    public function testUserCanThrowExceptionWhenUpdationFailed()
     {
         
         $input = array(
