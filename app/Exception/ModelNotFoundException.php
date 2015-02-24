@@ -18,7 +18,6 @@ class ModelNotFoundException extends \RuntimeException
      */
     public function setModel($model)
     {
-        //print_r($model);
         $this->model   = $model;
         $this->message = "Can Not Found Given Model In Database";
         return $this;
