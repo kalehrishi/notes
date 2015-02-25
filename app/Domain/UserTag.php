@@ -14,23 +14,26 @@ class UserTag
 {
     public function __construct()
     {
-       $this->validator=new InputValidator();
-    } 
+        $this->validator = new InputValidator();
+    }
     public function create($userTagModel)
     {
         
-        if($this->validator->isEmpty($userTagModel->getUserId()) && $this->validator->validId($userTagModel->getUserId())
-            &&  $this->validator->isEmpty($userTagModel->getTag()))      
-        $userTagMpper = new UserTagMapper();
-        $userTagModel = $userTagMpper->create($userTagModel);
-        return $userTagModel;
+        if ($this->validator->isEmpty($userTagModel->getUserId())
+            && $this->validator->validId($userTagModel->getUserId())
+            && $this->validator->isEmpty($userTagModel->getTag())) {
+            $userTagMpper = new UserTagMapper();
+            $userTagModel = $userTagMpper->create($userTagModel);
+            return $userTagModel;
+        }
     }
     public function read($userTagModel)
     {
         
-        if($this->validator->isEmpty($userTagModel->getId()) && $this->validator->validId($userTagModel->getId()))  
-        $userTagMpper = new UserTagMapper();
-        $userTagModel = $userTagMpper->read($userTagModel);
-        return $userTagModel;
+        if ($this->validator->isEmpty($userTagModel->getId()) && $this->validator->validId($userTagModel->getId())) {
+            $userTagMpper = new UserTagMapper();
+            $userTagModel = $userTagMpper->read($userTagModel);
+            return $userTagModel;
+        }
     }
 }

@@ -25,7 +25,7 @@ class InputValidator
         if (filter_var($input, FILTER_VALIDATE_INT)) {
             return true;
         } else {
-            throw new \InvalidArgumentException("Input should be Number");   
+            throw new \InvalidArgumentException("Input should be Number");
         }
     }
     public function validEmail($value)
@@ -34,6 +34,6 @@ class InputValidator
             return true;
         } else {
             throw new \InvalidArgumentException("Invalid Email");
-        }   
+        }
     }
 }
