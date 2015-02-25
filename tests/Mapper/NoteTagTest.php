@@ -6,6 +6,8 @@ use Notes\Config\Config as Configuration;
 
 use Notes\Model\NoteTag as NoteTagModel;
 
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
 class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
@@ -57,9 +59,9 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(0, $noteTagModel->getIsDeleted());
     }
     /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       NoteTagId Does Not Present
-     */
+    * @expectedException         Notes\Exception\ModelNotFoundException
+    * @expectedExceptionMessage  Can Not Found Given Model In Database
+    */
     public function testNoteTagIdDoesNotExist()
     {
         $input        = array(
@@ -100,23 +102,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
-    /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       Column 'noteId' cannot be null
-     */
-    public function testInsertFailedWhenParameterMissing()
-    {
-        $input        = array(
-            'userTagId' => 1
-        );
-        $noteTagModel = new NoteTagModel();
-        $noteTagModel->setUserTagId($input['userTagId']);
-        
-        
-        $noteTagMapper = new NoteTag();
-        $noteTagModel  = $noteTagMapper->create($noteTagModel);
-    }
-
+    
     public function testCanDeleteRecord()
     {
         $input        = array(
@@ -146,9 +132,9 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       NoteTagId Does Not Present
-     */
+    * @expectedException         Notes\Exception\ModelNotFoundException
+    * @expectedExceptionMessage  Can Not Found Given Model In Database
+    */
     public function testDeletionFailed()
     {
         $input        = array(

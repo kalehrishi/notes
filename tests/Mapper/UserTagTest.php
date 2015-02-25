@@ -6,6 +6,9 @@ use Notes\Model\UserTag as UserTagModel;
 
 use Notes\Config\Config as Configuration;
 
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
+
 class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
@@ -56,9 +59,9 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('0', $userTagModel->getIsDeleted());
     }
     /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       UserTagId Does Not Present
-     */
+    * @expectedException         Notes\Exception\ModelNotFoundException
+    * @expectedExceptionMessage  Can Not Found Given Model In Database
+    */
     public function testUserTagIdDoesNotExists()
     {
         $input        = array(
@@ -97,23 +100,6 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(0, $userTagModel->getIsDeleted());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
-    /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       Column 'userId' cannot be null
-     */
-    
-    public function testInsertionFailed()
-    {
-        $input        = array(
-            'tag' => 'Tag for record 2'
-        );
-        $userTagModel = new UserTagModel();
-        $userTagModel->setTag($input['tag']);
-        
-        $userTagMapper = new UserTag();
-        $userTagModel  = $userTagMapper->create($userTagModel);
-        
-    }
     
     public function testCanDeleteRecord()
     {
@@ -145,9 +131,9 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       Failed
-     */
+    * @expectedException         Notes\Exception\ModelNotFoundException
+    * @expectedExceptionMessage  Can Not Found Given Model In Database
+    */
     public function testDeletionFailed()
     {
         $input        = array(
@@ -197,9 +183,9 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
-     * @expectedException              Exception
-     * @expectedExceptionMessage       Failed
-     */
+    * @expectedException         Notes\Exception\ModelNotFoundException
+    * @expectedExceptionMessage  Can Not Found Given Model In Database
+    */
     
     public function testUpdationFailed()
     {
