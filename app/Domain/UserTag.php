@@ -19,9 +19,9 @@ class UserTag
     public function create($userTagModel)
     {
         
-        if ($this->validator->isEmpty($userTagModel->getUserId())
-            && $this->validator->validId($userTagModel->getUserId())
-            && $this->validator->isEmpty($userTagModel->getTag())) {
+        if ($this->validator->notNull($userTagModel->getUserId())
+            && $this->validator->validNumber($userTagModel->getUserId())
+            && $this->validator->notNull($userTagModel->getTag())) {
             $userTagMpper = new UserTagMapper();
             $userTagModel = $userTagMpper->create($userTagModel);
             return $userTagModel;
@@ -30,7 +30,8 @@ class UserTag
     public function read($userTagModel)
     {
         
-        if ($this->validator->isEmpty($userTagModel->getId()) && $this->validator->validId($userTagModel->getId())) {
+        if ($this->validator->notNull($userTagModel->getId())
+            && $this->validator->validNumber($userTagModel->getId())) {
             $userTagMpper = new UserTagMapper();
             $userTagModel = $userTagMpper->read($userTagModel);
             return $userTagModel;

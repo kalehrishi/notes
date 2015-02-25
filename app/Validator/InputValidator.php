@@ -4,7 +4,7 @@ namespace Notes\Validator;
 
 class InputValidator
 {
-    public function isEmpty($input)
+    public function notNull($input)
     {
         if (!empty($input)) {
             return true;
@@ -20,7 +20,7 @@ class InputValidator
             throw new \InvalidArgumentException("Input should be string");
         }
     }
-    public function validId($input)
+    public function validNumber($input)
     {
         if (filter_var($input, FILTER_VALIDATE_INT)) {
             return true;

@@ -11,7 +11,7 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
         );
         
         $validator = new InputValidator();
-        $this->assertEquals(true, $validator->isEmpty($input));
+        $this->assertEquals(true, $validator->notNull($input));
     }
     /**
      * @expectedException         InvalidArgumentException
@@ -21,7 +21,7 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $input     = array();
         $validator = new InputValidator();
-        $validator->isEmpty($input);
+        $validator->notNull($input);
         
         
     }
@@ -32,7 +32,7 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
         );
         
         $validator = new InputValidator();
-        $this->assertEquals(true, $validator->validId($input['userId']));
+        $this->assertEquals(true, $validator->validNumber($input['userId']));
     }
     /**
      * @expectedException         InvalidArgumentException
@@ -44,7 +44,7 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
             'userId' => "Test"
         );
         $validator = new InputValidator();
-        $validator->validId($input['userId']);
+        $validator->validNumber($input['userId']);
         
     }
     public function testChecksForValidString()
