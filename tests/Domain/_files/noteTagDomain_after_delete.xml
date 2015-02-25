@@ -1,27 +1,27 @@
 <?xml version="1.0" ?>
 <dataset>
-    <table name="UserTags">
+    <table name="NoteTags">
         <column>id</column>
-        <column>userId</column>
-        <column>tag</column>
+        <column>noteId</column>
+        <column>userTagId</column>
         <column>isDeleted</column>
         <row>
             <value>1</value>
             <value>1</value>
-            <value>Import package</value>
+            <value>1</value>
             <value>0</value>
         </row>
         <row>
             <value>2</value>
             <value>1</value>
-            <value>Tag Updated</value>
+            <value>2</value>
             <value>0</value>
         </row>
         <row>
             <value>3</value>
             <value>2</value>
-            <value>People</value>
-            <value>0</value>
+            <value>3</value>
+            <value>1</value>
         </row>
     </table>
 </dataset>
