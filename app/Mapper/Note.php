@@ -107,6 +107,7 @@ class Note
             $noteModel->id    = $resultset[0]['id'];
             $noteModel->title = $resultset[0]['title'];
             $noteModel->body  = $resultset[0]['body'];
+
             return $noteModel;
         } else {
             $obj = new ModelNotFoundException();
