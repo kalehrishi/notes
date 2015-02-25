@@ -9,7 +9,7 @@ class InputValidator
         if (!empty($input)) {
             return true;
         } else {
-            throw new \InvalidArgumentException("NOT NULL");
+            throw new \InvalidArgumentException("Input should not be null");
         }
     }
     public function validString($input)
@@ -17,18 +17,16 @@ class InputValidator
         if (preg_match('/[a-zA-Z]/', $input)) {
             return true;
         } else {
-            throw new \InvalidArgumentException("Is Not String");
+            throw new \InvalidArgumentException("Input should be string");
         }
     }
-    public function validNumber($input)
+    public function validId($input)
     {
         if (filter_var($input, FILTER_VALIDATE_INT)) {
             return true;
         } else {
-            throw new \InvalidArgumentException("Is Not Number");
-            
+            throw new \InvalidArgumentException("Input should be Number");   
         }
-        
     }
     public function validEmail($value)
     {
@@ -36,7 +34,6 @@ class InputValidator
             return true;
         } else {
             throw new \InvalidArgumentException("Invalid Email");
-        }
-        
+        }   
     }
 }

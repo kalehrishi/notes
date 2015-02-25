@@ -8,25 +8,19 @@ use Notes\Mapper\UserTag as UserTagMapper;
 
 use Notes\Model\UserTag as UserTagModel;
 
+use Notes\Validator\InputValidator as InputValidator;
+
 class UserTag
 {
-    public function validation($userTagModel)
+    public function __construct()
     {
-        $tag=$userTagModel->getTag();
-        $userId=$userTagModel->getUserId();
-        if (empty($tag)) {
-            throw new \Exception("Column 'tag' cannot be null");
-        }
-        
-        if (empty($userId)) {
-            throw new \Exception("Column 'userId' cannot be null");
-        }
-
-        return $userTagModel;
-    }
+       $this->validator=new InputValidator();
+    } 
     public function create($userTagModel)
     {
-        $this->validation($userTagModel);
+        
+        if($this->validator->isEmpty($userTagModel->getUserId()) && $this->validator->validId($userTagModel->getUserId())
+            &&  $this->validator->isEmpty($userTagModel->getTag()))      
         $userTagMpper = new UserTagMapper();
         $userTagModel = $userTagMpper->create($userTagModel);
         return $userTagModel;
@@ -34,6 +28,7 @@ class UserTag
     public function read($userTagModel)
     {
         
+        if($this->validator->isEmpty($userTagModel->getId()) && $this->validator->validId($userTagModel->getId()))  
         $userTagMpper = new UserTagMapper();
         $userTagModel = $userTagMpper->read($userTagModel);
         return $userTagModel;

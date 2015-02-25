@@ -15,7 +15,7 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
     }
     /**
      * @expectedException         InvalidArgumentException
-     * @expectedExceptionMessage  NOT NULL
+     * @expectedExceptionMessage  Input should not be null
      */
     public function testThrowsExceptionWhenFiledIsEmpty()
     {
@@ -32,11 +32,11 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
         );
         
         $validator = new InputValidator();
-        $this->assertEquals(true, $validator->validNumber($input['userId']));
+        $this->assertEquals(true, $validator->validId($input['userId']));
     }
     /**
      * @expectedException         InvalidArgumentException
-     * @expectedExceptionMessage  Is Not Number
+     * @expectedExceptionMessage  Input should be Number
      */
     public function testThrowsExceptionWhenIdIsNotNumber()
     {
@@ -44,7 +44,7 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
             'userId' => "Test"
         );
         $validator = new InputValidator();
-        $validator->validNumber($input['userId']);
+        $validator->validId($input['userId']);
         
     }
     public function testChecksForValidString()
@@ -58,7 +58,7 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
     }
     /**
      * @expectedException         InvalidArgumentException
-     * @expectedExceptionMessage  Is Not String
+     * @expectedExceptionMessage  Input should be string
      */
     public function testThrowsExceptionWhenVariableIsNotString()
     {
