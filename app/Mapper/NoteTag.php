@@ -4,6 +4,8 @@ namespace Notes\Mapper;
 
 use Notes\Database\Database as Database;
 
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
 class NoteTag
 {
     
@@ -23,8 +25,6 @@ class NoteTag
         if ($result['rowCount'] == 1) {
             $noteTagModel->setId($result['lastInsertId']);
             return $noteTagModel;
-        } else {
-            throw new \Exception("Column 'noteId' cannot be null");
         }
     }
     
@@ -47,7 +47,9 @@ class NoteTag
             $noteTagModel->setIsDeleted($resultset[0]['isDeleted']);
             return $noteTagModel;
         } else {
-            throw new \Exception("NoteTagId Does Not Present");
+            $exception = new ModelNotFoundException();
+            $exception->setModel($noteTagModel);
+            throw $exception;
         }
     }
 
@@ -69,7 +71,9 @@ class NoteTag
         if ($result['rowCount'] == 1) {
             return $noteTagModel;
         } else {
-            throw new \Exception("NoteTagId Does Not Present");
+            $exception = new ModelNotFoundException();
+            $exception->setModel($noteTagModel);
+            throw $exception;
         }
         
     }

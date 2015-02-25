@@ -4,6 +4,8 @@ namespace Notes\Mapper;
 
 use Notes\Database\Database as Database;
 
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
 class UserTag
 {
     public function create($userTagModel)
@@ -22,8 +24,6 @@ class UserTag
         if ($result['rowCount'] == 1) {
             $userTagModel->setId($result['lastInsertId']);
             return $userTagModel;
-        } else {
-            throw new \Exception("Column 'userId' cannot be null");
         }
     }
     
@@ -46,7 +46,9 @@ class UserTag
             $userTagModel->setIsDeleted($resultset[0]['isDeleted']);
             return $userTagModel;
         } else {
-            throw new \Exception("UserTagId Does Not Present");
+            $exception = new ModelNotFoundException();
+            $exception->setModel($userTagModel);
+            throw $exception;
         }
     }
     
@@ -68,7 +70,9 @@ class UserTag
         if ($result['rowCount'] == 1) {
             return $userTagModel ;
         } else {
-            throw new \Exception("Failed");
+            $exception = new ModelNotFoundException();
+            $exception->setModel($userTagModel);
+            throw $exception;
         }
     }
 }
