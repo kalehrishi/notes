@@ -5,6 +5,7 @@ use Notes\Model\Note as NoteModel;
 use Notes\Domain\Note as NoteDomain;
 use Notes\Config\Config as Configuration;
 use Notes\Model\UserTag as UserTagModel;
+use Notes\Model\NoteTag as NoteTagModel;
 
 class NoteTest extends \PHPUnit_Extensions_Database_TestCase
 {
@@ -26,7 +27,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
-        
     }
     
     public function getDataSet()
@@ -34,7 +34,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/domain_note_seed.xml');
     }
     
-    public function testCanCreateNote()
+    public function testCanCreate()
     {
         $noteInput = array(
             'userId' => 1,
@@ -55,35 +55,69 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $userTagModel->setUserId($usetTagInput['userId']);
         $userTagModel->setTag($usetTagInput['tag']);
         
+        $noteTagInput = array(
+            'noteId' => 2,
+            'userTagId' => 1
+        );
+        
+        $noteTagModel = new NoteTagModel();
+        $noteTagModel->setNoteId($noteTagInput['noteId']);
+        $noteTagModel->setUserTagId($noteTagInput['userTagId']);
+        
+
         $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->create($noteModel, $userTagModel);
+        $actualResultSet = $noteDomain->create($noteModel, $userTagModel, $noteTagModel);
         $this->assertEquals(3, $actualResultSet[0]->getId());
         $this->assertEquals(1, $actualResultSet[0]->getUserId());
         $this->assertEquals('Exception', $actualResultSet[0]->getTitle());
         $this->assertEquals('Creating a custom exception handler is quite simple.', $actualResultSet[0]->getBody());
         $this->assertEquals(0, $actualResultSet[0]->getIsDeleted());
         
-        $this->assertEquals(1, $actualResultSet[1]->getId());
+        $this->assertEquals(2, $actualResultSet[1]->getId());
         $this->assertEquals(1, $actualResultSet[1]->getUserId());
         $this->assertEquals('PHP', $actualResultSet[1]->getTag());
         $this->assertEquals(0, $actualResultSet[1]->getIsDeleted());
+
+        $this->assertEquals(2, $actualResultSet[2]->getId());
+        $this->assertEquals(2, $actualResultSet[2]->getNoteId());
+        $this->assertEquals(1, $actualResultSet[2]->getUserTagId());
         
     }
     
     public function testCanDelete()
     {
-        $input     = array(
-            'id' => 2,
+        $noteInput     = array(
+            'id' => 1,
+            'userId' => 1,
             'isDeleted' => 1
         );
         $noteModel = new NoteModel();
-        $noteModel->setId($input['id']);
-        $noteModel->setIsDeleted($input['isDeleted']);
+        $noteModel->setId($noteInput['id']);
+        $noteModel->setUserId($noteInput['userId']);
+        $noteModel->setIsDeleted($noteInput['isDeleted']);
+        
+        $noteTagInput = array(
+            'id' => 1,
+            'noteId' => 1,
+            'userTagId' => 1
+        );
+        
+        $noteTagModel = new NoteTagModel();
+        $noteTagModel->setId($noteTagInput['id']);
+        $noteTagModel->setNoteId($noteTagInput['noteId']);
+        $noteTagModel->setUserTagId($noteTagInput['userTagId']);
         
         $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->delete($noteModel);
+        $actualResultSet = $noteDomain->delete($noteModel, $noteTagModel);
         
-        $this->assertEquals(1, $actualResultSet->getIsDeleted());
+        $this->assertEquals(1, $actualResultSet[0]->getId());
+        $this->assertEquals(1, $actualResultSet[0]->getUserId());
+        $this->assertEquals(1, $actualResultSet[0]->getIsDeleted());
+        
+        $this->assertEquals(1, $actualResultSet[1]->getId());
+        $this->assertEquals(1, $actualResultSet[1]->getNoteId());
+        $this->assertEquals(1, $actualResultSet[1]->getUserTagId());
+        $this->assertEquals(1, $actualResultSet[1]->getIsDeleted());
         
     }
     

@@ -48,7 +48,6 @@ class Note
             $e->getMessage();
         }
         if (!empty($resultset)) {
-            $noteModel->setId($resultset['id']);
             return $noteModel;
         } else {
             $obj = new ModelNotFoundException();

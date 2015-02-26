@@ -60,4 +60,22 @@
             <value>0</value>
         </row>
     </table>
+    <table name="NoteTags">
+        <column>id</column>
+        <column>noteId</column>
+        <column>userTagId</column>
+        <column>isDeleted</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>2</value>
+            <value>1</value>
+            <value>0</value>
+        </row>
+    </table>
 </dataset>

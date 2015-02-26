@@ -7,6 +7,8 @@ use Notes\Config\Config as Configuration;
 use Notes\Validator\InputValidator as InputValidator;
 use Notes\Domain\UserTag as UserTagDomain;
 use Notes\Model\UserTag as UserTagModel;
+use Notes\Domain\NoteTag as NoteTagDomain;
+use Notes\Model\NoteTag as NoteTagModel;
 
 class Note
 {
@@ -15,49 +17,47 @@ class Note
         $this->validator = new InputValidator();
     }
     
-    public function create(NoteModel $noteModel, UserTagModel $userTagModel)
+    public function create(NoteModel $noteModel, UserTagModel $userTagModel, NoteTagModel $noteTagModel)
     {
         if ($this->validator->notNull($noteModel->getUserId())
         	&& $this->validator->validNumber($noteModel->getUserId())
         	&& $this->validator->notNull($noteModel->getTitle())
         	&& $this->validator->notNull($noteModel->getBody())) {
+            $noteTagDomain         = new NoteTagDomain();
+            $resultsetNotTagDomain = $noteTagDomain->create($noteTagModel);
+            
             $noteUserTagDomain      = new UserTagDomain();
             $resultsetUserTagDomain = $noteUserTagDomain->create($userTagModel);
             
-            $noteMapper = new NoteMapper();
-            $resultset  = $noteMapper->create($noteModel);
+            $noteMapper          = new NoteMapper();
+            $resultsetNoteDomain = $noteMapper->create($noteModel);
             
-            
-            
-            
-            $noteModel->setId($resultset->id);
-            $noteModel->setUserId($resultset->userId);
-            $noteModel->setTitle($resultset->title);
-            $noteModel->setBody($resultset->body);
-            
-            $resultsetUserTagDomain->setId($resultsetUserTagDomain->getId());
-            $resultsetUserTagDomain->setUserId($resultsetUserTagDomain->getUserId());
-            $resultsetUserTagDomain->setTag($resultsetUserTagDomain->getTag());
-            
-            $noteCreateModel = array(
-                $noteModel,
-                $resultsetUserTagDomain
+            $resultsetNoteCreateModel = array(
+                $resultsetNoteDomain,
+                $resultsetUserTagDomain,
+                $resultsetNotTagDomain
             );
-            return $noteCreateModel;
+            return $resultsetNoteCreateModel;
         }
     }
     
-    public function delete(NoteModel $noteModel)
+    public function delete(NoteModel $noteModel, NoteTagModel $noteTagModel)
     {
         if ($this->validator->notNull($noteModel->getId())
         	&& $this->validator->validNumber($noteModel->getId())
         	&& $this->validator->notNull($noteModel->getIsDeleted())
         	&& $this->validator->validNumber($noteModel->getIsDeleted())) {
-            $noteMapper = new NoteMapper();
+            $noteMapper          = new NoteMapper();
+            $resultsetNoteDomain = $noteMapper->delete($noteModel);
             
-            $resultset = $noteMapper->delete($noteModel);
-            $noteModel->setIsDeleted($resultset->isDeleted);
-            return $noteModel;
+            $noteTagDomain         = new NoteTagDomain();
+            $resultsetNotTagDomain = $noteTagDomain->delete($noteTagModel);
+            
+            $resultsetNoteDeleteModel = array(
+                $resultsetNoteDomain,
+                $resultsetNotTagDomain
+            );
+            return $resultsetNoteDeleteModel;
         }
     }
     

@@ -41,4 +41,28 @@
             <value>0</value>
         </row>
     </table>
+    <table name="UserTags">
+        <column>id</column>
+        <column>userId</column>
+        <column>tag</column>
+        <column>isDeleted</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>OOP PHP</value>
+            <value>0</value>
+        </row>
+    </table>
+    <table name="NoteTags">
+        <column>id</column>
+        <column>noteId</column>
+        <column>userTagId</column>
+        <column>isDeleted</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>0</value>
+        </row>
+    </table>
 </dataset>
