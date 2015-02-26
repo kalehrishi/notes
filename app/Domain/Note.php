@@ -4,7 +4,7 @@ namespace Notes\Domain;
 use Notes\Mapper\Note as NoteMapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Config\Config as Configuration;
-use Notes\validator\InputValidator as InputValidator;
+use Notes\Validator\InputValidator as InputValidator;
 use Notes\Domain\UserTag as UserTagDomain;
 use Notes\Model\UserTag as UserTagModel;
 
