@@ -31,8 +31,8 @@ class NoteTag
     public function read($noteTagModel)
     {
         
-        if ($this->validator->notNull($noteTagModel->getId())
-            && $this->validator->validNumber($noteTagModel->getId())) {
+        if ($this->validator->notNull($noteTagModel->getNoteId())
+            && $this->validator->validNumber($noteTagModel->getNoteId())) {
             $noteTagMpper = new NoteTagMapper();
             $noteTagModel = $noteTagMpper->read($noteTagModel);
             return $noteTagModel;

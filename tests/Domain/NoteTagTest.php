@@ -81,14 +81,14 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $noteTagDomain = new NoteTag();
         $noteTagModel  = $noteTagDomain->create($noteTagModel);
     }
-    public function testCanReadNoteTagById()
+    public function testCanReadNoteTagByNoteId()
     {
         $input = array(
-            'id' => 2
+            'noteid' => 2
         );
         
         $noteTagModel = new NoteTagModel();
-        $noteTagModel->setId($input['id']);
+        $noteTagModel->setNoteId($input['noteid']);
         
         
         $noteTagDomain = new NoteTag();
@@ -100,9 +100,9 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
             'NoteTags'
         ));
         
-        $this->assertEquals(2, $noteTagModel->getId());
-        $this->assertEquals(1, $noteTagModel->getNoteId());
-        $this->assertEquals(2, $noteTagModel->getUserTagId());
+        $this->assertEquals(3, $noteTagModel->getId());
+        $this->assertEquals(2, $noteTagModel->getNoteId());
+        $this->assertEquals(3, $noteTagModel->getUserTagId());
         $this->assertEquals(0, $noteTagModel->getIsDeleted());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
@@ -114,11 +114,11 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testThrowsExceptionWhenNoteTagIdDoesNotExist()
     {
         $input = array(
-            'id' => 54
+            'noteid' => 54
         );
         
         $noteTagModel = new NoteTagModel();
-        $noteTagModel->setId($input['id']);
+        $noteTagModel->setNoteId($input['noteid']);
         
         
         $noteTagDomain = new NoteTag();

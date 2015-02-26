@@ -30,9 +30,9 @@ class NoteTag
     
     public function read($noteTagModel)
     {
-        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE id=:id";
+        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid";
         $placeholder      = array(
-            ':id' => $noteTagModel->getId()
+            ':noteid' => $noteTagModel->getNoteId()
         );
         $params           = array(
             'dataQuery' => $query,
