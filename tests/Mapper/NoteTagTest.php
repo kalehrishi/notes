@@ -36,13 +36,13 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     
-    public function testCanReadRecordById()
+    public function testCanReadRecordByNoteId()
     {
         $input        = array(
-            'id' => 1
+            'noteid' => 4
         );
         $noteTagModel = new NoteTagModel();
-        $noteTagModel->setId($input['id']);
+        $noteTagModel->setNoteId($input['noteid']);
         
         
         $noteTagMapper = new NoteTag();
@@ -65,10 +65,10 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testNoteTagIdDoesNotExist()
     {
         $input        = array(
-            'id' => 2
+            'noteid' => 122
         );
         $noteTagModel = new NoteTagModel();
-        $noteTagModel->setId($input['id']);
+        $noteTagModel->setNoteId($input['noteid']);
         
         
         $noteTagMapper = new NoteTag();
