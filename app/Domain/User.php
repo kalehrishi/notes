@@ -9,12 +9,15 @@ use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 use Notes\Validator\InputValidator as InputValidator;
 
+use Notes\PasswordValidation\PasswordValidator as PasswordValidator;
+
 class User
 {
     
     public function __construct()
     {
         $this->validator = new InputValidator();
+        
     }
     
     public function create($userModel)
@@ -26,10 +29,12 @@ class User
         && $this->validator->notNull($userModel->getPassword())
         && $this->validator->validString($userModel->getFirstName())
         && $this->validator->validString($userModel->getLastName())
-        && $this->validator->validEmail($userModel->getEmail())) {
+        && $this->validator->validEmail($userModel->getEmail())
+        && $this->validator->isValidPassword($userModel->getPassword())) {
             $userMapper = new UserMapper();
             $userModel  = $userMapper->create($userModel);
             return $userModel;
+            
         }
     }
     public function read($userModel)
@@ -38,6 +43,14 @@ class User
         if ($this->validator->notNull($userModel->getId()) && $this->validator->validNumber($userModel->getId())) {
             $userMapper = new UserMapper();
             $userModel  = $userMapper->read($userModel);
+            return $userModel;
+        }
+    }
+    public function getUserByEmailAndPassword($userModel)
+    {
+        if ($this->validator->notNull($userModel->getEmail()) && $this->validator->notNull($userModel->getPassword())) {
+            $userMapper = new UserMapper();
+            $userModel  = $userMapper->getUserByEmailAndPassword($userModel);
             return $userModel;
         }
     }

@@ -60,6 +60,32 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
+    public function testCanReadRecordByEmailAndPassword()
+    {
+        $input     = array(
+            'email' => 'anusha@gmail.com',
+            'password' => 'sfhsk1223'
+        );
+        $userModel = new UserModel();
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
+        $userDomain      = new User();
+        $userModel       = $userDomain->getUserByEmailAndPassword($userModel);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'Users'
+        ));
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $this->assertEquals(1, $userModel->getId());
+        $this->assertEquals('anusha', $userModel->getFirstName());
+        $this->assertEquals('hiremath', $userModel->getLastName());
+        $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
+        $this->assertEquals('sfhsk1223', $userModel->getPassword());
+        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        
+        
+    }
     
     /**
      * @expectedException Notes\Exception\ModelNotFoundException
@@ -79,16 +105,16 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
-    public function testCanCreateUser()
+    public function testCanInsertRecord()
     {
         $input     = array(
             'firstName' => 'kirti',
             'lastName' => 'ramani',
             'email' => 'kirti.6@gmail.com',
-            'password' => 'sfhsk1226',
+            'password' => 'abc@$#A123',
             'createdOn' => '2014-10-31 20:59:59'
         );
-        $userModel = new UserModel($input);
+        $userModel = new UserModel();
         $userModel->setFirstName($input['firstName']);
         $userModel->setLastName($input['lastName']);
         $userModel->setEmail($input['email']);
@@ -100,11 +126,12 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
         ));
+        
         $this->assertEquals(3, $userModel->getId());
         $this->assertEquals('kirti', $userModel->getFirstName());
         $this->assertEquals('ramani', $userModel->getLastName());
         $this->assertEquals('kirti.6@gmail.com', $userModel->getEmail());
-        $this->assertEquals('sfhsk1226', $userModel->getPassword());
+        $this->assertEquals('abc@$#A123', $userModel->getPassword());
         $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         

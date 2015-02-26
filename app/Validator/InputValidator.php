@@ -2,6 +2,8 @@
 
 namespace Notes\Validator;
 
+use Notes\PasswordValidation\PasswordValidator as PasswordValidator;
+
 class InputValidator
 {
     public function notNull($input)
@@ -35,5 +37,19 @@ class InputValidator
         } else {
             throw new \InvalidArgumentException("Invalid Email");
         }
+    }
+    
+    
+    public function isValidPassword($password)
+    {
+        $obj   = new PasswordValidator($password);
+        $count = $obj->strength();
+        if ($count == 4) {
+            return true;
+        } else {
+            throw new \InvalidArgumentException("Password Strength is weak");
+            
+        }
+        
     }
 }

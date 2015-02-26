@@ -53,7 +53,32 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
-     /**
+    public function testCanReadRecordByEmailAndPassword()
+    {
+        $input      = array(
+            'email' => 'anusha@gmail.com',
+            'password' => 'sfhsk1223'
+        );
+        $userModel  = new UserModel();
+        $userMapper = new UserMapper();
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
+        $userModel       = $userMapper->getUserByEmailAndPassword($userModel);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'Users'
+        ));
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $this->assertEquals(1, $userModel->getId());
+        $this->assertEquals('anusha', $userModel->getFirstName());
+        $this->assertEquals('hiremath', $userModel->getLastName());
+        $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
+        $this->assertEquals('sfhsk1223', $userModel->getPassword());
+        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        
+    }
+    /**
      * @expectedException Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
@@ -100,9 +125,6 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
-     
-
-    
     
     public function testCanUpdateRecord()
     {
@@ -121,7 +143,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setEmail($input['email']);
         $userModel->setPassword($input['password']);
         $userModel->setCreatedOn($input['createdOn']);
-
+        
         $userMapper      = new UserMapper();
         $resultset       = $userMapper->update($userModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_update.xml');
@@ -137,7 +159,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
-     /**
+    /**
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
@@ -155,8 +177,8 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
         $userModel  = new UserModel($input);
         $userMapper = new UserMapper();
-        $resultset       = $userMapper->update($userModel);
+        $resultset  = $userMapper->update($userModel);
         
-             
+        
     }
 }
