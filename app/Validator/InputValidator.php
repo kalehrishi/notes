@@ -2,8 +2,6 @@
 
 namespace Notes\Validator;
 
-use Notes\PasswordValidation\PasswordValidator as PasswordValidator;
-
 class InputValidator
 {
     public function notNull($input)

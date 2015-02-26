@@ -1,5 +1,5 @@
 <?php
-namespace Notes\PasswordValidation;
+namespace Notes\Validator;
 
 class PasswordValidator
 {

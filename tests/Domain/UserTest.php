@@ -37,13 +37,17 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     
-    public function testCanReadRecordById()
+    public function testCanReadRecordByIdUserNameAndPassword()
     {
         $input     = array(
-            'id' => 1
+            'id' => 1,
+            'email' => 'anusha@gmail.com',
+            'password' => 'sfhsk1223'
         );
         $userModel = new UserModel();
         $userModel->setId($input['id']);
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
         $userDomain      = new User();
         $userModel       = $userDomain->read($userModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
@@ -60,33 +64,6 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
-    public function testCanReadRecordByEmailAndPassword()
-    {
-        $input     = array(
-            'email' => 'anusha@gmail.com',
-            'password' => 'sfhsk1223'
-        );
-        $userModel = new UserModel();
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userDomain      = new User();
-        $userModel       = $userDomain->getUserByEmailAndPassword($userModel);
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Users'
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals(1, $userModel->getId());
-        $this->assertEquals('anusha', $userModel->getFirstName());
-        $this->assertEquals('hiremath', $userModel->getLastName());
-        $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
-        $this->assertEquals('sfhsk1223', $userModel->getPassword());
-        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        
-        
-    }
-    
     /**
      * @expectedException Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
@@ -96,10 +73,33 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
         $input = array(
             'id' => 4
+            
+        );
+        
+        $userModel  = new UserModel($input);
+        $userMapper = new UserMapper();
+        $userModel->setId($input['id']);
+        $userModel = $userMapper->read($userModel);
+    }
+    
+    
+    
+    /**
+     * @expectedException         InvalidArgumentException
+     * @expectedExceptionMessage  Input should not be null
+     */
+    public function testUserCanThrowModelNotFoundExceptionWhenUserNamePasswordDoesNotMatch()
+    {
+        
+        $input = array(
+            
+            'email' => 'anusha@gmil.com',
+            'password' => 'sfhs1223'
         );
         
         $userModel = new UserModel($input);
-        $userModel->setId($input['id']);
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
         $userDomain = new User();
         $userModel  = $userDomain->read($userModel);
         

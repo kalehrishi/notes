@@ -1,5 +1,5 @@
 <?php
-namespace Notes\PasswordValidation;
+namespace Notes\Validator;
 
 class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
 {

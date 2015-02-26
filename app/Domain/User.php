@@ -40,20 +40,17 @@ class User
     public function read($userModel)
     {
         
-        if ($this->validator->notNull($userModel->getId()) && $this->validator->validNumber($userModel->getId())) {
+        if ($this->validator->notNull($userModel->getId())
+            && $this->validator->validNumber($userModel->getId())
+            && $this->validator->notNull($userModel->getEmail())
+            && $this->validator->validEmail($userModel->getEmail())
+            && $this->validator->notNull($userModel->getPassword())) {
             $userMapper = new UserMapper();
             $userModel  = $userMapper->read($userModel);
             return $userModel;
         }
     }
-    public function getUserByEmailAndPassword($userModel)
-    {
-        if ($this->validator->notNull($userModel->getEmail()) && $this->validator->notNull($userModel->getPassword())) {
-            $userMapper = new UserMapper();
-            $userModel  = $userMapper->getUserByEmailAndPassword($userModel);
-            return $userModel;
-        }
-    }
+    
     public function update($userModel)
     {
         if ($this->validator->notNull($userModel->getId())

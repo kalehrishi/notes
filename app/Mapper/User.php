@@ -37,52 +37,33 @@ class User
     }
     public function read(UserModel $userModel)
     {
-        $input = array(
-            'id' => $userModel->getId()
-        );
         
         $database = new Database();
-        $query    = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
-        $params   = array(
-            'dataQuery' => $query,
-            'placeholder' => $input
-        );
-        try {
-            $database  = new Database();
-            $resultset = $database->get($params);
-        } catch (\PDOException $e) {
-            $e->getMessage();
-        }
         
-        if (!empty($resultset)) {
-            $userModel->setId($resultset[0]['id']);
-            $userModel->setFirstName($resultset[0]['firstName']);
-            $userModel->setLastName($resultset[0]['lastName']);
-            $userModel->setEmail($resultset[0]['email']);
-            $userModel->setPassword($resultset[0]['password']);
-            $userModel->setCreatedOn($resultset[0]['createdOn']);
-            return $userModel;
-        } else {
-            $obj = new ModelNotFoundException();
-            $obj->setModel($userModel);
-            throw $obj;
-        }
-    }
-    public function getUserByEmailAndPassword(UserModel $userModel)
-    {
-        $input = array(
-            'email' => $userModel->getEmail(),
-            'password' => $userModel->getPassword()
+        if ($userModel->getId()) {
+            $input = array(
+                'id' => $userModel->getId()
+                
+            );
             
-        );
+            $query = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
+        } elseif ($userModel->getEmail() && $userModel->getPassword()) {
+            $input = array(
+                
+                'email' => $userModel->getEmail(),
+                'password' => $userModel->getPassword()
+            );
+            $query = "select id,firstName,lastName,email,password,createdOn
+             from Users where email=:email and password=:password";
+        }
         
-        $database = new Database();
-        $query    = "select id,firstName,lastName,email,password,createdOn 
-        from Users where email=:email and password=:password";
-        $params   = array(
+        
+        $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
         );
+        
+        
         try {
             $database  = new Database();
             $resultset = $database->get($params);
@@ -104,7 +85,6 @@ class User
             throw $obj;
         }
     }
-    
     
     public function update(UserModel $userModel)
     {
