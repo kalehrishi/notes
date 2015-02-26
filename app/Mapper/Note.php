@@ -1,4 +1,5 @@
 <?php
+
 namespace Notes\Mapper;
 
 use Notes\Model\Note as NoteModel;
@@ -10,9 +11,9 @@ class Note
     public function create(NoteModel $noteModel)
     {
         $input     = array(
-            'userId' => $noteModel->userId,
-            'title' => $noteModel->title,
-            'body' => $noteModel->body
+            'userId' => $noteModel->getUserId(),
+            'title' => $noteModel->getTitle(),
+            'body' => $noteModel->getBody()
         );
         $query     = "INSERT INTO Notes(userId, title, body) VALUES (:userId, :title, :body)";
         $params    = array(
@@ -22,7 +23,7 @@ class Note
         $database  = new Database();
         $resultset = $database->post($params);
         if (!empty($resultset)) {
-            $noteModel->id = $resultset['lastInsertId'];
+            $noteModel->setId($resultset['lastInsertId']);
             return $noteModel;
         } else {
             throw new \PDOException();
@@ -32,8 +33,8 @@ class Note
     public function delete(NoteModel $noteModel)
     {
         $input  = array(
-            'id' => $noteModel->id,
-            'isDeleted' => $noteModel->isDeleted
+            'id' => $noteModel->getId(),
+            'isDeleted' => $noteModel->getIsDeleted()
         );
         $sql    = "UPDATE Notes SET isDeleted=:isDeleted WHERE id=:id";
         $params = array(
@@ -47,7 +48,7 @@ class Note
             $e->getMessage();
         }
         if (!empty($resultset)) {
-            $noteModel->id = $resultset['id'];
+            $noteModel->setId($resultset['id']);
             return $noteModel;
         } else {
             $obj = new ModelNotFoundException();
@@ -59,9 +60,9 @@ class Note
     public function update(NoteModel $noteModel)
     {
         $input  = array(
-            'id' => $noteModel->id,
-            'title' => $noteModel->title,
-            'body' => $noteModel->body
+            'id' => $noteModel->getId(),
+            'title' => $noteModel->getTitle(),
+            'body' => $noteModel->getBody()
         );
         $sql    = "UPDATE Notes SET title=:title, body=:body WHERE id=:id";
         $params = array(
@@ -88,7 +89,7 @@ class Note
     public function read(NoteModel $noteModel)
     {
         $input = array(
-            'id' => $noteModel->id
+            'id' => $noteModel->getId()
         );
         
         $query  = "SELECT id, title, body FROM Notes WHERE id=:id";
@@ -104,9 +105,9 @@ class Note
         }
         
         if (!empty($resultset)) {
-            $noteModel->id    = $resultset[0]['id'];
-            $noteModel->title = $resultset[0]['title'];
-            $noteModel->body  = $resultset[0]['body'];
+            $noteModel->setId($resultset[0]['id']);
+            $noteModel->setTitle($resultset[0]['title']);
+            $noteModel->setBody($resultset[0]['body']);
 
             return $noteModel;
         } else {

@@ -5,6 +5,8 @@ use Notes\Mapper\Note as NoteMapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Config\Config as Configuration;
 use Notes\validator\InputValidator as InputValidator;
+use Notes\Domain\UserTag as UserTagDomain;
+use Notes\Model\UserTag as UserTagModel;
 
 class Note
 {
@@ -13,54 +15,76 @@ class Note
         $this->validator = new InputValidator();
     }
     
-    public function create($input)
+    public function create(NoteModel $noteModel, UserTagModel $userTagModel)
     {
-        if ($this->validator->notNull($input['userId']) && $this->validator->validNumber($input['userId'])
-        	&& $this->validator->notNull($input['title']) && $this->validator->notNull($input['body'])) {
+        if ($this->validator->notNull($noteModel->getUserId())
+        	&& $this->validator->validNumber($noteModel->getUserId())
+        	&& $this->validator->notNull($noteModel->getTitle())
+        	&& $this->validator->notNull($noteModel->getBody())) {
+            $noteUserTagDomain      = new UserTagDomain();
+            $resultsetUserTagDomain = $noteUserTagDomain->create($userTagModel);
+            
             $noteMapper = new NoteMapper();
-            $noteModel  = new NoteModel($input);
             $resultset  = $noteMapper->create($noteModel);
             
-            $noteModel->id     = $resultset->id;
-            $noteModel->userId = $resultset->userId;
-            $noteModel->title  = $resultset->title;
-            $noteModel->body   = $resultset->body;
-            return $noteModel;
+            
+            
+            
+            $noteModel->setId($resultset->id);
+            $noteModel->setUserId($resultset->userId);
+            $noteModel->setTitle($resultset->title);
+            $noteModel->setBody($resultset->body);
+            
+            $resultsetUserTagDomain->setId($resultsetUserTagDomain->getId());
+            $resultsetUserTagDomain->setUserId($resultsetUserTagDomain->getUserId());
+            $resultsetUserTagDomain->setTag($resultsetUserTagDomain->getTag());
+            
+            $noteCreateModel = array(
+                $noteModel,
+                $resultsetUserTagDomain
+            );
+            return $noteCreateModel;
         }
     }
     
-    public function delete($input)
+    public function delete(NoteModel $noteModel)
     {
-        if ($this->validator->notNull($input['id']) && $this->validator->validNumber($input['id'])
-        	&& $this->validator->notNull($input['isDeleted']) && $this->validator->validNumber($input['isDeleted'])) {
-            $noteMapper           = new NoteMapper();
-            $noteModel            = new NoteModel($input);
-            $resultset            = $noteMapper->delete($noteModel);
-            $noteModel->isDeleted = $resultset->isDeleted;
-            return $noteModel;
-        }
-    }
-    
-    public function update($input)
-    {
-        if ($this->validator->notNull($input['id']) && $this->validator->validNumber($input['id'])
-        	&& $this->validator->notNull($input['title']) && $this->validator->notNull($input['body'])) {
+        if ($this->validator->notNull($noteModel->getId())
+        	&& $this->validator->validNumber($noteModel->getId())
+        	&& $this->validator->notNull($noteModel->getIsDeleted())
+        	&& $this->validator->validNumber($noteModel->getIsDeleted())) {
             $noteMapper = new NoteMapper();
-            $noteModel  = new NoteModel($input);
-            $resultset  = $noteMapper->update($noteModel);
+            
+            $resultset = $noteMapper->delete($noteModel);
+            $noteModel->setIsDeleted($resultset->isDeleted);
+            return $noteModel;
+        }
+    }
+    
+    public function update(NoteModel $noteModel)
+    {
+        if ($this->validator->notNull($noteModel->getId())
+        	&& $this->validator->validNumber($noteModel->getId())
+        	&& $this->validator->notNull($noteModel->getTitle())
+        	&& $this->validator->notNull($noteModel->getBody())) {
+            $noteMapper = new NoteMapper();
+            
+            $resultset = $noteMapper->update($noteModel);
             return $resultset;
         }
     }
     
-    public function read($input)
+    public function read(NoteModel $noteModel)
     {
-        if ($this->validator->notNull($input['id']) && $this->validator->validNumber($input['id'])) {
-            $noteMapper       = new NoteMapper();
-            $noteModel        = new NoteModel($input);
-            $resultset        = $noteMapper->read($noteModel);
-            $noteModel->id    = $resultset->id;
-            $noteModel->title = $resultset->title;
-            $noteModel->body  = $resultset->body;
+        if ($this->validator->notNull($noteModel->getId())
+        	&& $this->validator->validNumber($noteModel->getId())) {
+            $noteMapper = new NoteMapper();
+            
+            $resultset = $noteMapper->read($noteModel);
+            
+            $noteModel->setId($resultset->id);
+            $noteModel->setTitle($resultset->title);
+            $noteModel->setBody($resultset->body);
             return $noteModel;
         }
     }

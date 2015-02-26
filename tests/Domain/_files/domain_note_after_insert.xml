@@ -1,5 +1,19 @@
 <?xml version="1.0" ?>
 <dataset>
+    <table name="Users">
+        <column>id</column>
+        <column>firstName</column>
+        <column>lastName</column>
+        <column>email</column>
+        <column>password</column>
+        <row>
+            <value>1</value>
+            <value>John</value>
+            <value>Doe</value>
+            <value>john@doe.com</value>
+            <value>password@123</value>
+        </row>
+    </table>
     <table name="Notes">
         <column>id</column>
         <column>userId</column>
@@ -25,6 +39,24 @@
             <value>1</value>
             <value>Exception</value>
             <value>Creating a custom exception handler is quite simple.</value>
+            <value>0</value>
+        </row>
+    </table>
+    <table name="UserTags">
+        <column>id</column>
+        <column>userId</column>
+        <column>tag</column>
+        <column>isDeleted</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>First Tag</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>1</value>
+            <value>PHP</value>
             <value>0</value>
         </row>
     </table>

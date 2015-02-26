@@ -41,8 +41,13 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'title' => 'Web',
             'body' => 'PHP is a powerful tool for making dynamic Web pages.'
         );
+        $noteModel       = new NoteModel();
+        $noteModel->setId($input['id']);
+        $noteModel->setTitle($input['title']);
+        $noteModel->setBody($input['body']);
+
         $noteMapper      = new NoteMapper();
-        $noteModel       = new NoteModel($input);
+        
         $actualResultset = $noteMapper->update($noteModel);
         $this->assertEquals("Updated Successfully", $actualResultset);
         $query           = "select id, title, body from Notes";
@@ -62,8 +67,11 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'title' => 'Web',
             'body' => 'PHP is a powerful tool for making dynamic Web pages.'
         );
+        $noteModel       = new NoteModel();
+        $noteModel->setTitle($input['title']);
+        $noteModel->setBody($input['body']);
+        
         $noteMapper = new NoteMapper();
-        $noteModel  = new NoteModel($input);
         $noteMapper->update($noteModel);
     }
     
@@ -74,10 +82,14 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'title' => 'Exception',
             'body' => 'Creating a custom exception handler is quite simple.'
         );
-        $noteMapper = new NoteMapper();
+        $noteModel       = new NoteModel();
+        $noteModel->setUserId($input['userId']);
+        $noteModel->setTitle($input['title']);
+        $noteModel->setBody($input['body']);
         
-        $noteModel         = new NoteModel($input);
+        $noteMapper = new NoteMapper();
         $actualResultset   = $noteMapper->create($noteModel);
+        
         $expectedResultset = 3;
         $this->assertEquals($expectedResultset, $actualResultset->id);
         $query           = "select id, userId, title, body, isDeleted from Notes";
@@ -96,9 +108,12 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'userId' => 1,
             'body' => 'Insert Data Into MySQL Using PDO'
         );
+        $noteModel       = new NoteModel();
+        $noteModel->setUserId($input['userId']);
+        $noteModel->setBody($input['body']);
+
+
         $noteMapper = new NoteMapper();
-        
-        $noteModel = new NoteModel($input);
         $noteMapper->create($noteModel);
     }
     
@@ -109,8 +124,11 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 2,
             'isDeleted' => 1
         );
+        $noteModel       = new NoteModel();
+        $noteModel->setId($input['id']);
+        $noteModel->setIsDeleted($input['isDeleted']);
+
         $noteMapper      = new NoteMapper();
-        $noteModel       = new NoteModel($input);
         $actualResultset = $noteMapper->delete($noteModel);
         $this->assertEquals(1, $actualResultset->isDeleted);
         
@@ -130,9 +148,10 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $input      = array(
             'isDeleted' => 1
         );
-        $noteMapper = new NoteMapper();
+        $noteModel       = new NoteModel();
+        $noteModel->setIsDeleted($input['isDeleted']);
         
-        $noteModel       = new NoteModel($input);
+        $noteMapper = new NoteMapper();
         $noteMapper->delete($noteModel);
     }
     public function testCanReadByTitle()
@@ -140,15 +159,17 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $input             = array(
             'id' => 2
         );
+        $noteModel       = new NoteModel();
+        $noteModel->setId($input['id']);
+        
+
         $expectedResultset = "PHP5";
         $noteMapper        = new NoteMapper();
-        $noteModel         = new NoteModel($input);
         $actualResultset   = $noteMapper->read($noteModel);
-        $expectedResultset = 'PHP5';
-        $this->assertEquals(2, $actualResultset->id);
-        $this->assertEquals('PHP5', $actualResultset->title);
-        $this->assertEquals('Server scripting language.', $actualResultset->body);
-        $this->assertEquals('PHP5', $actualResultset->title);
+
+        $this->assertEquals(2, $actualResultset->getId());
+        $this->assertEquals('PHP5', $actualResultset->getTitle());
+        $this->assertEquals('Server scripting language.', $actualResultset->getBody());
     }
     
     /**
@@ -160,8 +181,10 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $input           = array(
             'id' => 4
         );
+        $noteModel       = new NoteModel();
+        $noteModel->setId($input['id']);
+        
         $noteMapper      = new NoteMapper();
-        $noteModel       = new NoteModel($input);
         $noteMapper->read($noteModel);
     }
 }
