@@ -36,4 +36,18 @@ class InputValidator
             throw new \InvalidArgumentException("Invalid Email");
         }
     }
+    
+    
+    public function isValidPassword($password)
+    {
+        $obj   = new PasswordValidator($password);
+        $count = $obj->strength();
+        if ($count == 4) {
+            return true;
+        } else {
+            throw new \InvalidArgumentException("Password Strength is weak");
+            
+        }
+        
+    }
 }
