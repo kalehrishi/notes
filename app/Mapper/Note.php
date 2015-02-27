@@ -87,11 +87,17 @@ class Note
     
     public function read(NoteModel $noteModel)
     {
-        $input = array(
-            'id' => $noteModel->getId()
-        );
-        
-        $query  = "SELECT id, title, body FROM Notes WHERE id=:id";
+        if (!empty($noteModel->userId)) {
+            $input = array(
+                'userId' => $noteModel->getUserId()
+            );
+            $query = "SELECT id, userId, title, body FROM Notes WHERE userId=:userId";
+        } else {
+            $input = array(
+                'id' => $noteModel->getId()
+            );
+            $query = "SELECT id, userId, title, body FROM Notes WHERE id=:id";
+        }
         $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
@@ -104,10 +110,11 @@ class Note
         }
         
         if (!empty($resultset)) {
-            $noteModel->setId($resultset[0]['id']);
-            $noteModel->setTitle($resultset[0]['title']);
-            $noteModel->setBody($resultset[0]['body']);
-
+            $count     = count($resultset);
+            $noteModel = array();
+            for ($i = 0; $i < $count; $i++) {
+                array_push($noteModel, $resultset[$i]);
+            }
             return $noteModel;
         } else {
             $obj = new ModelNotFoundException();
