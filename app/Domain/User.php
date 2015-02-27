@@ -59,8 +59,8 @@ class User
     }
     public function update($userModel)
     {
-        if ($this->validator->notNull($userModel->getId())
-            && $this->validator->validString($userModel->getFirstName())
+       
+        if ($this->validator->validString($userModel->getFirstName())
             && $this->validator->validString($userModel->getLastName())
             && $this->validator->validEmail($userModel->getEmail())
             && $this->validator->notNull($userModel->getPassword())) {

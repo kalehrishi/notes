@@ -198,9 +198,9 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
-    /**
-     * @expectedException         InvalidArgumentException
-     * @expectedExceptionMessage  Input should not be null
+      /**
+     * @expectedException Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
      */
     
     public function testUserCanThrowExceptionWhenUpdationFailed()
@@ -210,17 +210,14 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'firstName' => 'priyanka',
             'lastName' => 'kumar',
             'email' => 'kumar.6@gmail.com',
-            'password' => 'sfhsk1229',
-            'createdOn' => '2014-10-30 20:59:59'
+            'password' => 'sfhsk1229'
+            
         );
-        
-        
         $userModel = new UserModel($input);
         $userModel->setFirstName($input['firstName']);
         $userModel->setLastName($input['lastName']);
         $userModel->setEmail($input['email']);
         $userModel->setPassword($input['password']);
-        $userModel->setCreatedOn($input['createdOn']);
         $userDomain = new User();
         $userModel  = $userDomain->update($userModel);
         
