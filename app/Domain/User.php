@@ -24,13 +24,13 @@ class User
     {
         
         if ($this->validator->notNull($userModel->getFirstName())
-        && $this->validator->notNull($userModel->getLastName())
-        && $this->validator->notNull($userModel->getEmail())
-        && $this->validator->notNull($userModel->getPassword())
-        && $this->validator->validString($userModel->getFirstName())
-        && $this->validator->validString($userModel->getLastName())
-        && $this->validator->validEmail($userModel->getEmail())
-        && $this->validator->isValidPassword($userModel->getPassword())) {
+            && $this->validator->notNull($userModel->getLastName())
+            && $this->validator->notNull($userModel->getEmail())
+            && $this->validator->notNull($userModel->getPassword())
+            && $this->validator->validString($userModel->getFirstName())
+            && $this->validator->validString($userModel->getLastName())
+            && $this->validator->validEmail($userModel->getEmail())
+            && $this->validator->isValidPassword($userModel->getPassword())) {
             $userMapper = new UserMapper();
             $userModel  = $userMapper->create($userModel);
             return $userModel;
@@ -41,16 +41,22 @@ class User
     {
         
         if ($this->validator->notNull($userModel->getId())
-            && $this->validator->validNumber($userModel->getId())
-            && $this->validator->notNull($userModel->getEmail())
-            && $this->validator->validEmail($userModel->getEmail())
-            && $this->validator->notNull($userModel->getPassword())) {
+         && $this->validator->validNumber($userModel->getId())) {
             $userMapper = new UserMapper();
             $userModel  = $userMapper->read($userModel);
             return $userModel;
         }
     }
     
+    public function readByUsernameandPassword($userModel)
+    {
+        if ($this->validator->validEmail($userModel->getEmail())
+            && $this->validator->notNull($userModel->getPassword())) {
+            $userMapper = new UserMapper();
+            $userModel  = $userMapper->read($userModel);
+            return $userModel;
+        }
+    }
     public function update($userModel)
     {
         if ($this->validator->notNull($userModel->getId())
