@@ -64,7 +64,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(3, $userTagModel->getUserId());
         $this->assertEquals('Create', $userTagModel->getTag());
         $this->assertEquals(0, $userTagModel->getIsDeleted());
-        
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
     * @expectedException         InvalidArgumentException
@@ -92,7 +92,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(3, $userTagModel->getUserId());
         $this->assertEquals('Create', $userTagModel->getTag());
         $this->assertEquals(0, $userTagModel->getIsDeleted());
-        
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     public function testCanReadTagById()
     {
@@ -117,7 +117,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(1, $userTagModel->getUserId());
         $this->assertEquals('Tax', $userTagModel->getTag());
         $this->assertEquals(0, $userTagModel->getIsDeleted());
-        
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
     * @expectedException         Notes\Exception\ModelNotFoundException
