@@ -6,6 +6,7 @@ class Session
 {
     private $id;
     private $userId;
+    private $authToken;
     private $createdOn;
     private $expiredOn;
     private $isExpired;
@@ -18,6 +19,15 @@ class Session
     public function getId()
     {
         return $this->id;
+    }
+    public function setAuthToken($authToken)
+    {
+        $this->authToken = $authToken;
+    }
+    
+    public function getAuthToken()
+    {
+        return $this->authToken;
     }
     
     public function setUserId($userId)

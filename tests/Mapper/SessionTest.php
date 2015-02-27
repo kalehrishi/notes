@@ -36,24 +36,31 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input          = array(
             'userId'    => 1,
+            'authToken' => 'abc',
             'createdOn' => '2015-01-01 10:00:01',
             'expiredOn' => '2015-01-01 10:00:01'
+            
         );
         $sessionModel = new SessionModel();
         $sessionModel->setUserId($input['userId']);
+        $sessionModel->setAuthToken($input['authToken']);
         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
+        
         $sessionMapper = new SessionMapper();
         $sessionModel  = $sessionMapper->create($sessionModel);
-        $query         = "select id, userId,createdOn, expiredOn,isExpired from Sessions";
+        $query         = "select id, userId ,authToken,createdOn, expiredOn,isExpired from Sessions";
         $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_insert.xml')
         ->getTable("Sessions");
         $this->assertTablesEqual($expectedTable, $queryTable);
         $this->assertEquals('3', $sessionModel->getId());
         $this->assertEquals('1', $sessionModel->getUserId());
+        $this->assertEquals('abc', $sessionModel->getAuthToken());
+        
         $this->assertEquals('2015-01-01 10:00:01', $sessionModel->getCreatedOn());
         $this->assertEquals('2015-01-01 10:00:01', $sessionModel->getExpiredOn());
+         $this->assertEquals(0, $sessionModel->getIsExpired());
     }
     
     public function testCanReadById()
@@ -72,10 +79,37 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         $this->assertEquals('2', $sessionModel->getId());
         $this->assertEquals('2', $sessionModel->getUserId());
+        $this->assertEquals('pqr', $sessionModel->getAuthToken());
         $this->assertEquals('2015-01-01 11:00:01', $sessionModel->getCreatedOn());
         $this->assertEquals('2015-01-10 01:01:01', $sessionModel->getExpiredOn());
+        $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
+
+    public function testCanReadByAuthTokenAndUserId()
+    {
+        $input = array(
+            'userId'    => 1,
+            'authToken' => 'abc'
+        );
+        $sessionModel    = new SessionModel();
+        $sessionModel->setUserId($input['userId']);
+        $sessionModel->setAuthToken($input['authToken']);
+        $sessionMapper   = new SessionMapper();
+        $sessionModel    = $sessionMapper->read($sessionModel);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'Sessions'
+        ));
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $this->assertEquals('1', $sessionModel->getId());
+        $this->assertEquals('1', $sessionModel->getUserId());
+        $this->assertEquals('abc', $sessionModel->getAuthToken());
+        $this->assertEquals('2015-01-01 00:00:01', $sessionModel->getCreatedOn());
+        $this->assertEquals('2015-01-01 00:00:01', $sessionModel->getExpiredOn());
+        $this->assertEquals(1, $sessionModel->getIsExpired());
+    }
+ 
     /**
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
@@ -107,7 +141,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setIsExpired($input['isExpired']);
         $sessionMapper = new SessionMapper();
         $sessionMapper->update($sessionModel);
-        $query         = "select id, userId,createdOn, expiredOn,isExpired from Sessions";
+        $query         = "select id, userId,authToken,createdOn, expiredOn,isExpired from Sessions";
         $queryTable    = $this->getConnection()->createQueryTable('Sessions', $query);
         $expectedTable = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_after_update.xml')
         ->getTable("Sessions");
@@ -116,6 +150,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('1', $sessionModel->getUserId());
         $this->assertEquals('2015-01-01 01:00:01', $sessionModel->getExpiredOn());
         $this->assertEquals('1', $sessionModel->getIsExpired());
+
     }
     
     /**

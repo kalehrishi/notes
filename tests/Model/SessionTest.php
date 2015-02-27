@@ -17,11 +17,21 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     public function testCanSetAndGetUserId()
     {
         $input   = array(
-            'userId' => '2'
+            'userId' => 2
         );
         $session = new Session();
         $session->setUserId($input['userId']);
-        $this->assertEquals('2', $session->getUserId());
+        $this->assertEquals(2, $session->getUserId());
+    }
+
+    public function testCanSetAndGetAuthToken()
+    {
+        $input   = array(
+            'authToken' => 'abc'
+        );
+        $session = new Session();
+        $session->setAuthToken($input['authToken']);
+        $this->assertEquals('abc', $session->getAuthToken());
     }
     
     public function testCanSetAndGetcreatedOn()
