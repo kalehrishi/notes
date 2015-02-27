@@ -48,10 +48,6 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $userDomain      = new User();
         $userModel       = $userDomain->read($userModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
-        $actualDataSet   = $this->getConnectiuserDomain = new User();
-        $userModel       = $userDomain->read($userModel);
-        
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
         ));
@@ -66,8 +62,8 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     /**
-     * @expectedException         InvalidArgumentException
-     * @expectedExceptionMessage  Input should not be null
+     * @expectedException Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
      */
     
     public function testUserCanThrowExceptionWhenUserIdDoesNotExist()
@@ -78,23 +74,24 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             
         );
         
-        $userModel  = new UserModel($input);
+        $userModel = new UserModel($input);
+        $userModel->setId($input['id']);
         $userDomain = new User();
         $userModel  = $userDomain->read($userModel);
-        $userModel->setId($input['id']);
-        $userModel = $userMapper->read($userModel);
+        
+        
     }
     public function testCanReadRecordByUsernameAndPassword()
     {
-        $input      = array(
+        $input     = array(
             'email' => 'anusha@gmail.com',
             'password' => 'sfhsk1223'
         );
-        $userModel  = new UserModel();
-        $userDomain = new User();
+        $userModel = new UserModel();
         $userModel->setEmail($input['email']);
         $userModel->setPassword($input['password']);
-        $userModel = $userDomain->readByUsernameandPassword($userModel);
+        $userDomain = new User();
+        $userModel  = $userDomain->readByUsernameandPassword($userModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -218,7 +215,12 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         );
         
         
-        $userModel  = new UserModel($input);
+        $userModel = new UserModel($input);
+        $userModel->setFirstName($input['firstName']);
+        $userModel->setLastName($input['lastName']);
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
+        $userModel->setCreatedOn($input['createdOn']);
         $userDomain = new User();
         $userModel  = $userDomain->update($userModel);
         
