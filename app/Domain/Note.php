@@ -9,6 +9,8 @@ use Notes\Domain\UserTag as UserTagDomain;
 use Notes\Model\UserTag as UserTagModel;
 use Notes\Domain\NoteTag as NoteTagDomain;
 use Notes\Model\NoteTag as NoteTagModel;
+use Notes\Model\User as UserModel;
+use Notes\Domain\User as UserDomain;
 
 class Note
 {
@@ -17,27 +19,30 @@ class Note
         $this->validator = new InputValidator();
     }
     
-    public function create(NoteModel $noteModel)
+    public function create(UserModel $userModel, NoteModel $noteModel)
     {
-        if ($this->validator->notNull($noteModel->getUserId())
-        	&& $this->validator->validNumber($noteModel->getUserId())
-        	&& $this->validator->notNull($noteModel->getTitle())
+        if ( $this->validator->notNull($noteModel->getTitle())
         	&& $this->validator->notNull($noteModel->getBody())) {
+        	$userDomain 		   = new UserDomain();
+        	$resultsetUserModel    = $userDomain->create($userModel);
+        	
+        	$noteModel->setUserId($resultsetUserModel->getId());
+
             $noteMapper            = new NoteMapper();
             $resultsetNoteModel    = $noteMapper->create($noteModel);
+
             $userTagInput          = array(
                 0 => array(
-                    'userId' => $resultsetNoteModel->getUserId(),
+                    'userId' => $resultsetUserModel->getId(),
                     'tag' => 'PHP'
                 ),
                 1 => array(
-                    'userId' => $resultsetNoteModel->getUserId(),
+                    'userId' => $resultsetUserModel->getId(),
                     'tag' => 'PHP6'
                 )
             );
-            $count                 = count($userTagInput);
             $resultsetUserTagModel = array();
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < count($userTagInput); $i++) {
                 $userTagModel = new UserTagModel();
                 
                 $userTagModel->setUserId($userTagInput[$i]['userId']);
@@ -48,9 +53,8 @@ class Note
                 
                 
             }
-            $c1                   = count($resultsetUserTagModel);
             $resultsetNotTagModel = array();
-            for ($i = 0; $i < $c1; $i++) {
+            for ($i = 0; $i < count($resultsetUserTagModel); $i++) {
                 $noteTagModel = new NoteTagModel();
                 $noteTagModel->setNoteId($resultsetNoteModel->getId());
                 $noteTagModel->setUserTagId($resultsetUserTagModel[$i]->getId());

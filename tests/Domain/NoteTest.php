@@ -6,6 +6,7 @@ use Notes\Domain\Note as NoteDomain;
 use Notes\Config\Config as Configuration;
 use Notes\Model\UserTag as UserTagModel;
 use Notes\Model\NoteTag as NoteTagModel;
+use Notes\Model\User as UserModel;
 
 class NoteTest extends \PHPUnit_Extensions_Database_TestCase
 {
@@ -36,30 +37,43 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function testCanCreate()
     {
+        $userInput = array(
+            'firstName' => 'anusha',
+            'lastName' => 'hiremath',
+            'email' => 'anusha@gmail.com',
+            'password' => 'Sfh@sk1223',
+            'createdOn' => '2014-10-31 20:59:59'
+            ); 
+        $userModel = new userModel();
+        $userModel->setFirstName($userInput['firstName']);
+        $userModel->setLastName($userInput['lastName']);
+        $userModel->setEmail($userInput['email']);
+        $userModel->setPassword($userInput['password']);
+        $userModel->setCreatedOn($userInput['createdOn']);
+
         $noteInput = array(
-            'userId' => 1,
             'title' => 'Exception',
             'body' => 'Creating a custom exception handler is quite simple.'
         );
         $noteModel = new NoteModel();
-        $noteModel->setUserId($noteInput['userId']);
         $noteModel->setTitle($noteInput['title']);
         $noteModel->setBody($noteInput['body']);
         
         $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->create($noteModel);
+        $actualResultSet = $noteDomain->create($userModel, $noteModel);
+        
         $this->assertEquals(3, $actualResultSet[0]->getId());
-        $this->assertEquals(1, $actualResultSet[0]->getUserId());
+        $this->assertEquals(2, $actualResultSet[0]->getUserId());
         $this->assertEquals('Exception', $actualResultSet[0]->getTitle());
         $this->assertEquals('Creating a custom exception handler is quite simple.', $actualResultSet[0]->getBody());
         $this->assertEquals(0, $actualResultSet[0]->getIsDeleted());
         
         $this->assertEquals(2, $actualResultSet[1][0]->getId());
-        $this->assertEquals(1, $actualResultSet[1][0]->getUserId());
+        $this->assertEquals(2, $actualResultSet[1][0]->getUserId());
         $this->assertEquals('PHP', $actualResultSet[1][0]->getTag());
         
         $this->assertEquals(3, $actualResultSet[1][1]->getId());
-        $this->assertEquals(1, $actualResultSet[1][1]->getUserId());
+        $this->assertEquals(2, $actualResultSet[1][1]->getUserId());
         $this->assertEquals('PHP6', $actualResultSet[1][1]->getTag());
 
         $this->assertEquals(2, $actualResultSet[2][0]->getId());

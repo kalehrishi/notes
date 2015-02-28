@@ -6,12 +6,14 @@
         <column>lastName</column>
         <column>email</column>
         <column>password</column>
+        <column>createdOn</column>
         <row>
             <value>1</value>
             <value>John</value>
             <value>Doe</value>
             <value>john@doe.com</value>
-            <value>password@123</value>
+            <value>sfhsk1223</value>
+            <value>2014-10-31 20:59:59</value>
         </row>
     </table>
     <table name="Notes">
