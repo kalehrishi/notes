@@ -2,6 +2,8 @@
 
 namespace Notes\Validator;
 
+use Notes\PasswordValidation\PasswordValidator as PasswordValidator;
+
 class InputValidatorTest extends \PHPUnit_Framework_TestCase
 {
     public function testChecksForFiledIsNotEmpty()
@@ -89,6 +91,28 @@ class InputValidatorTest extends \PHPUnit_Framework_TestCase
         );
         $validator = new InputValidator();
         $validator->validEmail($input['email']);
+        
+    }
+    public function testValidPassword()
+    {
+        $input     = array(
+            'password' => "abc@$#A123"
+        );
+        $validator = new InputValidator();
+        $this->assertEquals(true, $validator->isValidPassword($input['password']));
+    }
+    /**
+     * @expectedException         InvalidArgumentException
+     * @expectedExceptionMessage  Password Strength is weak
+     */
+    
+    public function testThrowsExceptionWhenInvalidPassword()
+    {
+        $input     = array(
+            'password' => "abc@123"
+        );
+        $validator = new InputValidator();
+        $validator->isValidPassword($input['password']);
         
     }
 }

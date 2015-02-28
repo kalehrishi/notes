@@ -11,6 +11,7 @@ class User
 {
     public function create(UserModel $userModel)
     {
+        
         $input = array(
             'firstName' => $userModel->getFirstName(),
             'lastName' => $userModel->getLastName(),
@@ -30,22 +31,39 @@ class User
         if ($resultset['rowCount'] == 1) {
             $userModel->setId($resultset['lastInsertId']);
             return $userModel;
-                     
+            
         }
         
     }
     public function read(UserModel $userModel)
     {
-        $input = array(
-            'id' => $userModel->getId()
-        );
         
-        $database  = new Database();
-        $query     = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
-        $params    = array(
+        $database = new Database();
+        
+        if ($userModel->getId()) {
+            $input = array(
+                'id' => $userModel->getId()
+                
+            );
+            
+            $query = "select id,firstName,lastName,email,password,createdOn from Users where id=:id";
+        } elseif ($userModel->getEmail() && $userModel->getPassword()) {
+            $input = array(
+                
+                'email' => $userModel->getEmail(),
+                'password' => $userModel->getPassword()
+            );
+            $query = "select id,firstName,lastName,email,password,createdOn
+             from Users where email=:email and password=:password";
+        }
+        
+        
+        $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
         );
+        
+        
         try {
             $database  = new Database();
             $resultset = $database->get($params);
@@ -68,24 +86,24 @@ class User
         }
     }
     
-    
     public function update(UserModel $userModel)
     {
-        $database  = new Database();
-        $sql       = "UPDATE Users SET firstName=:firstName,lastName=:lastName,email=:email,
+        $database = new Database();
+        $sql      = "UPDATE Users SET firstName=:firstName,lastName=:lastName,email=:email,
         password=:password,createdOn=:createdOn  WHERE id=:id";
-        $input = array(
-            ':id'       => $userModel->getId(),
+        $input    = array(
+            ':id' => $userModel->getId(),
             ':firstName' => $userModel->getFirstName(),
             ':lastName' => $userModel->getLastName(),
             ':email' => $userModel->getEmail(),
             ':password' => $userModel->getPassword(),
             ':createdOn' => $userModel->getCreatedOn()
         );
-        $params    = array(
+        $params   = array(
             'dataQuery' => $sql,
             'placeholder' => $input
-        );try {
+        );
+        try {
             $database  = new Database();
             $resultset = $database->update($params);
         } catch (\PDOException $e) {
