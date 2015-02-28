@@ -43,7 +43,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'email' => 'anusha@gmail.com',
             'password' => 'Sfh@sk1223',
             'createdOn' => '2014-10-31 20:59:59'
-            ); 
+            );
         $userModel = new userModel();
         $userModel->setFirstName($userInput['firstName']);
         $userModel->setLastName($userInput['lastName']);

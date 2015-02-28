@@ -21,16 +21,16 @@ class Note
     
     public function create(UserModel $userModel, NoteModel $noteModel)
     {
-        if ( $this->validator->notNull($noteModel->getTitle())
+        if ($this->validator->notNull($noteModel->getTitle())
         	&& $this->validator->notNull($noteModel->getBody())) {
-        	$userDomain 		   = new UserDomain();
-        	$resultsetUserModel    = $userDomain->create($userModel);
-        	
-        	$noteModel->setUserId($resultsetUserModel->getId());
-
-            $noteMapper            = new NoteMapper();
-            $resultsetNoteModel    = $noteMapper->create($noteModel);
-
+            $userDomain         = new UserDomain();
+            $resultsetUserModel = $userDomain->create($userModel);
+            
+            $noteModel->setUserId($resultsetUserModel->getId());
+            
+            $noteMapper         = new NoteMapper();
+            $resultsetNoteModel = $noteMapper->create($noteModel);
+            
             $userTagInput          = array(
                 0 => array(
                     'userId' => $resultsetUserModel->getId(),
