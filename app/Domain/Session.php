@@ -13,43 +13,43 @@ class Session
     {
         $this->validator = new InputValidator();
     }
-    /*
-    public function create($userModel)
+    
+    public function create($userModel , $sessionModel)
     {
         try {
+            
             $userDomain    = new UserDomain();
-            $userModelRead = $userDomain->getUserByEmailPassword($userModel);
+            $userModelRead = $userDomain->readByUsernameandPassword($userModel);
             if (!empty($userModelRead)) {
-                $sessionModel = new SessionModel();
+                $sessionModel->setUserId($userModelRead->getId());
                 if ($this->validator->notNull($sessionModel->getUserId())
-                    && $this->validator->validNumber($sessionModel->getUserId())) {
-                    // var_dump(method_exists($sessionModel->setAuthToken())) = md5(mt_rand(1, 10000) . $createdOn);
+                && $this->validator->validNumber($sessionModel->getUserId())) {
                     $sessionMapper = new SessionMapper();
-                    $sessionModel  = $sessionMapper->create($userModelRead);
+                    $sessionModel  = $sessionMapper->create($sessionModel);
                     return $sessionModel;
                 }
             }
-        } catch (Notes\Exception\ModelNotFoundException $e) {
+        }
+        catch (Notes\Exception\ModelNotFoundException $e) {
             echo "Can Not Found Given Model In Database:" . $e->getMessage();
         }
     }
-    */
     
     public function read($sessionModel)
     {
         if ($this->validator->notNull($sessionModel->getId())
-        && $this->validator->validNumber($sessionModel->getId())) {
+            && $this->validator->validNumber($sessionModel->getId())) {
             $sessionMapper = new SessionMapper();
             $sessionModel  = $sessionMapper->read($sessionModel);
             return $sessionModel;
         }
     }
-
+    
     public function getSessionByAuthTokenAndUserId($sessionModel)
     {
         if ($this->validator->notNull($sessionModel->getUserId())
-        && $this->validator->validNumber($sessionModel->getUserId())
-        && $this->validator->notNull($sessionModel->getAuthToken())) {
+            && $this->validator->validNumber($sessionModel->getUserId())
+            && $this->validator->notNull($sessionModel->getAuthToken())) {
             $sessionMapper = new SessionMapper();
             $sessionModel  = $sessionMapper->read($sessionModel);
             return $sessionModel;
@@ -59,9 +59,9 @@ class Session
     public function delete($sessionModel)
     {
         if ($this->validator->notNull($sessionModel->getId())
-        && $this->validator->validNumber($sessionModel->getId())
-        && $this->validator->notNull($sessionModel->getUserId())
-        && $this->validator->validNumber($sessionModel->getUserId())) {
+            && $this->validator->validNumber($sessionModel->getId())
+            && $this->validator->notNull($sessionModel->getUserId())
+            && $this->validator->validNumber($sessionModel->getUserId())) {
             $sessionMapper = new SessionMapper();
             $sessionModel  = $sessionMapper->update($sessionModel);
             return $sessionModel;
