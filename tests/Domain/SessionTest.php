@@ -45,25 +45,21 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setEmail($userInput['email']);
         $userModel->setPassword($userInput['password']);
         $input        = array(
-            'userId' => 3,
             'authToken' => 'pqr',
             'createdOn' => '2015-01-29 20:59:59',
             'expiredOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
-        $sessionModel->setUserId($input['userId']);
-        $sessionModel->setAuthToken($input['authToken']);
-        $sessionModel->setCreatedOn($input['createdOn']);
+         $sessionModel->setAuthToken($input['authToken']);
+         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
-        
+    
         $sessionDomain = new Session();
         $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
-        
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/Session_after_create.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Sessions'
         ));
-        
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
         $this->assertEquals('pqr', $sessionModel->getAuthToken());
@@ -145,17 +141,19 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should not be null
      */
-    public function testthrowsExceptionWhenUserIdDoesNotExist()
+    public function testThrowsExceptionWhenUserIdIsNull()
     {
         $input        = array(
+            'id' => 1,
             'createdOn' => '2015-01-29 20:59:59',
             'expiredOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
+        $sessionModel->setId($input['id']);
         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
         $SessionDomain = new Session();
-        $sessionModel  = $SessionDomain->read($sessionModel);
+        $sessionModel  = $SessionDomain->delete($sessionModel);
     }
     
     /**
