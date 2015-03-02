@@ -50,12 +50,12 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'expiredOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
-         $sessionModel->setAuthToken($input['authToken']);
-         $sessionModel->setCreatedOn($input['createdOn']);
+        $sessionModel->setAuthToken($input['authToken']);
+        $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
-    
-        $sessionDomain = new Session();
-        $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
+        
+        $sessionDomain   = new Session();
+        $sessionModel    = $sessionDomain->create($userModel, $sessionModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/Session_after_create.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Sessions'
@@ -186,5 +186,31 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setAuthToken($input['authToken']);
         $SessionDomain = new Session();
         $sessionModel  = $SessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
+    }
+
+    /**
+     * @expectedException         Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage  Can Not Found Given Model In Database
+     */
+    public function testhrowsExceptionWhenEmailAndPasswordNotExist()
+    {
+        $userInput = array(
+            'email' => 'abcd@gmail.com',
+            'password' => 'psd'
+        );
+        $userModel = new UserModel();
+        $userModel->setEmail($userInput['email']);
+        $userModel->setPassword($userInput['password']);
+        $input        = array(
+            'authToken' => 'pqr',
+            'createdOn' => '2015-01-29 20:59:59',
+            'expiredOn' => '2015-01-29 20:59:59'
+        );
+        $sessionModel = new sessionModel();
+        $sessionModel->setAuthToken($input['authToken']);
+        $sessionModel->setCreatedOn($input['createdOn']);
+        $sessionModel->setExpiredOn($input['expiredOn']);
+        $sessionDomain = new Session();
+        $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
     }
 }
