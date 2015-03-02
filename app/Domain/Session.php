@@ -36,7 +36,7 @@ class Session
     public function read($sessionModel)
     {
         if ($this->validator->notNull($sessionModel->getId())
-            && $this->validator->validNumber($sessionModel->getId())) {
+        && $this->validator->validNumber($sessionModel->getId())) {
             $sessionMapper = new SessionMapper();
             $sessionModel  = $sessionMapper->read($sessionModel);
             return $sessionModel;
@@ -46,8 +46,8 @@ class Session
     public function getSessionByAuthTokenAndUserId($sessionModel)
     {
         if ($this->validator->notNull($sessionModel->getUserId())
-            && $this->validator->validNumber($sessionModel->getUserId())
-            && $this->validator->notNull($sessionModel->getAuthToken())) {
+        && $this->validator->validNumber($sessionModel->getUserId())
+        && $this->validator->notNull($sessionModel->getAuthToken())) {
             $sessionMapper = new SessionMapper();
             $sessionModel  = $sessionMapper->read($sessionModel);
             return $sessionModel;
@@ -57,9 +57,9 @@ class Session
     public function delete($sessionModel)
     {
         if ($this->validator->notNull($sessionModel->getId())
-            && $this->validator->validNumber($sessionModel->getId())
-            && $this->validator->notNull($sessionModel->getUserId())
-            && $this->validator->validNumber($sessionModel->getUserId())) {
+        && $this->validator->validNumber($sessionModel->getId())
+        && $this->validator->notNull($sessionModel->getUserId())
+        && $this->validator->validNumber($sessionModel->getUserId())) {
             $sessionMapper = new SessionMapper();
             $sessionModel  = $sessionMapper->update($sessionModel);
             return $sessionModel;
