@@ -14,10 +14,9 @@ class Session
         $this->validator = new InputValidator();
     }
     
-    public function create($userModel , $sessionModel)
+    public function create($userModel, $sessionModel)
     {
         try {
-            
             $userDomain    = new UserDomain();
             $userModelRead = $userDomain->readByUsernameandPassword($userModel);
             if (!empty($userModelRead)) {
@@ -29,8 +28,7 @@ class Session
                     return $sessionModel;
                 }
             }
-        }
-        catch (Notes\Exception\ModelNotFoundException $e) {
+        } catch (Notes\Exception\ModelNotFoundException $e) {
             echo "Can Not Found Given Model In Database:" . $e->getMessage();
         }
     }
