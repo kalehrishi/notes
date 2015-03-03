@@ -48,9 +48,7 @@ class Collection implements \Iterator
     
     public function key()
     {
-        if ($this->pointer < $this->total) {
-            return $this->pointer++;
-        }
+        return $this->pointer;
     }
     
     public function next()

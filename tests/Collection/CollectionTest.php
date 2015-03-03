@@ -67,4 +67,29 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($noteTagModel1, $collection->getRow(1));
         
     }
+    public function test_Retrives_Collection_Object()
+    {
+        $collection = new Collection();
+        
+        $noteTagModel  = new NoteTagModel();
+        $noteTagModel->setId(41);
+        $noteTagModel->setNoteId(4);
+        $noteTagModel->setUserTagId(543);
+        $noteTagModel->setIsDeleted(0);
+        
+        
+        $collection->add($noteTagModel);
+        
+        $noteTagModel->setId(122);
+        $noteTagModel->setNoteId(71);
+        $noteTagModel->setUserTagId(63);
+        $noteTagModel->setIsDeleted(0);
+        
+        $collection->add($noteTagModel);
+        
+        while($result=$collection->next())
+        {
+            print_r($result);
+        }
+    }
 }
