@@ -6,10 +6,8 @@ use Notes\Model\NoteTag as NoteTagModel;
 
 class Collection implements \Iterator
 {
-    
-    protected $mapper;
-    protected $total = 0;
-    protected $count;
+    private $total = 0;
+    private $count=0;
     private $pointer = 0;
     private $objects = array();
     
@@ -20,18 +18,21 @@ class Collection implements \Iterator
     
     public function add($object)
     {
-        
-        $this->objects[$this->total++] = $object;
+        if (is_object($object)) {
+            $this->objects[$this->total++] = $object;
+        } else {
+            throw new \InvalidArgumentException("Input should be Object");
+        }
         
     }
-    
-    public function getRow($num)
+
+    public function getResult($index)
     {
-        if ($num >= $this->total || $num < 0) {
+        if ($index >= $this->total || $index < 0) {
             return null;
         }
-        if (isset($this->objects[$num])) {
-            return $this->objects[$num];
+        if (isset($this->objects[$index])) {
+            return $this->objects[$index];
         }
         
     }
@@ -43,7 +44,7 @@ class Collection implements \Iterator
     
     public function current()
     {
-        return $this->getRow($this->pointer);
+        return $this->getResult($this->pointer);
     }
     
     public function key()
@@ -53,15 +54,27 @@ class Collection implements \Iterator
     
     public function next()
     {
-        $row = $this->getRow($this->pointer);
-        if ($row) {
+        $result = $this->getResult($this->pointer);
+        if ($result) {
             $this->pointer++;
+            return $result;
         }
-        return $row;
     }
-    
+    public function hasNext()
+    {
+        $result = $this->getResult($this->pointer);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function valid()
     {
-        return (!is_null($this->current()));
+        if (!is_null($this->current())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
