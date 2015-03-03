@@ -58,15 +58,16 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionDomain   = new Session();
 
         $sessionModel    = $sessionDomain->create($userModel, $sessionModel);
-
+        
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/Session_after_create.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Sessions'
+
         ));
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
-        $this->assertEquals('ba273a93b9de3c0d241b93c40ba94cb8', $sessionModel->getAuthToken());
+        $this->assertEquals('c24f708834cef1827a9f5bc9ec240d0d', $sessionModel->getAuthToken());
         $this->assertEquals('2015-01-29 20:59:59', $sessionModel->getCreatedOn());
         $this->assertEquals('2015-01-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(0, $sessionModel->getIsExpired());

@@ -18,11 +18,17 @@ class Session
     {
         
         $userDomain    = new UserDomain();
-        $userModelRead = $userDomain->readByUsernameandPassword($userModel);
+        $userModelRead = $userDomain->readByUsernameAndPassword($userModel);
         if (!empty($userModelRead)) {
             $sessionModel->setUserId($userModelRead->getId());
             
-            $sessionModel->setAuthToken($sessionModel->createAuthToken());
+            $randomNumber = 100;
+
+            $pwd=$userModelRead->getPassword();
+
+            $token= $sessionModel->createAuthToken($pwd, $randomNumber);
+
+            $sessionModel->setAuthToken($token);
             
             if ($this->validator->notNull($sessionModel->getUserId())
             && $this->validator->validNumber($sessionModel->getUserId())) {
