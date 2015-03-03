@@ -16,20 +16,25 @@ class Session
     
     public function create($userModel, $sessionModel)
     {
-        try {
-            $userDomain    = new UserDomain();
-            $userModelRead = $userDomain->readByUsernameandPassword($userModel);
-            if (!empty($userModelRead)) {
-                $sessionModel->setUserId($userModelRead->getId());
-                if ($this->validator->notNull($sessionModel->getUserId())
-                && $this->validator->validNumber($sessionModel->getUserId())) {
-                    $sessionMapper = new SessionMapper();
-                    $sessionModel  = $sessionMapper->create($sessionModel);
-                    return $sessionModel;
-                }
+        
+        $userDomain    = new UserDomain();
+        $userModelRead = $userDomain->readByUsernameandPassword($userModel);
+        if (!empty($userModelRead)) {
+            $sessionModel->setUserId($userModelRead->getId());
+            
+            $sessionModel->setAuthToken($sessionModel->createAuthToken());
+            
+            if ($this->validator->notNull($sessionModel->getUserId())
+            && $this->validator->validNumber($sessionModel->getUserId())) {
+                $sessionMapper = new SessionMapper();
+                $sessionModel  = $sessionMapper->create($sessionModel);
+                return $sessionModel;
             }
-        } catch (Notes\Exception\ModelNotFoundException $e) {
-            echo "Can Not Found Given Model In Database:" . $e->getMessage();
+        } else {
+            $obj = new ModelNotFoundException();
+            
+            $obj->setModel($userModelRead);
+            throw $obj;
         }
     }
     
@@ -38,7 +43,8 @@ class Session
         if ($this->validator->notNull($sessionModel->getId())
         && $this->validator->validNumber($sessionModel->getId())) {
             $sessionMapper = new SessionMapper();
-            $sessionModel  = $sessionMapper->read($sessionModel);
+            
+            $sessionModel = $sessionMapper->read($sessionModel);
             return $sessionModel;
         }
     }
@@ -49,7 +55,8 @@ class Session
         && $this->validator->validNumber($sessionModel->getUserId())
         && $this->validator->notNull($sessionModel->getAuthToken())) {
             $sessionMapper = new SessionMapper();
-            $sessionModel  = $sessionMapper->read($sessionModel);
+            
+            $sessionModel = $sessionMapper->read($sessionModel);
             return $sessionModel;
         }
     }
@@ -61,7 +68,8 @@ class Session
         && $this->validator->notNull($sessionModel->getUserId())
         && $this->validator->validNumber($sessionModel->getUserId())) {
             $sessionMapper = new SessionMapper();
-            $sessionModel  = $sessionMapper->update($sessionModel);
+            
+            $sessionModel = $sessionMapper->update($sessionModel);
             return $sessionModel;
         }
     }

@@ -47,28 +47,26 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setPassword($userInput['password']);
 
         $input        = array(
-            'authToken' => 'pqr',
             'createdOn' => '2015-01-29 20:59:59',
             'expiredOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
 
-        $sessionModel->setAuthToken($input['authToken']);
         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
         
         $sessionDomain   = new Session();
+
         $sessionModel    = $sessionDomain->create($userModel, $sessionModel);
 
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/Session_after_create.xml');
+        $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/Session_after_create.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Sessions'
         ));
-
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
-        $this->assertEquals('pqr', $sessionModel->getAuthToken());
+        $this->assertEquals('ba273a93b9de3c0d241b93c40ba94cb8', $sessionModel->getAuthToken());
         $this->assertEquals('2015-01-29 20:59:59', $sessionModel->getCreatedOn());
         $this->assertEquals('2015-01-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(0, $sessionModel->getIsExpired());
@@ -86,6 +84,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setAuthToken($input['authToken']);
 
         $SessionDomain   = new Session();
+
         $sessionModel    = $SessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
 
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
@@ -142,6 +141,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setIsExpired($input['isExpired']);
 
         $SessionDomain   = new Session();
+
         $sessionModel    = $SessionDomain->delete($sessionModel);
 
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml');
@@ -173,6 +173,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setExpiredOn($input['expiredOn']);
 
         $SessionDomain = new Session();
+
         $sessionModel  = $SessionDomain->delete($sessionModel);
     }
     
@@ -191,6 +192,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setId($input['id']);
 
         $SessionDomain = new Session();
+
         $sessionModel  = $SessionDomain->read($sessionModel);
     }
     /**
@@ -209,6 +211,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setAuthToken($input['authToken']);
 
         $SessionDomain = new Session();
+
         $sessionModel  = $SessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
     }
 
@@ -239,6 +242,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setExpiredOn($input['expiredOn']);
         
         $sessionDomain = new Session();
+        
         $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
     }
 }
