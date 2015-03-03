@@ -69,12 +69,11 @@ class Session
     {
         return $this->isExpired;
     }
-   public function createAuthToken()
-   {
+    public function createAuthToken()
+    {
           $password = 'abc';
           $randomNumber = 100;
          $authToken = md5($password.$randomNumber);
          return $authToken;
-   }    
-
+    }
 }
