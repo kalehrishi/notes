@@ -50,6 +50,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionDomain   = new Session();
 
         $sessionModel    = $sessionDomain->create($userModel);
+        
+        $this->assertEquals(4, $sessionModel->getId());
+        $this->assertEquals(3, $sessionModel->getUserId());
+        $this->assertEquals(NULL, $sessionModel->getExpiredOn());
+        $this->assertEquals(0, $sessionModel->getIsExpired());
     }
     
     public function test_can_read_session_by_UserId_and_authToken()
@@ -90,6 +95,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setId($input['id']);
 
         $SessionDomain   = new Session();
+
         $sessionModel    = $SessionDomain->read($sessionModel);
 
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
