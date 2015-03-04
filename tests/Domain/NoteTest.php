@@ -85,7 +85,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'title' => 'Exception',
             'body' => 'Creating a custom exception handler is quite simple.'
         );
-        $tagsInput = array('JavaScript Exception');
+        $tagsInput = array();
         $UserTagModel = array();
 
         $noteModel = new NoteModel();
@@ -95,12 +95,11 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
         $noteDomain      = new NoteDomain();
         $actualResultSet = $noteDomain->create($noteModel, $tagsInput);
-        
-        $this->assertEquals(3, $actualResultSet[0]->getId());
-        $this->assertEquals(1, $actualResultSet[0]->getUserId());
-        $this->assertEquals('Exception', $actualResultSet[0]->getTitle());
-        $this->assertEquals('Creating a custom exception handler is quite simple.', $actualResultSet[0]->getBody());
-        $this->assertEquals(0, $actualResultSet[0]->getIsDeleted());
+        $this->assertEquals(3, $actualResultSet->getId());
+        $this->assertEquals(1, $actualResultSet->getUserId());
+        $this->assertEquals('Exception', $actualResultSet->getTitle());
+        $this->assertEquals('Creating a custom exception handler is quite simple.', $actualResultSet->getBody());
+        $this->assertEquals(0, $actualResultSet->getIsDeleted());
     }
 
     /**

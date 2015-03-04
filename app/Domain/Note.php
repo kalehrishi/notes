@@ -56,7 +56,7 @@ class Note
                     array_push($resultsetNoteTagModel, $noteTagDomain->create($noteTagModel));
                 }
             } else {
-                return $noteModel;
+                return $resultsetNoteModel;
             }
             $resultsetNoteCreateModel = array(
                 $resultsetNoteModel,
