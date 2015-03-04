@@ -4,7 +4,11 @@ namespace Notes\Model;
 
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
-    public function test_can_set_and_get_id()
+    /**
+    * @test
+    *
+    **/
+    public function it_should_set_and_get_id()
     {
         $input   = array(
             'id' => 1
@@ -16,7 +20,11 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $session->getId());
     }
     
-    public function test_it_should_set_and_get_userId()
+    /**
+    * @test
+    *
+    **/
+    public function it_should_set_and_get_userId()
     {
         $input   = array(
             'userId' => 2
@@ -28,7 +36,11 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $session->getUserId());
     }
 
-    public function test_it_should_set_and_get_authToken()
+    /**
+    * @test
+    *
+    **/
+    public function it_should_set_and_get_authToken()
     {
         $input   = array(
             'authToken' => 'abc'
@@ -40,7 +52,11 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('abc', $session->getAuthToken());
     }
     
-    public function test_it_should_set_and_get_createdOn()
+    /**
+    * @test
+    *
+    **/
+    public function it_should_set_and_get_createdOn()
     {
         $input   = array(
             'createdOn' => '2015-02-16 08:56:44'
@@ -52,7 +68,11 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('2015-02-16 08:56:44', $session->getCreatedOn());
     }
     
-    public function test_it_should_set_and_get_expirededOn()
+    /**
+    * @test
+    *
+    **/
+    public function it_should_set_and_get_expirededOn()
     {
         $input   = array(
             'expiredOn' => '2015-02-16 08:56:44'
@@ -63,8 +83,12 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('2015-02-16 08:56:44', $session->getExpiredOn());
     }
-    
-    public function test_it_should_set_and_get_isExpired()
+
+    /**
+    * @test
+    *
+    **/
+    public function it_should_set_and_get_isExpired()
     {
         $input   = array(
             'isExpired' => '0'
@@ -75,15 +99,21 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('0', $session->getIsExpired());
     }
-    public function test_it_should_generate_authToken()
+
+    /**
+    * @test
+    *
+    **/
+    public function it_should_generate_authToken()
     {
             $password = 'abc';
             $randomNumber = 121;
 
         $session = new Session();
-
-        $actual=$session->createAuthToken($password,$randomNumber);
+    
+        $session->createAuthToken($password,$randomNumber);
         
+        $actual = $session->getAuthToken();
         $this->assertEquals('c3f3c4ffb150f5c87cec3164662e03dd',$actual);
     }
 }

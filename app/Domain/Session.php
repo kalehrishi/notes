@@ -22,12 +22,12 @@ class Session
         
         $sessionModel->setUserId($userModelRead->getId());
         
-        $randomNumber = rand();
-        
+        $randomNumber = rand(10,100);
+       
         $password = $userModelRead->getPassword();
         
-        $sessionModel->setAuthToken($sessionModel->createAuthToken($password, $randomNumber));
-        
+        $sessionModel->createAuthToken($password, $randomNumber);
+       
         $sessionModel->setCreatedOn(date("Y-m-d H:i:s"));
         
         if ($this->validator->notNull($sessionModel->getUserId())

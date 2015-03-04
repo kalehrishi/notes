@@ -33,7 +33,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
     }
     
-    public function test_it_should_create_session_with_valid_email_password()
+      /**
+    * @test
+    *
+    **/
+    public function it_should_create_session_with_valid_email_password()
     {
         $userInput = array(
             'email' => 'pushpa@marade.com',
@@ -57,7 +61,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(0, $sessionModel->getIsExpired());
     }
     
-    public function test_can_read_session_by_UserId_and_authToken()
+     /**
+    * @test
+    *
+    **/
+    public function it_should_read_session_by_UserId_and_authToken()
     {
         $input        = array(
             'userId' => 2,
@@ -84,8 +92,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
-    
-    public function test_it_should_read_session_by_id()
+
+    /**
+    * @test
+    *
+    **/
+
+    public function it_should_read_session_by_id()
     {
         $input        = array(
             'id' => 2
@@ -110,8 +123,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
-    
-    public function test_it_should_Delete_Session()
+
+     /**
+    * @test
+    *
+    **/
+
+    public function test_it_should_delete_session()
     {
         $input        = array(
             'id' => '1',
@@ -141,11 +159,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
+
     /**
+     * @test
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should not be null
      */
-    public function test_it_should_throw_exception_while_deleting_session_with_no_userId()
+    public function it_should_throw_exception_while_deleting_session_with_no_userId()
     {
         $input        = array(
             'id' => 1,
@@ -164,6 +184,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     /**
+     * @test
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
@@ -182,6 +203,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel  = $SessionDomain->read($sessionModel);
     }
     /**
+     * @test
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
@@ -202,6 +224,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
+     * @test
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */

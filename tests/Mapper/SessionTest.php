@@ -32,7 +32,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
     }
     
-    public function test_it_should_create_session()
+    /**
+    * @test
+    *
+    **/
+    public function it_should_create_session()
     {
         $input          = array(
             'userId'    => 1,
@@ -66,7 +70,10 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2015-01-01 10:00:01', $sessionModel->getExpiredOn());
         $this->assertEquals(0, $sessionModel->getIsExpired());
     }
-    
+    /**
+    * @test
+    *
+    **/
     public function test_it_should_read_session_by_id()
     {
         $input = array(
@@ -94,9 +101,12 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2015-01-10 01:01:01', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
-    
-
-    public function test_it_should_read_session_by_userId_authToken()
+   
+    /**
+    * @test
+    *
+    **/
+    public function it_should_read_session_by_userId_authToken()
     {
         $input = array(
             'userId'    => 1,
@@ -126,6 +136,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     }
  
     /**
+     * @test
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
@@ -143,6 +154,10 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel  = $sessionMapper->read($sessionModel);
     }
     
+    /**
+    * @test
+    *
+    **/
     public function test_it_should_Delete_Session()
     {
         
@@ -178,6 +193,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     /**
+     * @test
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
