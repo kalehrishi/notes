@@ -101,7 +101,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
-    public function testCanReadSession()
+    public function testCanReadSessionById()
     {
         $input        = array(
             'id' => 2
