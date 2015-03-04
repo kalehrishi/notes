@@ -72,8 +72,7 @@ class Session
     public function createAuthToken($password, $randomNumber)
     {
         $authToken = md5($password.$randomNumber);
-        
-         $this->setAuthToken($authToken);
+        $this->setAuthToken($authToken);
 
      }
 }

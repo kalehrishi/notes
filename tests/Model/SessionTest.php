@@ -111,9 +111,9 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
         $session = new Session();
     
-        $session->createAuthToken($password,$randomNumber);
-        
+        $session->createAuthToken($password, $randomNumber);
+
         $actual = $session->getAuthToken();
-        $this->assertEquals('c3f3c4ffb150f5c87cec3164662e03dd',$actual);
+        $this->assertEquals('c3f3c4ffb150f5c87cec3164662e03dd', $actual);
     }
 }
