@@ -110,9 +110,8 @@ class Note
         }
         
         if (!empty($resultset)) {
-            $count     = count($resultset);
             $noteModel = array();
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < count($resultset); $i++) {
                 array_push($noteModel, $resultset[$i]);
             }
             return $noteModel;
