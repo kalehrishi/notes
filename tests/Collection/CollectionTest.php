@@ -2,8 +2,6 @@
 
 namespace Notes\Collection;
 
-use Notes\Mapper\NoteTag as NoteTagMapper;
-
 use Notes\Model\NoteTag as NoteTagModel;
 
 class CollectionTest extends \PHPUnit_Framework_TestCase
@@ -51,6 +49,34 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     }
     /**
     * @test
+    * @expectedException         OutOfBoundsException
+    * @expectedExceptionMessage  Array index is out of bounds
+    **/
+    
+    public function throws_Exception_while_accessing_array_out_of_bounds()
+    {
+        $noteTagModel  = new NoteTagModel();
+        $noteTagModel->setId(41);
+        $noteTagModel->setNoteId(4);
+        $noteTagModel->setUserTagId(543);
+        $noteTagModel->setIsDeleted(0);
+        
+        $this->collection->add($noteTagModel);
+
+        $this->assertEquals($noteTagModel, $this->collection->getRow(1));
+    }
+    /**
+    * @test
+    * @expectedException         OutOfBoundsException
+    * @expectedExceptionMessage  Array index is out of bounds
+    **/
+    
+    public function throws_Exception_while_collection_object_is_null()
+    {
+        $this->collection->getRow(0);
+    }
+    /**
+    * @test
     *
     **/
     public function it_should_be_added_multiple_objects()
@@ -63,7 +89,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         
         $this->collection->add($noteTagModel);
 
-        $this->assertEquals($noteTagModel, $this->collection->getResult(0));
+        $this->assertEquals($noteTagModel, $this->collection->getRow(0));
         
         $noteTagModel  = new NoteTagModel();
         $noteTagModel->setId(122);
@@ -73,7 +99,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
        
         $this->collection->add($noteTagModel);
         
-        $this->assertEquals($noteTagModel, $this->collection->getResult(1));
+        $this->assertEquals($noteTagModel, $this->collection->getRow(1));
               
         $noteTagModel  = new NoteTagModel();
         $noteTagModel->setId(12);
@@ -83,30 +109,30 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         
         $this->collection->add($noteTagModel);
         
-        $this->assertEquals($noteTagModel, $this->collection->getResult(2));  
+        $this->assertEquals($noteTagModel, $this->collection->getRow(2));  
 
-
-        $this->collection->rewind();
-        while(($result = $this->collection->valid())) {
-           $this->assertEquals(true,$result);
-           $this->collection->next();
-        }   
 
         $this->collection->rewind();
         while($this->collection->hasNext()) {
-        $this->assertEquals(122, $this->collection->getResult(1)->getId());
-        $this->assertEquals(71, $this->collection->getResult(1)->getNoteId());
-        $this->assertEquals(63, $this->collection->getResult(1)->getUserTagId());
-        $this->assertEquals(0, $this->collection->getResult(1)->getIsDeleted());
-        $this->assertEquals(41, $this->collection->getResult(0)->getId());
-        $this->assertEquals(4, $this->collection->getResult(0)->getNoteId());
-        $this->assertEquals(543, $this->collection->getResult(0)->getUserTagId());
-        $this->assertEquals(0, $this->collection->getResult(0)->getIsDeleted());
-        $this->assertEquals(12, $this->collection->getResult(2)->getId());
-        $this->assertEquals(1, $this->collection->getResult(2)->getNoteId());
-        $this->assertEquals(93, $this->collection->getResult(2)->getUserTagId());
-        $this->assertEquals(1, $this->collection->getResult(2)->getIsDeleted());
+           $this->assertEquals(true,$this->collection->valid());
+           $this->collection->next();
+       }   
+
+        $this->collection->rewind();
+        while($this->collection->hasNext()) {
+        $this->assertEquals(122, $this->collection->getRow(1)->getId());
+        $this->assertEquals(71, $this->collection->getRow(1)->getNoteId());
+        $this->assertEquals(63, $this->collection->getRow(1)->getUserTagId());
+        $this->assertEquals(0, $this->collection->getRow(1)->getIsDeleted());
+        $this->assertEquals(41, $this->collection->getRow(0)->getId());
+        $this->assertEquals(4, $this->collection->getRow(0)->getNoteId());
+        $this->assertEquals(543, $this->collection->getRow(0)->getUserTagId());
+        $this->assertEquals(0, $this->collection->getRow(0)->getIsDeleted());
+        $this->assertEquals(12, $this->collection->getRow(2)->getId());
+        $this->assertEquals(1, $this->collection->getRow(2)->getNoteId());
+        $this->assertEquals(93, $this->collection->getRow(2)->getUserTagId());
+        $this->assertEquals(1, $this->collection->getRow(2)->getIsDeleted());
         $this->collection->next();
-        }
+        }  
     }
 }

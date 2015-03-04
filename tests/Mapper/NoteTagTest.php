@@ -46,17 +46,22 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagMapper = new NoteTag();
-        $noteTagModel  = $noteTagMapper->read($noteTagModel);
-        
+        $noteTagCollection  = $noteTagMapper->read($noteTagModel);
+       
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTag_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'NoteTags'
         ));
+        
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals(1, $noteTagModel->getId());
-        $this->assertEquals(4, $noteTagModel->getNoteId());
-        $this->assertEquals(3, $noteTagModel->getUserTagId());
-        $this->assertEquals(0, $noteTagModel->getIsDeleted());
+        
+        while($noteTagCollection->hasNext()) {
+        $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
+        $this->assertEquals(4, $noteTagCollection->getRow(0)->getNoteId());
+        $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
+        $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
+        $noteTagCollection->next();
+        } 
     }
     /**
     * @expectedException         Notes\Exception\ModelNotFoundException
