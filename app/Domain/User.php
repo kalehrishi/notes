@@ -11,6 +11,8 @@ use Notes\Validator\InputValidator as InputValidator;
 
 use Notes\PasswordValidation\PasswordValidator as PasswordValidator;
 
+use Notes\Factory\UserFactory as UserFactory;
+
 class User
 {
     
@@ -37,11 +39,12 @@ class User
             
         }
     }
+    
     public function read($userModel)
     {
         
         if ($this->validator->notNull($userModel->getId())
-         && $this->validator->validNumber($userModel->getId())) {
+            && $this->validator->validNumber($userModel->getId())) {
             $userMapper = new UserMapper();
             $userModel  = $userMapper->read($userModel);
             return $userModel;
@@ -50,6 +53,7 @@ class User
     
     public function readByUsernameandPassword($userModel)
     {
+        
         if ($this->validator->validEmail($userModel->getEmail())
             && $this->validator->notNull($userModel->getPassword())) {
             $userMapper = new UserMapper();
@@ -59,7 +63,7 @@ class User
     }
     public function update($userModel)
     {
-       
+        
         if ($this->validator->validString($userModel->getFirstName())
             && $this->validator->validString($userModel->getLastName())
             && $this->validator->validEmail($userModel->getEmail())
