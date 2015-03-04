@@ -14,33 +14,30 @@ class Session
         $this->validator = new InputValidator();
     }
     
-    public function create($userModel, $sessionModel)
+    public function create($userModel)
     {
-        
+        $sessionModel  = new sessionModel();
         $userDomain    = new UserDomain();
         $userModelRead = $userDomain->readByUserNameAndPassword($userModel);
-        if (!empty($userModelRead)) {
-            $sessionModel->setUserId($userModelRead->getId());
-            
-            $randomNumber = 100;
+        
+        $sessionModel->setUserId($userModelRead->getId());
+        
+        $randomNumber = rand();
+        
+        $password = $userModelRead->getPassword();
+        
+        $sessionModel->setAuthToken($sessionModel->createAuthToken($password, $randomNumber));
+        
+        $sessionModel->setCreatedOn(date("Y-m-d H:i:s"));
+        
+        if ($this->validator->notNull($sessionModel->getUserId())
+        && $this->validator->validNumber($sessionModel->getUserId())
+        && $this->validator->notNull($sessionModel->getAuthToken())) {
+            $sessionMapper = new SessionMapper();
 
-            $pwd=$userModelRead->getPassword();
+            $sessionModel  = $sessionMapper->create($sessionModel);
 
-            $Authtoken= $sessionModel->createAuthToken($pwd, $randomNumber);
-
-            $sessionModel->setAuthToken($Authtoken);
-            
-            if ($this->validator->notNull($sessionModel->getUserId())
-            && $this->validator->validNumber($sessionModel->getUserId())) {
-                $sessionMapper = new SessionMapper();
-                $sessionModel  = $sessionMapper->create($sessionModel);
-                return $sessionModel;
-            }
-        } else {
-            $obj = new ModelNotFoundException();
-            
-            $obj->setModel($userModelRead);
-            throw $obj;
+            return $sessionModel;
         }
     }
     
@@ -51,6 +48,7 @@ class Session
             $sessionMapper = new SessionMapper();
             
             $sessionModel = $sessionMapper->read($sessionModel);
+
             return $sessionModel;
         }
     }
@@ -63,6 +61,7 @@ class Session
             $sessionMapper = new SessionMapper();
             
             $sessionModel = $sessionMapper->read($sessionModel);
+
             return $sessionModel;
         }
     }
@@ -76,6 +75,7 @@ class Session
             $sessionMapper = new SessionMapper();
             
             $sessionModel = $sessionMapper->update($sessionModel);
+            
             return $sessionModel;
         }
     }

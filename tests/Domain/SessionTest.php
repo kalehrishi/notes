@@ -33,7 +33,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
     }
     
-    public function testCanCreateSession()
+    public function test_it_should_create_session_with_valid_email_password()
     {
         $userInput = array(
             'email' => 'pushpa@marade.com',
@@ -46,34 +46,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setEmail($userInput['email']);
         $userModel->setPassword($userInput['password']);
 
-        $input        = array(
-            'createdOn' => '2015-01-29 20:59:59',
-            'expiredOn' => '2015-01-29 20:59:59'
-        );
         $sessionModel = new sessionModel();
-
-        $sessionModel->setCreatedOn($input['createdOn']);
-        $sessionModel->setExpiredOn($input['expiredOn']);
-        
         $sessionDomain   = new Session();
 
-        $sessionModel    = $sessionDomain->create($userModel, $sessionModel);
-        
-        $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/Session_after_create.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Sessions'
-
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals(4, $sessionModel->getId());
-        $this->assertEquals(3, $sessionModel->getUserId());
-        $this->assertEquals('c24f708834cef1827a9f5bc9ec240d0d', $sessionModel->getAuthToken());
-        $this->assertEquals('2015-01-29 20:59:59', $sessionModel->getCreatedOn());
-        $this->assertEquals('2015-01-29 20:59:59', $sessionModel->getExpiredOn());
-        $this->assertEquals(0, $sessionModel->getIsExpired());
+        $sessionModel    = $sessionDomain->create($userModel);
     }
     
-    public function testCanReadSessionByUserIdAndAuthToken()
+    public function test_can_read_session_by_UserId_and_authToken()
     {
         $input        = array(
             'userId' => 2,
@@ -101,7 +80,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
-    public function testCanReadSessionById()
+    public function test_it_should_read_session_by_id()
     {
         $input        = array(
             'id' => 2
@@ -126,7 +105,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
-    public function testCanDeleteSession()
+    public function test_it_should_Delete_Session()
     {
         $input        = array(
             'id' => '1',
@@ -160,7 +139,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should not be null
      */
-    public function testThrowsExceptionWhenUserIdIsNull()
+    public function test_it_should_throw_exception_while_deleting_session_with_no_userId()
     {
         $input        = array(
             'id' => 1,
@@ -183,7 +162,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
     
-    public function testThrowsExceptionWhenSessionIdDoesNotExist()
+    public function test_it_should_throw_exception_with_invalid_id()
     {
         $input        = array(
             'id' => 10
@@ -200,7 +179,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-    public function testThrowsExceptionWhenAuthTokenAndUserIdNotExist()
+    public function test_it_should_throw_exception_with_invalid_authToken_userId()
     {
         $input        = array(
             'userId' => 15,
@@ -220,7 +199,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-    public function testhrowsExceptionWhenEmailAndPasswordNotExist()
+    public function test_it_should_throw_exception_with_invalid_email_password()
     {
         $userInput = array(
             'email' => 'abcd@gmail.com',
