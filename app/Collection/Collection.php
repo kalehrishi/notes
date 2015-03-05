@@ -56,6 +56,8 @@ class Collection implements \Iterator
         if ($this->hasNext()) {
             $result = $this->getRow($this->pointer++);
             return $result;
+        } else {
+            return null;
         }
     }
     public function hasNext()
