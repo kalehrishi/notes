@@ -27,7 +27,7 @@ class Session
         $password = $userModelRead->getPassword();
         
         $sessionModel->createAuthToken($password, $randomNumber);
-       
+        
         $sessionModel->setCreatedOn(date("Y-m-d H:i:s"));
         
         if ($this->validator->notNull($sessionModel->getUserId())
