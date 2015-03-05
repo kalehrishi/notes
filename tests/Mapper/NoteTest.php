@@ -49,7 +49,11 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper      = new NoteMapper();
         
         $actualResultset = $noteMapper->update($noteModel);
-        $this->assertEquals("Updated Successfully", $actualResultset);
+
+        $this->assertEquals(1, $actualResultset->getId());
+        $this->assertEquals('Web', $actualResultset->getTitle());
+        $this->assertEquals('PHP is a powerful tool for making dynamic Web pages.', $actualResultset->getBody());
+
         $query           = "select id, title, body from Notes";
         $actualDataSet   = $this->getConnection()->createQueryTable('Notes', $query);
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
@@ -165,11 +169,15 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
 
         $expectedResultset = "PHP5";
         $noteMapper        = new NoteMapper();
-        $actualResultset   = $noteMapper->read($noteModel);
+        $noteCollection   = $noteMapper->read($noteModel);
 
-        $this->assertEquals(2, $actualResultset[0]['id']);
-        $this->assertEquals('PHP5', $actualResultset[0]['title']);
-        $this->assertEquals('Server scripting language.', $actualResultset[0]['body']);
+        while($noteCollection->hasNext()) {
+        $this->assertEquals(2, $noteCollection->getRow(0)->getId());
+        $this->assertEquals(1, $noteCollection->getRow(0)->getUserId());
+        $this->assertEquals('PHP5', $noteCollection->getRow(0)->getTitle());
+        $this->assertEquals('Server scripting language.', $noteCollection->getRow(0)->getBody());
+        $noteCollection->next();
+        }
     }
     
     /**

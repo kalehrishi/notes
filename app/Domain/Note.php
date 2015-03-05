@@ -70,9 +70,9 @@ class Note
     public function delete(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getId())
-        	&& $this->validator->validNumber($noteModel->getId())
-        	&& $this->validator->notNull($noteModel->getIsDeleted())
-        	&& $this->validator->validNumber($noteModel->getIsDeleted())) {
+            && $this->validator->validNumber($noteModel->getId())
+            && $this->validator->notNull($noteModel->getIsDeleted())
+            && $this->validator->validNumber($noteModel->getIsDeleted())) {
             $noteMapper               = new NoteMapper();
             $resultsetNoteDeleteModel = $noteMapper->delete($noteModel);
             return $resultsetNoteDeleteModel;
@@ -82,9 +82,9 @@ class Note
     public function update(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getId())
-        	&& $this->validator->validNumber($noteModel->getId())
-        	&& $this->validator->notNull($noteModel->getTitle())
-        	&& $this->validator->notNull($noteModel->getBody())) {
+            && $this->validator->validNumber($noteModel->getId())
+            && $this->validator->notNull($noteModel->getTitle())
+            && $this->validator->notNull($noteModel->getBody())) {
             $noteMapper = new NoteMapper();
             
             $resultset = $noteMapper->update($noteModel);
@@ -95,30 +95,20 @@ class Note
     public function readNote($noteModel)
     {
         if ($this->validator->notNull($noteModel->getId())
-        	&& $this->validator->validNumber($noteModel->getId())) {
-            $noteMapper = new NoteMapper();
-            $resultset  = $noteMapper->read($noteModel);
-            $noteModel  = array();
-            for ($i = 0; $i < count($resultset); $i++) {
-                array_push($noteModel, $resultset[$i]);
-            }
-            return $noteModel;
+            && $this->validator->validNumber($noteModel->getId())) {
+            $noteMapper     = new NoteMapper();
+            $noteCollection = $noteMapper->read($noteModel);
+            return $noteCollection;
         }
-        
     }
     
     public function readAllNotes(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getUserId())
-        	&& $this->validator->validNumber($noteModel->getUserId())) {
-            $noteMapper = new NoteMapper();
-            $resultset  = $noteMapper->read($noteModel);
-            $noteModel  = array();
-            for ($i = 0; $i < count($resultset); $i++) {
-                array_push($noteModel, $resultset[$i]);
-            }
-            return $noteModel;
-            
+            && $this->validator->validNumber($noteModel->getUserId())) {
+            $noteMapper     = new NoteMapper();
+            $noteCollection = $noteMapper->read($noteModel);
+            return $noteCollection;
         }
     }
 }

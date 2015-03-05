@@ -5,6 +5,7 @@ namespace Notes\Mapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Database\Database as Database;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+use Notes\Collection\NoteCollection as NoteCollection;
 
 class Note
 {
@@ -70,13 +71,12 @@ class Note
         );
         try {
             $database  = new Database();
-            $resultset = $database->update($params);
+            $resultset = $database->post($params);
         } catch (\PDOException $e) {
             $e->getMessage();
         }
-        
-        if (!empty($resultset)) {
-            return "Updated Successfully";
+        if ($resultset['rowCount'] == 1) {
+            return $noteModel ;
         } else {
             $obj = new ModelNotFoundException();
             $obj->setModel($noteModel);
@@ -110,11 +110,7 @@ class Note
         }
         
         if (!empty($resultset)) {
-            $noteModel = array();
-            for ($i = 0; $i < count($resultset); $i++) {
-                array_push($noteModel, $resultset[$i]);
-            }
-            return $noteModel;
+            return new NoteCollection($resultset);
         } else {
             $obj = new ModelNotFoundException();
             $obj->setModel($noteModel);
