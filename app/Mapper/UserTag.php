@@ -4,6 +4,8 @@ namespace Notes\Mapper;
 
 use Notes\Database\Database as Database;
 
+use Notes\Collection\UserTagCollection as UserTagCollection;
+
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class UserTag
@@ -29,9 +31,9 @@ class UserTag
     
     public function read($userTagModel)
     {
-        $query            = " SELECT id,userId,tag,isDeleted FROM UserTags WHERE id=:id";
+        $query            = " SELECT id,userId,tag,isDeleted FROM UserTags WHERE userId=:userId";
         $placeholder      = array(
-            ':id' => $userTagModel->getId()
+            ':userId' => $userTagModel->getUserId()
         );
         $params           = array(
             'dataQuery' => $query,
@@ -40,11 +42,7 @@ class UserTag
         $userTagModelbase = new Database();
         $resultset        = $userTagModelbase->get($params);
         if (!empty($resultset)) {
-            $userTagModel->setId($resultset[0]['id']);
-            $userTagModel->setUserId($resultset[0]['userId']);
-            $userTagModel->setTag($resultset[0]['tag']);
-            $userTagModel->setIsDeleted($resultset[0]['isDeleted']);
-            return $userTagModel;
+            return new UserTagCollection($resultset);
         } else {
             $exception = new ModelNotFoundException();
             $exception->setModel($userTagModel);
