@@ -29,8 +29,7 @@ class Collection implements \Iterator
     {
         if ($index > $this->total || $index < 0) {
             throw new \OutOfBoundsException("Array index is out of bounds");
-        }
-        if (isset($this->objects[$index])) {
+        } elseif (isset($this->objects[$index])) {
             return $this->objects[$index];
         }
         
