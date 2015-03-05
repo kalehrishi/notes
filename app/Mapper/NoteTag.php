@@ -4,6 +4,8 @@ namespace Notes\Mapper;
 
 use Notes\Database\Database as Database;
 
+use Notes\Collection\NoteTagCollection as NoteTagCollection;
+
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class NoteTag
@@ -41,11 +43,7 @@ class NoteTag
         $noteTagModelbase = new Database();
         $resultset        = $noteTagModelbase->get($params);
         if (!empty($resultset)) {
-            $noteTagModel->setId($resultset[0]['id']);
-            $noteTagModel->setNoteId($resultset[0]['noteId']);
-            $noteTagModel->setUserTagId($resultset[0]['userTagId']);
-            $noteTagModel->setIsDeleted($resultset[0]['isDeleted']);
-            return $noteTagModel;
+            return new NoteTagCollection($resultset);
         } else {
             $exception = new ModelNotFoundException();
             $exception->setModel($noteTagModel);

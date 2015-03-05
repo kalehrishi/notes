@@ -37,38 +37,44 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     
-    public function testCanReadRecordById()
+    public function testCanReadRecordByUserId()
     {
         $input        = array(
-            'id' => 1
+            'userId' => 1
         );
         $userTagModel = new UserTagModel();
-        $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
         
         
         $userTagMapper = new UserTag();
-        $userTagModel  = $userTagMapper->read($userTagModel);
+        $userTagCollection = $userTagMapper->read($userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTags_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'UserTags'
         ));
+        
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals('Import package', $userTagModel->getTag());
-        $this->assertEquals('1', $userTagModel->getUserId());
-        $this->assertEquals('0', $userTagModel->getIsDeleted());
+       
+        while($userTagCollection->hasNext()) {
+        $this->assertEquals(1, $userTagCollection->getRow(0)->getId());
+        $this->assertEquals(1, $userTagCollection->getRow(0)->getUserId());
+        $this->assertEquals('Import package', $userTagCollection->getRow(0)->getTag());
+        $this->assertEquals(0, $userTagCollection->getRow(0)->getIsDeleted());
+        $userTagCollection->next();
+        } 
     }
     /**
     * @expectedException         Notes\Exception\ModelNotFoundException
     * @expectedExceptionMessage  Can Not Found Given Model In Database
     */
-    public function testUserTagIdDoesNotExists()
+    public function testUserIdDoesNotExists()
     {
         $input        = array(
-            'id' => 2
+            'userId' => 2
         );
         $userTagModel = new UserTagModel();
-        $userTagModel->setId($input['id']);
+        $userTagModel->setUserId($input['userId']);
         
         
         $userTagMapper = new UserTag();

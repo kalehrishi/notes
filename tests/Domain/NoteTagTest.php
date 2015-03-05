@@ -52,12 +52,11 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $noteTagDomain = new NoteTag();
         $noteTagModel  = $noteTagDomain->create($noteTagModel);
         
-        
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTagDomain_after_create.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'NoteTags'
         ));
-        
+    
         $this->assertEquals(4, $noteTagModel->getId());
         $this->assertEquals(3, $noteTagModel->getNoteId());
         $this->assertEquals(1, $noteTagModel->getUserTagId());
@@ -92,18 +91,21 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->read($noteTagModel);
-        
+        $noteTagCollection  = $noteTagDomain->readAllTag($noteTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTagDomain_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'NoteTags'
         ));
         
-        $this->assertEquals(3, $noteTagModel->getId());
-        $this->assertEquals(2, $noteTagModel->getNoteId());
-        $this->assertEquals(3, $noteTagModel->getUserTagId());
-        $this->assertEquals(0, $noteTagModel->getIsDeleted());
+        while($noteTagCollection->hasNext()) {
+        $this->assertEquals(3, $noteTagCollection->getRow(0)->getId());
+        $this->assertEquals(2, $noteTagCollection->getRow(0)->getNoteId());
+        $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
+        $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
+        $noteTagCollection->next();
+        } 
+
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
@@ -122,7 +124,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->read($noteTagModel);
+        $noteTagModel  = $noteTagDomain->readAllTag($noteTagModel);
     }
     public function testCanDeleteNoteTag()
     {

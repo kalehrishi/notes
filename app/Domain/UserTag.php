@@ -27,14 +27,14 @@ class UserTag
             return $userTagModel;
         }
     }
-    public function read($userTagModel)
+    public function readAllTag($userTagModel)
     {
         
-        if ($this->validator->notNull($userTagModel->getId())
-            && $this->validator->validNumber($userTagModel->getId())) {
+        if ($this->validator->notNull($userTagModel->getUserId())
+            && $this->validator->validNumber($userTagModel->getUserId())) {
             $userTagMpper = new UserTagMapper();
-            $userTagModel = $userTagMpper->read($userTagModel);
-            return $userTagModel;
+            $userTagCollection = $userTagMpper->read($userTagModel);
+            return $userTagCollection;
         }
     }
 }
