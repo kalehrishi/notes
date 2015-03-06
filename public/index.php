@@ -1,26 +1,27 @@
 <?php
 
-namespace Notes\Domain;
-
 require '../vendor/autoload.php';
 
-use Notes\Model\UserTag as UserTagModel;
+//use Notes\Domain\UserTag as UserTagDomain;
+//use Notes\Model\UserTag as UserTagModel;
+
+use Notes\Request\Request as Request;
+use Notes\Controller\User as UserController;
+
 
 $app = new \Slim\Slim();
 
-$app->get('/tag/:tag', function ($tag) {
-
-    $userTagModel= new UserTagModel();
+$app->get('/user/:user', function($user)
+{
     
-    $userTagModel->setUserId(2);
-    $userTagModel->setTag($tag);
-
-    $userTagDomain= new UserTag();
     
-    $result=$userTagDomain->create($userTagModel);
-
-    print_r($result);
+    $request     = new Request($user);
+    $requestdata = $request->get();
+    
+    $userController = new UserController();
+    $response       = $userController->create($requestdata);
+    
+    print_r($response);
 });
 
 $app->run();
-
