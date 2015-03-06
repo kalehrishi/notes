@@ -1,0 +1,1 @@
+ALTER TABLE Sessions modify expiredOn TIMESTAMP DEFAULT NULL;

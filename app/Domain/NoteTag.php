@@ -28,14 +28,14 @@ class NoteTag
             return $noteTagModel;
         }
     }
-    public function read($noteTagModel)
+    public function readAllTag($noteTagModel)
     {
         
         if ($this->validator->notNull($noteTagModel->getNoteId())
             && $this->validator->validNumber($noteTagModel->getNoteId())) {
             $noteTagMpper = new NoteTagMapper();
-            $noteTagModel = $noteTagMpper->read($noteTagModel);
-            return $noteTagModel;
+            $noteTagCollection = $noteTagMpper->read($noteTagModel);
+            return $noteTagCollection;
         }
     }
     public function delete($noteTagModel)
