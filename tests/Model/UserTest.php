@@ -3,22 +3,27 @@ namespace Notes\Model;
 
 use Notes\Model\User as UserModel;
 
-use Notes\Factory\UserFactory as UserFactory;
-
 class UserTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanSetMultipleProperties()
     {
         
         $input     = array(
+            'id' => 1,
             'firstName' => 'anusha',
             'lastName' => 'hiremath',
             'email' => 'anusha@gmail.com',
             'password' => 'sfhsk1223',
             'createdOn' => '2014-10-31 20:59:59'
         );
-        $userFactory     = new UserFactory();
-        $userModel       = $userFactory->create($input);
+        $userModel = new UserModel();
+        $userModel->setId($input['id']);
+        $userModel->setFirstName($input['firstName']);
+        $userModel->setLastName($input['lastName']);
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
+        $userModel->setCreatedOn($input['createdOn']);
+        $this->assertEquals(1, $userModel->getId());
         $this->assertEquals('anusha', $userModel->getFirstName());
         $this->assertEquals('hiremath', $userModel->getLastName());
         $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
@@ -31,11 +36,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         
         $input     = array(
-            'id' => 1
+            'firstName' => 'anusha'
         );
-        $userFactory     = new UserFactory();
-        $userModel       = $userFactory->read($input);
-        $this->assertEquals(1, $userModel->getId());
+        $userModel = new UserModel();
+        $userModel->setId($input['firstName']);
+        $this->assertEquals('anusha', $userModel->getId());
         
     }
 }

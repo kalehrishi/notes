@@ -9,11 +9,10 @@ use Notes\Config\Config as Configuration;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
-use Notes\Factory\UserFactory as UserFactory;
+use Notes\Factory\User as UserFactory;
 
 class UserTest extends \PHPUnit_Extensions_Database_TestCase
 {
-    
     private $connection;
     
     public function getConnection()
@@ -40,15 +39,14 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     
-    
     public function testCanReadRecordById()
     {
-        $input           = array(
+        $input     = array(
             'id' => 1
             
         );
-        $userFactory     = new UserFactory();
-        $userModel       = $userFactory->read($input);
+        $userModel = new UserModel();
+        $userModel->setId($input['id']);
         $userDomain      = new User();
         $userModel       = $userDomain->read($userModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
@@ -78,23 +76,24 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             
         );
         
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->read($input);
-        $userDomain  = new User();
-        $userModel   = $userDomain->read($userModel);
+        $userModel = new UserModel($input);
+        $userModel->setId($input['id']);
+        $userDomain = new User();
+        $userModel  = $userDomain->read($userModel);
         
         
     }
     public function testCanReadRecordByUsernameAndPassword()
     {
-        $input       = array(
+        $input     = array(
             'email' => 'anusha@gmail.com',
             'password' => 'sfhsk1223'
         );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->readByUsernameandPassword($input);
-        $userDomain  = new User();
-        $userModel   = $userDomain->readByUsernameandPassword($userModel);
+        $userModel = new UserModel();
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
+        $userDomain = new User();
+        $userModel  = $userDomain->readByUsernameandPassword($userModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -125,27 +124,27 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'password' => 'sfhs1223'
         );
         
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->readByUsernameandPassword($input);
-        $userDomain  = new User();
-        $userModel   = $userDomain->readByUsernameandPassword($userModel);
+        $userModel = new UserModel($input);
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
+        $userDomain = new User();
+        $userModel  = $userDomain->readByUsernameandPassword($userModel);
         
     }
     
     public function testCanInsertRecord()
     {
-        $input = array(
+        $input     = array(
             'firstName' => 'kirti',
             'lastName' => 'ramani',
             'email' => 'kirti.6@gmail.com',
             'password' => 'abc@$#A123',
             'createdOn' => '2014-10-31 20:59:59'
         );
-        
         $userFactory     = new UserFactory();
         $userModel       = $userFactory->create($input);
         $userDomain      = new User();
-        $userModel       = $userDomain->create($userModel);
+        $userModel       = $userDomain->create($input);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_insert.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
@@ -164,7 +163,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function testCanUpdateRecord()
     {
-        $input           = array(
+        $input     = array(
             'id' => 1,
             'firstName' => 'julie',
             'lastName' => 'shah',
@@ -172,8 +171,13 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'password' => 'sfhsk1223',
             'createdOn' => '2014-10-29 20:59:59'
         );
-        $userFactory     = new UserFactory();
-        $userModel       = $userFactory->update($input);
+        $userModel = new UserModel();
+        $userModel->setId($input['id']);
+        $userModel->setFirstName($input['firstName']);
+        $userModel->setLastName($input['lastName']);
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
+        $userModel->setCreatedOn($input['createdOn']);
         $userDomain      = new User();
         $userModel       = $userDomain->update($userModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_update.xml');
@@ -192,7 +196,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
-    /**
+      /**
      * @expectedException Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
@@ -200,19 +204,20 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     public function testUserCanThrowExceptionWhenUpdationFailed()
     {
         
-        $input       = array(
-            'id' => 7,
+        $input = array(
             'firstName' => 'priyanka',
             'lastName' => 'kumar',
             'email' => 'kumar.6@gmail.com',
-            'password' => 'sfhsk1229',
-            'createdOn' => '2014-10-29 20:59:49'
+            'password' => 'sfhsk1229'
             
         );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->update($input);
-        $userDomain  = new User();
-        $userModel   = $userDomain->update($userModel);
+        $userModel = new UserModel($input);
+        $userModel->setFirstName($input['firstName']);
+        $userModel->setLastName($input['lastName']);
+        $userModel->setEmail($input['email']);
+        $userModel->setPassword($input['password']);
+        $userDomain = new User();
+        $userModel  = $userDomain->update($userModel);
         
         
         

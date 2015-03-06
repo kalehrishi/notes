@@ -11,7 +11,7 @@ use Notes\Validator\InputValidator as InputValidator;
 
 use Notes\PasswordValidation\PasswordValidator as PasswordValidator;
 
-use Notes\Factory\UserFactory as UserFactory;
+use Notes\Factory\User as UserFactory;
 
 class User
 {
@@ -22,9 +22,12 @@ class User
         
     }
     
-    public function create($userModel)
+    public function create($input)
     {
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
         
+
         if ($this->validator->notNull($userModel->getFirstName())
             && $this->validator->notNull($userModel->getLastName())
             && $this->validator->notNull($userModel->getEmail())
