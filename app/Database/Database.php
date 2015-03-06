@@ -3,15 +3,13 @@ namespace Notes\Database;
 
 use Notes\Config\Config as Configuration;
 
-class Database extends \PHPUnit_Framework_TestCase
+class Database
 {
     private $connection;
     
     public function __construct()
     {
-        
-        
-        $config     = new Configuration("app/Config/config.json");
+        $config     = new Configuration("/vagrant/public/notes/app/Config/config.json");
         $configData = $config->get();
         $dbHost     = $configData['dbHost'];
         $dbName     = $configData['dbName'];
