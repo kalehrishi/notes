@@ -8,7 +8,7 @@ class Config
     
     public function __construct($path)
     {
-        $this->obj = json_decode(file_get_contents($path), true);
+        $this->obj = json_decode(file_get_contents(__dir__."/$path"), true);
     }
     public function get()
     {
