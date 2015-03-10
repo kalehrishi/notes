@@ -26,22 +26,15 @@ class User
         $userModel->setPassword($input['password']);
         $userModel->setCreatedOn($input['createdOn']);
         
-        
-        
         if ($this->validator->notNull($userModel->getFirstName())
-         && $this->validator->notNull($userModel->getLastName())
-         && $this->validator->notNull($userModel->getEmail())
-         && $this->validator->notNull($userModel->getPassword())
-         && $this->validator->validString($userModel->getFirstName())
-         && $this->validator->validString($userModel->getLastName())
-         && $this->validator->validEmail($userModel->getEmail())) {
-            return $userModel;
-            
-        }
-        
-        if ($this->validator->isValidPassword($userModel->getPassword())) {
+            && $this->validator->notNull($userModel->getLastName())
+            && $this->validator->notNull($userModel->getEmail())
+            && $this->validator->notNull($userModel->getPassword())
+            && $this->validator->validString($userModel->getFirstName())
+            && $this->validator->validString($userModel->getLastName())
+            && $this->validator->validEmail($userModel->getEmail())
+            && $this->validator->isValidPassword($userModel->getPassword())) {
             return $userModel;
         }
-        
     }
 }
