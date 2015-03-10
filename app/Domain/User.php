@@ -26,21 +26,11 @@ class User
     {
         $userFactory = new UserFactory();
         $userModel   = $userFactory->create($input);
+        $userMapper = new UserMapper();
+        $userModel  = $userMapper->create($userModel);
+        return $userModel;
         
-
-        if ($this->validator->notNull($userModel->getFirstName())
-            && $this->validator->notNull($userModel->getLastName())
-            && $this->validator->notNull($userModel->getEmail())
-            && $this->validator->notNull($userModel->getPassword())
-            && $this->validator->validString($userModel->getFirstName())
-            && $this->validator->validString($userModel->getLastName())
-            && $this->validator->validEmail($userModel->getEmail())
-            && $this->validator->isValidPassword($userModel->getPassword())) {
-            $userMapper = new UserMapper();
-            $userModel  = $userMapper->create($userModel);
-            return $userModel;
-            
-        }
+        
     }
     
     public function read($userModel)

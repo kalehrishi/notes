@@ -1,4 +1,5 @@
 <?php
+namespace Notes\Factory;
 
 use Notes\Factory\User as UserFactory;
 
