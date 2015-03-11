@@ -7,7 +7,7 @@ use Notes\Database\Database as Database;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 use Notes\Collection\NoteCollection as NoteCollection;
 
-class Notes
+class FindNotes
 {
     public function findAllNotesByUSerId(NoteModel $noteModel)
     {

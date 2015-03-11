@@ -2,11 +2,15 @@
 namespace Notes\Domain;
 
 use Notes\Model\Note as NoteModel;
+use Notes\Model\User as UserModel;
+
 use Notes\Domain\Note as NoteDomain;
+
 use Notes\Config\Config as Configuration;
+
 use Notes\Model\UserTag as UserTagModel;
 use Notes\Model\NoteTag as NoteTagModel;
-use Notes\Model\User as UserModel;
+
 use Notes\Collection\Collection as Collection;
 
 class NoteTest extends \PHPUnit_Extensions_Database_TestCase
@@ -58,34 +62,35 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteDomain      = new NoteDomain();
         $actualResultSet = $noteDomain->create($noteModel, $tagsInput);
         
-        $noteModel = $actualResultSet[0];
+        $this->assertEquals(3, $actualResultSet[0]->getId());
+        $this->assertEquals(1, $actualResultSet[0]->getUserId());
+        $this->assertEquals('Exception', $actualResultSet[0]->getTitle());
+        $this->assertEquals('Creating a custom exception handler is quite simple.',
+            $actualResultSet[0]->getBody());
+
+        $userModelCollection = $actualResultSet[1];
+        while ($userModelCollection->hasNext()) {
+            $this->assertEquals(2, $userModelCollection->getRow(0)->getId());
+        $this->assertEquals(1, $userModelCollection->getRow(0)->getUserId());
+        $this->assertEquals('PHP', $userModelCollection->getRow(0)->getTag());
+
+        $this->assertEquals(3, $userModelCollection->getRow(1)->getId());
+        $this->assertEquals(1, $userModelCollection->getRow(1)->getUserId());
+        $this->assertEquals('PHP6', $userModelCollection->getRow(1)->getTag());
+        $userModelCollection->next();
+        }
+
+        $noteTagCollection = $actualResultSet[2];
+        while ($noteTagCollection->hasNext()) {
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getId());
+        $this->assertEquals(3, $noteTagCollection->getRow(0)->getNoteId());
+        $this->assertEquals(2, $noteTagCollection->getRow(0)->getUserTagId());
         
-        $userTagModel  = $actualResultSet[1];
-        $userTagModel1 = $userTagModel[0];
-        $userTagModel2 = $userTagModel[1];
-        
-        $noteTagModel  = $actualResultSet[2];
-        $noteTagModel1 = $userTagModel[0];
-        $noteTagModel2 = $userTagModel[1];
-        
-        $collection = new Collection();
-        $collection->add($noteModel);
-        $this->assertEquals($noteModel, $collection->getRow(0));
-        
-        $collection = new Collection();
-        $collection->add($userTagModel1);
-        $this->assertEquals($userTagModel1, $collection->getRow(0));
-        $collection = new Collection();
-        $collection->add($userTagModel2);
-        $this->assertEquals($userTagModel2, $collection->getRow(0));
-        
-        $collection = new Collection();
-        $collection->add($noteTagModel1);
-        $this->assertEquals($noteTagModel1, $collection->getRow(0));
-        
-        $collection = new Collection();
-        $collection->add($noteTagModel2);
-        $this->assertEquals($noteTagModel2, $collection->getRow(0));
+        $this->assertEquals(3, $noteTagCollection->getRow(1)->getId());
+        $this->assertEquals(3, $noteTagCollection->getRow(1)->getNoteId());
+        $this->assertEquals(3, $noteTagCollection->getRow(1)->getUserTagId());
+        $noteTagCollection->next();
+        }
     }
     
     public function testCanCreatebyPassingEmptyArrayTag()
@@ -95,7 +100,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'title' => 'Exception',
             'body' => 'Creating a custom exception handler is quite simple.'
         );
-        $tagsInput    = array();
         $UserTagModel = array();
         
         $noteModel = new NoteModel();
@@ -104,7 +108,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setBody($noteInput['body']);
         
         $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->create($noteModel, $tagsInput);
+        $actualResultSet = $noteDomain->create($noteModel);
         $this->assertEquals(3, $actualResultSet->getId());
         $this->assertEquals(1, $actualResultSet->getUserId());
         $this->assertEquals('Exception', $actualResultSet->getTitle());

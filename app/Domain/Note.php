@@ -2,7 +2,7 @@
 namespace Notes\Domain;
 
 use Notes\Mapper\Note as NoteMapper;
-use Notes\Mapper\Notes as NotesMapper;
+use Notes\Mapper\FindNotes as FindNotesMapper;
 
 use Notes\Model\Note as NoteModel;
 
@@ -21,6 +21,7 @@ use Notes\Domain\User as UserDomain;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 use Notes\Collection\NoteCollection as NoteCollection;
+use Notes\Collection\Collection as Collection;
 
 class Note
 {
@@ -29,19 +30,20 @@ class Note
         $this->validator = new InputValidator();
     }
     
-    public function create(NoteModel $noteModel, $tagsInput)
+    public function create(NoteModel $noteModel, $tagsInput = null)
     {
         if ($this->validator->notNull($noteModel->getTitle())) {
-            $userDomain = new UserDomain();
             $userModel  = new UserModel();
             $userModel->setId($noteModel->getUserId());
+            
+            $userDomain = new UserDomain();
             $resultsetUserModel = $userDomain->read($userModel);
             $noteModel->setUserId($resultsetUserModel->getId());
             
             $noteMapper            = new NoteMapper();
             $resultsetNoteModel    = $noteMapper->create($noteModel);
-            $resultsetUserTagModel = array();
-            $resultsetNoteTagModel = array();
+            $collectionUserTagModel = new Collection();
+            $collectionNoteTagModel = new Collection();
             if (!empty($tagsInput)) {
                 for ($i = 0; $i < count($tagsInput); $i++) {
                     $userTagModel = new UserTagModel();
@@ -49,24 +51,24 @@ class Note
                     $userTagModel->setTag($tagsInput[$i]);
                     
                     $userTagDomain = new UserTagDomain();
-                    array_push($resultsetUserTagModel, $userTagDomain->create($userTagModel));
+                    $collectionUserTagModel->add($userTagDomain->create($userTagModel));
                     $noteTagModel = new NoteTagModel();
                     $noteTagModel->setNoteId($resultsetNoteModel->getId());
-                    $noteTagModel->setUserTagId($resultsetUserTagModel[$i]->getId());
+                    $noteTagModel->setUserTagId($collectionUserTagModel->getRow($i)->getId());
                     
                     
                     $noteTagDomain = new NoteTagDomain();
-                    array_push($resultsetNoteTagModel, $noteTagDomain->create($noteTagModel));
+                    $collectionNoteTagModel->add($noteTagDomain->create($noteTagModel));
+                    
                 }
             } else {
                 return $resultsetNoteModel;
             }
-            $resultsetNoteCreateModel = array(
+            return array(
                 $resultsetNoteModel,
-                $resultsetUserTagModel,
-                $resultsetNoteTagModel
+                $collectionUserTagModel,
+                $collectionNoteTagModel
             );
-            return $resultsetNoteCreateModel;
         }
     }
     
@@ -109,8 +111,8 @@ class Note
     {
         if ($this->validator->notNull($noteModel->getUserId())
             && $this->validator->validNumber($noteModel->getUserId())) {
-            $notesMapper     = new NotesMapper();
-            $noteCollection = $notesMapper->findAllNotesByUSerId($noteModel);
+            $findNotesMapper     = new FindNotesMapper();
+            $noteCollection = $findNotesMapper->findAllNotesByUSerId($noteModel);
             return $noteCollection;
         }
     }

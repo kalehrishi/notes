@@ -1,12 +1,12 @@
 <?php
 namespace Notes;
 
-use Notes\Mapper\Notes as NotesMapper;
+use Notes\Mapper\FindNotes as FindNotesMapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Config\Config as Configuration;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
-class NotesTest extends \PHPUnit_Extensions_Database_TestCase
+class FindNotesTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
     
@@ -43,8 +43,8 @@ class NotesTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel = new NoteModel();
         $noteModel->setUserId($input['userId']);
         
-        $notesMapper           = new NotesMapper();
-        $actualNotesCollection = $notesMapper->findAllNotesByUSerId($noteModel);
+        $findNotesMapper           = new FindNotesMapper();
+        $actualNotesCollection = $findNotesMapper->findAllNotesByUSerId($noteModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteMapper_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
