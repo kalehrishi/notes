@@ -93,7 +93,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         }
     }
     
-    public function testCanCreatebyPassingEmptyArrayTag()
+    public function testCanCreateWithoutTag()
     {
         $noteInput    = array(
             'userId' => 1,
