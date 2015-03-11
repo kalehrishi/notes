@@ -142,15 +142,19 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteInput = array(
             'id' => 1,
             'userId' => 1,
+            'title' => 'PHP',
+            'body' => 'Preprocessor Hypertext',
             'isDeleted' => 1
         );
         $noteModel = new NoteModel();
         $noteModel->setId($noteInput['id']);
         $noteModel->setUserId($noteInput['userId']);
+        $noteModel->setTitle($noteInput['title']);
+        $noteModel->setBody($noteInput['body']);
         $noteModel->setIsDeleted($noteInput['isDeleted']);
         
         $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->delete($noteModel);
+        $actualResultSet = $noteDomain->update($noteModel);
         
         $this->assertEquals(1, $actualResultSet->getId());
         $this->assertEquals(1, $actualResultSet->getUserId());
@@ -173,21 +177,25 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setIsDeleted($noteInput['isDeleted']);
         
         $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->delete($noteModel);
+        $actualResultSet = $noteDomain->update($noteModel);
     }
     
     public function testCanUpdate()
     {
         $input = array(
             'id' => 1,
+            'userId' => 1,
             'title' => 'Web',
-            'body' => 'PHP is a powerful tool for making dynamic Web pages.'
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.',
+            'isDeleted' => 0
         );
         
         $noteModel = new NoteModel();
         $noteModel->setId($input['id']);
+        $noteModel->setUserId($input['userId']);
         $noteModel->setTitle($input['title']);
         $noteModel->setBody($input['body']);
+        $noteModel->setIsDeleted($input['isDeleted']);
         
         $noteDomain      = new NoteDomain();
         $actualResultSet = $noteDomain->update($noteModel);
