@@ -97,22 +97,22 @@ class Note
         }
     }
     
-    public function readNote(NoteModel $noteModel)
+    public function read(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getId())
             && $this->validator->validNumber($noteModel->getId())) {
             $noteMapper     = new NoteMapper();
-            $noteModel = $noteMapper->readNote($noteModel);
+            $noteModel = $noteMapper->read($noteModel);
             return $noteModel;
         }
     }
     
-    public function findAllNotesByUSerId(NoteModel $noteModel)
+    public function findAllNotesByUserId(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getUserId())
             && $this->validator->validNumber($noteModel->getUserId())) {
             $findNotesMapper     = new FindNotesMapper();
-            $noteCollection = $findNotesMapper->findAllNotesByUSerId($noteModel);
+            $noteCollection = $findNotesMapper->findAllNotesByUserId($noteModel);
             return $noteCollection;
         }
     }

@@ -83,7 +83,7 @@ class Note
         }
     }
     
-    public function readNote(NoteModel $noteModel)
+    public function read(NoteModel $noteModel)
     {
         $input = array(
                 'id' => $noteModel->getId()

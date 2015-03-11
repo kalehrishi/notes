@@ -232,7 +232,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setUserId($input['userId']);
         
         $noteDomain           = new NoteDomain();
-        $actualNoteCollection = $noteDomain->findAllNotesByUSerId($noteModel);
+        $actualNoteCollection = $noteDomain->findAllNotesByUserId($noteModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteDomain_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -265,7 +265,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
         $noteDomain           = new NoteDomain();
 
-        $noteModel   = $noteDomain->readNote($noteModel);
+        $noteModel   = $noteDomain->read($noteModel);
 
         $this->assertEquals(1, $noteModel[0]['id']);
         $this->assertEquals(1, $noteModel[0]['userId']);
@@ -286,7 +286,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setId($input['id']);
         
         $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->readNote($noteModel);
+        $actualResultSet = $noteDomain->read($noteModel);
     }
     
     /**
@@ -302,6 +302,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setId($input['id']);
         
         $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->readNote($noteModel);
+        $actualResultSet = $noteDomain->read($noteModel);
     }
 }

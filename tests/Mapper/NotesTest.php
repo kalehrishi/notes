@@ -6,7 +6,7 @@ use Notes\Model\Note as NoteModel;
 use Notes\Config\Config as Configuration;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
-class FindNotesTest extends \PHPUnit_Extensions_Database_TestCase
+class NotesTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
     

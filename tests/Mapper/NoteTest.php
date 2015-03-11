@@ -169,7 +169,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
 
         $expectedResultset = "PHP5";
         $noteMapper        = new NoteMapper();
-        $noteModel   = $noteMapper->readNote($noteModel);
+        $noteModel   = $noteMapper->read($noteModel);
         
         $this->assertEquals(2, $noteModel[0]['id']);
         $this->assertEquals(1, $noteModel[0]['userId']);
@@ -192,6 +192,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setId($input['id']);
         
         $noteMapper      = new NoteMapper();
-        $noteMapper->readNote($noteModel);
+        $noteMapper->read($noteModel);
     }
 }

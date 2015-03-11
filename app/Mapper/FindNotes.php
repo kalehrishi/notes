@@ -9,7 +9,7 @@ use Notes\Collection\NoteCollection as NoteCollection;
 
 class FindNotes
 {
-    public function findAllNotesByUSerId(NoteModel $noteModel)
+    public function findAllNotesByUserId(NoteModel $noteModel)
     {
         $input  = array(
             'userId' => $noteModel->getUserId()
