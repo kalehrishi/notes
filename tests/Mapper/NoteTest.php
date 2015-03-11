@@ -169,15 +169,14 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
 
         $expectedResultset = "PHP5";
         $noteMapper        = new NoteMapper();
-        $noteCollection   = $noteMapper->read($noteModel);
-
-        while($noteCollection->hasNext()) {
-        $this->assertEquals(2, $noteCollection->getRow(0)->getId());
-        $this->assertEquals(1, $noteCollection->getRow(0)->getUserId());
-        $this->assertEquals('PHP5', $noteCollection->getRow(0)->getTitle());
-        $this->assertEquals('Server scripting language.', $noteCollection->getRow(0)->getBody());
-        $noteCollection->next();
-        }
+        $noteModel   = $noteMapper->readNote($noteModel);
+        
+        $this->assertEquals(2, $noteModel[0]['id']);
+        $this->assertEquals(1, $noteModel[0]['userId']);
+        $this->assertEquals('PHP5', $noteModel[0]['title']);
+        $this->assertEquals('Server scripting language.', $noteModel[0]['body']);
+        
+        
     }
     
     /**
@@ -193,6 +192,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setId($input['id']);
         
         $noteMapper      = new NoteMapper();
-        $noteMapper->read($noteModel);
+        $noteMapper->readNote($noteModel);
     }
 }

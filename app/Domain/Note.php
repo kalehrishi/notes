@@ -2,6 +2,8 @@
 namespace Notes\Domain;
 
 use Notes\Mapper\Note as NoteMapper;
+use Notes\Mapper\Notes as NotesMapper;
+
 use Notes\Model\Note as NoteModel;
 
 use Notes\Config\Config as Configuration;
@@ -18,6 +20,7 @@ use Notes\Model\User as UserModel;
 use Notes\Domain\User as UserDomain;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+use Notes\Collection\NoteCollection as NoteCollection;
 
 class Note
 {
@@ -92,22 +95,22 @@ class Note
         }
     }
     
-    public function readNote($noteModel)
+    public function readNote(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getId())
             && $this->validator->validNumber($noteModel->getId())) {
             $noteMapper     = new NoteMapper();
-            $noteCollection = $noteMapper->read($noteModel);
-            return $noteCollection;
+            $noteModel = $noteMapper->readNote($noteModel);
+            return $noteModel;
         }
     }
     
-    public function readAllNotes(NoteModel $noteModel)
+    public function findAllNotesByUSerId(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getUserId())
             && $this->validator->validNumber($noteModel->getUserId())) {
-            $noteMapper     = new NoteMapper();
-            $noteCollection = $noteMapper->read($noteModel);
+            $notesMapper     = new NotesMapper();
+            $noteCollection = $notesMapper->findAllNotesByUSerId($noteModel);
             return $noteCollection;
         }
     }

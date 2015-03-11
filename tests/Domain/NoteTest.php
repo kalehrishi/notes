@@ -228,7 +228,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setUserId($input['userId']);
         
         $noteDomain           = new NoteDomain();
-        $actualNoteCollection = $noteDomain->readAllNotes($noteModel);
+        $actualNoteCollection = $noteDomain->findAllNotesByUSerId($noteModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteDomain_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -260,17 +260,13 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setId($input['id']);
         
         $noteDomain           = new NoteDomain();
-        $actualNoteCollection = $noteDomain->readNote($noteModel);
-        
-        while ($actualNoteCollection->hasNext()) {
-            $this->assertEquals(1, $actualNoteCollection->getRow(0)->getId());
-            $this->assertEquals(1, $actualNoteCollection->getRow(0)->getUserId());
-            $this->assertEquals('PHP', $actualNoteCollection->getRow(0)->getTitle());
-            $this->assertEquals('Preprocessor Hypertext', $actualNoteCollection->getRow(0)->getBody());
-            
-            $actualNoteCollection->next();
-        }
-        
+
+        $noteModel   = $noteDomain->readNote($noteModel);
+
+        $this->assertEquals(1, $noteModel[0]['id']);
+        $this->assertEquals(1, $noteModel[0]['userId']);
+        $this->assertEquals('PHP', $noteModel[0]['title']);
+        $this->assertEquals('Preprocessor Hypertext', $noteModel[0]['body']);
     }
     
     /**

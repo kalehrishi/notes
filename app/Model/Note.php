@@ -76,12 +76,4 @@ class Note
     {
         $this->isDeleted = $isDeleted;
     }
-    /*public function __construct($params)
-    {
-        foreach ($params as $key => $val) {
-            if (isset($key)) {
-                $this->{$key} = $val;
-            }
-        }
-    }*/
 }

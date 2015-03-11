@@ -5,7 +5,6 @@ namespace Notes\Mapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Database\Database as Database;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
-use Notes\Collection\NoteCollection as NoteCollection;
 
 class Note
 {
@@ -84,21 +83,13 @@ class Note
         }
     }
     
-    
-    public function read(NoteModel $noteModel)
+    public function readNote(NoteModel $noteModel)
     {
-        if (!empty($noteModel->userId)) {
-            $input = array(
-                'userId' => $noteModel->getUserId()
-            );
-            $query = "SELECT id, userId, title, body FROM Notes WHERE userId=:userId";
-        } else {
-            $input = array(
+        $input = array(
                 'id' => $noteModel->getId()
             );
             $query = "SELECT id, userId, title, body FROM Notes WHERE id=:id";
-        }
-        $params = array(
+            $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
         );
@@ -108,9 +99,10 @@ class Note
         } catch (\PDOException $e) {
             $e->getMessage();
         }
-        
+
         if (!empty($resultset)) {
-            return new NoteCollection($resultset);
+            return $resultset;
+            
         } else {
             $obj = new ModelNotFoundException();
             $obj->setModel($noteModel);
