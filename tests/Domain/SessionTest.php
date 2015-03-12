@@ -1,14 +1,11 @@
 <?php
-
 namespace Notes\Domain;
-
 use Notes\Domain\User as UserDomain;
 use Notes\Domain\Session as Session;
 use Notes\Model\Session as SessionModel;
 use Notes\Model\User as UserModel;
 use Notes\Config\Config as Configuration;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
-
 class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
@@ -64,7 +61,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @test
      *
      **/
-    public function it_should_read_session_by_UserId_and_authToken()
+    public function it_should_read_session_by_userId_and_authToken()
     {
         $input        = array(
             'userId' => 2,
