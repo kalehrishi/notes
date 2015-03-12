@@ -23,7 +23,7 @@ class Session
         $sessionModel->setUserId($userModelRead->getId());
         
         $randomNumber = rand(10, 100);
-       
+        
         $password = $userModelRead->getPassword();
         
         $sessionModel->createAuthToken($password, $randomNumber);
@@ -34,9 +34,9 @@ class Session
         && $this->validator->validNumber($sessionModel->getUserId())
         && $this->validator->notNull($sessionModel->getAuthToken())) {
             $sessionMapper = new SessionMapper();
-
-            $sessionModel  = $sessionMapper->create($sessionModel);
-
+            
+            $sessionModel = $sessionMapper->create($sessionModel);
+            
             return $sessionModel;
         }
     }
@@ -48,7 +48,7 @@ class Session
             $sessionMapper = new SessionMapper();
             
             $sessionModel = $sessionMapper->read($sessionModel);
-
+            
             return $sessionModel;
         }
     }
@@ -61,7 +61,7 @@ class Session
             $sessionMapper = new SessionMapper();
             
             $sessionModel = $sessionMapper->read($sessionModel);
-
+            
             return $sessionModel;
         }
     }
