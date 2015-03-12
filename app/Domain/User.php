@@ -54,6 +54,7 @@ class User
             && $this->validator->notNull($userModel->getPassword())) {
             $userMapper = new UserMapper();
             $userModel  = $userMapper->read($userModel);
+            print_r($userModel);
             return $userModel;
         }
     }

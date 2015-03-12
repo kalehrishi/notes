@@ -1,12 +1,10 @@
 <?php
 namespace Notes\Domain;
-
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 use Notes\Mapper\Session as SessionMapper;
 use Notes\Model\Session as SessionModel;
 use Notes\Domain\User as UserDomain;
 use Notes\Validator\InputValidator as InputValidator;
-
 class Session
 {
     public function __construct()
@@ -34,9 +32,7 @@ class Session
         && $this->validator->validNumber($sessionModel->getUserId())
         && $this->validator->notNull($sessionModel->getAuthToken())) {
             $sessionMapper = new SessionMapper();
-
             $sessionModel  = $sessionMapper->create($sessionModel);
-
             return $sessionModel;
         }
     }
@@ -48,7 +44,6 @@ class Session
             $sessionMapper = new SessionMapper();
             
             $sessionModel = $sessionMapper->read($sessionModel);
-
             return $sessionModel;
         }
     }
@@ -61,7 +56,6 @@ class Session
             $sessionMapper = new SessionMapper();
             
             $sessionModel = $sessionMapper->read($sessionModel);
-
             return $sessionModel;
         }
     }
