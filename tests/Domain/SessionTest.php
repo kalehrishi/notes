@@ -97,7 +97,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     * @test
     *
     **/
-
     public function it_should_read_session_by_id()
     {
         $input        = array(
@@ -128,8 +127,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     * @test
     *
     **/
-
-    public function test_it_should_delete_session()
+    public function it_should_delete_session()
     {
         $input        = array(
             'id' => '1',
@@ -188,8 +186,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-    
-    public function test_it_should_throw_exception_with_invalid_id()
+    public function it_should_throw_exception_with_invalid_id()
     {
         $input        = array(
             'id' => 10
@@ -202,12 +199,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
         $sessionModel  = $SessionDomain->read($sessionModel);
     }
+    
     /**
      * @test
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-    public function test_it_should_throw_exception_with_invalid_authToken_userId()
+    public function it_should_throw_exception_with_invalid_authToken_userId()
     {
         $input        = array(
             'userId' => 15,
@@ -228,7 +226,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-    public function test_it_should_throw_exception_with_invalid_email_password()
+    public function it_should_throw_exception_with_invalid_email_password()
     {
         $userInput = array(
             'email' => 'abcd@gmail.com',

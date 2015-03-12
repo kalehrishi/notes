@@ -1,4 +1,5 @@
 <?php
+
 namespace Notes\Domain;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
