@@ -2,6 +2,7 @@
 
 namespace Notes\Controller;
 
+use Notes\Model\User as UserModel;
 use Notes\Service\Session as SessionService;
 
 class Session
