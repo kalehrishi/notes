@@ -14,11 +14,11 @@ class Session
         $this->validator = new InputValidator();
     }
     
-    public function create($userModel)
+    public function create($userInput)
     {
         $sessionModel  = new sessionModel();
         $userDomain    = new UserDomain();
-        $userModelRead = $userDomain->readByUserNameAndPassword($userModel);
+        $userModelRead = $userDomain->readByUserNameAndPassword($userInput);
         
         $sessionModel->setUserId($userModelRead->getId());
         

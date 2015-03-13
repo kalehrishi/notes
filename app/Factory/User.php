@@ -17,24 +17,49 @@ class User
     }
     public function create($input)
     {
+        
         $userModel = new UserModel();
-        
-        
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userModel->setCreatedOn($input['createdOn']);
-        
-        if ($this->validator->notNull($userModel->getFirstName())
-            && $this->validator->notNull($userModel->getLastName())
-            && $this->validator->notNull($userModel->getEmail())
-            && $this->validator->notNull($userModel->getPassword())
-            && $this->validator->validString($userModel->getFirstName())
-            && $this->validator->validString($userModel->getLastName())
-            && $this->validator->validEmail($userModel->getEmail())
-            && $this->validator->isValidPassword($userModel->getPassword())) {
-            return $userModel;
+        foreach ($input as $key => $value) {
+            if ($key == 'id') {
+                if ($this->validator->notNull($input['id'])) {
+                    $userModel->setId($input['id']);
+                    
+                }
+            }
+            if ($key == 'firstName') {
+                if ($this->validator->notNull($input['firstName'])) {
+                    $userModel->setFirstName($input['firstName']);
+                    
+                }
+            }
+            if ($key == 'lastName') {
+                if ($this->validator->notNull($input['lastName'])) {
+                    $userModel->setLastName($input['lastName']);
+                }
+            }
+            if ($key == 'email') {
+                if ($this->validator->validEmail($input['email'])) {
+                    $userModel->setEmail($input['email']);
+                    
+                }
+            }
+            if ($key == 'password') {
+                if ($this->validator->isValidPassword($input['password'])) {
+                    $userModel->setPassword($input['password']);
+                    
+                }
+                
+            }
+            if ($key == 'createdOn') {
+                $userModel->setCreatedOn($input['createdOn']);
+                
+            }
+            
+            
+            
+            
         }
+        return $userModel;
+        
     }
 }

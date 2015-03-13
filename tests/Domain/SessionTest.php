@@ -40,20 +40,15 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     public function it_should_create_session_with_valid_email_password()
     {
         $userInput = array(
-            'email' => 'pushpa@marade.com',
-            'password' => 'pushpa123'
+            'email' => 'Pushpa@Marade.com',
+            'password' => 'pushpaA@123'
             
         );
         
-        $userModel = new UserModel();
-
-        $userModel->setEmail($userInput['email']);
-        $userModel->setPassword($userInput['password']);
-
         $sessionModel = new sessionModel();
         $sessionDomain   = new Session();
 
-        $sessionModel    = $sessionDomain->create($userModel);
+        $sessionModel    = $sessionDomain->create($userInput);
         
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
@@ -225,8 +220,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
     /**
      * @test
-     * @expectedException         Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage  Can Not Found Given Model In Database
+     * @expectedException         InvalidArgumentException
+     * @expectedExceptionMessage  Password Strength is weak
      */
     public function test_it_should_throw_exception_with_invalid_email_password()
     {
@@ -234,10 +229,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'email' => 'abcd@gmail.com',
             'password' => 'psd'
         );
-        $userModel = new UserModel();
+        
+       
 
-        $userModel->setEmail($userInput['email']);
-        $userModel->setPassword($userInput['password']);
 
         $input        = array(
             'authToken' => 'pqr',
@@ -252,6 +246,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         
         $sessionDomain = new Session();
         
-        $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
+        $sessionModel  = $sessionDomain->create($userInput, $sessionModel);
     }
 }

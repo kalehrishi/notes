@@ -1,27 +1,22 @@
 <?php
 namespace Notes\Service;
 
-use Notes\Mapper\User as UserMapper;
+use Notes\Domain\User as UserDomain;
 
-use Notes\Model\User as UserModel;
-
-/**
-*
-*/
 class User
 {
-  
+    
     public function __construct()
     {
-    
+        
     }
-    public function createUser($userInput)
+    public function createUser($userModel)
     {
-        $userMapper=new UserMapper();
-        //how to convert user input to mode??
-        //can we create model here?
-        $user=new UserModel($userInput);
-        $userMapper->create($user);
+        $userDomain = new UserDomain();
+        
+        $user = $userDomain->create($userModel);
+        
         return $user;
+        
     }
 }
