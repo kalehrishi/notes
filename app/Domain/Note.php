@@ -2,7 +2,7 @@
 namespace Notes\Domain;
 
 use Notes\Mapper\Note as NoteMapper;
-use Notes\Mapper\FindNotes as FindNotesMapper;
+use Notes\Mapper\Notes as NotesMapper;
 
 use Notes\Model\Note as NoteModel;
 
@@ -30,18 +30,42 @@ class Note
         $this->validator = new InputValidator();
     }
     
+    public function edit($noteModel, $noteTagModel)
+    {
+        if ($this->validator->notNull($noteModel->getId())
+            && $this->validator->validNumber($noteModel->getId())
+            && $this->validator->notNull($noteModel->getUserId())
+            && $this->validator->validNumber($noteModel->getUserId())
+            && $this->validator->notNull($noteTagModel->getNoteId())
+            && $this->validator->validNumber($noteTagModel->getNoteId())
+            && $this->validator->notNull($noteTagModel->getUserTag())) {
+            $noteMapper     = new NoteMapper();
+            $noteCollection = new Collection();
+            $noteCollection->add($noteMapper->update($noteModel));
+            
+            $noteTagDomain    = new NoteTagDomain();
+            $resultsetNoteTag = $noteTagDomain->edit($noteModel, $noteTagModel);
+            return array(
+                $resultsetNoteTag,
+                $noteCollection
+            );
+        }
+    }
+    
     public function create(NoteModel $noteModel, $tagsInput = null)
     {
-        if ($this->validator->notNull($noteModel->getTitle())) {
-            $userModel  = new UserModel();
+        if ($this->validator->notNull($noteModel->getTitle())
+            && $this->validator->notNull($noteModel->getUserId())
+            && $this->validator->validNumber($noteModel->getUserId())) {
+            $userModel = new UserModel();
             $userModel->setId($noteModel->getUserId());
             
-            $userDomain = new UserDomain();
+            $userDomain         = new UserDomain();
             $resultsetUserModel = $userDomain->read($userModel);
             $noteModel->setUserId($resultsetUserModel->getId());
             
-            $noteMapper            = new NoteMapper();
-            $resultsetNoteModel    = $noteMapper->create($noteModel);
+            $noteMapper             = new NoteMapper();
+            $resultsetNoteModel     = $noteMapper->create($noteModel);
             $collectionUserTagModel = new Collection();
             $collectionNoteTagModel = new Collection();
             if (!empty($tagsInput)) {
@@ -62,7 +86,7 @@ class Note
                     
                 }
             } else {
-                return $resultsetNoteModel;
+                return array($resultsetNoteModel);
             }
             return array(
                 $resultsetNoteModel,
@@ -101,8 +125,8 @@ class Note
     {
         if ($this->validator->notNull($noteModel->getId())
             && $this->validator->validNumber($noteModel->getId())) {
-            $noteMapper     = new NoteMapper();
-            $noteModel = $noteMapper->read($noteModel);
+            $noteMapper = new NoteMapper();
+            $noteModel  = $noteMapper->read($noteModel);
             return $noteModel;
         }
     }
@@ -111,8 +135,8 @@ class Note
     {
         if ($this->validator->notNull($noteModel->getUserId())
             && $this->validator->validNumber($noteModel->getUserId())) {
-            $findNotesMapper     = new FindNotesMapper();
-            $noteCollection = $findNotesMapper->findAllNotesByUserId($noteModel);
+            $notesMapper = new NotesMapper();
+            $noteCollection  = $notesMapper->findAllNotesByUserId($noteModel);
             return $noteCollection;
         }
     }

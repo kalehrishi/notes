@@ -10,11 +10,41 @@ use Notes\Model\NoteTag as NoteTagModel;
 
 use Notes\Validator\InputValidator as InputValidator;
 
+use Notes\Model\UserTag as UserTagModel;
+use Notes\Domain\UserTag as UserTag;
+use Notes\Collection\Collection as Collection;
+
 class NoteTag
 {
     public function __construct()
     {
         $this->validator = new InputValidator();
+    }
+    public function edit($noteModel, $noteTagModel)
+    {
+        if ($this->validator->notNull($noteModel->getUserId())
+            && $this->validator->notNull($noteTagModel->getNoteId())
+            && $this->validator->validNumber($noteTagModel->getNoteId())
+            && $this->validator->notNull($noteTagModel->getUserTag())
+            && $this->validator->notNull($noteTagModel->getUserTag())) {
+            $userTagModel = new UserTagModel();
+            $userTagModel->setUserId($noteModel->getUserId());
+            $userTagModel->setTag($noteTagModel->getUserTag());
+
+            $noteUserTagDomain = new UserTag();
+
+            $userTagCollection = new Collection();
+            $userTagCollection->add($noteUserTagDomain->create($userTagModel));
+
+            $noteTagModel->setUserTagId($userTagCollection->getRow(0)->getId());
+            
+            $noteTagCollection = new Collection();
+            $noteTagMapper = new NoteTagMapper();
+            $noteTagCollection->add($noteTagMapper->create($noteTagModel));
+
+            return array($userTagCollection, $noteTagCollection);
+
+        }
     }
     public function create($noteTagModel)
     {

@@ -10,7 +10,17 @@ class Note
     public $createdOn;
     public $lastUpdatedOn;
     public $isDeleted;
+    public $noteTag;
     
+    public function getNoteTag()
+    {
+        return $this->noteTag;
+    }
+    public function setNoteTag($noteTag)
+    {
+        $this->noteTag = $noteTag;
+    }
+
     public function getId()
     {
         return $this->id;

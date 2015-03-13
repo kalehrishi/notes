@@ -12,7 +12,16 @@ class NoteTag
     private $noteId;
     private $userTagId;
     private $isDeleted;
+    public $userTag;
     
+    public function getUserTag()
+    {
+        return $this->userTag;
+    }
+    public function setUserTag($userTag)
+    {
+        $this->userTag = $userTag;
+    }
     public function getId()
     {
         return $this->id;

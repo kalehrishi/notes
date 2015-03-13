@@ -40,6 +40,68 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/domain_note_seed.xml');
     }
     
+    public function testCanUpdateNewTagsWithExistingNote()
+    {
+        $noteInput = array(
+            'id' => 1,
+            'userId' => 1,
+            'title' => 'Web',
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.',
+            'isDeleted' => 0
+        );
+        
+        $noteTags = array(
+            'noteId' => 1,
+            'userTgas' => 'PHP5'
+        );
+        
+        $noteModel = new NoteModel();
+        $noteModel->setId($noteInput['id']);
+        $noteModel->setTitle($noteInput['title']);
+        $noteModel->setBody($noteInput['body']);
+        $noteModel->setIsDeleted($noteInput['isDeleted']);
+        $noteModel->setUserId($noteInput['userId']);
+        
+        $noteTagModel = new NoteTagModel();
+        $noteTagModel->setNoteId($noteTags['noteId']);
+        $noteTagModel->setUserTag($noteTags['userTgas']);
+        
+        $noteDomain      = new NoteDomain();
+        $actualResultSet = $noteDomain->edit($noteModel, $noteTagModel);
+        
+        $userTagsCollection = $actualResultSet[0][0];
+        
+        while ($userTagsCollection->hasNext()) {
+            $this->assertEquals(2, $userTagsCollection->getRow(0)->getId());
+            $this->assertEquals(1, $userTagsCollection->getRow(0)->getUserId());
+            $this->assertEquals('PHP5', $userTagsCollection->getRow(0)->getTag());
+            
+            $userTagsCollection->next();
+        }
+        
+        $noteTagsCollection = $actualResultSet[0][1];
+        while ($noteTagsCollection->hasNext()) {
+            $this->assertEquals(2, $noteTagsCollection->getRow(0)->getId());
+            $this->assertEquals(1, $noteTagsCollection->getRow(0)->getNoteId());
+            $this->assertEquals(2, $noteTagsCollection->getRow(0)->getUserTagId());
+            
+            $noteTagsCollection->next();
+        }
+        
+        $noteTagsCollection = $actualResultSet[1];
+        while ($noteTagsCollection->hasNext()) {
+            $this->assertEquals(1, $noteTagsCollection->getRow(0)->getId());
+            $this->assertEquals(1, $noteTagsCollection->getRow(0)->getUserId());
+            $this->assertEquals('Web', $noteTagsCollection->getRow(0)->getTitle());
+            $body = 'PHP is a powerful tool for making dynamic Web pages.';
+            $this->assertEquals($body, $noteTagsCollection->getRow(0)->getBody());
+            $this->assertEquals(0, $noteTagsCollection->getRow(0)->getIsDeleted());
+            
+            $noteTagsCollection->next();
+        }
+        
+    }
+    
     public function testCanCreate()
     {
         $noteInput = array(
@@ -65,31 +127,30 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(3, $actualResultSet[0]->getId());
         $this->assertEquals(1, $actualResultSet[0]->getUserId());
         $this->assertEquals('Exception', $actualResultSet[0]->getTitle());
-        $this->assertEquals('Creating a custom exception handler is quite simple.',
-            $actualResultSet[0]->getBody());
-
+        $this->assertEquals('Creating a custom exception handler is quite simple.', $actualResultSet[0]->getBody());
+        
         $userModelCollection = $actualResultSet[1];
         while ($userModelCollection->hasNext()) {
             $this->assertEquals(2, $userModelCollection->getRow(0)->getId());
-        $this->assertEquals(1, $userModelCollection->getRow(0)->getUserId());
-        $this->assertEquals('PHP', $userModelCollection->getRow(0)->getTag());
-
-        $this->assertEquals(3, $userModelCollection->getRow(1)->getId());
-        $this->assertEquals(1, $userModelCollection->getRow(1)->getUserId());
-        $this->assertEquals('PHP6', $userModelCollection->getRow(1)->getTag());
-        $userModelCollection->next();
+            $this->assertEquals(1, $userModelCollection->getRow(0)->getUserId());
+            $this->assertEquals('PHP', $userModelCollection->getRow(0)->getTag());
+            
+            $this->assertEquals(3, $userModelCollection->getRow(1)->getId());
+            $this->assertEquals(1, $userModelCollection->getRow(1)->getUserId());
+            $this->assertEquals('PHP6', $userModelCollection->getRow(1)->getTag());
+            $userModelCollection->next();
         }
-
+        
         $noteTagCollection = $actualResultSet[2];
         while ($noteTagCollection->hasNext()) {
             $this->assertEquals(2, $noteTagCollection->getRow(0)->getId());
-        $this->assertEquals(3, $noteTagCollection->getRow(0)->getNoteId());
-        $this->assertEquals(2, $noteTagCollection->getRow(0)->getUserTagId());
-        
-        $this->assertEquals(3, $noteTagCollection->getRow(1)->getId());
-        $this->assertEquals(3, $noteTagCollection->getRow(1)->getNoteId());
-        $this->assertEquals(3, $noteTagCollection->getRow(1)->getUserTagId());
-        $noteTagCollection->next();
+            $this->assertEquals(3, $noteTagCollection->getRow(0)->getNoteId());
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getUserTagId());
+            
+            $this->assertEquals(3, $noteTagCollection->getRow(1)->getId());
+            $this->assertEquals(3, $noteTagCollection->getRow(1)->getNoteId());
+            $this->assertEquals(3, $noteTagCollection->getRow(1)->getUserTagId());
+            $noteTagCollection->next();
         }
     }
     
@@ -109,11 +170,11 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
         $noteDomain      = new NoteDomain();
         $actualResultSet = $noteDomain->create($noteModel);
-        $this->assertEquals(3, $actualResultSet->getId());
-        $this->assertEquals(1, $actualResultSet->getUserId());
-        $this->assertEquals('Exception', $actualResultSet->getTitle());
-        $this->assertEquals('Creating a custom exception handler is quite simple.', $actualResultSet->getBody());
-        $this->assertEquals(0, $actualResultSet->getIsDeleted());
+        $this->assertEquals(3, $actualResultSet[0]->getId());
+        $this->assertEquals(1, $actualResultSet[0]->getUserId());
+        $this->assertEquals('Exception', $actualResultSet[0]->getTitle());
+        $this->assertEquals('Creating a custom exception handler is quite simple.', $actualResultSet[0]->getBody());
+        $this->assertEquals(0, $actualResultSet[0]->getIsDeleted());
     }
     
     /**
@@ -271,10 +332,10 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel = new NoteModel();
         $noteModel->setId($input['id']);
         
-        $noteDomain           = new NoteDomain();
-
-        $noteModel   = $noteDomain->read($noteModel);
-
+        $noteDomain = new NoteDomain();
+        
+        $noteModel = $noteDomain->read($noteModel);
+        
         $this->assertEquals(1, $noteModel[0]['id']);
         $this->assertEquals(1, $noteModel[0]['userId']);
         $this->assertEquals('PHP', $noteModel[0]['title']);
