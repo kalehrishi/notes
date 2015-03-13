@@ -35,7 +35,7 @@ $application->post('/register', function() {
     $response       = $userController->create($request);
     
     $objResopnse = new Response();
-    $data        = $objResopnse->to_json($response);
+    $data        = $objResopnse->toJson($response);
     echo $data;
 });
 $application->run();
