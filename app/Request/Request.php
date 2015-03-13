@@ -4,12 +4,11 @@ namespace Notes\Request;
 
 class Request
 {
-    public function __construct($request)
+	public function __construct($request)
     {
-        $this->input = explode(" ", $request);
-        
+        $this->input = json_decode($request,true);
     }
-    public function get()
+    public function read()
     {
         return $this->input;
     }

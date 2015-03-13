@@ -2,26 +2,39 @@
 
 require '../vendor/autoload.php';
 
-//use Notes\Domain\UserTag as UserTagDomain;
-//use Notes\Model\UserTag as UserTagModel;
-
 use Notes\Request\Request as Request;
+use Notes\Response\Response as Response;
 use Notes\Controller\User as UserController;
 
 
-$app = new \Slim\Slim();
+$application = new \Slim\Slim(array('debug' => true));
 
-$app->get('/user/:user', function($user)
-{
+
+$application->get('/env', function(){
+ $env=\Slim\Environment::getInstance();
+ echo "<br/>slim.url_scheme=".$env['slim.url_scheme'];
+ echo "<br/>REQUEST_METHOD=".$env['REQUEST_METHOD'];
+ echo "<br/>SCRIPT_NAME=".$env['SCRIPT_NAME'];
+ echo "<br/>PATH_INFO=".$env['PATH_INFO'];
+ echo "<br/>SERVER_NAME=".$env['SERVER_NAME'];    
     
-    
-    $request     = new Request($user);
-    $requestdata = $request->get();
-    
-    $userController = new UserController();
-    $response       = $userController->create($requestdata);
-    
-    print_r($response);
+}); 
+
+$application->get('/', function() {
+    echo "Home Page";
 });
 
-$app->run();
+$application->post('/register', function() {
+    $paramsData = \Slim\Slim::getInstance()->request()->getBody();
+      
+    $objRequest=new Request($paramsData);
+    $request=$objRequest->read();
+       
+    $userController=new UserController();
+    $response=$userController->create($request);
+       
+    $objResopnse=new Response();
+    $data=$objResopnse->to_json($response);
+    echo $data;
+});
+$application->run();

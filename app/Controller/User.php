@@ -14,17 +14,18 @@ class User
     }
     public function create($request)
     {
-        
         $userModel = new UserModel();
-        $userModel->setFirstName($request[0]);
-        $userModel->setLastName($request[1]);
-        $userModel->setEmail($request[2]);
-        $userModel->setPassword($request[3]);
-        $userModel->setCreatedOn($request[4]);
-        
+        $userModel->setFirstName($request['firstName']);
+        $userModel->setLastName($request['lastName']);
+        $userModel->setEmail($request['email']);
+        $userModel->setPassword($request['password']);
+        $userModel->setCreatedOn($request['createdOn']);
+        try {
         $userService = new UserService();
-        $user        = $userService->registration($userModel);
-        
-        return $user;
+        $response    = $userService->create($userModel);
+        } catch (\InvalidArgumentException $e ) {
+             $response=$e->getMessage();
+        }
+        return $response;
     }
 }

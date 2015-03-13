@@ -11,7 +11,7 @@ class User
     {
         
     }
-    public function registration($userModel)
+    public function create($userModel)
     {
         $userDomain = new UserDomain();
         
