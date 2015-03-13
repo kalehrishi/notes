@@ -21,10 +21,10 @@ class User
         $userModel->setPassword($request['password']);
         $userModel->setCreatedOn($request['createdOn']);
         try {
-        $userService = new UserService();
-        $response    = $userService->create($userModel);
-        } catch (\InvalidArgumentException $e ) {
-             $response=$e->getMessage();
+            $userService = new UserService();
+            $response    = $userService->create($userModel);
+        } catch (\InvalidArgumentException $e) {
+            $response = $e->getMessage();
         }
         return $response;
     }
