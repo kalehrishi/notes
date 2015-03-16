@@ -3,7 +3,7 @@ namespace Notes\Database;
 
 use Notes\Config\Config as Configuration;
 
-class Database extends \PHPUnit_Framework_TestCase
+class Database
 {
     private $connection;
     
