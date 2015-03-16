@@ -66,6 +66,8 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteTagModel->setNoteId($noteTags['noteId']);
         $noteTagModel->setUserTag($noteTags['userTgas']);
         
+        $collection = new Collection();
+        
         $noteDomain      = new NoteDomain();
         $actualResultSet = $noteDomain->edit($noteModel, $noteTagModel);
         
@@ -336,10 +338,15 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
         $noteModel = $noteDomain->read($noteModel);
         
-        $this->assertEquals(1, $noteModel[0]['id']);
-        $this->assertEquals(1, $noteModel[0]['userId']);
-        $this->assertEquals('PHP', $noteModel[0]['title']);
-        $this->assertEquals('Preprocessor Hypertext', $noteModel[0]['body']);
+        $this->assertEquals(1, $noteModel[0]->getId());
+        $this->assertEquals(1, $noteModel[0]->getUserId());
+        $this->assertEquals('PHP', $noteModel[0]->getTitle());
+        $this->assertEquals('Preprocessor Hypertext', $noteModel[0]->getBody());
+
+        $this->assertEquals(1, $noteModel[1]->getRow(0)->getId());
+        $this->assertEquals(1, $noteModel[1]->getRow(0)->getUserId());
+        $this->assertEquals('OOP PHP', $noteModel[1]->getRow(0)->getTag());
+        $this->assertEquals(0, $noteModel[1]->getRow(0)->getIsDeleted());
     }
     
     /**

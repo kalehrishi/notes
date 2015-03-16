@@ -86,7 +86,9 @@ class Note
                     
                 }
             } else {
-                return array($resultsetNoteModel);
+                return array(
+                    $resultsetNoteModel
+                );
             }
             return array(
                 $resultsetNoteModel,
@@ -127,7 +129,24 @@ class Note
             && $this->validator->validNumber($noteModel->getId())) {
             $noteMapper = new NoteMapper();
             $noteModel  = $noteMapper->read($noteModel);
-            return $noteModel;
+            
+            $noteTagModel = new NoteTagModel();
+            $noteTagModel->setNoteId($noteModel->getId());
+            
+            $noteTagDomain     = new NoteTagDomain();
+            $noteTagcollection = $noteTagDomain->readAllTag($noteTagModel);
+            
+            $userTagModel      = new UserTagModel();
+            $userTagCollection = new Collection();
+            for ($i = 0; $i < count($noteTagcollection); $i++) {
+                $userTagModel->setId($noteTagcollection->getRow($i)->getUserTagId());
+                $userTagDomain = new UserTagDomain();
+                $userTagCollection->add($userTagDomain->readByUserTagId($userTagModel));
+            }
+            return array(
+                $noteModel,
+                $userTagCollection
+            );
         }
     }
     
@@ -135,8 +154,8 @@ class Note
     {
         if ($this->validator->notNull($noteModel->getUserId())
             && $this->validator->validNumber($noteModel->getUserId())) {
-            $notesMapper = new NotesMapper();
-            $noteCollection  = $notesMapper->findAllNotesByUserId($noteModel);
+            $notesMapper    = new NotesMapper();
+            $noteCollection = $notesMapper->findAllNotesByUserId($noteModel);
             return $noteCollection;
         }
     }

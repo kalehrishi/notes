@@ -182,10 +182,10 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteMapper        = new NoteMapper();
         $noteModel   = $noteMapper->read($noteModel);
         
-        $this->assertEquals(2, $noteModel[0]['id']);
-        $this->assertEquals(1, $noteModel[0]['userId']);
-        $this->assertEquals('PHP5', $noteModel[0]['title']);
-        $this->assertEquals('Server scripting language.', $noteModel[0]['body']);
+        $this->assertEquals(2, $noteModel->getId());
+        $this->assertEquals(1, $noteModel->getUserId());
+        $this->assertEquals('PHP5', $noteModel->getTitle());
+        $this->assertEquals('Server scripting language.', $noteModel->getBody());
         
         
     }

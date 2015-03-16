@@ -37,4 +37,15 @@ class UserTag
             return $userTagCollection;
         }
     }
+
+    public function readByUserTagId($userTagModel)
+    {
+        
+        if ($this->validator->notNull($userTagModel->getId())
+            && $this->validator->validNumber($userTagModel->getId())) {
+            $userTagMpper = new UserTagMapper();
+            $userTagModel = $userTagMpper->readByUserTagId($userTagModel);
+            return $userTagModel;
+        }
+    }
 }

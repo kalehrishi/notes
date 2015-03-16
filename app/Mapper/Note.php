@@ -5,6 +5,7 @@ namespace Notes\Mapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Database\Database as Database;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+use Notes\Collection\NoteCollection as NoteCollection;
 
 class Note
 {
@@ -77,8 +78,12 @@ class Note
         }
 
         if (!empty($resultset)) {
-            return $resultset;
-            
+            $noteModel->setId($resultset[0]['id']);
+            $noteModel->setUserId($resultset[0]['userId']);
+            $noteModel->setTitle($resultset[0]['title']);
+            $noteModel->setBody($resultset[0]['body']);
+
+            return $noteModel;
         } else {
             $obj = new ModelNotFoundException();
             $obj->setModel($noteModel);

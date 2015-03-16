@@ -49,6 +49,31 @@ class UserTag
             throw $exception;
         }
     }
+
+    public function readByUserTagId($userTagModel)
+    {
+        $query            = " SELECT id,userId,tag,isDeleted FROM UserTags WHERE id=:id";
+        $placeholder      = array(
+            ':id' => $userTagModel->getId()
+        );
+        $params           = array(
+            'dataQuery' => $query,
+            'placeholder' => $placeholder
+        );
+        $userTagModelbase = new Database();
+        $resultset        = $userTagModelbase->get($params);
+        if (!empty($resultset)) {
+            $userTagModel->setUserId($resultset[0]['userId']);
+            $userTagModel->setTag($resultset[0]['tag']);
+            $userTagModel->setIsDeleted($resultset[0]['isDeleted']);
+            return $userTagModel;
+        } else {
+            $exception = new ModelNotFoundException();
+            $exception->setModel($userTagModel);
+            throw $exception;
+        }
+    }
+  
     
     public function update($userTagModel)
     {
