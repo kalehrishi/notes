@@ -36,7 +36,40 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/userTags_seed.xml');
     }
     
-    
+    public function testCanReadById()
+    {
+        $input        = array(
+            'id' => 1
+        );
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
+        
+        $userTagMapper = new UserTag();
+        $actualResultSet = $userTagMapper->readTagById($userTagModel);
+        
+        $this->assertEquals(1, $actualResultSet->getId());
+        $this->assertEquals(1, $actualResultSet->getUserId());
+        $this->assertEquals('Import package', $actualResultSet->getTag());
+        $this->assertEquals(0, $actualResultSet->getIsDeleted());
+        
+    }
+    /**
+    * @expectedException         Notes\Exception\ModelNotFoundException
+    * @expectedExceptionMessage  Can Not Found Given Model In Database
+    */
+    public function testThrowsExceptionWhenIdDoesNotExists()
+    {
+        $input        = array(
+            'id' => 2
+        );
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
+        
+        
+        $userTagMapper = new UserTag();
+        $userTagModel  = $userTagMapper->readTagById($userTagModel);
+        
+    }
     public function testCanReadRecordByUserId()
     {
         $input        = array(
@@ -47,7 +80,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $userTagMapper = new UserTag();
-        $userTagCollection = $userTagMapper->read($userTagModel);
+        $userTagCollection = $userTagMapper->readTagsByUserId($userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTags_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -78,7 +111,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $userTagMapper = new UserTag();
-        $userTagModel  = $userTagMapper->read($userTagModel);
+        $userTagModel  = $userTagMapper->readTagsByUserId($userTagModel);
         
     }
     

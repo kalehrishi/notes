@@ -100,12 +100,12 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'userId' => 2
         );
         
-        $userTagModel = new UserTagModel();
-        $userTagModel->setUserId($input['userId']);
+        $userModel = new UserModel();
+        $userModel->setId($input['userId']);
         
         
         $userTagDomain = new UserTag();
-        $userTagCollection  = $userTagDomain->readAllTag($userTagModel);
+        $userTagCollection  = $userTagDomain->readTagsByUserId($userModel);
            
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -131,11 +131,37 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'userId' => 54
         );
         
-        $userTagModel = new UserTagModel();
-        $userTagModel->setUserId($input['userId']);
+        $userModel = new UserModel();
+        $userModel->setId($input['userId']);
         
         
         $userTagDomain = new UserTag();
-        $userTagCollection  = $userTagDomain->readAllTag($userTagModel);
+        $userTagCollection  = $userTagDomain->readTagsByUserId($userModel);
+    }
+
+    public function testCanReadById()
+    {
+        $input = array(
+            'id' => 1
+        );
+        
+        $userTagModel = new UserTagModel();
+        $userTagModel->setId($input['id']);
+        
+        
+        $userTagDomain = new UserTag();
+        $userTagResultSet  = $userTagDomain->readTagById($userTagModel);
+        
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_read.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'UserTags'
+        ));
+        
+        $this->assertEquals(1, $userTagResultSet->getId());
+        $this->assertEquals(1, $userTagResultSet->getUserId());
+        $this->assertEquals('Import package', $userTagResultSet->getTag());
+        $this->assertEquals(0, $userTagResultSet->getIsDeleted());
+        
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
 }
