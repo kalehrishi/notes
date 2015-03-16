@@ -14,7 +14,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     
     public function getConnection()
     {
-        $config     = new Configuration("app/Config/config.json");
+        $config     = new Configuration("config.json");
         $configData = $config->get();
         $dbHost     = $configData['dbHost'];
         $dbName     = $configData['dbName'];
