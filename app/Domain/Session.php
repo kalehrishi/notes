@@ -22,7 +22,7 @@ class Session
         
         $sessionModel->setUserId($userModelRead->getId());
         
-        $randomNumber = rand(10, 100);
+        $randomNumber = rand();
        
         $password = $userModelRead->getPassword();
         
