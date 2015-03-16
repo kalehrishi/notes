@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<dataset>
+<table name="Sessions">
+        <column>id</column>
+        <column>userId</column>
+        <column>authToken</column>
+        <column>createdOn</column>
+        <column>expiredOn</column>
+        <column>isExpired</column>
+         
+          <row>
+            <value>1</value>
+            <value>1</value>
+            <value>abc</value>
+            <value>2014-10-31 20:59:59</value>
+            <value>2015-01-01 01:00:01</value>
+            <value>1</value>
+            
+        </row>
+       <row>
+            <value>2</value>
+            <value>2</value>
+            <value>pqr</value>
+            <value>2014-10-29 20:59:59</value>
+            <value>2014-10-29 20:59:59</value>
+            <value>1</value>
+            
+        </row>
+         <row>
+            <value>3</value>
+            <value>3</value>
+            <value>abc</value>
+            <value>2015-01-29 20:59:59</value>
+            <value>2015-01-29 20:59:59</value>
+            <value>0</value>
+            
+        </row>              
+        
+    </table>
+</dataset>
