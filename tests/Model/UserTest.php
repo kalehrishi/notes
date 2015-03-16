@@ -23,7 +23,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userModel->setEmail($input['email']);
         $userModel->setPassword($input['password']);
         $userModel->setCreatedOn($input['createdOn']);
-
         $this->assertEquals(1, $userModel->getId());
         $this->assertEquals('anusha', $userModel->getFirstName());
         $this->assertEquals('hiremath', $userModel->getLastName());
