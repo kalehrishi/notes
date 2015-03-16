@@ -5,6 +5,7 @@ namespace Notes\Domain;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 use Notes\Mapper\NoteTag as NoteTagMapper;
+use Notes\Mapper\UserTag as UserTagDomain;
 
 use Notes\Model\NoteTag as NoteTagModel;
 
@@ -16,15 +17,21 @@ class NoteTag
     {
         $this->validator = new InputValidator();
     }
-    public function create($noteTagModel)
+    public function create(NoteTagModel $noteTagModel, $userTagModel)
     {
         
         if ($this->validator->notNull($noteTagModel->getNoteId())
             && $this->validator->validNumber($noteTagModel->getNoteId())
-            && $this->validator->notNull($noteTagModel->getUserTagId())
-            && $this->validator->validNumber($noteTagModel->getNoteId())) {
+            && $this->validator->notNull($userTagModel->getTag())) {
+            $UserTagDomain = new UserTagDomain();
+            $userTagModel = $UserTagDomain->create($userTagModel);
+
+            $noteTagModel->setUserTagId($userTagModel->getId());
+
             $noteTagMpper = new NoteTagMapper();
             $noteTagModel = $noteTagMpper->create($noteTagModel);
+
+            $noteTagModel->setUserTag($userTagModel->getTag());
             return $noteTagModel;
         }
     }
@@ -38,7 +45,7 @@ class NoteTag
             return $noteTagCollection;
         }
     }
-    public function delete($noteTagModel)
+    public function update($noteTagModel)
     {
         $noteTagModel->setIsDeleted(1);
         if ($this->validator->notNull($noteTagModel->getId())
