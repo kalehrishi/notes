@@ -1,5 +1,8 @@
 {
     "autoload": {
         "psr-4": {"Notes\\": "app/"}
+    },
+    "require": {
+        "slim/slim": "2.*"
     }
 }
