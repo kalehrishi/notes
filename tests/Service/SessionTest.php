@@ -1,8 +1,8 @@
 <?php
 
-namespace Notes\Domain;
+namespace Notes\Service;
 
-use Notes\Domain\Session as Session;
+use Notes\Service\Session as Session;
 use Notes\Model\Session as sessionModel;
 use Notes\Model\User as UserModel;
 use Notes\Config\Config as Configuration;
@@ -32,12 +32,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
     }
-    
-      /**
+    /**
     * @test
     *
     **/
-    public function it_should_create_session_with_valid_email_password()
+    public function it_should_login_with_valid_email_password()
     {
         $userInput = array(
             'email' => 'pushpa@marade.com',
@@ -51,9 +50,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setPassword($userInput['password']);
 
         $sessionModel = new sessionModel();
-        $sessionDomain   = new Session();
+        $sessionService   = new Session();
 
-        $sessionModel    = $sessionDomain->create($userModel);
+        $sessionModel    = $sessionService->login($userModel);
         
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
@@ -65,7 +64,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     * @test
     *
     **/
-    public function it_should_read_session_by_UserId_and_authToken()
+    public function it_should_read_session_by_userId_and_authToken()
     {
         $input        = array(
             'userId' => 2,
@@ -76,9 +75,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
 
-        $SessionDomain   = new Session();
+        $sessionService   = new Session();
 
-        $sessionModel    = $SessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
+        $sessionModel    = $sessionService->isValid($sessionModel);
 
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -97,7 +96,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     * @test
     *
     **/
-
     public function it_should_read_session_by_id()
     {
         $input        = array(
@@ -107,9 +105,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
         $sessionModel->setId($input['id']);
 
-        $SessionDomain   = new Session();
+        $sessionService   = new Session();
 
-        $sessionModel    = $SessionDomain->read($sessionModel);
+        $sessionModel    = $sessionService->read($sessionModel);
 
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -128,8 +126,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     * @test
     *
     **/
-
-    public function test_it_should_delete_session()
+    public function it_should_logout()
     {
         $input        = array(
             'id' => '1',
@@ -144,9 +141,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setExpiredOn($input['expiredOn']);
         $sessionModel->setIsExpired($input['isExpired']);
 
-        $SessionDomain   = new Session();
+        $sessionService   = new Session();
 
-        $sessionModel    = $SessionDomain->delete($sessionModel);
+        $sessionModel    = $sessionService->logout($sessionModel);
 
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -165,7 +162,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should not be null
      */
-    public function it_should_throw_exception_while_deleting_session_with_no_userId()
+    public function it_should_throw_exception_while_logout_without_userId()
     {
         $input        = array(
             'id' => 1,
@@ -178,9 +175,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
 
-        $SessionDomain = new Session();
+        $sessionService = new Session();
 
-        $sessionModel  = $SessionDomain->delete($sessionModel);
+        $sessionModel  = $sessionService->logout($sessionModel);
     }
     
     /**
@@ -188,8 +185,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-    
-    public function test_it_should_throw_exception_with_invalid_id()
+    public function it_should_throw_exception_with_invalid_id()
     {
         $input        = array(
             'id' => 10
@@ -198,16 +194,17 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
         $sessionModel->setId($input['id']);
 
-        $SessionDomain = new Session();
+        $sessionService = new Session();
 
-        $sessionModel  = $SessionDomain->read($sessionModel);
+        $sessionModel  = $sessionService->read($sessionModel);
     }
+    
     /**
      * @test
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-    public function test_it_should_throw_exception_with_invalid_authToken_userId()
+    public function it_should_throw_exception_with_invalid_authToken_userId()
     {
         $input        = array(
             'userId' => 15,
@@ -218,9 +215,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
 
-        $SessionDomain = new Session();
+        $sessionService = new Session();
 
-        $sessionModel  = $SessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
+        $sessionModel  = $sessionService->isValid($sessionModel);
     }
 
     /**
@@ -228,7 +225,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-    public function test_it_should_throw_exception_with_invalid_email_password()
+    public function it_should_throw_exception_with_invalid_email_password()
     {
         $userInput = array(
             'email' => 'abcd@gmail.com',
@@ -239,19 +236,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setEmail($userInput['email']);
         $userModel->setPassword($userInput['password']);
 
-        $input        = array(
-            'authToken' => 'pqr',
-            'createdOn' => '2015-01-29 20:59:59',
-            'expiredOn' => '2015-01-29 20:59:59'
-        );
-        $sessionModel = new sessionModel();
-
-        $sessionModel->setAuthToken($input['authToken']);
-        $sessionModel->setCreatedOn($input['createdOn']);
-        $sessionModel->setExpiredOn($input['expiredOn']);
-        
-        $sessionDomain = new Session();
-        
-        $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
+        $sessionService = new Session();
+        $sessionModel  = $sessionService->login($userModel);
     }
 }
