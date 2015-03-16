@@ -4,23 +4,22 @@ namespace Notes\Request;
 
 class Request
 {
-	protected $request;
-
-	public function __construct($request)
+    protected $request;
+    
+    public function __construct($request)
     {
-        $this->request=$request;    
+        $this->request = $request;
     }
     public function data()
     {
-       return json_decode($this->request->getBody(),true);
+        return json_decode($this->request->getBody(), true);
     }
     public function version()
     {
-       return $this->request->getScheme();
+        return $this->request->getScheme();
     }
     public function cookies()
     {
-       return $this->request->cookies;
+        return $this->request->cookies;
     }
-    
 }
