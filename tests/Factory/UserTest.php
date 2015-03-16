@@ -22,25 +22,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
        
         
     }
-     /**
-     * @test
-     *
-     */
-    public function it_should_set_usermodel_for_create_user_when_firstname_and_lastname_not_null()
-    {
-        
-         $input     = array(
-            'firstName' => 'kirti',
-            'lastName' =>'ramani'
-        );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
-        
-        $this->assertEquals('kirti', $userModel->getFirstName());
-        $this->assertEquals('ramani', $userModel->getLastName());
-       
-              
-    }
+    
      
    
     /**
@@ -83,6 +65,32 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userModel   = $userFactory->create($input);
         
         $this->assertEquals(1, $userModel->getId());
+        $this->assertEquals('julie', $userModel->getFirstName());
+        $this->assertEquals('shah', $userModel->getLastName());
+        $this->assertEquals('priya@gmail.com', $userModel->getEmail());
+        $this->assertEquals('sfhZ@223', $userModel->getPassword());
+        $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
+      
+        
+    }
+     /**
+     * @test
+     *
+     */
+    public function it_should_set_usermodel_for_update_user_when_all_fields_are_null()
+    {
+        
+        $input     = array(
+            'firstName' => 'julie',
+            'lastName' => 'shah',
+            'email' => 'priya@gmail.com',
+            'password' => 'sfhZ@223',
+            'createdOn' => '2014-10-29 20:59:59'
+        );
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
+        
+        
         $this->assertEquals('julie', $userModel->getFirstName());
         $this->assertEquals('shah', $userModel->getLastName());
         $this->assertEquals('priya@gmail.com', $userModel->getEmail());

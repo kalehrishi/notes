@@ -27,37 +27,28 @@ class User
                 }
             }
             if ($key == 'firstName') {
-                if ($this->validator->notNull($input['firstName'])) {
+                if ($this->validator->notNull($input['firstName'])
+                    && $this->validator->validString($input['firstName'])
+                    && $this->validator->validString($input['lastName'])) {
                     $userModel->setFirstName($input['firstName']);
-                    
-                }
-            }
-            if ($key == 'lastName') {
-                if ($this->validator->notNull($input['lastName'])) {
                     $userModel->setLastName($input['lastName']);
+                    $userModel->setCreatedOn($input['createdOn']);
+                                                           
                 }
             }
+           
             if ($key == 'email') {
-                if ($this->validator->validEmail($input['email'])) {
+                if ($this->validator->validEmail($input['email'])
+                    && $this->validator->isValidPassword($input['password'])) {
                     $userModel->setEmail($input['email']);
-                    
-                }
-            }
-            if ($key == 'password') {
-                if ($this->validator->isValidPassword($input['password'])) {
                     $userModel->setPassword($input['password']);
                     
+                    
                 }
-                
             }
-            if ($key == 'createdOn') {
-                $userModel->setCreatedOn($input['createdOn']);
+          
                 
-            }
-            
-            
-            
-            
+                    
         }
         return $userModel;
         

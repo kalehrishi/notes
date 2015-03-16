@@ -59,7 +59,6 @@ class User
     {
         $userFactory = new UserFactory();
         $userModel   = $userFactory->create($input);
-       
             $userMapper = new UserMapper();
             $userModel  = $userMapper->update($userModel);
             return $userModel;
