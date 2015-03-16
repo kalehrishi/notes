@@ -54,7 +54,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionDomain   = new Session();
 
         $sessionModel    = $sessionDomain->create($userModel);
-        
+       
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
         $this->assertEquals(null, $sessionModel->getExpiredOn());
