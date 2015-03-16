@@ -6,7 +6,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testCanAcceptConfigurationForIntegrationEnviornment()
     {   
-        $config=new Config("app/Config/config_integration.json");
+        $config=new Config("config_integration.json");
         $result=$config->get();
         $this->assertEquals("localhost", $result['dbHost']);
         $this->assertEquals("notes-@GIT_BRANCH", $result['dbName']);
@@ -16,7 +16,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testCanAcceptConfigurationForDevEnviornment()
     {   
-        $config=new Config("app/Config/config_dev.json");
+        $config=new Config("config_dev.json");
         $result=$config->get();
         $this->assertEquals("localhost", $result['dbHost']);
         $this->assertEquals("notes-@GIT_BRANCH", $result['dbName']);
@@ -26,7 +26,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testCanAcceptConfigurationForBetaEnviornment()
     {   
-        $config=new Config("app/Config/config_beta.json");
+        $config=new Config("config_beta.json");
         $result=$config->get();
         $this->assertEquals("localhost", $result['dbHost']);
         $this->assertEquals("notes-@GIT_BRANCH", $result['dbName']);
@@ -36,7 +36,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testCanAcceptConfigurationForMasterEnviornment()
     {   
-        $config=new Config("app/Config/config_master.json");
+        $config=new Config("config_master.json");
         $result=$config->get();
         $this->assertEquals("localhost", $result['dbHost']);
         $this->assertEquals("notes-@GIT_BRANCH", $result['dbName']);
