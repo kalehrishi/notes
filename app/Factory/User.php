@@ -5,8 +5,6 @@ use Notes\Model\User as UserModel;
 
 use Notes\Validator\InputValidator as InputValidator;
 
-use Notes\PasswordValidation\PasswordValidator as PasswordValidator;
-
 class User
 {
     
@@ -28,15 +26,15 @@ class User
             }
             if ($key == 'firstName') {
                 if ($this->validator->notNull($input['firstName'])
-                    && $this->validator->validString($input['firstName'])
-                    && $this->validator->validString($input['lastName'])) {
+                 && $this->validator->validString($input['firstName'])
+                 && $this->validator->validString($input['lastName'])) {
                     $userModel->setFirstName($input['firstName']);
                     $userModel->setLastName($input['lastName']);
                     $userModel->setCreatedOn($input['createdOn']);
-                                                           
+                    
                 }
             }
-           
+            
             if ($key == 'email') {
                 if ($this->validator->validEmail($input['email'])
                     && $this->validator->isValidPassword($input['password'])) {
@@ -46,9 +44,9 @@ class User
                     
                 }
             }
-          
-                
-                    
+            
+            
+            
         }
         return $userModel;
         
