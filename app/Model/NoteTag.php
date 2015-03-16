@@ -12,7 +12,7 @@ class NoteTag
     private $noteId;
     private $userTagId;
     private $isDeleted;
-    public $userTag;
+    private $userTag;
     
     public function getUserTag()
     {

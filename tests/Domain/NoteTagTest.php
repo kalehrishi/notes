@@ -5,7 +5,10 @@ namespace Notes\Domain;
 use Notes\Mapper\NoteTag as NoteTagMapper;
 
 use Notes\Model\NoteTag as NoteTagModel;
+
+use Notes\Model\UserTag as UserTagModel;
 use Notes\Model\Note as NoteModel;
+
 use Notes\Config\Config as Configuration;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
@@ -78,15 +81,21 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input = array(
             'noteId' => 3,
-            'userTagId' => 1
+            'userId' => 1,
+            'userTag' => 'WordPress',
+            'isDeleted' => 0
         );
         
         $noteTagModel = new NoteTagModel();
         $noteTagModel->setNoteId($input['noteId']);
-        $noteTagModel->setUserTagId($input['userTagId']);
+        $noteTagModel->setIsDeleted($input['isDeleted']);
+        
+        $userTagModel = new UserTagModel();
+        $userTagModel->setTag($input['userTag']);
+        $userTagModel->setUserId($input['userId']);
         
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->create($noteTagModel);
+        $noteTagModel  = $noteTagDomain->create($noteTagModel, $userTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTagDomain_after_create.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -95,8 +104,9 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         $this->assertEquals(4, $noteTagModel->getId());
         $this->assertEquals(3, $noteTagModel->getNoteId());
-        $this->assertEquals(1, $noteTagModel->getUserTagId());
+        $this->assertEquals(4, $noteTagModel->getUserTagId());
         $this->assertEquals(0, $noteTagModel->getIsDeleted());
+        $this->assertEquals('WordPress', $noteTagModel->getUserTag());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
@@ -107,14 +117,16 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testThrowsExceptionWhenUserTagIdIsNull()
     {
         $input = array(
-            'noteId' => 1
+            'noteId' => 1,
         );
         
         $noteTagModel = new NoteTagModel();
         $noteTagModel->setNoteId($input['noteId']);
         
+        $userTagModel = new UserTagModel();
+        
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->create($noteTagModel);
+        $noteTagModel  = $noteTagDomain->create($noteTagModel, $userTagModel);
     }
     public function testCanReadNoteTagByNoteId()
     {
@@ -178,7 +190,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $noteTagModel->setIsDeleted($input['isDeleted']);
         
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->delete($noteTagModel);
+        $noteTagModel  = $noteTagDomain->update($noteTagModel);
         
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTagDomain_after_delete.xml');
@@ -209,6 +221,6 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $noteTagModel->setIsDeleted($input['isDeleted']);
         
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->delete($noteTagModel);
+        $noteTagModel  = $noteTagDomain->update($noteTagModel);
     }
 }
