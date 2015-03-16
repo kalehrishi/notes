@@ -8,6 +8,7 @@ use Notes\Mapper\NoteTag as NoteTagMapper;
 use Notes\Mapper\UserTag as UserTagDomain;
 
 use Notes\Model\NoteTag as NoteTagModel;
+use Notes\Model\UserTag as UserTagModel;
 
 use Notes\Validator\InputValidator as InputValidator;
 
@@ -17,7 +18,7 @@ class NoteTag
     {
         $this->validator = new InputValidator();
     }
-    public function create(NoteTagModel $noteTagModel, $userTagModel)
+    public function create(NoteTagModel $noteTagModel, UserTagModel $userTagModel)
     {
         
         if ($this->validator->notNull($noteTagModel->getNoteId())

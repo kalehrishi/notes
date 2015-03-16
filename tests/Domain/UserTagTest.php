@@ -100,12 +100,12 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'userId' => 2
         );
         
-        $userTagModel = new UserTagModel();
-        $userTagModel->setUserId($input['userId']);
+        $userModel = new UserModel();
+        $userModel->setId($input['userId']);
         
         
         $userTagDomain = new UserTag();
-        $userTagCollection  = $userTagDomain->readTagsByUserId($userTagModel);
+        $userTagCollection  = $userTagDomain->readTagsByUserId($userModel);
            
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -131,12 +131,12 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'userId' => 54
         );
         
-        $userTagModel = new UserTagModel();
-        $userTagModel->setUserId($input['userId']);
+        $userModel = new UserModel();
+        $userModel->setId($input['userId']);
         
         
         $userTagDomain = new UserTag();
-        $userTagCollection  = $userTagDomain->readTagsByUserId($userTagModel);
+        $userTagCollection  = $userTagDomain->readTagsByUserId($userModel);
     }
 
     public function testCanReadById()
