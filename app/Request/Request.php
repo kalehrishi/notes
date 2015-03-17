@@ -8,13 +8,6 @@ class Request
     protected $cookie;
     protected $urlParam;
     protected $data;
-    //protected $version = null;
-    //protected $platform = null;
-    
-    public function __construct()
-    {
-        
-    }
     public function setData($data)
     {
         $this->data = json_decode($data, true);
