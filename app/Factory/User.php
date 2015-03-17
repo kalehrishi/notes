@@ -72,31 +72,31 @@ class User
         
         
         
-        $userModel->setId($input['id']);
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userModel->setCreatedOn($input['createdOn']);
-        
+       
         if (isset($input['id']) && $this->validator->notNull($input['id'])) {
+            $userModel->setId($input['id']);
              return $userModel;
         }
         if (isset($input['firstName']) && $this->validator->validString($input['firstName'])) {
+              $userModel->setFirstName($input['firstName']);
              return $userModel;
             
         } if (isset($input['lastName']) && $this->validator->validString($input['lastName'])) {
+              $userModel->setLastName($input['lastName']);
               return $userModel;
         }
         if (isset($input['email']) && $this->validator->validString($input['email'])) {
+              $userModel->setEmail($input['email']);
               return $userModel;
             
         }
         if (isset($input['password']) && $this->validator->isValidPassword($input['password'])) {
+            $userModel->setPassword($input['password']);
             return $userModel;
         }
         if (isset($input['createdOn']) && $this->validator->isValidPassword($input['createdOn'])) {
-            return $userModel;
+             $userModel->setCreatedOn($input['createdOn']);
+             return $userModel;
         } else {
             throw new \InvalidArgumentException("Input should not be null");
             
