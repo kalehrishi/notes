@@ -4,22 +4,48 @@ namespace Notes\Request;
 
 class Request
 {
-    protected $request;
+    protected $header;
+    protected $cookie;
+    protected $urlParam;
+    protected $data;
+    //protected $version = null;
+    //protected $platform = null;
     
-    public function __construct($request)
+    public function __construct()
     {
-        $this->request = $request;
+        
     }
-    public function data()
+    public function setData($data)
     {
-        return json_decode($this->request->getBody(), true);
+        $this->data = json_decode($data, true);
     }
-    public function version()
+    public function setHeader($header)
     {
-        return $this->request->getScheme();
+        $this->header = $header;
     }
-    public function cookies()
+    public function setUrlParam($urlParam)
     {
-        return $this->request->cookies;
+        $this->urlParam = $urlParam;
+    }
+    public function setCookie($cookie)
+    {
+        $this->cookie = $cookie;
+    }
+    
+    public function getData()
+    {
+        return $this->data;
+    }
+    public function getHeader()
+    {
+        return $this->header;
+    }
+    public function getUrlParam()
+    {
+        return $this->urlParam;
+    }
+    public function getCookie()
+    {
+        return $this->cookie;
     }
 }
