@@ -76,9 +76,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
 
-        $SessionDomain   = new Session();
+        $sessionDomain   = new Session();
 
-        $sessionModel    = $SessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
+        $sessionModel    = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
 
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -106,9 +106,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
         $sessionModel->setId($input['id']);
 
-        $SessionDomain   = new Session();
+        $sessionDomain   = new Session();
 
-        $sessionModel    = $SessionDomain->read($sessionModel);
+        $sessionModel    = $sessionDomain->read($sessionModel);
 
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -142,9 +142,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setExpiredOn($input['expiredOn']);
         $sessionModel->setIsExpired($input['isExpired']);
 
-        $SessionDomain   = new Session();
+        $sessionDomain   = new Session();
 
-        $sessionModel    = $SessionDomain->delete($sessionModel);
+        $sessionModel    = $sessionDomain->delete($sessionModel);
 
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -176,9 +176,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
 
-        $SessionDomain = new Session();
+        $sessionDomain = new Session();
 
-        $sessionModel  = $SessionDomain->delete($sessionModel);
+        $sessionModel  = $sessionDomain->delete($sessionModel);
     }
     
     /**
@@ -195,9 +195,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
         $sessionModel->setId($input['id']);
 
-        $SessionDomain = new Session();
+        $sessionDomain = new Session();
 
-        $sessionModel  = $SessionDomain->read($sessionModel);
+        $sessionModel  = $sessionDomain->read($sessionModel);
     }
     /**
      * @test
