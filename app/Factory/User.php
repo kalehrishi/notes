@@ -20,7 +20,8 @@ class User
         
         $userModel = new UserModel();
         
-        if (isset($input['id']) && isset($input['firstName'])) {
+        if (isset($input['id']) && isset($input['firstName']) && isset($input['lastName']) && isset($input['email'])
+            && isset($input['password']) && isset($input['createdOn'])) {
             $userModel->setId($input['id']);
             $userModel->setFirstName($input['firstName']);
             $userModel->setLastName($input['lastName']);
