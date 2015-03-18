@@ -10,9 +10,9 @@ class Note
     public function create(NoteModel $noteModel)
     {
         $input     = array(
-            'userId' => $noteModel->userId,
-            'title' => $noteModel->title,
-            'body' => $noteModel->body
+            'userId' => $noteModel->getUserId(),
+            'title' => $noteModel->getTitle(),
+            'body' => $noteModel->getBody()
         );
         $query     = "INSERT INTO Notes(userId, title, body) VALUES (:userId, :title, :body)";
         $params    = array(
@@ -32,8 +32,8 @@ class Note
     public function delete(NoteModel $noteModel)
     {
         $input  = array(
-            'id' => $noteModel->id,
-            'isDeleted' => $noteModel->isDeleted
+            'id' => $noteModel->getId(),
+            'isDeleted' => $noteModel->getIsDeleted()
         );
         $sql    = "UPDATE Notes SET isDeleted=:isDeleted WHERE id=:id";
         $params = array(
@@ -59,10 +59,11 @@ class Note
     public function update(NoteModel $noteModel)
     {
         $input  = array(
-            'id' => $noteModel->id,
-            'title' => $noteModel->title,
-            'body' => $noteModel->body
+            'id' => $noteModel->getId(),
+            'title' => $noteModel->getTitle(),
+            'body' => $noteModel->getBody()
         );
+
         $sql    = "UPDATE Notes SET title=:title, body=:body WHERE id=:id";
         $params = array(
             'dataQuery' => $sql,
@@ -74,9 +75,8 @@ class Note
         } catch (\PDOException $e) {
             $e->getMessage();
         }
-        
-        if (!empty($resultset)) {
-            return "Updated Successfully";
+        if ($resultset == 1) {
+            return $noteModel;
         } else {
             $obj = new ModelNotFoundException();
             $obj->setModel($noteModel);
@@ -88,11 +88,10 @@ class Note
     public function read(NoteModel $noteModel)
     {
         $input = array(
-            'id' => $noteModel->id
-        );
-        
-        $query  = "SELECT id, title, body FROM Notes WHERE id=:id";
-        $params = array(
+                'id' => $noteModel->getId()
+            );
+            $query = "SELECT id, userId, title, body FROM Notes WHERE id=:id";
+            $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
         );
@@ -102,11 +101,13 @@ class Note
         } catch (\PDOException $e) {
             $e->getMessage();
         }
-        
+
         if (!empty($resultset)) {
-            $noteModel->id    = $resultset[0]['id'];
-            $noteModel->title = $resultset[0]['title'];
-            $noteModel->body  = $resultset[0]['body'];
+            $noteModel->setId($resultset[0]['id']);
+            $noteModel->setUserId($resultset[0]['userId']);
+            $noteModel->setTitle($resultset[0]['title']);
+            $noteModel->setBody($resultset[0]['body']);
+
             return $noteModel;
         } else {
             $obj = new ModelNotFoundException();

@@ -63,14 +63,17 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'NoteTags'
         ));
-    
+        
         $this->assertEquals(4, $noteTagModel->getId());
         $this->assertEquals(3, $noteTagModel->getNoteId());
         $this->assertEquals(4, $noteTagModel->getUserTagId());
         $this->assertEquals(0, $noteTagModel->getIsDeleted());
-        $this->assertEquals('WordPress', $noteTagModel->getUserTag());
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
+        $this->assertEquals(4, $noteTagModel->getUserTag()->getId());
+        $this->assertEquals(1, $noteTagModel->getUserTag()->getUserId());
+        $this->assertEquals('WordPress', $noteTagModel->getUserTag()->getTag());
+
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
      * @expectedException         InvalidArgumentException

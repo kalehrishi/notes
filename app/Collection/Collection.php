@@ -75,4 +75,8 @@ class Collection implements \Iterator
             return false;
         }
     }
+    public function getCount()
+    {
+        return $this->count;
+    }
 }

@@ -26,23 +26,23 @@ class NoteTag
             && $this->validator->notNull($userTagModel->getTag())) {
             $UserTagDomain = new UserTagDomain();
             $userTagModel = $UserTagDomain->create($userTagModel);
-
-            $noteTagModel->setUserTagId($userTagModel->getId());
-
+            
+            $noteTagModel->setUserTag($userTagModel);
+            
+            $noteTagModel->setUserTagId($noteTagModel->getUserTag()->getId());
             $noteTagMpper = new NoteTagMapper();
             $noteTagModel = $noteTagMpper->create($noteTagModel);
 
-            $noteTagModel->setUserTag($userTagModel->getTag());
             return $noteTagModel;
         }
     }
     public function readAllTag($noteTagModel)
     {
-        
         if ($this->validator->notNull($noteTagModel->getNoteId())
             && $this->validator->validNumber($noteTagModel->getNoteId())) {
             $noteTagMpper = new NoteTagMapper();
             $noteTagCollection = $noteTagMpper->read($noteTagModel);
+
             return $noteTagCollection;
         }
     }
