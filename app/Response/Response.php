@@ -13,12 +13,12 @@ class Response
         }
         
     }
-    public function ErrorMessage()
+    public function errorMessage()
     {
         
     }
-    public function to_JSON()
+    public function toJson()
     {
         
-    }    
+    }
 }
