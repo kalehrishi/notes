@@ -47,6 +47,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionController = new Session();
         
         $response = $sessionController->post($userInput);
+        
         $this->assertEquals(4, $response->getId());
         $this->assertEquals(3, $response->getUserId());
         $this->assertEquals(null, $response->getExpiredOn());
@@ -82,7 +83,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'userId' => 1
         );
         $sessionController = new Session();
+
         $response          = $sessionController->delete($input);
+
         $this->assertEquals(1, $response->getId());
         $this->assertEquals(1, $response->getUserId());
         $this->assertEquals(1, $response->getIsExpired());
@@ -100,7 +103,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'authToken' => 'xyz'
         );
         $sessionController = new Session();
-        
+
         $response = $sessionController->delete($input);
     }
 }

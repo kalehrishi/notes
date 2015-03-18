@@ -31,8 +31,10 @@ class Session
         $sessionModel->setUserId($request['userId']);
         try {
             $sessionService   = new SessionService();
+
             $sessionModelRead = $sessionService->isValid($sessionModel);
             $response         = $sessionService->logout($sessionModelRead);
+            
         } catch (\ModelNotFoundException $e) {
             $response = $e->getMessage();
         }
