@@ -21,8 +21,6 @@ class User
         $userModel = new UserModel();
         
         
-        
-        
         if (!((isset($input['id']) && $this->validator->notNull($input['id']))
                && (isset($input['firstName']) && $this->validator->validString($input['firstName']))
                && (isset($input['lastName']) && $this->validator->validString($input['lastName']))
