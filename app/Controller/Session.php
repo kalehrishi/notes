@@ -3,34 +3,37 @@
 namespace Notes\Controller;
 
 use Notes\Model\User as UserModel;
+use Notes\Model\Session as SessionModel;
 use Notes\Service\Session as SessionService;
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class Session
 {
-    public function login($request)
+    public function post($request)
     {
         $userModel = new UserModel();
-        $userModel->setEmail($request[0]);
-        $userModel->setPassword($request[1]);
+        $userModel->setEmail($request['email']);
+        $userModel->setPassword($request['password']);
         try {
             $sessionService = new SessionService();
             $response       = $sessionService->login($userModel);
-        } catch (\InvalidArgumentException $e) {
+        } catch (\ModelNotFoundException $e) {
             $response = $e->getMessage();
         }
         return $response;
     }
     
-    public function logout($request)
+    public function delete($request)
     {
-        $sessionModel = new SessionModel();
-        $sessionModel->setUserId($request[0]);
-        $sessionModel->setExpiredOn($request[1]);
-        $sessionModel->setIsExpired($request[2]);
+        $sessionModel = new sessionModel();
+        
+        $sessionModel->setUserId($request['userId']);
+        $sessionModel->setAuthToken($request['authToken']);
         try {
-            $sessionService = new SessionService();
-            $response       = $sessionService->logout($sessionModel);
-        } catch (\InvalidArgumentException $e) {
+            $sessionService   = new SessionService();
+            $response = $sessionService->isValid($sessionModel);
+         // $response = $sessionService->logout($sessionModel); 
+        } catch (\ModelNotFoundException $e) {
             $response = $e->getMessage();
         }
         return $response;

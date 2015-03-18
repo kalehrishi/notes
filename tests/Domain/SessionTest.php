@@ -167,14 +167,15 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input        = array(
             'id' => 1,
-            'createdOn' => '2015-01-29 20:59:59',
-            'expiredOn' => '2015-01-29 20:59:59'
+            'expiredOn' => '2015-01-29 20:59:59',
+            'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
 
         $sessionModel->setId($input['id']);
-        $sessionModel->setCreatedOn($input['createdOn']);
+        
         $sessionModel->setExpiredOn($input['expiredOn']);
+        $sessionModel->setIsExpired($input['isExpired']);
 
         $sessionDomain = new Session();
 
@@ -236,19 +237,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setEmail($userInput['email']);
         $userModel->setPassword($userInput['password']);
 
-        $input        = array(
-            'authToken' => 'pqr',
-            'createdOn' => '2015-01-29 20:59:59',
-            'expiredOn' => '2015-01-29 20:59:59'
-        );
-        $sessionModel = new sessionModel();
-
-        $sessionModel->setAuthToken($input['authToken']);
-        $sessionModel->setCreatedOn($input['createdOn']);
-        $sessionModel->setExpiredOn($input['expiredOn']);
-        
         $sessionDomain = new Session();
         
-        $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
+        $sessionModel  = $sessionDomain->create($userModel);
     }
 }
