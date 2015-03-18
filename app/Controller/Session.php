@@ -27,12 +27,12 @@ class Session
     {
         $sessionModel = new sessionModel();
         
-        $sessionModel->setUserId($request['userId']);
         $sessionModel->setAuthToken($request['authToken']);
+        $sessionModel->setUserId($request['userId']);
         try {
             $sessionService   = new SessionService();
-            $response = $sessionService->isValid($sessionModel);
-         // $response = $sessionService->logout($sessionModel); 
+            $sessionModelRead = $sessionService->isValid($sessionModel);
+            $response         = $sessionService->logout($sessionModelRead);
         } catch (\ModelNotFoundException $e) {
             $response = $e->getMessage();
         }

@@ -68,13 +68,13 @@ class Session
     
     public function update($sessionModel)
     {
-        $query       = "update Sessions set userId=:userId,isExpired=:isExpired,
+        $query       = "update Sessions set userId=:userId,isExpired=1,
                         expiredOn=:expiredOn where id=:id";
         $placeholder = array(
             ':id'    => $sessionModel->getId(),
             ':userId'=> $sessionModel->getUserId(),
             ':expiredOn' => $sessionModel->getExpiredOn(),
-            ':isExpired' => $sessionModel->getIsExpired()
+            //':isExpired' => $sessionModel->getIsExpired()
         );
         $params      = array(
             'dataQuery' => $query,
