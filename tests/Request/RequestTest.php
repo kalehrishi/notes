@@ -33,4 +33,41 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request->setData($data);
         $this->assertJsonStringEqualsJsonString(json_encode($request->getData()), $data);
     }
+    /**
+    * @test
+    *
+    */
+    public function it_should_set_headers_urlParams_and_cookies()
+    {
+        $headers    = array(
+                        'Host' => 'notes.com',
+                        'Connection' => 'keep-alive',
+                        'Content-Length' => 246,
+                        'Cache-Control' => 'no-cache',
+                        'Origin' => 'chrome-extension://mkhojklkhkdaghjjfdnphfphiaiohkef',
+                        'Client-Header' => 'Header Test',
+                        'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
+                        'Content-Type' => 'text/plain',
+                        'charset'=>'UTF-8' ,
+                        'Accept-Encoding' => 'gzip, deflate'
+                        );
+        $urlParams = array(
+                        'firstName' => 'Joy',
+                        'lastName' => 'mock'
+                        );
+        $cookies = array(
+                        'firstName' => 'Joy'
+                        );
+
+        $request = new Request();
+        $request->setHeaders($headers);
+        $request->setUrlParams($urlParams);
+        $request->setCookies($cookies);
+
+        $this->assertEquals($headers,$request->getHeaders());
+        $this->assertEquals($urlParams,$request->getUrlParams());
+        $this->assertEquals($cookies,$request->getCookies());
+
+    }
+    
 }
