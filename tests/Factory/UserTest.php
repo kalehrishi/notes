@@ -99,6 +99,5 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('sfhZ@223', $userModel->getPassword());
         $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
         
-       }
-    
+    }
 }
