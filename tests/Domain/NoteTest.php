@@ -165,7 +165,8 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 1,
             'userId' => 1,
             'title' => 'Web',
-            'body' => 'PHP is a powerful tool for making dynamic Web pages.'
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.',
+            'isDeleted' => 0
         );
         $userTags  = array(
             0 => array(
@@ -198,6 +199,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setUserId($noteInput['userId']);
         $noteModel->setTitle($noteInput['title']);
         $noteModel->setBody($noteInput['body']);
+        $noteModel->setIsDeleted($noteInput['isDeleted']);
         
         $noteTags = array(
             $noteModel->getId(),

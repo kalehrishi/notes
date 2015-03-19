@@ -67,21 +67,7 @@ class Note
             return $noteModel;
         }
     }
-    
-    public function delete(NoteModel $noteModel)
-    {
-        if ($this->validator->notNull($noteModel->getId())
-            && $this->validator->validNumber($noteModel->getId())
-            && $this->validator->notNull($noteModel->getIsDeleted())
-            && $this->validator->validNumber($noteModel->getIsDeleted())) {
-            $noteMapper               = new NoteMapper();
-            $resultsetNoteDeleteModel = $noteMapper->delete($noteModel);
-
-
-            return $resultsetNoteDeleteModel;
-        }
-    }
-    
+        
     public function update(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getId())

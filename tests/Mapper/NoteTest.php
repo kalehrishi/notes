@@ -38,20 +38,23 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input           = array(
             'id' => 1,
+            'userId' => 1,
             'title' => 'Web',
-            'body' => 'PHP is a powerful tool for making dynamic Web pages.'
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.',
+            'isDeleted' => 0
         );
         $noteMapper      = new NoteMapper();
         
         $noteModel       = new NoteModel();
         $noteModel->setId($input['id']);
+        $noteModel->setUserId($input['userId']);
         $noteModel->setTitle($input['title']);
         $noteModel->setBody($input['body']);
+        $noteModel->setIsDeleted($input['isDeleted']);
 
         $actualResultset = $noteMapper->update($noteModel);
 
-        //$this->assertEquals("Updated Successfully", $actualResultset);
-        $query           = "select id, title, body from Notes";
+        $query           = "select id, userId, title, body, isDeleted from Notes";
         $actualDataSet   = $this->getConnection()->createQueryTable('Notes', $query);
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/note_after_update.xml')
         ->getTable("Notes");
@@ -123,15 +126,20 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input           = array(
             'id' => 2,
+            'userId' => 1,
+            'title' =>'PHP5',
+            'body' =>'Server scripting language.',
             'isDeleted' => 1
         );
         $noteMapper      = new NoteMapper();
         $noteModel       = new NoteModel();
 
         $noteModel->setId($input['id']);
+        $noteModel->setUserId($input['userId']);
+        $noteModel->setTitle($input['title']);
+        $noteModel->setBody($input['body']);
         $noteModel->setIsDeleted($input['isDeleted']);
-
-        $actualResultset = $noteMapper->delete($noteModel);
+        $actualResultset = $noteMapper->update($noteModel);
         $this->assertEquals(1, $actualResultset->isDeleted);
         
         $query           = "select id,userId, title, body, isDeleted from Notes";
@@ -148,13 +156,16 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
     public function testCanFailedForDeleteByNotPassingNoteId()
     {
         $input      = array(
+            'userId' => 1,
+            'title' =>'PHP5',
+            'body' =>'Server scripting language.',
             'isDeleted' => 1
         );
         $noteMapper = new NoteMapper();
         $noteModel         = new NoteModel();
         $noteModel->setIsDeleted($input['isDeleted']);
         $noteModel       = new NoteModel($input);
-        $noteMapper->delete($noteModel);
+        $noteMapper->update($noteModel);
     }
     public function testCanReadByTitle()
     {
