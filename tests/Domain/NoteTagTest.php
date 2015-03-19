@@ -27,8 +27,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
             $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
         
@@ -110,15 +109,13 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'NoteTags'
         ));
-        
-        while($noteTagCollection->hasNext()) {
-        $this->assertEquals(3, $noteTagCollection->getRow(0)->getId());
-        $this->assertEquals(2, $noteTagCollection->getRow(0)->getNoteId());
-        $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
-        $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
-        $noteTagCollection->next();
-        } 
-
+        while ($noteTagCollection->hasNext()) {
+            $this->assertEquals(3, $noteTagCollection->getRow(0)->getId());
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getNoteId());
+            $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
+            $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
+            $noteTagCollection->next();
+        }
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }

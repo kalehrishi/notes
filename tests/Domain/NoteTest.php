@@ -10,6 +10,7 @@ use Notes\Config\Config as Configuration;
 
 use Notes\Collection\Collection as Collection;
 use Notes\Collection\UserTagCollection as UserTagCollection;
+use Notes\Collection\NoteTagCollection as NoteTagCollection;
 
 use Notes\Domain\UserTag as UserTagDomain;
 use Notes\Model\UserTag as UserTagModel;
@@ -53,35 +54,49 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'title' => 'Exception',
             'body' => 'Creating a custom exception handler is quite simple.'
         );
-        
-        $userTags = array(
-            0 => array(
+        $noteTag = array(
+            '0'=>array(
                 'id' => 1,
-                'userId' => 1,
-                'tag' => 'PDOException',
-                'isDeleted' => 0
-            ),
-            
-            1 => array(
+                'noteId' => 3,
+                'userTagId' => 1,
+                'isDeleted' => 0,
+                'userTag' => array(
+                    'id' => 1,
+                    'userId' => 1,
+                    'tag' => 'OOP PHP',
+                    'isDeleted' => 0)
+              ),
+            '1'=>array(
                 'id' => 2,
-                'userId' => 1,
-                'tag' => 'Runtime',
-                'isDeleted' => 0
-            )
-        );
-        for ($i = 0; $i < count($userTags); $i++) {
-            $userTagCollection = new UserTagCollection($userTags);
-        }
+                'noteId' => 3,
+                'userTagId' => 3,
+                'isDeleted' => 0,
+                'userTag' => array(
+                    'id' => 2,
+                    'userId' => 1,
+                    'tag' => 'First Tag',
+                    'isDeleted' => 0)
+              ),
+            '2'=>array(
+                'id' => 2,
+                'noteId' => 3,
+                'userTagId' => 4,
+                'isDeleted' => 0,
+                'userTag' => array(
+                    'id' => 3,
+                    'userId' => 1,
+                    'tag' => 'Second Tag',
+                    'isDeleted' => 0)
+              )
+            );
+        $noteTagCollection = new NoteTagCollection($noteTag);
+        
         $noteModel = new NoteModel();
         $noteModel->setUserId($noteInput['userId']);
         $noteModel->setTitle($noteInput['title']);
         $noteModel->setBody($noteInput['body']);
         
-        $noteTags = array(
-            $userTagCollection
-        );
-        
-        $noteModel->setNoteTags($noteTags);
+        $noteModel->setNoteTag($noteTagCollection);
         
         $noteDomain = new NoteDomain();
         $noteModel  = $noteDomain->create($noteModel);
@@ -91,16 +106,31 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Exception', $noteModel->getTitle());
         $this->assertEquals('Creating a custom exception handler is quite simple.', $noteModel->getBody());
         
-        $this->assertEquals(3, $noteModel->getNoteTags()['noteId']);
-        $noteTagCollection = $noteModel->getNoteTags()['userTagModel'];
+        $noteTagCollection = $noteModel->getNoteTag();
         while ($noteTagCollection->hasNext()) {
             $this->assertEquals(3, $noteTagCollection->getRow(0)->getId());
-            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserId());
-            $this->assertEquals('PDOException', $noteTagCollection->getRow(0)->getTag());
-            
+            $this->assertEquals(3, $noteTagCollection->getRow(0)->getNoteId());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTagId());
+
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTag()->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTag()->getUserId());
+            $this->assertEquals('OOP PHP', $noteTagCollection->getRow(0)->getUserTag()->getTag());
+
             $this->assertEquals(4, $noteTagCollection->getRow(1)->getId());
-            $this->assertEquals(1, $noteTagCollection->getRow(1)->getUserId());
-            $this->assertEquals('Runtime', $noteTagCollection->getRow(1)->getTag());
+            $this->assertEquals(3, $noteTagCollection->getRow(1)->getNoteId());
+            $this->assertEquals(3, $noteTagCollection->getRow(1)->getUserTagId());
+
+            $this->assertEquals(3, $noteTagCollection->getRow(1)->getUserTag()->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(1)->getUserTag()->getUserId());
+            $this->assertEquals('First Tag', $noteTagCollection->getRow(1)->getUserTag()->getTag());
+            
+            $this->assertEquals(5, $noteTagCollection->getRow(2)->getId());
+            $this->assertEquals(3, $noteTagCollection->getRow(2)->getNoteId());
+            $this->assertEquals(4, $noteTagCollection->getRow(2)->getUserTagId());
+
+            $this->assertEquals(4, $noteTagCollection->getRow(2)->getUserTag()->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(2)->getUserTag()->getUserId());
+            $this->assertEquals('Second Tag', $noteTagCollection->getRow(2)->getUserTag()->getTag());
             $noteTagCollection->next();
         }
         
@@ -123,13 +153,14 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('PHP', $noteModel->getTitle());
         $this->assertEquals('Preprocessor Hypertext', $noteModel->getBody());
         
-        $this->assertEquals(1, $noteModel->getNoteTags()['noteId']);
-        $noteTagCollection = $noteModel->getNoteTags()['userTagModel'];
+        $this->assertEquals(1, $noteModel->getNoteTag()['noteId']);
+        $noteTagCollection = $noteModel->getNoteTag()['userTagModel'];
         while ($noteTagCollection->hasNext()) {
-            $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserId());
-            $this->assertEquals('OOP PHP', $noteTagCollection->getRow(0)->getTag());
+            $this->assertEquals('Javascript', $noteTagCollection->getRow(0)->getTag());
             $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
+
             $noteTagCollection->next();
         }
     }
@@ -157,143 +188,5 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             $this->assertEquals('Server scripting language.', $noteCollection->getRow(1)->getBody());
             $noteCollection->next();
         }
-    }
-
-    public function testCanUpdate()
-    {
-        $noteInput = array(
-            'id' => 1,
-            'userId' => 1,
-            'title' => 'Web',
-            'body' => 'PHP is a powerful tool for making dynamic Web pages.',
-            'isDeleted' => 0
-        );
-        $userTags  = array(
-            0 => array(
-                'id' => 1,
-                'userId' => 1,
-                'tag' => 'PDOException',
-                'isDeleted' => 0
-            ),
-            
-            1 => array(
-                'id' => 2,
-                'userId' => 1,
-                'tag' => 'OOP PHP',
-                'isDeleted' => 1
-            ),
-            
-            2 => array(
-                'id' => 3,
-                'userId' => 1,
-                'tag' => 'Runtime',
-                'isDeleted' => 0
-            )
-        );
-        
-        for ($i = 0; $i < count($userTags); $i++) {
-            $userTagCollection = new UserTagCollection($userTags);
-        }
-        $noteModel = new NoteModel();
-        $noteModel->setId($noteInput['id']);
-        $noteModel->setUserId($noteInput['userId']);
-        $noteModel->setTitle($noteInput['title']);
-        $noteModel->setBody($noteInput['body']);
-        $noteModel->setIsDeleted($noteInput['isDeleted']);
-        
-        $noteTags = array(
-            $noteModel->getId(),
-            $userTagCollection
-        );
-        
-        $noteModel->setNoteTags($noteTags);
-        
-        
-        
-        $noteDomain = new NoteDomain();
-        $noteModel  = $noteDomain->update($noteModel);
-        
-        $this->assertEquals(1, $noteModel->getId());
-        $this->assertEquals(1, $noteModel->getUserId());
-        $this->assertEquals('Web', $noteModel->getTitle());
-        $this->assertEquals('PHP is a powerful tool for making dynamic Web pages.', $noteModel->getBody());
-        
-        $this->assertEquals(1, $noteModel->getNoteTags()['noteId']);
-        $noteTagCollection = $noteModel->getNoteTags()['userTagModel'];
-        while ($noteTagCollection->hasNext()) {
-            $this->assertEquals(3, $noteTagCollection->getRow(0)->getId());
-            $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
-            $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
-            $this->assertEquals('PDOException', $noteTagCollection->getRow(0)->getUserTag()->getTag());
-            
-            $this->assertEquals(2, $noteTagCollection->getRow(1)->getId());
-            $this->assertEquals(1, $noteTagCollection->getRow(1)->getNoteId());
-            $this->assertEquals(3, $noteTagCollection->getRow(1)->getUserTagId());
-            $this->assertEquals(1, $noteTagCollection->getRow(1)->getIsDeleted());
-            
-            $this->assertEquals(4, $noteTagCollection->getRow(2)->getId());
-            $this->assertEquals(1, $noteTagCollection->getRow(2)->getNoteId());
-            $this->assertEquals(4, $noteTagCollection->getRow(2)->getUserTagId());
-            $this->assertEquals('Runtime', $noteTagCollection->getRow(2)->getUserTag()->getTag());
-            $noteTagCollection->next();
-        }
-        
-    }
-    
-    /**
-     * @expectedException         InvalidArgumentException
-     * @expectedExceptionMessage  Input should not be null
-     */
-    public function testThrowsExceptionWhenTitileIsNull()
-    {
-        
-        $noteInput = array(
-            'body' => 'Creating a custom exception handler is quite simple.'
-        );
-        
-        $noteModel = new NoteModel();
-        $noteModel->setBody($noteInput['body']);
-        
-        $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->create($noteModel);
-        
-    }
-    
-    /**
-     * @expectedException         InvalidArgumentException
-     * @expectedExceptionMessage  Input should not be null
-     */
-    public function testThrowsExceptionWhenNoteIdIsNotPass()
-    {
-        $noteInput = array(
-            'userId' => 1,
-            'title' => 'Web',
-            'body' => 'PHP is a powerful tool for making dynamic Web pages.',
-            'isDeleted' => 1
-        );
-        $noteModel = new NoteModel();
-        $noteModel->setUserId($noteInput['userId']);
-        $noteModel->setTitle($noteInput['title']);
-        $noteModel->setBody($noteInput['body']);
-        $noteModel->setIsDeleted($noteInput['isDeleted']);
-        
-        $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->update($noteModel);
-    }
-    
-    /**
-     * @expectedException        Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
-     */
-    public function testThrowsModelNotFoundExceptionWhenNoteIdNotExist()
-    {
-        $input     = array(
-            'id' => 10
-        );
-        $noteModel = new NoteModel();
-        $noteModel->setId($input['id']);
-        
-        $noteDomain      = new NoteDomain();
-        $actualResultSet = $noteDomain->read($noteModel);
     }
 }
