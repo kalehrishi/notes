@@ -150,10 +150,12 @@ class Note
         }
     }
     
-    public function findAllNotesByUserId(NoteModel $noteModel)
+    public function findAllNotesByUserId(UserModel $userModel)
     {
-        if ($this->validator->notNull($noteModel->getUserId())
-            && $this->validator->validNumber($noteModel->getUserId())) {
+        if ($this->validator->notNull($userModel->getId())
+            && $this->validator->validNumber($userModel->getId())) {
+            $noteModel = new NoteModel();
+            $noteModel->setUserId($userModel->getId());
             $notesMapper    = new NotesMapper();
             $noteCollection = $notesMapper->findAllNotesByUserId($noteModel);
             return $noteCollection;

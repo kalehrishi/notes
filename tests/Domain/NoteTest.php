@@ -106,7 +106,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
-    public function testCanRead()
+    public function testCanReadByNoteId()
     {
         $input = array(
             'id' => 1
@@ -134,6 +134,31 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         }
     }
     
+    public function testCanReadAllNotesByUserId()
+    {
+        $input = array(
+            'id' => 1
+        );
+        
+        $userModel = new UserModel();
+        $userModel->setId($input['id']);
+        
+        $noteDomain = new NoteDomain();
+        $noteCollection  = $noteDomain->findAllNotesByUserId($userModel);
+        while ($noteCollection->hasNext()) {
+            $this->assertEquals(1, $noteCollection->getRow(0)->getId());
+            $this->assertEquals(1, $noteCollection->getRow(0)->getUserId());
+            $this->assertEquals('PHP', $noteCollection->getRow(0)->getTitle());
+            $this->assertEquals('Preprocessor Hypertext', $noteCollection->getRow(0)->getBody());
+
+            $this->assertEquals(2, $noteCollection->getRow(1)->getId());
+            $this->assertEquals(1, $noteCollection->getRow(1)->getUserId());
+            $this->assertEquals('PHP5', $noteCollection->getRow(1)->getTitle());
+            $this->assertEquals('Server scripting language.', $noteCollection->getRow(1)->getBody());
+            $noteCollection->next();
+        }
+    }
+
     public function testCanUpdate()
     {
         $noteInput = array(
