@@ -76,7 +76,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @test
      *
      **/
-    public function it_should_delete_session()
+    public function it_should_delete_session_if_user_login()
     {
         $input             = array(
             'authToken' => 'abc',
@@ -105,5 +105,5 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionController = new Session();
 
         $response = $sessionController->delete($input);
-    }
+    } 
 }
