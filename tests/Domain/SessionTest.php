@@ -131,12 +131,14 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input        = array(
             'id' => '1',
-            'userId' => '1'
+            'userId' => '1',
+            'isExpired'=>'1'
         );
         $sessionModel = new sessionModel();
 
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
+        $sessionModel->setIsExpired($input['isExpired']);
         $sessionDomain   = new Session();
 
         $sessionModel    = $sessionDomain->delete($sessionModel);
