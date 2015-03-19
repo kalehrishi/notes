@@ -7,7 +7,7 @@ class Response
     public function __construct($code, $status, $data)
     {
         if ($status = "success") {
-            $this->to_JSON($data);
+            $this->toJson($data);
         } else {
             $this->ErrorMessage();
         }
