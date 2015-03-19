@@ -8,15 +8,15 @@ class Response
     private $message;
     private $version;
     private $data;
-    private $debug_data;
+    private $debugData;
     
-    public function __construct($statusCode, $message, $version, $data, $debug_data)
+    public function __construct($status, $message, $version, $data=null, $debugData=null)
     {
-        $this->statusCode = $statusCode;
+        $this->status = $status;
         $this->message    = $message;
         $this->version    = $version;
         $this->data       = $data;
-        $this->debug_data = $debug_data;
+        $this->debugData = $debugData;
     }
     public function getResponse()
     {
