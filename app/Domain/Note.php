@@ -124,10 +124,9 @@ class Note
                     }
                 }
             }
+            $noteModel->setNoteTag($noteTagCollection);
+            return $noteModel;
         }
-        $noteModel->setNoteTag($noteTagCollection);
-        return $noteModel;
-        
     }
     
     public function read(NoteModel $noteModel)
@@ -161,7 +160,12 @@ class Note
             
             $notesMapper = new NotesMapper();
             $noteModel   = $notesMapper->findAllNotesByUserId($noteModel);
+            for ($i=0; $i < count($noteModel); $i++) {
+                if ($noteModel->getRow($i)->getIsDeleted() != 1) {
+                    $noteModel->getRow($i);
+                }
+            }
+            return $noteModel;
         }
-        return $noteModel;
     }
 }

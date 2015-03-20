@@ -180,7 +180,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
         $noteDomain = new NoteDomain();
         $noteModel  = $noteDomain->findAllNotesByUserId($userModel);
-        
         while ($noteModel->hasNext()) {
             $this->assertEquals(1, $noteModel->getRow(0)->getId());
             $this->assertEquals(1, $noteModel->getRow(0)->getUserId());

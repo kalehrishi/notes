@@ -12,19 +12,20 @@ class NoteCollectionTest extends \PHPUnit_Framework_TestCase
                 'id' => 10,
                 'userId' => 1,
                 'title' => 'SQL',
-                'body' => 'Standard language for accessing databases.'
+                'body' => 'Standard language for accessing databases.',
+                'isDeleted' => 0
             ),
             '1' => array(
                 'id' => 11,
                 'userId' => 1,
                 'title' => 'JQuery',
-                'body' => 'Simplifies JavaScript programming.'
+                'body' => 'Simplifies JavaScript programming.',
+                'isDeleted' => 0
             )
         );
         
         
         $noteCollection = new NoteCollection($resulset);
-        
         $noteCollection->rewind();
         while ($noteCollection->hasNext()) {
             $this->assertEquals(10, $noteCollection->getRow(0)->getId());

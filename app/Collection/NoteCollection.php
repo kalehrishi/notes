@@ -14,6 +14,7 @@ class NoteCollection extends Collection
             $noteModel->setUserId($resultset[$i]['userId']);
             $noteModel->setTitle($resultset[$i]['title']);
             $noteModel->setBody($resultset[$i]['body']);
+            $noteModel->setIsDeleted($resultset[$i]['isDeleted']);
             $this->add($noteModel);
         }
     }
