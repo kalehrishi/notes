@@ -18,7 +18,7 @@ class User
         
         try {
             $userService = new UserService();
-            $response    = $userService->create($userModel);
+            $response    = $userService->createUser($userModel);
         } catch (\InvalidArgumentException $e) {
             $response = $e->getMessage();
         }
