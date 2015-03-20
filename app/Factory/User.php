@@ -21,9 +21,13 @@ class User
         $userModel = new UserModel();
         
         
+        if (!((isset($input['firstName']) && $this->validator->validString($input['firstName']))
+                && (isset($input['lastName']) && $this->validator->validString($input['lastName']))
+                && (isset($input['email']) && $this->validator->validString($input['email']))
+                && (isset($input['password']) && $this->validator->isValidPassword($input['password']))
+                && (isset($input['createdOn'])))
         
-        
-        if (!((isset($input['id']) && $this->validator->notNull($input['id']))
+           || ((isset($input['id']) && $this->validator->notNull($input['id']))
             && (isset($input['firstName']) && $this->validator->validString($input['firstName']))
             && (isset($input['lastName']) && $this->validator->validString($input['lastName']))
             && (isset($input['email']) && $this->validator->validString($input['email']))
@@ -32,11 +36,6 @@ class User
 
             || ((isset($input['id']) && $this->validator->notNull($input['id'])))
 
-            || ((isset($input['firstName']) && $this->validator->validString($input['firstName']))
-                && (isset($input['lastName']) && $this->validator->validString($input['lastName']))
-                && (isset($input['email']) && $this->validator->validString($input['email']))
-                && (isset($input['password']) && $this->validator->isValidPassword($input['password']))
-                && (isset($input['createdOn'])))
 
             || ((isset($input['email']) && $this->validator->validString($input['email']))
                 && (isset($input['password']) && $this->validator->isValidPassword($input['password'])))) {
