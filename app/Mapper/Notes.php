@@ -14,7 +14,7 @@ class Notes
         $input  = array(
             'userId' => $noteModel->getUserId()
         );
-        $query  = "SELECT id, userId, title, body FROM Notes WHERE userId=:userId";
+        $query  = "SELECT id, userId, title, body, isDeleted FROM Notes WHERE userId=:userId";
         $params = array(
             'dataQuery' => $query,
             'placeholder' => $input

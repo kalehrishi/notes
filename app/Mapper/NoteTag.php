@@ -32,10 +32,10 @@ class NoteTag
     
     public function read($noteTagModel)
     {
-        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid";
         $placeholder      = array(
             ':noteid' => $noteTagModel->getNoteId()
         );
+        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid";
         $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
@@ -49,9 +49,8 @@ class NoteTag
                 $noteTagModel->setNoteId($resultset[$i]['noteId']);
                 $noteTagModel->setUserTagId($resultset[$i]['userTagId']);
                 $noteTagModel->setIsDeleted($resultset[$i]['isDeleted']);
-                
-                $noteTagcollection->add($noteTagModel);
             }
+            $noteTagcollection->add($noteTagModel);
             return $noteTagcollection;
         } else {
             $exception = new ModelNotFoundException();

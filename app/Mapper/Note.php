@@ -64,7 +64,7 @@ class Note
         $input = array(
                 'id' => $noteModel->getId()
             );
-            $query = "SELECT id, userId, title, body FROM Notes WHERE id=:id";
+            $query = "SELECT id, userId, title, body, isDeleted FROM Notes WHERE id=:id";
             $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
@@ -81,6 +81,7 @@ class Note
             $noteModel->setUserId($resultset[0]['userId']);
             $noteModel->setTitle($resultset[0]['title']);
             $noteModel->setBody($resultset[0]['body']);
+            $noteModel->setIsDeleted($resultset[0]['isDeleted']);
 
             return $noteModel;
         } else {

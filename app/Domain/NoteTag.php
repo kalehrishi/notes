@@ -18,19 +18,10 @@ class NoteTag
     {
         $this->validator = new InputValidator();
     }
-    public function create(NoteTagModel $noteTagModel, UserTagModel $userTagModel)
+    public function create(NoteTagModel $noteTagModel)
     {
-        
         if ($this->validator->notNull($noteTagModel->getNoteId())
-            && $this->validator->validNumber($noteTagModel->getNoteId())
-            && $this->validator->notNull($userTagModel->getTag())) {
-            if ($userTagModel->getId() == null) {
-                $UserTagDomain = new UserTagDomain();
-                $userTagModel = $UserTagDomain->create($userTagModel);
-            }
-            $noteTagModel->setUserTag($userTagModel);
-            
-            $noteTagModel->setUserTagId($noteTagModel->getUserTag()->getId());
+            && $this->validator->validNumber($noteTagModel->getNoteId())) {
             $noteTagMpper = new NoteTagMapper();
             $noteTagModel = $noteTagMpper->create($noteTagModel);
 
@@ -43,7 +34,6 @@ class NoteTag
             && $this->validator->validNumber($noteTagModel->getNoteId())) {
             $noteTagMpper = new NoteTagMapper();
             $noteTagcollection = $noteTagMpper->read($noteTagModel);
-            
             $userTagDomain = new UserTagDomain();
             for ($i=0; $i < count($noteTagcollection); $i++) {
                 $userTagModel = new UserTagModel();
@@ -51,7 +41,6 @@ class NoteTag
                 $userTagResultSet = $userTagDomain->readTagById($userTagModel);
                 $noteTagcollection->getRow($i)->setUserTag($userTagResultSet);
             }
-            
             return $noteTagcollection;
         }
     }

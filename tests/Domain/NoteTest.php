@@ -153,13 +153,17 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('PHP', $noteModel->getTitle());
         $this->assertEquals('Preprocessor Hypertext', $noteModel->getBody());
         
-        $this->assertEquals(1, $noteModel->getNoteTag()['noteId']);
-        $noteTagCollection = $noteModel->getNoteTag()['userTagModel'];
+        $noteTagCollection = $noteModel->getNoteTag();
         while ($noteTagCollection->hasNext()) {
             $this->assertEquals(2, $noteTagCollection->getRow(0)->getId());
-            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserId());
-            $this->assertEquals('Javascript', $noteTagCollection->getRow(0)->getTag());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getUserTagId());
             $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
+
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getUserTag()->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTag()->getUserId());
+            $this->assertEquals('Javascript', $noteTagCollection->getRow(0)->getUserTag()->getTag());
+            $this->assertEquals(0, $noteTagCollection->getRow(0)->getUserTag()->getIsDeleted());
 
             $noteTagCollection->next();
         }
@@ -175,18 +179,114 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setId($input['id']);
         
         $noteDomain = new NoteDomain();
-        $noteCollection  = $noteDomain->findAllNotesByUserId($userModel);
-        while ($noteCollection->hasNext()) {
-            $this->assertEquals(1, $noteCollection->getRow(0)->getId());
-            $this->assertEquals(1, $noteCollection->getRow(0)->getUserId());
-            $this->assertEquals('PHP', $noteCollection->getRow(0)->getTitle());
-            $this->assertEquals('Preprocessor Hypertext', $noteCollection->getRow(0)->getBody());
+        $noteModel  = $noteDomain->findAllNotesByUserId($userModel);
+        
+        while ($noteModel->hasNext()) {
+            $this->assertEquals(1, $noteModel->getRow(0)->getId());
+            $this->assertEquals(1, $noteModel->getRow(0)->getUserId());
+            $this->assertEquals('PHP', $noteModel->getRow(0)->getTitle());
+            $this->assertEquals('Preprocessor Hypertext', $noteModel->getRow(0)->getBody());
 
-            $this->assertEquals(2, $noteCollection->getRow(1)->getId());
-            $this->assertEquals(1, $noteCollection->getRow(1)->getUserId());
-            $this->assertEquals('PHP5', $noteCollection->getRow(1)->getTitle());
-            $this->assertEquals('Server scripting language.', $noteCollection->getRow(1)->getBody());
-            $noteCollection->next();
+            $this->assertEquals(2, $noteModel->getRow(1)->getId());
+            $this->assertEquals(1, $noteModel->getRow(1)->getUserId());
+            $this->assertEquals('PHP5', $noteModel->getRow(1)->getTitle());
+            $this->assertEquals('Server scripting language.', $noteModel->getRow(1)->getBody());
+            $noteModel->next();
         }
+    }
+    
+    public function testCanUpdate()
+    {
+        $noteInput = array(
+            'id' => 1,
+            'userId' => 1,
+            'title' => 'Web',
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.',
+            'isDeleted' => 0
+        );
+        $noteTag  = array(
+            0 => array(
+                'id' => 1,
+                'noteId' => 1,
+                'userTagId' => 1,
+                'isDeleted' => 0,
+                'userTag' => array(
+                    'id' => 1,
+                    'userId' => 1,
+                    'tag' => 'OOP PHP',
+                    'isDeleted' => 1
+                )
+            ),
+
+            1 => array
+            ('id' => 2,
+                'noteId' => 1,
+                'userTagId' => 2,
+                'isDeleted' => 0,
+                'userTag' => array(
+                'id' => 2,
+                'userId' => 1,
+                'tag' => 'PDOException',
+                'isDeleted' => 0
+                )
+            ),
+            
+            
+            2 => array(
+                'id' => 3,
+                'noteId' => 1,
+                'userTagId' => 3,
+                'isDeleted' => 0,
+                'userTag' => array(
+                    'id' => 3,
+                    'userId' => 1,
+                    'tag' => 'Runtime',
+                    'isDeleted' => 0
+               )
+            )
+        );
+        $noteTagCollection = new NoteTagCollection($noteTag);
+        
+        $noteModel = new NoteModel();
+        $noteModel->setId($noteInput['id']);
+        $noteModel->setUserId($noteInput['userId']);
+        $noteModel->setTitle($noteInput['title']);
+        $noteModel->setBody($noteInput['body']);
+        $noteModel->setIsDeleted($noteInput['isDeleted']);
+        
+        $noteModel->setNoteTag($noteTagCollection);
+        
+        
+        
+        $noteDomain = new NoteDomain();
+        $noteModel  = $noteDomain->update($noteModel);
+        
+        $this->assertEquals(1, $noteModel->getId());
+        $this->assertEquals(1, $noteModel->getUserId());
+        $this->assertEquals('Web', $noteModel->getTitle());
+        $this->assertEquals('PHP is a powerful tool for making dynamic Web pages.', $noteModel->getBody());
+        
+        $noteTagCollection = $noteModel->getNoteTag();
+        while ($noteTagCollection->hasNext()) {
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTagId());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getIsDeleted());
+            $this->assertEquals('OOP PHP', $noteTagCollection->getRow(0)->getUserTag()->getTag());
+            
+            $this->assertEquals(3, $noteTagCollection->getRow(1)->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(1)->getNoteId());
+            $this->assertEquals(3, $noteTagCollection->getRow(1)->getUserTagId());
+            $this->assertEquals(0, $noteTagCollection->getRow(1)->getIsDeleted());
+            $this->assertEquals('PDOException', $noteTagCollection->getRow(1)->getUserTag()->getTag());
+            
+            $this->assertEquals(4, $noteTagCollection->getRow(2)->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(2)->getNoteId());
+            $this->assertEquals(4, $noteTagCollection->getRow(2)->getUserTagId());
+            $this->assertEquals(0, $noteTagCollection->getRow(2)->getIsDeleted());
+            $this->assertEquals('Runtime', $noteTagCollection->getRow(2)->getUserTag()->getTag());
+            $noteTagCollection->next();
+        }
+        
     }
 }
