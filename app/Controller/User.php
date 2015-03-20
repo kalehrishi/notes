@@ -4,6 +4,8 @@ namespace Notes\Controller;
 
 use Notes\Service\User as UserService;
 
+use Notes\Model\User as UserModel;
+
 class User
 {
     public function create($request)
