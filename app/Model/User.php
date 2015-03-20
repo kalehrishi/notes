@@ -1,7 +1,9 @@
 <?php
 namespace Notes\Model;
 
-class User
+use Notes\ConvertToArray\ConvertToArray as ConvertToArray;
+
+class User extends ConvertToArray
 {
     protected $id;
     protected $firstName;
@@ -59,5 +61,9 @@ class User
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+    public function toArray()
+    {
+        return(get_object_vars($this));
     }
 }
