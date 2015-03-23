@@ -41,7 +41,7 @@ class Session
     public function isValid($sessionModel)
     {
         $sessionDomain = new SessionDomain();
-
+        
         $session = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
         
         return $session;

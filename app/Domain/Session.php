@@ -73,7 +73,7 @@ class Session
         && $this->validator->notNull($sessionModel->getUserId())
         && $this->validator->validNumber($sessionModel->getUserId())) {
             $sessionMapper = new SessionMapper();
-            
+            $sessionModel->setExpiredOn(date("Y-m-d H:i:s"));
             $sessionModel = $sessionMapper->update($sessionModel);
             
             return $sessionModel;
