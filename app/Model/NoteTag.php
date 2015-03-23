@@ -6,7 +6,7 @@ use Notes\Model\Note as NoteModel;
 
 use Notes\Model\UserTag as UserTagModel;
 
-class NoteTag
+class NoteTag extends Model
 {
     private $id;
     private $noteId;

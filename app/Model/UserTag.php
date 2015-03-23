@@ -4,7 +4,7 @@ namespace Notes\Model;
 
 use Notes\Model\User as UserModel;
 
-class UserTag
+class UserTag extends Model
 {
     private $id;
     private $userId;

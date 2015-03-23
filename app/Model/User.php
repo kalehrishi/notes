@@ -1,9 +1,7 @@
 <?php
 namespace Notes\Model;
 
-use Notes\Convertible\Convertible as Convertible;
-
-class User implements Convertible
+class User extends Model
 {
     protected $id;
     protected $firstName;
@@ -61,9 +59,5 @@ class User implements Convertible
     public function getCreatedOn()
     {
         return $this->createdOn;
-    }
-    public function getArray()
-    {
-        return(get_object_vars($this));
     }
 }
