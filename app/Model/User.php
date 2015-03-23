@@ -1,9 +1,9 @@
 <?php
 namespace Notes\Model;
 
-use Notes\Support\Arrayable as Arrayable;
+use Notes\Convertible\Convertible as Convertible;
 
-class User implements Arrayable
+class User implements Convertible
 {
     protected $id;
     protected $firstName;
@@ -62,7 +62,7 @@ class User implements Arrayable
     {
         return $this->createdOn;
     }
-    public function toArray()
+    public function getArray()
     {
         return(get_object_vars($this));
     }
