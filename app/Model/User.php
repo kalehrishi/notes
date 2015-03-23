@@ -1,9 +1,9 @@
 <?php
 namespace Notes\Model;
 
-use Notes\ConvertToArray\ConvertToArray as ConvertToArray;
+use Notes\Support\Arrayable as Arrayable;
 
-class User extends ConvertToArray
+class User implements Arrayable
 {
     protected $id;
     protected $firstName;
