@@ -25,8 +25,8 @@ class Session
         $userModelRead = $userDomain->readByUserNameAndPassword($userInput);
         
         $sessionModel->setUserId($userModelRead->getId());
-        
-        $randomNumber = rand(10, 100);
+
+        $randomNumber = rand();
        
         $password = $userModelRead->getPassword();
         
