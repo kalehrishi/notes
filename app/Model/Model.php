@@ -2,15 +2,13 @@
 
 namespace Notes\Model;
 
-Class Model
+class Model
 {
     /**
     * @return array
-    * 
     */
-    
     public function toArray()
     {
-      return(get_object_vars($this));
+        return (get_object_vars($this));
     }
 }
