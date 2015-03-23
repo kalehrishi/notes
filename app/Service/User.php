@@ -19,4 +19,22 @@ class User
         return $user;
         
     }
+    
+    public function readUser($userModel)
+    {
+        $userDomain = new UserDomain();
+        
+        $user = $userDomain->read($userModel);
+        
+        return $user;
+    }
+    
+    public function updateUser($userModel)
+    {
+        $userDomain = new UserDomain();
+        
+        $user = $userDomain->update($userModel);
+        
+        return $user;
+    }
 }

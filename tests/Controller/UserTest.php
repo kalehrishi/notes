@@ -25,7 +25,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userController = new UserController();
         
         $response = $userController->create($userInput);
-
+        
         $this->assertEquals('julie', $response->getFirstName());
         $this->assertEquals('shah', $response->getLastName());
         $this->assertEquals('priya@gmail.com', $response->getEmail());
