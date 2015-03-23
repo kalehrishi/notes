@@ -9,6 +9,9 @@ use Notes\Config\Config as Configuration;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
+use Notes\Factory\User as UserFactory;
+
+
 class UserTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
@@ -37,116 +40,20 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     
-    public function testCanReadRecordById()
-    {
-        $input     = array(
-            'id' => 1
-            
-        );
-        $userModel = new UserModel();
-        $userModel->setId($input['id']);
-        $userDomain      = new User();
-        $userModel       = $userDomain->read($userModel);
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Users'
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals(1, $userModel->getId());
-        $this->assertEquals('anusha', $userModel->getFirstName());
-        $this->assertEquals('hiremath', $userModel->getLastName());
-        $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
-        $this->assertEquals('sfhsk1223', $userModel->getPassword());
-        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        
-    }
-    /**
-     * @expectedException Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
-     */
-    
-    public function testUserCanThrowExceptionWhenUserIdDoesNotExist()
-    {
-        
-        $input = array(
-            'id' => 4
-            
-        );
-        
-        $userModel = new UserModel($input);
-        $userModel->setId($input['id']);
-        $userDomain = new User();
-        $userModel  = $userDomain->read($userModel);
-        
-        
-    }
-    public function testCanReadRecordByUsernameAndPassword()
-    {
-        $input     = array(
-            'email' => 'anusha@gmail.com',
-            'password' => 'sfhsk1223'
-        );
-        $userModel = new UserModel();
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userDomain = new User();
-        $userModel  = $userDomain->readByUsernameandPassword($userModel);
-        
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Users'
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals(1, $userModel->getId());
-        $this->assertEquals('anusha', $userModel->getFirstName());
-        $this->assertEquals('hiremath', $userModel->getLastName());
-        $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
-        $this->assertEquals('sfhsk1223', $userModel->getPassword());
-        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        
-    }
-    
-    /**
-     * @expectedException Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
-     */
-    
-    public function testUserCanThrowModelNotFoundExceptionWhenUserNamePasswordDoesNotMatch()
-    {
-        
-        $input = array(
-            
-            'email' => 'anusha@gmil.com',
-            'password' => 'sfhs1223'
-        );
-        
-        $userModel = new UserModel($input);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userDomain = new User();
-        $userModel  = $userDomain->readByUsernameandPassword($userModel);
-        
-    }
-    
+
     public function testCanInsertRecord()
     {
-        $input     = array(
+        $input = array(
             'firstName' => 'kirti',
             'lastName' => 'ramani',
             'email' => 'kirti.6@gmail.com',
             'password' => 'abc@$#A123',
             'createdOn' => '2014-10-31 20:59:59'
         );
-        $userModel = new UserModel();
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userModel->setCreatedOn($input['createdOn']);
+        $userFactory     = new UserFactory();
+        $userModel       = $userFactory->create($input);
         $userDomain      = new User();
-        $userModel       = $userDomain->create($userModel);
+        $userModel       = $userDomain->create($input);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_insert.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
@@ -163,25 +70,112 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     
+    public function testCanReadRecordById()
+    {
+        $input           = array(
+            'id' => 1
+            
+        );
+        $userFactory     = new UserFactory();
+        $userModel       = $userFactory->create($input);
+        $userDomain      = new User();
+        $userModel       = $userDomain->read($input);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'Users'
+        ));
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $this->assertEquals(1, $userModel->getId());
+        $this->assertEquals('anusha', $userModel->getFirstName());
+        $this->assertEquals('hiremath', $userModel->getLastName());
+        $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
+        $this->assertEquals('anushA@h21', $userModel->getPassword());
+        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        
+    }
+    /**
+     * @expectedException         Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage   Can Not Found Given Model In Database
+     */
+    
+    public function testUserCanThrowExceptionWhenUserIdDoesNotExist()
+    {
+        
+        $input = array(
+            'id' => 4
+            
+        );
+        
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
+        $userDomain  = new User();
+        $userModel   = $userDomain->read($input);
+        
+        
+    }
+    public function testCanReadRecordByUsernameAndPassword()
+    {
+        $input           = array(            
+            'email' => 'anusha@gmail.com',
+            'password' => 'anushA@h21'
+        );
+        $userFactory     = new UserFactory();
+        $userModel       = $userFactory->create($input);
+        $userDomain      = new User();
+        $userModel       = $userDomain->readByUsernameandPassword($input);
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'Users'
+        ));
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        $this->assertEquals(1, $userModel->getId());
+        $this->assertEquals('anusha', $userModel->getFirstName());
+        $this->assertEquals('hiremath', $userModel->getLastName());
+        $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
+        $this->assertEquals('anushA@h21', $userModel->getPassword());
+        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        
+    }
+    
+    /**
+     * @expectedException        Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
+     */
+    
+    public function testUserCanThrowModelNotFoundExceptionWhenUserNamePasswordDoesNotMatch()
+    {
+        
+        $input = array(
+            'id' => 7,
+            'email' => 'anusha@gmail.com',
+            'password' => 'anushA@h21'
+        );
+        
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
+        $userDomain  = new User();
+        $userModel   = $userDomain->readByUsernameandPassword($input);
+        
+    }
+    
+    
+    
     public function testCanUpdateRecord()
     {
-        $input     = array(
+        $input           = array(
             'id' => 1,
             'firstName' => 'julie',
             'lastName' => 'shah',
             'email' => 'priya@gmail.com',
-            'password' => 'sfhsk1223',
+            'password' => 'sfhZ@223',
             'createdOn' => '2014-10-29 20:59:59'
         );
-        $userModel = new UserModel();
-        $userModel->setId($input['id']);
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userModel->setCreatedOn($input['createdOn']);
+        $userFactory     = new UserFactory();
+        $userModel       = $userFactory->create($input);
         $userDomain      = new User();
-        $userModel       = $userDomain->update($userModel);
+        $userModel       = $userDomain->update($input);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_update.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
@@ -190,7 +184,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('julie', $userModel->getFirstName());
         $this->assertEquals('shah', $userModel->getLastName());
         $this->assertEquals('priya@gmail.com', $userModel->getEmail());
-        $this->assertEquals('sfhsk1223', $userModel->getPassword());
+        $this->assertEquals('sfhZ@223', $userModel->getPassword());
         $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
@@ -198,28 +192,27 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
-      /**
-     * @expectedException Notes\Exception\ModelNotFoundException
+    /**
+     * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
     
     public function testUserCanThrowExceptionWhenUpdationFailed()
     {
         
-        $input = array(
-            'firstName' => 'priyanka',
-            'lastName' => 'kumar',
-            'email' => 'kumar.6@gmail.com',
-            'password' => 'sfhsk1229'
+        $input       = array(
+            'id' => 7,
+            'firstName' => 'priyankaa',
+            'lastName' => 'kumara',
+            'email' => 'kumar.6@gmai.com',
+            'password' => 'sfhZ@223',
+            'createdOn' => '2014-10-29 20:59:50'
             
         );
-        $userModel = new UserModel($input);
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userDomain = new User();
-        $userModel  = $userDomain->update($userModel);
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
+        $userDomain  = new User();
+        $userModel   = $userDomain->update($input);
         
         
         

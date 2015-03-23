@@ -2,9 +2,13 @@
 namespace Notes\Domain;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
 use Notes\Mapper\Session as SessionMapper;
+
 use Notes\Model\Session as SessionModel;
+
 use Notes\Domain\User as UserDomain;
+
 use Notes\Validator\InputValidator as InputValidator;
 
 class Session
@@ -14,15 +18,15 @@ class Session
         $this->validator = new InputValidator();
     }
     
-    public function create($userModel)
+    public function create($userInput)
     {
         $sessionModel  = new sessionModel();
         $userDomain    = new UserDomain();
-        $userModelRead = $userDomain->readByUserNameAndPassword($userModel);
+        $userModelRead = $userDomain->readByUserNameAndPassword($userInput);
         
         $sessionModel->setUserId($userModelRead->getId());
         
-        $randomNumber = rand();
+        $randomNumber = rand(10, 100);
        
         $password = $userModelRead->getPassword();
         
@@ -34,13 +38,10 @@ class Session
         && $this->validator->validNumber($sessionModel->getUserId())
         && $this->validator->notNull($sessionModel->getAuthToken())) {
             $sessionMapper = new SessionMapper();
-
             $sessionModel  = $sessionMapper->create($sessionModel);
-
             return $sessionModel;
         }
     }
-    
     public function read($sessionModel)
     {
         if ($this->validator->notNull($sessionModel->getId())
