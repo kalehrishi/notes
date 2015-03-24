@@ -3,9 +3,13 @@
 namespace Notes\Service;
 
 use Notes\Service\Session as Session;
+
 use Notes\Model\Session as sessionModel;
+
 use Notes\Model\User as UserModel;
+
 use Notes\Config\Config as Configuration;
+
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class SessionTest extends \PHPUnit_Extensions_Database_TestCase
@@ -52,7 +56,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel = new sessionModel();
         $sessionService   = new Session();
 
-        $sessionModel    = $sessionService->login($userModel);
+        $sessionModel    = $sessionService->login($userInput);
         
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
@@ -237,6 +241,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setPassword($userInput['password']);
 
         $sessionService = new Session();
-        $sessionModel  = $sessionService->login($userModel);
+        $sessionModel  = $sessionService->login($userInput);
     }
 }

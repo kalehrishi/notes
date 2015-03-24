@@ -11,6 +11,8 @@ use Notes\Validator\InputValidator as InputValidator;
 
 use Notes\PasswordValidation\PasswordValidator as PasswordValidator;
 
+use Notes\Factory\User as UserFactory;
+
 class User
 {
     
@@ -20,54 +22,46 @@ class User
         
     }
     
-    public function create($userModel)
+    public function create($input)
     {
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
+        $userMapper = new UserMapper();
+        $userModel  = $userMapper->create($userModel);
+        return $userModel;
         
-        if ($this->validator->notNull($userModel->getFirstName())
-            && $this->validator->notNull($userModel->getLastName())
-            && $this->validator->notNull($userModel->getEmail())
-            && $this->validator->notNull($userModel->getPassword())
-            && $this->validator->validString($userModel->getFirstName())
-            && $this->validator->validString($userModel->getLastName())
-            && $this->validator->validEmail($userModel->getEmail())
-            && $this->validator->isValidPassword($userModel->getPassword())) {
-            $userMapper = new UserMapper();
-            $userModel  = $userMapper->create($userModel);
-            return $userModel;
-            
-        }
-    }
-    public function read($userModel)
-    {
-        
-        if ($this->validator->notNull($userModel->getId())
-         && $this->validator->validNumber($userModel->getId())) {
-            $userMapper = new UserMapper();
-            $userModel  = $userMapper->read($userModel);
-            return $userModel;
-        }
     }
     
-    public function readByUsernameandPassword($userModel)
+    public function read($input)
     {
-        if ($this->validator->validEmail($userModel->getEmail())
-            && $this->validator->notNull($userModel->getPassword())) {
+        
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
             $userMapper = new UserMapper();
             $userModel  = $userMapper->read($userModel);
             return $userModel;
-        }
+        
     }
-    public function update($userModel)
+    
+    public function readByUsernameandPassword($input)
     {
-       
-        if ($this->validator->validString($userModel->getFirstName())
-            && $this->validator->validString($userModel->getLastName())
-            && $this->validator->validEmail($userModel->getEmail())
-            && $this->validator->notNull($userModel->getPassword())) {
+        
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
+
+            $userMapper = new UserMapper();
+            $userModel  = $userMapper->read($userModel);
+            return $userModel;
+        
+    }
+    public function update($input)
+    {
+        $userFactory = new UserFactory();
+        $userModel   = $userFactory->create($input);
             $userMapper = new UserMapper();
             $userModel  = $userMapper->update($userModel);
             return $userModel;
-        }
+        
         
     }
 }
