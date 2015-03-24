@@ -89,6 +89,6 @@ class Collection implements \Iterator
                 $object_array[$key] = $value;
             }
         }
-        return ($object_array);
+        return ($object_array['objects']);
     }
 }
