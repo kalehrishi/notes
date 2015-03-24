@@ -135,4 +135,51 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->collection->next();
         }  
     }
+    /**
+    *@test
+    *
+    **/
+    public function it_should_convert_object_into_array()
+    {
+         $noteTagModel = array(
+            '0'=>array(
+                'id' => 1,
+                'noteId' => 3,
+                'userTagId' => 1,
+                'isDeleted' => 0,
+                'userTag' => array(
+                    'id' => 1,
+                    'userId' => 1,
+                    'tag' => 'OOP PHP',
+                    'isDeleted' => 0)
+              ),
+            '1'=>array(
+                'id' => 2,
+                'noteId' => 3,
+                'userTagId' => 3,
+                'isDeleted' => 0,
+                'userTag' => array(
+                    'id' => 2,
+                    'userId' => 1,
+                    'tag' => 'First Tag',
+                    'isDeleted' => 0)
+              ),
+            '2'=>array(
+                'id' => 2,
+                'noteId' => 3,
+                'userTagId' => 4,
+                'isDeleted' => 0,
+                'userTag' => array(
+                    'id' => 3,
+                    'userId' => 1,
+                    'tag' => 'Second Tag',
+                    'isDeleted' => 0)
+              )
+            );
+        $noteTagCollection = new Collection($noteTagModel);
+        print_r($noteTagCollection->toArray());
+        
+        
+        $this->assertEquals($noteTagModel,$noteTagCollection->toArray());
+    }
 }
