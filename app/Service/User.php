@@ -24,7 +24,7 @@ class User
     {
         $userDomain = new UserDomain();
         
-        $user = $userDomain->read($userModel);
+        $user = $userDomain->readByUsernameandPassword($userModel);
         
         return $user;
     }

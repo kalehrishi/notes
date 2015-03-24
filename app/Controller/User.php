@@ -8,19 +8,55 @@ use Notes\Model\User as UserModel;
 
 class User
 {
-    public function create($request)
+    
+    protected $request;
+    
+    public function __construct($request)
     {
+        $this->request = $request;
+    }
+    
+    public function create()
+    {
+        $data_array = $this->request->getData();
+        $data       = $data_array['data'];
         
         $userModel = new UserModel();
-        $userModel->setFirstName($request['firstName']);
-        $userModel->setLastName($request['lastName']);
-        $userModel->setEmail($request['email']);
-        $userModel->setPassword($request['password']);
-        $userModel->setCreatedOn($request['createdOn']);
+        $userModel->setFirstName($data['firstName']);
+        $userModel->setLastName($data['lastName']);
+        $userModel->setEmail($data['email']);
+        $userModel->setPassword($data['password']);
+        $userModel->setCreatedOn($data['createdOn']);
         
         try {
             $userService = new UserService();
             $response    = $userService->createUser($userModel);
+        } catch (\InvalidArgumentException $e) {
+            $this->message = $e->getMessage();
+        }
+        catch (\Exception $e) {
+            print_r($this->message = $e->getMessage());
+        }
+        return $response;
+    }
+    
+    public function update()
+    {
+        
+        $data_array = $this->request->getData();
+        $data       = $data_array['data'];
+        
+        $userModel = new UserModel();
+        $userModel->setId($data['id']);
+        $userModel->setFirstName($data['firstName']);
+        $userModel->setLastName($data['lastName']);
+        $userModel->setEmail($data['email']);
+        $userModel->setPassword($data['password']);
+        $userModel->setCreatedOn($data['createdOn']);
+        
+        try {
+            $userService = new UserService();
+            $response    = $userService->updateUser($userModel);
         } catch (\InvalidArgumentException $e) {
             $response = $e->getMessage();
         }
