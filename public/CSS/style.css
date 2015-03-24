@@ -1,0 +1,45 @@
+.note{
+    height:150px;
+    padding:10px;
+    width:150px;
+    position:absolute;
+    overflow:hidden;
+    cursor:move;
+
+    font-family:Trebuchet MS,Tahoma,Myriad Pro,Arial,Verdana,sans-serif;
+    font-size:22px;
+
+    /* Adding a CSS3 shadow below the note, in the browsers which support it: */
+    -moz-box-shadow:2px 2px 0 #DDDDDD;
+    -webkit-box-shadow:2px 2px 0 #DDDDDD;
+    box-shadow:2px 2px 0 #DDDDDD;
+}
+
+#fancy_ajax .note{ cursor:default; }
+
+/* Three styles for the notes: */
+
+.yellow{
+    background-color:#FDFB8C;
+    border:1px solid #DEDC65;
+}
+
+.blue{
+    background-color:#A6E3FC;
+    border:1px solid #75C5E7;
+}
+
+.green{
+    background-color:#A5F88B;
+    border:1px solid #98E775;
+}
+
+/* Each note has a data span, which holds its ID */
+span.data{ display:none; }
+
+/* The "Add a note" button: */
+#addButton{
+    position:absolute;
+    top:-70px;
+    left:0;
+}

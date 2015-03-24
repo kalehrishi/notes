@@ -18,7 +18,7 @@ class UserTag
     }
     public function create($userTagModel)
     {
-        
+       
         if ($this->validator->notNull($userTagModel->getUserId())
             && $this->validator->validNumber($userTagModel->getUserId())
             && $this->validator->notNull($userTagModel->getTag())) {
@@ -29,7 +29,6 @@ class UserTag
     }
     public function readTagsByUserId($userModel)
     {
-        
         if ($this->validator->notNull($userModel->getId())
             && $this->validator->validNumber($userModel->getId())) {
             $userTagModel = new UserTagModel();
