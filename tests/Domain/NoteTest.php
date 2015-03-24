@@ -136,6 +136,27 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
     }
     
+    /**
+     * @expectedException         InvalidArgumentException
+     * @expectedExceptionMessage  Input should not be null
+     */
+    public function testThrowsExceptionWhenTitileIsNull()
+    {
+        
+        $noteInput    = array(
+            'body' => 'Creating a custom exception handler is quite simple.'
+        );
+        $tagsInput    = array();
+        $UserTagModel = array();
+        
+        $noteModel = new NoteModel();
+        $noteModel->setBody($noteInput['body']);
+        
+        $noteDomain      = new NoteDomain();
+        $actualResultSet = $noteDomain->create($noteModel);
+        
+    }
+
     public function testCanReadByNoteId()
     {
         $input = array(
@@ -169,6 +190,22 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         }
     }
     
+    /**
+     * @expectedException         Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage  Can Not Found Given Model In Database
+     */
+    public function testThrowsExceptionWhenNoteIdDoesNotExist()
+    {
+        $input     = array(
+            'id' => 10
+        );
+        $noteModel = new NoteModel();
+        $noteModel->setId($input['id']);
+        
+        $noteDomain      = new NoteDomain();
+        $actualResultSet = $noteDomain->read($noteModel);
+    }
+
     public function testCanReadAllNotesByUserId()
     {
         $input = array(
@@ -288,4 +325,29 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         }
         
     }
+
+    /**
+     * @expectedException         InvalidArgumentException
+     * @expectedExceptionMessage  Input should not be null
+     */
+    public function testThrowsExceptionWhenNoteIdIsNotPass()
+    {
+        $noteInput = array(
+            'userId' => 1,
+            'title' => 'Web',
+            'body' => 'PHP is a powerful tool for making dynamic Web pages.',
+            'isDeleted' => 1
+        );
+        $noteModel = new NoteModel();
+        $noteModel->setUserId($noteInput['userId']);
+        $noteModel->setTitle($noteInput['title']);
+        $noteModel->setBody($noteInput['body']);
+        $noteModel->setIsDeleted($noteInput['isDeleted']);
+        
+        $noteDomain      = new NoteDomain();
+        $actualResultSet = $noteDomain->update($noteModel);
+    }
+
+    
+
 }

@@ -35,7 +35,7 @@ class NoteTag
         $placeholder      = array(
             ':noteid' => $noteTagModel->getNoteId()
         );
-        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid";
+        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid and isDeleted=0";
         $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
