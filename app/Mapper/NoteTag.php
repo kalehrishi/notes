@@ -61,7 +61,7 @@ class NoteTag
 
     public function update($noteTagModel)
     {
-        $query= " UPDATE NoteTags SET id=:id,noteId=:noteId,userTagId=:userTagId,isDeleted=:isDeleted WHERE id= :id";
+        $query= " UPDATE NoteTags SET id=:id,noteId=:noteId,userTagId=:userTagId,isDeleted=:isDeleted WHERE id=:id";
         $placeholder      = array(
             ':id' => $noteTagModel->getId(),
             ':noteId'=>$noteTagModel->getNoteId(),

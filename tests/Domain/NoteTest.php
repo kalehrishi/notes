@@ -213,7 +213,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                     'id' => 1,
                     'userId' => 1,
                     'tag' => 'OOP PHP',
-                    'isDeleted' => 1
+                    'isDeleted' => 0
                 )
             ),
 
