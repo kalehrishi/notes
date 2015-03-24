@@ -19,7 +19,7 @@ class User
     {
         
         $userModel = new UserModel();
-        
+       
         
         if (!((isset($input['firstName']) && $this->validator->validString($input['firstName']))
                 && (isset($input['lastName']) && $this->validator->validString($input['lastName']))
@@ -49,6 +49,7 @@ class User
             }
             if (isset($input['lastName'])) {
                 $userModel->setLastName($input['lastName']);
+               
                 
             }
             if (isset($input['email'])) {
@@ -71,6 +72,7 @@ class User
         }
         
         return $userModel;
+      
         
     }
 }
