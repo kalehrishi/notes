@@ -8,11 +8,11 @@ use Notes\Model\UserTag as UserTagModel;
 
 class NoteTag extends Model
 {
-    private $id;
-    private $noteId;
-    private $userTagId;
-    private $isDeleted;
-    private $userTag;
+    protected $id;
+    protected $noteId;
+    protected $userTagId;
+    protected $isDeleted;
+    protected $userTag;
     
     public function getUserTag()
     {
