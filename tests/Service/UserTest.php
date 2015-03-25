@@ -9,6 +9,8 @@ use Notes\Config\Config as Configuration;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
+use Notes\Domain\User as UserDomain;
+
 class UserTest extends \PHPUnit_Extensions_Database_TestCase
 {
     
@@ -65,7 +67,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $userService     = new UserService();
-        $userModel       = $userService->createUser($userModel);
+        $userModel       = $userService->createUser($userInput);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_insert.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
@@ -103,7 +105,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $userService     = new UserService();
-        $userModel       = $userService->readUser($userModel);
+        $userModel       = $userService->readUser($userInput);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
@@ -136,7 +138,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $userService = new UserService();
-        $userModel   = $userService->readUser($userModel);
+        $userModel   = $userService->readUser($userInput);
     }
     
     /**
@@ -150,7 +152,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'firstName' => 'julie',
             'lastName' => 'shah',
             'email' => 'priya@gmail.com',
-            'password' => 'sfhsk1223',
+            'password' => 'sfhA@k1223',
             'createdOn' => '2014-10-29 20:59:59'
             
         );
@@ -166,7 +168,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setCreatedOn($userInput['createdOn']);
         
         $userService     = new UserService();
-        $userModel       = $userService->updateUser($userModel);
+        $userModel       = $userService->updateUser($userInput);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_update.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
@@ -176,7 +178,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('julie', $userModel->getFirstName());
         $this->assertEquals('shah', $userModel->getLastName());
         $this->assertEquals('priya@gmail.com', $userModel->getEmail());
-        $this->assertEquals('sfhsk1223', $userModel->getPassword());
+        $this->assertEquals('sfhA@k1223', $userModel->getPassword());
         $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
         
     }
@@ -184,28 +186,28 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     
     /**
      * @test
-     * @expectedException Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Password Strength is weak
      */
     
     public function it_should_throw_exceptionwhenupdationfailed()
     {
         
-        $input     = array(
+        $userInput     = array(
             'firstName' => 'priyanka',
             'lastName' => 'kumar',
             'email' => 'kumar.6@gmail.com',
             'password' => 'sfhsk1229'
             
         );
-        $userModel = new UserModel($input);
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
+        $userModel = new UserModel();
+        $userModel->setFirstName($userInput['firstName']);
+        $userModel->setLastName($userInput['lastName']);
+        $userModel->setEmail($userInput['email']);
+        $userModel->setPassword($userInput['password']);
         
         $userService = new UserService();
-        $userModel   = $userService->updateUser($userModel);
+        $userModel   = $userService->updateUser($userInput);
         
         
         

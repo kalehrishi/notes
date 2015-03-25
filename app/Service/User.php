@@ -3,6 +3,11 @@ namespace Notes\Service;
 
 use Notes\Domain\User as UserDomain;
 
+use Notes\Factory\User as UserFactory;
+
+
+use Notes\Model\User as UserModel;
+
 class User
 {
     
@@ -10,30 +15,30 @@ class User
     {
         
     }
-    public function createUser($userModel)
+    public function createUser($userInput)
     {
         $userDomain = new UserDomain();
         
-        $user = $userDomain->create($userModel);
+        $user = $userDomain->create($userInput);
         
         return $user;
         
     }
     
-    public function readUser($userModel)
+    public function readUser($userInput)
     {
         $userDomain = new UserDomain();
         
-        $user = $userDomain->readByUsernameandPassword($userModel);
+        $user = $userDomain->readByUsernameandPassword($userInput);
         
         return $user;
     }
     
-    public function updateUser($userModel)
+    public function updateUser($userInput)
     {
         $userDomain = new UserDomain();
         
-        $user = $userDomain->update($userModel);
+        $user = $userDomain->update($userInput);
         
         return $user;
     }

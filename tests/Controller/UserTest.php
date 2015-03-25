@@ -57,7 +57,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                             "firstName" : "julie",
                            "lastName" :"shah",
                            "email" :"priya@gmail.com",
-                           "password" :"sfhsk1223",
+                           "password" :"sfhA@k1223",
                            "createdOn" : "2014-10-29 20:59:59"
                         }   
                 }';
@@ -74,27 +74,28 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('julie', $response->getFirstName());
         $this->assertEquals('shah', $response->getLastName());
         $this->assertEquals('priya@gmail.com', $response->getEmail());
-        $this->assertEquals('sfhsk1223', $response->getPassword());
+        $this->assertEquals('sfhA@k1223', $response->getPassword());
         $this->assertEquals('2014-10-29 20:59:59', $response->getCreatedOn());
         
         
     }
-    /**
-     * @test
-     * @expectedException Notes\Exception\ModelNotFoundException
+      /**
+      * @test
+     * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
+    
     public function it_should_throw_exceptionwhenupdationfailed()
     {
         
         $data = '{
                 "data": {
                             "id"        : "7",
-                            "firstName" : "julia",
-                           "lastName" :"shaha",
-                           "email" :"priaya@gmail.com",
-                           "password" :"ssfhsk1223",
-                           "createdOn" : "21014-10-29 20:59:59"
+                            "firstName" : "priyanka",
+                           "lastName" :"kumar",
+                           "email" :"kumar.6@gmail.com",
+                           "password" :"sfhsk1229"
+                           "createdOn" : "2014-10-29 20:59:60"
                         }   
                 }';
         

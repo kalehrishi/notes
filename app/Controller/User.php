@@ -6,6 +6,10 @@ use Notes\Service\User as UserService;
 
 use Notes\Model\User as UserModel;
 
+use Notes\Factory\User as UserFactory;
+
+use Notes\Domain\User as UserDomain;
+
 class User
 {
     
@@ -30,7 +34,7 @@ class User
         
         try {
             $userService = new UserService();
-            $response    = $userService->createUser($userModel);
+            $response    = $userService->createUser($data);
         } catch (\InvalidArgumentException $e) {
             $this->message = $e->getMessage();
         }
@@ -54,10 +58,11 @@ class User
         $userModel->setPassword($data['password']);
         $userModel->setCreatedOn($data['createdOn']);
         
+        
         try {
             $userService = new UserService();
-            $response    = $userService->updateUser($userModel);
-        } catch (\InvalidArgumentException $e) {
+            $response    = $userService->updateUser($data);
+        } catch (\ModelNotFoundException $e) {
             $response = $e->getMessage();
         }
         return $response;
