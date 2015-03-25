@@ -1,7 +1,7 @@
 <?php
 namespace Notes\Model;
 
-class User
+class User extends Model
 {
     protected $id;
     protected $firstName;
