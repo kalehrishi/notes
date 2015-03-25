@@ -1,11 +1,14 @@
 <?php
-
 namespace Notes\Domain;
 
 use Notes\Domain\Session as Session;
+
 use Notes\Model\Session as sessionModel;
+
 use Notes\Model\User as UserModel;
+
 use Notes\Config\Config as Configuration;
+
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class SessionTest extends \PHPUnit_Extensions_Database_TestCase
@@ -45,15 +48,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             
         );
         
-        $userModel = new UserModel();
-
-        $userModel->setEmail($userInput['email']);
-        $userModel->setPassword($userInput['password']);
-
         $sessionModel = new sessionModel();
         $sessionDomain   = new Session();
-
-        $sessionModel    = $sessionDomain->create($userModel);
+        $sessionModel    = $sessionDomain->create($userInput);
         
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
@@ -72,14 +69,10 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'authToken' => 'pqr'
         );
         $sessionModel = new sessionModel();
-
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
-
         $SessionDomain   = new Session();
-
         $sessionModel    = $SessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
-
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Sessions'
@@ -92,7 +85,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
-
     /**
     * @test
     *
@@ -103,13 +95,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 2
         );
         $sessionModel = new sessionModel();
-
         $sessionModel->setId($input['id']);
-
         $SessionDomain   = new Session();
-
         $sessionModel    = $SessionDomain->read($sessionModel);
-
         $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Sessions'
@@ -122,7 +110,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
-
      /**
     * @test
     *
@@ -136,16 +123,12 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
-
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setExpiredOn($input['expiredOn']);
         $sessionModel->setIsExpired($input['isExpired']);
-
         $SessionDomain   = new Session();
-
         $sessionModel    = $SessionDomain->delete($sessionModel);
-
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Sessions'
@@ -157,7 +140,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
-
     /**
      * @test
      * @expectedException         InvalidArgumentException
@@ -171,13 +153,10 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'expiredOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
-
         $sessionModel->setId($input['id']);
         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
-
         $SessionDomain = new Session();
-
         $sessionModel  = $SessionDomain->delete($sessionModel);
     }
     
@@ -192,11 +171,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 10
         );
         $sessionModel = new sessionModel();
-
         $sessionModel->setId($input['id']);
-
         $SessionDomain = new Session();
-
         $sessionModel  = $SessionDomain->read($sessionModel);
     }
     /**
@@ -211,15 +187,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'authToken' => 'xyz'
         );
         $sessionModel = new sessionModel();
-
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
-
         $SessionDomain = new Session();
-
         $sessionModel  = $SessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
     }
-
     /**
      * @test
      * @expectedException         Notes\Exception\ModelNotFoundException
@@ -227,28 +199,24 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      */
     public function it_should_throw_exception_with_invalid_email_password()
     {
-        $userInput = array(
+         $userInput = array(
             'email' => 'abcd@gmail.com',
             'password' => 'psd'
         );
-        $userModel = new UserModel();
-
-        $userModel->setEmail($userInput['email']);
-        $userModel->setPassword($userInput['password']);
-
+        
+       
         $input        = array(
             'authToken' => 'pqr',
             'createdOn' => '2015-01-29 20:59:59',
             'expiredOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
-
         $sessionModel->setAuthToken($input['authToken']);
         $sessionModel->setCreatedOn($input['createdOn']);
         $sessionModel->setExpiredOn($input['expiredOn']);
         
         $sessionDomain = new Session();
         
-        $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
+        $sessionModel  = $sessionDomain->create($userInput, $sessionModel);
     }
 }

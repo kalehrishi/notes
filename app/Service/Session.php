@@ -11,11 +11,11 @@ class Session
         
     }
     
-    public function login($userModel)
+    public function login($userInput)
     {
         $sessionDomain = new SessionDomain();
         
-        $session = $sessionDomain->create($userModel);
+        $session = $sessionDomain->create($userInput);
         
         return $session;
     }
