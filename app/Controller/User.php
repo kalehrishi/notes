@@ -6,10 +6,6 @@ use Notes\Service\User as UserService;
 
 use Notes\Model\User as UserModel;
 
-use Notes\Factory\User as UserFactory;
-
-use Notes\Domain\User as UserDomain;
-
 class User
 {
     

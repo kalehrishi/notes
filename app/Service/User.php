@@ -5,7 +5,6 @@ use Notes\Domain\User as UserDomain;
 
 use Notes\Factory\User as UserFactory;
 
-
 use Notes\Model\User as UserModel;
 
 class User
