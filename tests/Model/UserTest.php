@@ -5,10 +5,14 @@ use Notes\Model\User as UserModel;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCanSetMultipleProperties()
+    /**
+    *@test
+    *
+    **/
+    public function it_should_set_multiple_properties()
     {
         
-        $input     = array(
+        $userInput     = array(
             'id' => 1,
             'firstName' => 'anusha',
             'lastName' => 'hiremath',
@@ -17,12 +21,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'createdOn' => '2014-10-31 20:59:59'
         );
         $userModel = new UserModel();
-        $userModel->setId($input['id']);
-        $userModel->setFirstName($input['firstName']);
-        $userModel->setLastName($input['lastName']);
-        $userModel->setEmail($input['email']);
-        $userModel->setPassword($input['password']);
-        $userModel->setCreatedOn($input['createdOn']);
+        $userModel->setId($userInput['id']);
+        $userModel->setFirstName($userInput['firstName']);
+        $userModel->setLastName($userInput['lastName']);
+        $userModel->setEmail($userInput['email']);
+        $userModel->setPassword($userInput['password']);
+        $userModel->setCreatedOn($userInput['createdOn']);
 
         $this->assertEquals(1, $userModel->getId());
         $this->assertEquals('anusha', $userModel->getFirstName());
@@ -32,16 +36,45 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
       
     }
+    /**
+    *@test
+    *
+    **/
     
-    public function testCanSetSingleProperty()
+    public function it_should_set_single_property()
     {
         
-        $input     = array(
+        $userInput     = array(
             'firstName' => 'anusha'
         );
         $userModel = new UserModel();
-        $userModel->setId($input['firstName']);
+        $userModel->setId($userInput['firstName']);
         $this->assertEquals('anusha', $userModel->getId());
         
+    }
+    /**
+    *@test
+    *
+    **/
+    public function it_should_convert_object_into_array()
+    {
+        $userInput=array(
+            'id' => 1,
+            'firstName' => 'Joy',
+            'lastName' => 'Mock',
+            'email' => 'joy@mok.com',
+            'password' => 'Joy#@Mo124',
+            'createdOn' => '2014-2-4 12:41:36');
+        
+        $userModel=new UserModel();
+        $userModel->setId($userInput['id']);
+        $userModel->setFirstName($userInput['firstName']);
+        $userModel->setLastName($userInput['lastName']);
+        $userModel->setEmail($userInput['email']);
+        $userModel->setPassword($userInput['password']);
+        $userModel->setCreatedOn($userInput['createdOn']);
+        
+        
+        $this->assertEquals($userInput,$userModel->toArray());
     }
 }

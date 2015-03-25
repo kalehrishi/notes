@@ -4,12 +4,12 @@ namespace Notes\Model;
 
 use Notes\Model\User as UserModel;
 
-class UserTag
+class UserTag extends Model
 {
-    private $id;
-    private $userId;
-    private $tag;
-    private $isDeleted;
+    protected $id;
+    protected $userId;
+    protected $tag;
+    protected $isDeleted;
     
     
     public function getId()

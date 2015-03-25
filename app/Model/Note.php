@@ -1,7 +1,7 @@
 <?php
 namespace Notes\Model;
 
-class Note
+class Note extends Model
 {
     public $id;
     public $userId;
