@@ -1,6 +1,7 @@
 <?php
 namespace Notes\Mapper;
 
+use Notes\Mapper\Note as NoteMapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Database\Database as Database;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
@@ -9,12 +10,12 @@ class Note
 {
     public function create(NoteModel $noteModel)
     {
+        $query     = "INSERT INTO Notes(userId, title, body) VALUES (:userId, :title, :body)";
         $input     = array(
             'userId' => $noteModel->getUserId(),
             'title' => $noteModel->getTitle(),
             'body' => $noteModel->getBody()
         );
-        $query     = "INSERT INTO Notes(userId, title, body) VALUES (:userId, :title, :body)";
         $params    = array(
             'dataQuery' => $query,
             'placeholder' => $input
@@ -36,9 +37,12 @@ class Note
             'userId' => $noteModel->getUserId(),
             'title' => $noteModel->getTitle(),
             'body' => $noteModel->getBody(),
-            'isDeleted' => $noteModel->getIsDeleted()
+            'isDeleted' => $noteModel->getIsDeleted(),
+            'lastUpdateOn' => $noteModel->getLastUpdatedOn()
         );
-        $sql    = "UPDATE Notes SET userId=:userId, title=:title, body=:body, isDeleted=:isDeleted WHERE id=:id";
+        $sql    = "UPDATE Notes SET 
+                    userId=:userId, title=:title, body=:body, isDeleted=:isDeleted, lastUpdateOn=:lastUpdateOn
+                    WHERE id=:id";
         $params = array(
             'dataQuery' => $sql,
             'placeholder' => $input
@@ -64,7 +68,9 @@ class Note
         $input = array(
                 'id' => $noteModel->getId()
             );
-            $query = "SELECT id, userId, title, body, isDeleted FROM Notes WHERE id=:id";
+            $query = "SELECT id, userId, title, body, createdOn, lastUpdateOn, isDeleted
+                        FROM Notes
+                        WHERE id=:id AND isDeleted=0";
             $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
@@ -75,14 +81,15 @@ class Note
         } catch (\PDOException $e) {
             $e->getMessage();
         }
-
         if (!empty($resultset)) {
             $noteModel->setId($resultset[0]['id']);
             $noteModel->setUserId($resultset[0]['userId']);
             $noteModel->setTitle($resultset[0]['title']);
             $noteModel->setBody($resultset[0]['body']);
+            $noteModel->setCreatedOn($resultset[0]['createdOn']);
+            $noteModel->setLastUpdatedOn($resultset[0]['lastUpdateOn']);
             $noteModel->setIsDeleted($resultset[0]['isDeleted']);
-
+            
             return $noteModel;
         } else {
             $obj = new ModelNotFoundException();

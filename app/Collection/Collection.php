@@ -79,4 +79,9 @@ class Collection implements \Iterator
     {
         return $this->count;
     }
+
+    public function getTotal()
+    {
+        return $this->total;
+    }
 }
