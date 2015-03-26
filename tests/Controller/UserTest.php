@@ -31,17 +31,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setData($data);
         
-        
-        
         $userController = new UserController($request);
         
         $response = $userController->create();
         
         
     }
-    
-    
-    
+          
     /**
      * @test
      *
@@ -62,13 +58,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setData($data);
         
-        
         $userController = new UserController($request);
         
         $response = $userController->update();
-        
-        
-        
+            
         
     }
     /**
@@ -93,7 +86,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $request = new Request();
         $request->setData($data);
-        
         
         $userController = new UserController($request);
         
