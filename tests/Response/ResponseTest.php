@@ -21,7 +21,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $status  = "200";
         $message = "ok";
         $version = "1.0.1";
-        $data    = array(
+        $data   = array(
             'firstName' => 'Joy',
             'lastName' => 'Mock',
             array(

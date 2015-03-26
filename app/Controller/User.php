@@ -1,16 +1,19 @@
 <?php
-
 namespace Notes\Controller;
 
 use Notes\Service\User as UserService;
 
 use Notes\Model\User as UserModel;
 
+use Notes\Response\Response as Response;
+
+use Notes\Model\Model as Model;
+
 class User
 {
     
     protected $request;
-    
+    public $message="Ok";
     public function __construct($request)
     {
         $this->request = $request;
@@ -37,7 +40,9 @@ class User
         catch (\Exception $e) {
             print_r($this->message = $e->getMessage());
         }
-        return $response;
+    
+        $objectResponse= new Response(200, $this->message, "1.0.0", $userModel->toArray());
+        return $objectResponse->getResponse();
     }
     
     public function update()
@@ -53,14 +58,13 @@ class User
         $userModel->setEmail($data['email']);
         $userModel->setPassword($data['password']);
         $userModel->setCreatedOn($data['createdOn']);
-        
-        
         try {
             $userService = new UserService();
             $response    = $userService->updateUser($data);
         } catch (\ModelNotFoundException $e) {
             $response = $e->getMessage();
         }
-        return $response;
+        $objectResponse= new Response(200, $this->message, "1.0.0", $userModel->toArray());
+        return $objectResponse->getResponse();
     }
 }
