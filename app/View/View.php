@@ -4,7 +4,7 @@ namespace Notes\View;
 
 class View
 {
-	public function render($request,$path)
+	public function render($response,$path)
 	{
 
 	}
