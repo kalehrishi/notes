@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="Users">
+        <column>id</column>
+        <column>firstName</column>
+        <column>lastName</column>
+        <column>email</column>
+        <column>password</column>
+        <column>createdOn</column>
+        <row>
+            <value>1</value>
+            <value>Gauri</value>
+            <value>Bhapkar</value>
+            <value>gau@bhapkar.com</value>
+            <value>bhapkar</value>
+            <value>2014-10-31 20:59:59</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Anusha</value>
+            <value>Hiremath</value>
+            <value>anu@hm.com</value>
+            <value>anu123</value>
+            <value>2014-10-29 20:59:59</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Pushpa</value>
+            <value>Marade</value>
+            <value>Pushpa@Marade.com</value>
+            <value>pushpa123</value>
+            <value>2015-01-29 20:59:59</value>
+        </row> 
+    </table>
+    <table name="Sessions">
+        <column>id</column>
+        <column>userId</column>
+        <column>authToken</column>
+        <column>createdOn</column>
+        <column>expiredOn</column>
+        <column>isExpired</column>
+          <row>
+            <value>1</value>
+            <value>1</value>
+             <value>abc</value>
+            <value>2014-10-31 20:59:59</value>
+            <value>2015-11-01 00:00:01</value>
+            <value>1</value>
+        </row>
+       <row>
+            <value>2</value>
+            <value>2</value>
+             <value>pqr</value>
+            <value>2014-10-29 20:59:59</value>
+            <value>2014-10-29 20:59:59</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>3</value>
+             <value>abc</value>
+            <value>2015-01-29 20:59:59</value>
+            <value>2015-01-29 20:59:59</value>
+            <value>0</value>
+        </row>
+    </table>
+</dataset>
