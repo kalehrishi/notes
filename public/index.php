@@ -6,12 +6,13 @@ use Notes\Request\Request as Request;
 
 use Notes\Controller\User as UserController;
 
+use Notes\View\View as View;
+
 $application = new \Slim\Slim(array('debug' => true));
 
 $application->get('/home', function() {
-    $application->get('/home', function() {
-    echo "Wel-come to Sticky-notes";
-    echo "<br><!DOCTYPE html><html><heda></head><body>";
-    echo "<a href='http://www.google.com'>Login</a></body></html>"; 
+	$fileName="home.html";
+    $view = new View();
+    $view->render($fileName);
 });
 $application->run();
