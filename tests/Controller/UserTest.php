@@ -19,9 +19,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
      **/
     public function it_should_create_user()
     {
+
+        $status  = "200";
+        $message = "ok";
+        $version = "1.0.1";
         $data    = '{
                 "data": {
-                            "firstName" : "kirti",
+                           "firstName" : "kirti",
                            "lastName" :"ramani",
                            "email" :"kirti.6@gmail.com",
                            "password" :"abc@$#A123",
@@ -34,7 +38,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userController = new UserController($request);
         
         $response = $userController->create();
-        
+
+     
         
     }
           
@@ -44,6 +49,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
      **/
     public function it_should_update_user()
     {
+         $status  = "200";
+        $message = "ok";
+        $version = "1.0.1";
         $data = '{
                 "data": {
                             "id" : "1",
@@ -62,7 +70,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $response = $userController->update();
             
-        
+         
     }
     /**
      * @test
@@ -90,5 +98,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userController = new UserController($request);
         
         $response = $userController->update();
+
     }
 }
