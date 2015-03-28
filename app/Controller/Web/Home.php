@@ -11,10 +11,10 @@ class Home
     {
         $this->request = $request;
     }
-    public function show()
+    public function get()
     {
         $fileName = "Home.php";
         $view     = new View();
-        $view     = $view->render($fileName);
+        $view     = $view->render($fileName,$this->request);
     }
 }

@@ -10,21 +10,31 @@ $application = new \Slim\Slim(array(
     'debug' => true
 ));
 
-$application->get('/', function() {
-    echo "test";
-});
-
-$application->map('/home', function() {
+$application->get('/:route', function($route) {
     $request        = new Request();
+    $request->setUrlParams($route);
     $homeController = new Home($request);
-    $homeController->show();
-})->via('GET', 'POST');
+    $homeController->get();
+})->conditions(array("route" => "(|home)"));
 
-$application->map('/login', function() {
+
+$application->get('/login', function() {
     $request        = new Request();
-    $userController = new User($request);
-    $userController->login();
-})->via('GET', 'POST');
+    $sessionController = new Session($request);
+    $sessionController->get();
+});
+$application->post('/login', function() {
+    // $app = new \Slim\Slim();
+    // $req= $app->request->getBody();
+    // print_r(parse_url($req));
+
+    $email=$_POST['email'];
+    $password=$_POST['password'];
+    $request        = new Request();
+    $request->setData(json_encode(array("email"=>$email,"password"=>$password)));
+    $sessionController = new Session($request);
+    $sessionController->post();
+});
 
 
 
