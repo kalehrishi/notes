@@ -84,4 +84,10 @@ class Collection implements \Iterator
     {
         return $this->total;
     }
+    public function isEmpty($object)
+    {
+        if (!empty($object)) {
+            return true;
+        }
+    }
 }

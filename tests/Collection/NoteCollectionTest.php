@@ -13,6 +13,7 @@ class NoteCollectionTest extends \PHPUnit_Framework_TestCase
                 'userId' => 1,
                 'title' => 'SQL',
                 'body' => 'Standard language for accessing databases.',
+                'createdOn' => '2015-03-26 11:36:44',
                 'isDeleted' => 0
             ),
             '1' => array(
@@ -20,6 +21,7 @@ class NoteCollectionTest extends \PHPUnit_Framework_TestCase
                 'userId' => 1,
                 'title' => 'JQuery',
                 'body' => 'Simplifies JavaScript programming.',
+                'createdOn' => '2015-03-26 11:36:44',
                 'isDeleted' => 0
             )
         );

@@ -4,6 +4,8 @@ namespace Notes\Mapper;
 
 use Notes\Database\Database as Database;
 
+use Notes\Model\NoteTag as NoteTagModel;
+
 use Notes\Collection\Collection as Collection;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
@@ -35,7 +37,7 @@ class NoteTag
         $placeholder      = array(
             ':noteid' => $noteTagModel->getNoteId()
         );
-        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid and isDeleted=0";
+        $query            = "SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid and isDeleted=0";
         $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
@@ -45,12 +47,15 @@ class NoteTag
         if (!empty($resultset)) {
             $noteTagcollection = new Collection();
             for ($i=0; $i < count($resultset); $i++) {
+                $noteTagModel = new NoteTagModel();
                 $noteTagModel->setId($resultset[$i]['id']);
                 $noteTagModel->setNoteId($resultset[$i]['noteId']);
                 $noteTagModel->setUserTagId($resultset[$i]['userTagId']);
                 $noteTagModel->setIsDeleted($resultset[$i]['isDeleted']);
+                
+                $noteTagcollection->add($noteTagModel);
+
             }
-            $noteTagcollection->add($noteTagModel);
             return $noteTagcollection;
         } else {
             $exception = new ModelNotFoundException();

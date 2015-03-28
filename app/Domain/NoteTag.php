@@ -33,20 +33,22 @@ class NoteTag
         if ($this->validator->notNull($noteTagModel->getNoteId())
             && $this->validator->validNumber($noteTagModel->getNoteId())) {
             $noteTagMpper = new NoteTagMapper();
-            $noteTagcollection = $noteTagMpper->read($noteTagModel);
+            $noteTagCollection = $noteTagMpper->read($noteTagModel);
             $userTagDomain = new UserTagDomain();
-            for ($i=0; $i < count($noteTagcollection); $i++) {
+            for ($i=0; $i <= $noteTagCollection->getTotal(); $i++) {
                 $userTagModel = new UserTagModel();
-                $userTagModel->setId($noteTagcollection->getRow($i)->getUserTagId());
-                $userTagResultSet = $userTagDomain->readTagById($userTagModel);
-                $noteTagcollection->getRow($i)->setUserTag($userTagResultSet);
+                $userTagModel->setId($noteTagCollection->getRow($i)->getUserTagId());
+                $userTagModel = $userTagDomain->readTagById($userTagModel);
+                $noteTagCollection->getRow($i)->setUserTag($userTagModel);
             }
-            return $noteTagcollection;
+            
+            return $noteTagCollection;
         }
     }
     public function update($noteTagModel)
     {
         $noteTagModel->setIsDeleted(1);
+
         if ($this->validator->notNull($noteTagModel->getId())
             && $this->validator->validNumber($noteTagModel->getId())
             && $this->validator->notNull($noteTagModel->getNoteId())

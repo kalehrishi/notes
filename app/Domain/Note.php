@@ -35,31 +35,31 @@ class Note
         if ($this->validator->notNull($noteModel->getTitle())
             && $this->validator->notNull($noteModel->getUserId())
             && $this->validator->validNumber($noteModel->getUserId())) {
-            $noteMapper = new NoteMapper();
-            $noteModel  = $noteMapper->create($noteModel);
-            
+            $noteMapper    = new NoteMapper();
+            $noteModel     = $noteMapper->create($noteModel);
             $userTagDomain = new UserTagDomain();
             $noteTagDomain = new NoteTagDomain();
             
             $userModel = new UserModel();
             $userModel->setId($noteModel->getUserId());
-            $existTag = $userTagDomain->readTagsByUserId($userModel);
-            
+            $existTags          = $userTagDomain->readTagsByUserId($userModel);
             $noteTagCollection = new Collection();
             $userTagCollection = new Collection();
-            $countTagsLength   = $noteModel->getNoteTag()->getTotal();
-            $i                 = 0;
-            if ($countTagsLength > 0) {
-                while ($i <= $countTagsLength) {
+            
+            $countExistingTagsLength = $existTags->getCount();
+            $i                       = 0;
+            if ($noteTagCollection->isEmpty($noteModel->getNoteTag())) {
+                $countTagsLength = $noteModel->getNoteTag()->getCount();
+                while ($i < $countTagsLength) {
                     $isAlreadyCreated = false;
-                    for ($j = 0; $j < count($existTag); $j++) {
+                    
+                    for ($j = 0; $j < $countExistingTagsLength; $j++) {
                         if (($noteModel->getNoteTag()->getRow($i)->getUserTag()->getTag()
-                            == $existTag->getRow($j)->getTag())) {
+                            == $existTags->getRow($j)->getTag())) {
                             $userTagModel = new UserTagModel();
-                            $userTagModel->setUserId($existTag->getRow($j)->getUserId());
-                            $userTagModel->setId($existTag->getRow($j)->getId());
-                            $userTagModel->setTag($existTag->getRow($j)->getTag());
-                            
+                            $userTagModel->setUserId($existTags->getRow($j)->getUserId());
+                            $userTagModel->setId($existTags->getRow($j)->getId());
+                            $userTagModel->setTag($existTags->getRow($j)->getTag());
                             $isAlreadyCreated = true;
                             break;
                         }
@@ -70,7 +70,6 @@ class Note
                         $userTagModel->setTag($noteModel->getNoteTag()->getRow($i)->getUserTag()->getTag());
                         
                         $userTagModel = $userTagDomain->create($userTagModel);
-                        
                     }
                     $userTagCollection->add($userTagModel);
                     $noteTagModel = new NoteTagModel();
@@ -98,18 +97,17 @@ class Note
             $noteMapper = new NoteMapper();
             $noteModel->setLastUpdatedOn(date("Y-m-d H:i:s"));
             
+            $noteTagCollection = new Collection();
+            $userTagCollection = new Collection();
+            
             $noteModel = $noteMapper->update($noteModel);
-            if ($noteModel->getIsDeleted() != 1) {
+            if ($noteModel->getIsDeleted() == 0) {
                 $userTagDomain = new UserTagDomain();
                 $noteTagDomain = new NoteTagDomain();
                 
                 $userModel = new UserModel();
                 $userModel->setId($noteModel->getUserId());
-                $existTags = $userTagDomain->readTagsByUserId($userModel);
-                
-                $noteTagCollection = new Collection();
-                $userTagCollection = new Collection();
-                
+                $existTags       = $userTagDomain->readTagsByUserId($userModel);
                 $countTagsLength = $noteModel->getNoteTag()->getTotal();
                 $i               = 0;
                 while ($i <= $countTagsLength) {
@@ -141,21 +139,32 @@ class Note
                     $noteTagModel->setUserTag($userTagCollection->getRow($i));
                     
                     if ($isAlreadyCreated == true) {
-                        $noteTagModel->setId($noteModel->getNoteTag()->getRow($i)->getId());
-                        
-                        $noteTagCollection->add($noteTagDomain->update($noteTagModel));
+                        $noteTagCollection = Note::updateNoteTag($noteModel);
                     } else {
                         $noteTagCollection->add($noteTagDomain->create($noteTagModel));
                     }
                     $i++;
-                    
                 }
-                $noteModel->setNoteTag($noteTagCollection);
+            } else {
+                $noteTagCollection = Note::updateNoteTag($noteModel);
             }
+            $noteModel->setNoteTag($noteTagCollection);
             return $noteModel;
         }
     }
-    
+    public function updateNoteTag($noteModel)
+    {
+        $noteTagCollection = new Collection();
+        $noteTagDomain = new NoteTagDomain();
+        $noteTagModel  = new NoteTagModel();
+                
+        $noteTagModel->setNoteId($noteModel->getId());
+        $readAllTagsCollection = $noteTagDomain->readAllTag($noteTagModel);
+        for ($i = 0; $i <= $readAllTagsCollection->getTotal(); $i++) {
+            $noteTagCollection->add($noteTagDomain->update($readAllTagsCollection->getRow($i)));
+        }
+        return $noteTagCollection;
+    }
     public function read(NoteModel $noteModel)
     {
         if ($this->validator->notNull($noteModel->getId())
