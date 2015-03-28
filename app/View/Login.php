@@ -11,11 +11,11 @@
     <table>
       <tr>
         <td>Email:</td>
-        <td><input type="text" name="email" value="gau@bhapkar.com"></input></td> 
+        <td><input type="text" name="email"></input></td> 
       </tr>
       <tr>
         <td>Password:</td>
-        <td><input type="password" name="password" value="bhapkar"></input></td> 
+        <td><input type="password" name="password"></input></td> 
       </tr>
       <tr>
         <td><input type="submit" value="Login" /></td>

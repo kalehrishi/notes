@@ -24,15 +24,12 @@ $application->get('/login', function() {
     $sessionController->get();
 });
 $application->post('/login', function() {
-    // $app = new \Slim\Slim();
-    // $req= $app->request->getBody();
-    // print_r(parse_url($req));
+    $request = \Slim\Slim::getInstance()->request();
 
-    $email=$_POST['email'];
-    $password=$_POST['password'];
-    $request        = new Request();
-    $request->setData(json_encode(array("email"=>$email,"password"=>$password)));
-    $sessionController = new Session($request);
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($request->post());
+    
+    $sessionController = new Session($objRequest);
     $sessionController->post();
 });
 

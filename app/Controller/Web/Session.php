@@ -1,8 +1,11 @@
 <?php
 
 namespace Notes\Controller\Web;
+
 use Notes\View\View as View;
 use Notes\Service\Session as SessionService;
+use Notes\Model\Session as SessionModel;
+
 class Session
 {
     protected $request;
@@ -19,20 +22,26 @@ class Session
 
     public function post()
     { 
-        //print_r($this->request->getData());
-        $input=$this->request->getData();
+        $input=$this->request->getUrlParams();
 
         $sessionService = new SessionService();
         try{
           $response=$sessionService->login($input);
-        }catch(ModelNotFoundException $e) {
-          $fileName = "Login.php";
+        } catch(InvalidArgument $error) {
+          echo "Error---".$error;
+          /*$fileName = "Login.php";
           $view     = new View();
           $view     = $view->render($fileName,$e);
+*/
+        } 
+        catch(ModelNotFoundException $error) {
+          /*$fileName = "Login.php";
+          $view     = new View();
+          $view     = $view->render($fileName,$e);*/
         }
 
-        if(get_class ($response)== 'Notes\Model\Session'){
-          echo "redirecting";
+        if($response instanceof SessionModel) {
+          echo "redirecting Test";
           //redirect to some other page
           header("Location: http://notes.com/notes");
         }
