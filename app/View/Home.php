@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h1>Wel-come to Sticky-notes</h1><br>
-	<a href='http://www.google.com'>Login</a>
+	<a href="http://notes.com/notes/public/login">Login</a>
 </body>
 </html>
