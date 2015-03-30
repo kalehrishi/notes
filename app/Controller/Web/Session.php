@@ -23,21 +23,20 @@ class Session
     public function post()
     { 
         $input=$this->request->getUrlParams();
-
         $sessionService = new SessionService();
         try{
           $response=$sessionService->login($input);
-        } catch(InvalidArgument $error) {
+        } catch(InvalidArgumentException $error) {
           echo "Error---".$error;
-          /*$fileName = "Login.php";
+          $fileName = "Login.php";
           $view     = new View();
           $view     = $view->render($fileName,$e);
-*/
+
         } 
         catch(ModelNotFoundException $error) {
-          /*$fileName = "Login.php";
+          $fileName = "Login.php";
           $view     = new View();
-          $view     = $view->render($fileName,$e);*/
+          $view     = $view->render($fileName,$e);
         }
 
         if($response instanceof SessionModel) {
