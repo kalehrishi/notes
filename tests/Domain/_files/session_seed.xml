@@ -9,28 +9,21 @@
         <column>createdOn</column>
         <row>
             <value>1</value>
-            <value>Gauri</value>
-            <value>Bhapkar</value>
-            <value>gau@bhapkar.com</value>
-            <value>bhapkar</value>
+            <value>anusha</value>
+            <value>hiremath</value>
+            <value>anusha@gmail.com</value>
+            <value>anushA@h21</value>
             <value>2014-10-31 20:59:59</value>
         </row>
         <row>
             <value>2</value>
-            <value>Anusha</value>
-            <value>Hiremath</value>
-            <value>anu@hm.com</value>
-            <value>anu123</value>
+            <value>priya</value>
+            <value>kumar</value>
+            <value>priya@gmail.com</value>
+            <value>Priya@123</value>
             <value>2014-10-29 20:59:59</value>
         </row>
-        <row>
-            <value>3</value>
-            <value>Pushpa</value>
-            <value>Marade</value>
-            <value>Pushpa@Marade.com</value>
-            <value>pushpa123</value>
-            <value>2015-01-29 20:59:59</value>
-        </row> 
+        
     </table>
     <table name="Sessions">
         <column>id</column>
