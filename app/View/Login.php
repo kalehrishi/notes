@@ -1,10 +1,16 @@
+<?php
+  $data=json_decode($response,true);
 
-
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+  <style>
+ .error { 
+  }
+</style>
 </head>
 <body>
     <form  method="POST">
@@ -18,12 +24,14 @@
         <td><input type="password" name="password"></input></td> 
       </tr>
       <tr>
-        <td><input type="submit" value="Login" /></td>
-        <td><button>Cancel</button></td> 
+        <?php if(is_string($data['data'])){?>
+        <td>Error :-  </td>
+        <td><div class="error" ><?php echo $data['data'];?></div></td>
+        <?php }?>
       </tr>
       <tr>
-        <td>Error:</td>
-        <td></td>
+        <td><input type="submit" value="Login" /></td>
+        <td><button>Cancel</button></td> 
       </tr>
     </table>
   </form>

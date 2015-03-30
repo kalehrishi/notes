@@ -1,10 +1,11 @@
 <?php
-
 namespace Notes\Controller\Web;
 
 use Notes\View\View as View;
 use Notes\Service\Session as SessionService;
 use Notes\Model\Session as SessionModel;
+use Notes\Response\Response as Response;
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class Session
 {
@@ -17,33 +18,33 @@ class Session
     {
         $fileName = "Login.php";
         $view     = new View();
-        $view     = $view->render($fileName, $this->request);
+        $view     = $view->render($fileName);
     }
-    
     public function post()
     {
         $input          = $this->request->getUrlParams();
         $sessionService = new SessionService();
         try {
             $response = $sessionService->login($input);
-        } catch (InvalidArgumentException $error) {
-            echo "Error---" . $error;
-            $fileName = "Login.php";
-            $view     = new View();
-            $view     = $view->render($fileName, $e);
-            
+        }
+        catch (\InvalidArgumentException $error) {
+            $response    = $error->getMessage();
+            $objResponse = new Response(200, "ok", "1.0.0", $response);
+            //print_r($objResponse->getResponse());
+            $fileName    = "Login.php";
+            $view        = new View();
+            $view        = $view->render($fileName, $objResponse->getResponse());
         }
         catch (ModelNotFoundException $error) {
-            $fileName = "Login.php";
-            $view     = new View();
-            $view     = $view->render($fileName, $e);
+            $response    = $error->getMessage();
+            $objResponse = new Response(200, "ok", "1.0.0", $response);
+            $fileName    = "Login.php";
+            $view        = new View();
+            $view        = $view->render($fileName, $objResponse->getResponse());
         }
-        
         if ($response instanceof SessionModel) {
-            echo "redirecting Test";
-            //redirect to some other page
-            header("Location: http://notes.com/notes");
+            header('Location: http://notes.com/notes');
+            exit();
         }
-        
     }
 }

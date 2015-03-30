@@ -32,7 +32,8 @@ $application->post('/login', function() {
     $sessionController = new Session($objRequest);
     $sessionController->post();
 });
-
-
+$application->get('/notes', function() {
+   echo"Login Successfully";
+});
 
 $application->run();
