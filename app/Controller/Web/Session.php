@@ -17,32 +17,32 @@ class Session
     {
         $fileName = "Login.php";
         $view     = new View();
-        $view     = $view->render($fileName,$this->request);
+        $view     = $view->render($fileName, $this->request);
     }
-
+    
     public function post()
-    { 
-        $input=$this->request->getUrlParams();
+    {
+        $input          = $this->request->getUrlParams();
         $sessionService = new SessionService();
-        try{
-          $response=$sessionService->login($input);
-        } catch(InvalidArgumentException $error) {
-          echo "Error---".$error;
-          $fileName = "Login.php";
-          $view     = new View();
-          $view     = $view->render($fileName,$e);
-
-        } 
-        catch(ModelNotFoundException $error) {
-          $fileName = "Login.php";
-          $view     = new View();
-          $view     = $view->render($fileName,$e);
+        try {
+            $response = $sessionService->login($input);
+        } catch (InvalidArgumentException $error) {
+            echo "Error---" . $error;
+            $fileName = "Login.php";
+            $view     = new View();
+            $view     = $view->render($fileName, $e);
+            
         }
-
-        if($response instanceof SessionModel) {
-          echo "redirecting Test";
-          //redirect to some other page
-          header("Location: http://notes.com/notes");
+        catch (ModelNotFoundException $error) {
+            $fileName = "Login.php";
+            $view     = new View();
+            $view     = $view->render($fileName, $e);
+        }
+        
+        if ($response instanceof SessionModel) {
+            echo "redirecting Test";
+            //redirect to some other page
+            header("Location: http://notes.com/notes");
         }
         
     }

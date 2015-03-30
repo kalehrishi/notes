@@ -10,7 +10,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should be Number
     */
-    public function it_should_create_userModel_1()
+    public function it_should_throw_exception_when_id_is_not_number()
     {
         
         $input       = array(
@@ -28,7 +28,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should be Number
     */
-    public function it_should_create_userModel_2()
+    public function it_should_throw_exception_when_id_is_string()
     {
         
         $input       = array(
@@ -44,7 +44,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should not be null
     */
-    public function it_should_create_userModel_3()
+    public function it_should_throw_exception_when_id_is_null()
     {
         
         $input       = array(
