@@ -1,12 +1,10 @@
 <?php
 namespace Notes\Controller\Api;
-
 use Notes\Response\Response as Response;
 use Notes\Model\Session as SessionModel;
 use Notes\Service\Session as SessionService;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 use Notes\Model\User as UserModel;
-
 class Session
 {
     
@@ -23,17 +21,16 @@ class Session
         $userModel = new UserModel();
         $userModel->setEmail($data['email']);
         $userModel->setPassword($data['password']);
-    
+        try {
             $sessionService = new SessionService();
-            $response     = $sessionService->login($data);
-        if ($response) {
-             $objectResponse= new Response(200, $this->message, "1.0.0", $userModel->toArray());
-            return $objectResponse->getResponse();
-        } else {
-            $obj = new ModelNotFoundException();
-            $obj->setModel($sessionModel);
-            throw $obj;
+            $userModel      = $sessionService->login($data);
+        } catch (\InvalidArgumentException $e) {
+            $this->message = $e->getMessage();
         }
+        
+    
+        $objectResponse= new Response(200, $this->message, "1.0.0", $userModel->toArray());
+        return $objectResponse->getResponse();
     }
     
     public function delete()
@@ -44,19 +41,13 @@ class Session
         $sessionModel = new sessionModel();
         $sessionModel->setAuthToken($data['authToken']);
         $sessionModel->setUserId($data['userId']);
-    
+        try {
             $sessionService   = new SessionService();
             $sessionModelRead = $sessionService->isValid($sessionModel);
-            $response         = $sessionService->logout($sessionModelRead);
+            $sessionModel         = $sessionService->logout($sessionModelRead);
             
-        if ($response) {
-            $objectResponse= new Response(200, $this->message, "1.0.0", $sessionModel->toArray());
-            return $objectResponse->getResponse();
-      
-        } else {
-            $obj = new ModelNotFoundException();
-            $obj->setModel($sessionModel);
-            throw $obj;
+        } catch (\InvalidArgumentException $e) {
+            $this->message = $e->getMessage();
         }
         
         $objectResponse= new Response(200, $this->message, "1.0.0", $sessionModel->toArray());
