@@ -1,10 +1,12 @@
 <?php
 namespace Notes\Controller\Api;
+
 use Notes\Response\Response as Response;
 use Notes\Model\Session as SessionModel;
 use Notes\Service\Session as SessionService;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 use Notes\Model\User as UserModel;
+
 class Session
 {
     
