@@ -23,9 +23,10 @@ class Session
     public function logout($sessionModel)
     {
         $sessionDomain = new SessionDomain();
-        
+        //print_r($sessionModel);
         $session = $sessionDomain->delete($sessionModel);
-        
+
+       
         return $session;
     }
     
@@ -41,9 +42,9 @@ class Session
     public function isValid($sessionModel)
     {
         $sessionDomain = new SessionDomain();
-
-        $session = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
         
+        $session = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
+       // print_r($session);
         return $session;
     }
 }
