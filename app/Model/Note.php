@@ -1,7 +1,7 @@
 <?php
 namespace Notes\Model;
 
-class Note
+class Note extends Model
 {
     public $id;
     public $userId;
@@ -10,15 +10,15 @@ class Note
     public $createdOn;
     public $lastUpdatedOn;
     public $isDeleted;
-    public $noteTag;
+    public $noteTags;
     
-    public function getNoteTag()
+    public function getNoteTags()
     {
-        return $this->noteTag;
+        return $this->noteTags;
     }
-    public function setNoteTag($noteTag)
+    public function setNoteTags($noteTags)
     {
-        $this->noteTag = $noteTag;
+        $this->noteTags = $noteTags;
     }
 
     public function getId()

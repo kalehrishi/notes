@@ -111,7 +111,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('RSYNC', $noteModel->getTitle());
         $this->assertEquals('To use sync a folder to the guest machine.', $noteModel->getBody());
         
-        $noteTagCollection = $noteModel->getNoteTag();
+        $noteTagCollection = $noteModel->getNoteTags();
         while ($noteTagCollection->hasNext()) {
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
@@ -229,7 +229,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setUserId($noteInput['userId']);
         $noteModel->setTitle($noteInput['title']);
         $noteModel->setBody($noteInput['body']);
-        $noteModel->setNoteTag($noteTagCollection);
+        $noteModel->setNoteTags($noteTagCollection);
         
         $noteDomain = new NoteDomain();
         $noteModel  = $noteDomain->create($noteModel);
@@ -239,7 +239,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Exception', $noteModel->getTitle());
         $this->assertEquals('Creating a custom exception handler is quite simple.', $noteModel->getBody());
         
-        $noteTagCollection = $noteModel->getNoteTag();
+        $noteTagCollection = $noteModel->getNoteTags();
         while ($noteTagCollection->hasNext()) {
             $this->assertEquals(7, $noteTagCollection->getRow(0)->getId());
             $this->assertEquals(6, $noteTagCollection->getRow(0)->getNoteId());
@@ -304,7 +304,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setUserId($noteInput['userId']);
         $noteModel->setTitle($noteInput['title']);
         $noteModel->setBody($noteInput['body']);
-        $noteModel->setNoteTag($noteTagCollection);
+        $noteModel->setNoteTags($noteTagCollection);
         
         $noteDomain = new NoteDomain();
         $noteModel  = $noteDomain->create($noteModel);
@@ -314,7 +314,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Explode', $noteModel->getTitle());
         $this->assertEquals('Break String into delimeter chunks.', $noteModel->getBody());
         
-        $noteTagCollection = $noteModel->getNoteTag();
+        $noteTagCollection = $noteModel->getNoteTags();
         while ($noteTagCollection->hasNext()) {
             $this->assertEquals(7, $noteTagCollection->getRow(0)->getId());
             $this->assertEquals(6, $noteTagCollection->getRow(0)->getNoteId());
@@ -379,7 +379,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setTitle($noteInput['title']);
         $noteModel->setBody($noteInput['body']);
         $noteModel->setIsDeleted($noteInput['isDeleted']);
-        $noteModel->setNoteTag($noteTagCollection);
+        $noteModel->setNoteTags($noteTagCollection);
         
         $noteDomain = new NoteDomain();
         $noteModel  = $noteDomain->update($noteModel);
@@ -389,7 +389,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Web', $noteModel->getTitle());
         $this->assertEquals('PHP is a powerful tool for making dynamic Web pages.', $noteModel->getBody());
         
-        $noteTagCollection = $noteModel->getNoteTag();
+        $noteTagCollection = $noteModel->getNoteTags();
         while ($noteTagCollection->hasNext()) {
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
@@ -419,33 +419,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             'body' => 'Asynchronous JavaScript and XML',
             'isDeleted' => 1
         );
-        $noteTags           = array(
-            '0' => array(
-                'id' => 4,
-                'noteId' => 4,
-                'userTagId' => 4,
-                'isDeleted' => 1,
-                'userTag' => array(
-                    'id' => 4,
-                    'userId' => 2,
-                    'tag' => 'Javascript',
-                    'isDeleted' => 0
-                )
-            ),
-            '1' => array(
-                'id' => 6,
-                'noteId' => 4,
-                'userTagId' => 5,
-                'isDeleted' => 1,
-                'userTag' => array(
-                    'id' => 5,
-                    'userId' => 2,
-                    'tag' => 'Flat XML',
-                    'isDeleted' => 0
-                )
-            )
-        );
-        $noteTagCollection = new NoteTagCollection($noteTags);
         
         $noteModel = new NoteModel();
         
@@ -454,8 +427,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel->setTitle($noteInput['title']);
         $noteModel->setBody($noteInput['body']);
         $noteModel->setIsDeleted($noteInput['isDeleted']);
-        $noteModel->setNoteTag($noteTagCollection);
-        
+       
         $noteDomain = new NoteDomain();
         
         $noteModel = $noteDomain->update($noteModel);
@@ -465,21 +437,5 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Ajax', $noteModel->getTitle());
         $this->assertEquals('Asynchronous JavaScript and XML', $noteModel->getBody());
         $this->assertEquals(1, $noteModel->getIsDeleted());
-        
-        $noteTagCollection = $noteModel->getNoteTag();
-        while ($noteTagCollection->hasNext()) {
-            $this->assertEquals(4, $noteTagCollection->getRow(0)->getId());
-            $this->assertEquals(4, $noteTagCollection->getRow(0)->getNoteId());
-            $this->assertEquals(4, $noteTagCollection->getRow(0)->getUserTagId());
-            $this->assertEquals(1, $noteTagCollection->getRow(0)->getIsDeleted());
-            $this->assertEquals('Javascript', $noteTagCollection->getRow(0)->getUserTag()->getTag());
-            
-            $this->assertEquals(6, $noteTagCollection->getRow(1)->getId());
-            $this->assertEquals(4, $noteTagCollection->getRow(1)->getNoteId());
-            $this->assertEquals(5, $noteTagCollection->getRow(1)->getUserTagId());
-            $this->assertEquals('Flat XML', $noteTagCollection->getRow(1)->getUserTag()->getTag());
-            
-            $noteTagCollection->next();
-        }
     }
 }

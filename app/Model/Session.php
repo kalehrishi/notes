@@ -2,7 +2,7 @@
 
 namespace Notes\Model;
 
-class Session
+class Session extends Model
 {
     private $id;
     private $userId;
