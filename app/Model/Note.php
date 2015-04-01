@@ -19,8 +19,8 @@ class Note extends Model
     public function setNoteTags($noteTags)
     {
         $this->noteTags = $noteTags;
-    }
 
+    }
     public function getId()
     {
         return $this->id;

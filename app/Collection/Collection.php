@@ -90,6 +90,7 @@ class Collection implements \Iterator
             return true;
         }
     }
+    
     public function toArray()
     {
         $object_array = get_object_vars($this);

@@ -369,6 +369,18 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                     'tag' => 'WordPress',
                     'isDeleted' => null
                 )
+            ),
+            '3' => array(
+                'id' => null,
+                'noteId' => null,
+                'userTagId' => null,
+                'isDeleted' => null,
+                'userTag' => array(
+                    'id' => 4,
+                    'userId' => 2,
+                    'tag' => 'Javascript',
+                    'isDeleted' => 0
+                )
             )
         );
         $noteTagCollection = new NoteTagCollection($noteTags);
@@ -389,23 +401,35 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Web', $noteModel->getTitle());
         $this->assertEquals('PHP is a powerful tool for making dynamic Web pages.', $noteModel->getBody());
         
+        
         $noteTagCollection = $noteModel->getNoteTags();
         while ($noteTagCollection->hasNext()) {
+            
+            
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTagId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getIsDeleted());
             $this->assertEquals('RSYNC1', $noteTagCollection->getRow(0)->getUserTag()->getTag());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTag()->getUserId());
             
             $this->assertEquals(7, $noteTagCollection->getRow(1)->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(1)->getNoteId());
             $this->assertEquals(6, $noteTagCollection->getRow(1)->getUserTagId());
             $this->assertEquals('PHP5', $noteTagCollection->getRow(1)->getUserTag()->getTag());
+            $this->assertEquals(1, $noteTagCollection->getRow(1)->getUserTag()->getUserId());
             
             $this->assertEquals(8, $noteTagCollection->getRow(2)->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(2)->getNoteId());
             $this->assertEquals(7, $noteTagCollection->getRow(2)->getUserTagId());
             $this->assertEquals('WordPress', $noteTagCollection->getRow(2)->getUserTag()->getTag());
+            $this->assertEquals(1, $noteTagCollection->getRow(2)->getUserTag()->getUserId());
+
+            $this->assertEquals(9, $noteTagCollection->getRow(3)->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(3)->getNoteId());
+            $this->assertEquals(4, $noteTagCollection->getRow(3)->getUserTagId());
+            $this->assertEquals('Javascript', $noteTagCollection->getRow(3)->getUserTag()->getTag());
+            $this->assertEquals(2, $noteTagCollection->getRow(3)->getUserTag()->getUserId());
             $noteTagCollection->next();
         }
     }
