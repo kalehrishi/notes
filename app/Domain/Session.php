@@ -19,11 +19,11 @@ class Session
     }
     
     public function create($userInput)
-    {
+    {  
         $sessionModel  = new sessionModel();
         $userDomain    = new UserDomain();
         $userModelRead = $userDomain->readByUserNameAndPassword($userInput);
-        
+         
         $sessionModel->setUserId($userModelRead->getId());
 
         $randomNumber = rand();
