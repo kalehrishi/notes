@@ -11,7 +11,6 @@ use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 use Notes\Factory\User as UserFactory;
 
-
 class UserTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
@@ -116,7 +115,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     }
     public function testCanReadRecordByUsernameAndPassword()
     {
-        $input           = array(            
+        $input           = array(
             'email' => 'anusha@gmail.com',
             'password' => 'anushA@h21'
         );

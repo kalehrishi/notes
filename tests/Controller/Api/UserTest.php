@@ -1,8 +1,7 @@
 <?php
+namespace Notes\Controller\Api;
 
-namespace Notes\Controller;
-
-use Notes\Controller\User as UserController;
+use Notes\Controller\Api\User as UserController;
 
 use Notes\Model\User as UserModel;
 
@@ -19,13 +18,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
      **/
     public function it_should_create_user()
     {
-
-        $status  = "200";
-        $message = "ok";
-        $version = "1.0.1";
+        
         $data    = '{
-                "data": {
-                           "firstName" : "kirti",
+                "data": {  
+                            
+                           "firstName" :"kirti",
                            "lastName" :"ramani",
                            "email" :"kirti.6@gmail.com",
                            "password" :"abc@$#A123",
@@ -36,26 +33,21 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $request->setData($data);
         
         $userController = new UserController($request);
+        $response       = $userController->create();
         
-        $response = $userController->create();
-
-     
-        
+        $this->assertNotNull($data, true);
     }
-          
     /**
      * @test
      *
      **/
     public function it_should_update_user()
     {
-         $status  = "200";
-        $message = "ok";
-        $version = "1.0.1";
+        
         $data = '{
                 "data": {
-                            "id" : "1",
-                            "firstName" : "julie",
+                           "id" : "1",
+                           "firstName" : "julie",
                            "lastName" :"shah",
                            "email" :"priya@gmail.com",
                            "password" :"sfhA@k1223",
@@ -69,15 +61,16 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userController = new UserController($request);
         
         $response = $userController->update();
-            
-         
+        
+        $this->assertNotNull($data, true);
+        
     }
+    
     /**
      * @test
      * @expectedException        Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage Can Not Found Given Model In Database
      */
-    
     public function it_should_throw_exceptionwhenupdationfailed()
     {
         
@@ -92,12 +85,43 @@ class UserTest extends \PHPUnit_Framework_TestCase
                         }   
                 }';
         
+        
+        $request = new Request();
+        $request->setData($data);
+        
+        $userController = new UserController($request);
+        
+        $response = $userController->update();       
+        $this->assertNotNull($data, false);
+    }
+    
+    /**
+     * @test
+     * @expectedException        Notes\Exception\ModelNotFoundException
+     * @expectedExceptionMessage Can Not Found Given Model In Database
+     */
+    public function it_should_throw_exception_when_all_fields_are_invalid()
+    {
+        $data = '{
+                "data": {
+                          
+                           "id"        :"8",
+                           "firstName" :"priyank",
+                           "lastName" :"kumar",
+                           "email" :"kumar.6@gmai.com",
+                           "password" :"sfhsk122"
+                           "createdOn" : "2014-11-29 20:59:60"
+                        }   
+                }';
+        
         $request = new Request();
         $request->setData($data);
         
         $userController = new UserController($request);
         
         $response = $userController->update();
-
+        
+        $this->assertResponseStatusCode(404);
+        
     }
 }
