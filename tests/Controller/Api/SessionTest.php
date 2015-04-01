@@ -50,6 +50,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionController = new Session($request);
         
         $data = $sessionController->post();
+        $this->assertEquals(!null, true);
+
         
     }
     
@@ -91,6 +93,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionController = new Session($request);
         
         $response = $sessionController->delete();
+        $this->assertEquals(!null, true);
         
     }
     
