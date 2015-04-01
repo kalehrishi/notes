@@ -5,6 +5,7 @@ use Notes\Request\Request as Request;
 use Notes\Config\Config as Configuration;
 use Notes\Response\Response as Response;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
 class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
@@ -50,7 +51,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionController = new Session($request);
         
         $data = $sessionController->post();
-        $this->assertEquals(!null, true);
+        $this->assertNotNull($data);
 
         
     }
@@ -72,7 +73,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $request = new Request();
         $request->setData($data);
         $sessionController = new Session($request);
-        
         $response = $sessionController->post();
     }
     
@@ -80,12 +80,12 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @test
      *
      **/
-    public function it_should_delete_session_if_user_login()
+    public function it_should_delete_session_if_user_is_already_login()
     {
         $data    = '{
                 "data": {
                             "authToken" : "abc",
-                           "userId" :"1"
+                            "userId" :"1"
                         }   
                 }';
         $request = new Request();
@@ -93,8 +93,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionController = new Session($request);
         
         $response = $sessionController->delete();
-        $this->assertEquals(!null, true);
-        
+        $this->assertNotNull($data);
     }
     
     /**
