@@ -1,7 +1,7 @@
 <?php
 namespace Notes\Factory;
 
-use Notes\Factory\User as UserFactory;
+
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,8 +17,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'id' => ' '
             
         );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
+        $userFactory = new User();
+        $userModel   = $userFactory->read($input);
         $this->assertEquals(1, $userModel->getId());
         
         
@@ -35,8 +35,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'id' => 'test'
             
         );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
+        $userFactory = new User();
+        $userModel   = $userFactory->read($input);
     }
     
     /*
@@ -51,8 +51,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'id' => null
             
         );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
+        $userFactory = new User();
+        $userModel   = $userFactory->read($input);
         $this->assertEquals(1, $userModel->getId());
     }
     /**
@@ -65,8 +65,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'id' => 1
             
         );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
+        $userFactory = new User();
+        $userModel   = $userFactory->read($input);
         $this->assertEquals(1, $userModel->getId());
     }
     
@@ -80,8 +80,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'email' => 'anusha@gmail.com',
             'password' => "anushA@h21"
         );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
+        $userFactory = new User();
+        $userModel   = $userFactory->login($input);
         
         $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
         $this->assertEquals('anushA@h21', $userModel->getPassword());
@@ -97,7 +97,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $input = array();
         
-        $userFactory = new UserFactory();
+        $userFactory = new User();
         $userModel   = $userFactory->create($input);
         
     }
@@ -114,8 +114,24 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'password' => "anushA@h21"
         );
         
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
+        $userFactory = new User();
+        $userModel   = $userFactory->login($input);
+    }
+    /**
+     * @test
+     * @expectedException          InvalidArgumentException
+     * @expectedExceptionMessage   Password Strength is weak
+    */
+    public function it_should_throw_exception_when_password_strength_is_weak()
+    {
+        
+        $input = array(
+            'email' => 'anusha@gmail.com',
+            'password' => "anuh21"
+        );
+        
+        $userFactory = new User();
+        $userModel   = $userFactory->login($input);
     }
     /**
      * @test
@@ -126,13 +142,31 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         
         $input = array(
+           
             'password' => "anushA@h21"
         );
         
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
-        print_r($userModel);
+        $userFactory = new User();
+        $userModel   = $userFactory->login($input);
+       
     }
+    /**
+     * @test
+     * @expectedException          InvalidArgumentException
+     * @expectedExceptionMessage   Input should not be null
+    */
+    public function it_should_throw_exception_when_password_is_empty()
+    {
+        
+        $input = array(
+            'email'=>"joy@maock.com",
+        );
+        
+        $userFactory = new User();
+        $userModel   = $userFactory->login($input);
+        
+    }
+    
     
     /**
      * @test
@@ -143,12 +177,37 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $input       = array(
             'firstName' => 'julie',
-            'lastName' => 'shah',
+            'lastName' => "shah",
             'email' => 'priya@gmail.com',
             'password' => 'sfhZ@223',
             'createdOn' => '2014-10-29 20:59:59'
         );
-        $userFactory = new UserFactory();
+        $userFactory = new User();
+        $userModel   = $userFactory->create($input);
+        
+        
+        $this->assertEquals('julie', $userModel->getFirstName());
+        $this->assertEquals('shah', $userModel->getLastName());
+        $this->assertEquals('priya@gmail.com', $userModel->getEmail());
+        $this->assertEquals('sfhZ@223', $userModel->getPassword());
+        $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
+    }
+    
+    /**
+     * @test
+     * @expectedException          InvalidArgumentException
+     * @expectedExceptionMessage   Input should not be null
+    */
+    public function it_should_throw_exception_when_lastName_does_not_present()
+    {
+        
+        $input       = array(
+            'firstName' => 'julie',
+            'email' => 'priya@gmail.com',
+            'password' => 'sfhZ@223',
+            'createdOn' => '2014-10-29 20:59:59'
+        );
+        $userFactory = new User();
         $userModel   = $userFactory->create($input);
         
         
@@ -174,8 +233,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'password' => 'sfhZ@223',
             'createdOn' => '2014-10-29 20:59:59'
         );
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
+        $userFactory = new User();
+        $userModel   = $userFactory->update($input);
         
         $this->assertEquals(1, $userModel->getId());
         $this->assertEquals('julie', $userModel->getFirstName());
