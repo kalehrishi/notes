@@ -50,8 +50,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         
         $response = $sessionController->delete();
         $this->assertNotNull($response);
-        
- }     
+    }
 
     /**
      * @test
@@ -90,7 +89,5 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         
         $response = $sessionController->delete();
         $this->assertNotNull($response);
-        
     }
-
 }

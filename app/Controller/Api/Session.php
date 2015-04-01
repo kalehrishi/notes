@@ -8,32 +8,31 @@ use Notes\Response\Response as Response;
 use Notes\Model\Model as Model;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
-
 class Session
 {
-   protected $request;
-    protected $message="Ok";
-   public function __construct($request)
-   {
-       $this->request=$request;
-   }
+    protected $request;
+    protected $message = "Ok";
+    public function __construct($request)
+    {
+        $this->request = $request;
+    }
     public function post()
-     {
-        $data_array=$this->request->getData();
-        $data=$data_array['data'];
+    {
+        $data_array = $this->request->getData();
+        $data       = $data_array['data'];
         
         
         try {
             $sessionService = new SessionService();
-            $sessionModel = new SessionModel();
-            $sessionModel      = $sessionService->login($data);
-          } catch (ModelNotFoundException $e ) {
-           $this->message=$e->setMessage();
-       } 
-       $objResponse= new Response(200,$this->message,$sessionModel->toArray());
+            $sessionModel   = new SessionModel();
+            $sessionModel   = $sessionService->login($data);
+        } catch (ModelNotFoundException $e) {
+            $this->message = $e->setMessage();
+        }
+        $objResponse = new Response(200, $this->message, $sessionModel->toArray());
         return $objResponse->getResponse();
-      }
-   
+    }
+    
     
     public function delete()
     {
@@ -44,18 +43,16 @@ class Session
         $sessionModel->setAuthToken($data['authToken']);
         $sessionModel->setUserId($data['userId']);
         try {
-            $sessionService   = new SessionService();
-         
-            $sessionModelRead = $sessionService->isValid($sessionModel);
-           
-            $sessionModel         = $sessionService->logout($sessionModelRead);
+            $sessionService = new SessionService();
             
-        } catch (ModelNotFoundException $e ) {
-           $this->message=$e->setMessage();
-       } 
-       $objResponse= new Response(200,$this->message,$sessionModel->toArray());
+            $sessionModelRead = $sessionService->isValid($sessionModel);
+            
+            $sessionModel = $sessionService->logout($sessionModelRead);
+            
+        } catch (ModelNotFoundException $e) {
+            $this->message = $e->setMessage();
+        }
+        $objResponse = new Response(200, $this->message, $sessionModel->toArray());
         return $objResponse->getResponse();
-      }
+    }
 }
-
-

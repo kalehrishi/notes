@@ -10,7 +10,7 @@ class Response
     private $data;
     private $debugData;
     
-    public function __construct($status, $message,$data = null, $debugData = null,$version="1.0.1")
+    public function __construct($status, $message, $data = null, $debugData = null, $version = "1.0.1")
     {
         $this->status    = $status;
         $this->message   = $message;
