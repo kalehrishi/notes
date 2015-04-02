@@ -47,7 +47,7 @@ class Session
             $sessionModel = $sessionService->logout($sessionModelRead);
             
         } catch (ModelNotFoundException $e) {
-            $this->message = $e->setMessage();
+            $this->message = $e->getMessage();
         }
         $objResponse = new Response(200, $this->message, $sessionModel->toArray());
         return $objResponse->getResponse();

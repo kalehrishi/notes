@@ -63,7 +63,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input        = array(
             'userId' => 2,
-            'authToken' => 'pqr'
+            'authToken' => 'abc'
         );
         $sessionModel = new sessionModel();
         
@@ -74,10 +74,10 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         
         $sessionModel = $sessionService->isValid($sessionModel);
         
-        $this->assertEquals(2, $sessionModel->getId());
+        $this->assertEquals(3, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
-        $this->assertEquals('pqr', $sessionModel->getAuthToken());
-        $this->assertEquals(1, $sessionModel->getIsExpired());
+        $this->assertEquals('abc', $sessionModel->getAuthToken());
+        $this->assertEquals(0, $sessionModel->getIsExpired());
     }
     
     /**
@@ -114,13 +114,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'id' => '3',
             'userId' => '2',
-            'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
         
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
-        $sessionModel->setIsExpired($input['isExpired']);
         
         $sessionService = new Session();
         

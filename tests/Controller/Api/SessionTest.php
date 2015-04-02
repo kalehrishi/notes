@@ -49,7 +49,6 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $sessionController = new Session($request);
         
         $response = $sessionController->delete();
-        
         $this->assertNotNull($response);
     }
     

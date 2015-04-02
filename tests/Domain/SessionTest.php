@@ -118,15 +118,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'id' => '3',
             'userId' => '2',
-            'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
-        $sessionModel->setIsExpired($input['isExpired']);
+    
         $SessionDomain   = new Session();
         $sessionModel    = $SessionDomain->delete($sessionModel);
-        
         $this->assertEquals(3, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals(1, $sessionModel->getIsExpired());

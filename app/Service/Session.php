@@ -39,7 +39,7 @@ class Session
         $sessionDomain = new SessionDomain();
         
         $session = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
-       
+        //print_r($session);
         return $session;
     }
 }
