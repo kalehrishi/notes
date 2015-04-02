@@ -34,9 +34,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $request->setData($data);
         
         $userController = new UserController($request);
-
         $response       = $userController->create();
-
         $this->assertNotNull($data, true);
     }
     /**
@@ -61,9 +59,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $request->setData($data);
         
         $userController = new UserController($request);
-
         $response = $userController->update();
-
         $this->assertNotNull($data, true);
         
         
