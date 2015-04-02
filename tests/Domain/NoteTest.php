@@ -186,10 +186,10 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                 )
             ),
             '1' => array(
-                'id' => 4,
-                'noteId' => 4,
-                'userTagId' => 4,
-                'isDeleted' => 0,
+                'id' => null,
+                'noteId' => null,
+                'userTagId' => null,
+                'isDeleted' => null,
                 'userTag' => array(
                     'id' => 4,
                     'userId' => 2,
@@ -210,10 +210,10 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                 )
             ),
             '3' => array(
-                'id' => 3,
-                'noteId' => 3,
-                'userTagId' => 3,
-                'isDeleted' => 0,
+                'id' => null,
+                'noteId' => null,
+                'userTagId' => null,
+                'isDeleted' => null,
                 'userTag' => array(
                     'id' => 3,
                     'userId' => 1,
@@ -251,17 +251,17 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             
             $this->assertEquals(8, $noteTagCollection->getRow(1)->getId());
             $this->assertEquals(6, $noteTagCollection->getRow(1)->getNoteId());
-            $this->assertEquals(7, $noteTagCollection->getRow(1)->getUserTagId());
+            $this->assertEquals(4, $noteTagCollection->getRow(1)->getUserTagId());
             
-            $this->assertEquals(7, $noteTagCollection->getRow(1)->getUserTag()->getId());
-            $this->assertEquals(1, $noteTagCollection->getRow(1)->getUserTag()->getUserId());
+            $this->assertEquals(4, $noteTagCollection->getRow(1)->getUserTag()->getId());
+            $this->assertEquals(2, $noteTagCollection->getRow(1)->getUserTag()->getUserId());
             $this->assertEquals('Javascript', $noteTagCollection->getRow(1)->getUserTag()->getTag());
             
             $this->assertEquals(9, $noteTagCollection->getRow(2)->getId());
             $this->assertEquals(6, $noteTagCollection->getRow(2)->getNoteId());
-            $this->assertEquals(8, $noteTagCollection->getRow(2)->getUserTagId());
+            $this->assertEquals(7, $noteTagCollection->getRow(2)->getUserTagId());
             
-            $this->assertEquals(8, $noteTagCollection->getRow(2)->getUserTag()->getId());
+            $this->assertEquals(7, $noteTagCollection->getRow(2)->getUserTag()->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(2)->getUserTag()->getUserId());
             $this->assertEquals('Second Tag', $noteTagCollection->getRow(2)->getUserTag()->getTag());
             
@@ -434,7 +434,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         }
     }
     
-    /*public function testCanDelete()
+    public function testCanDelete()
     {
         $noteInput         = array(
             'id' => 4,
@@ -461,5 +461,5 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Ajax', $noteModel->getTitle());
         $this->assertEquals('Asynchronous JavaScript and XML', $noteModel->getBody());
         $this->assertEquals(1, $noteModel->getIsDeleted());
-    }*/
+    }
 }
