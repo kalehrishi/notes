@@ -1,11 +1,10 @@
 <?php
-
 namespace Notes\Validator;
 
 class InputValidator
 {
     public function notNull($input)
-    {   
+    {
         if (!empty($input)) {
             return true;
         } else {
@@ -13,8 +12,7 @@ class InputValidator
         }
     }
     public function validString($input)
-    {   
-            
+    {
         if (preg_match('/[a-zA-Z]/', $input)) {
             return true;
         } else {
