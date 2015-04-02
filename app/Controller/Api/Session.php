@@ -48,7 +48,7 @@ class Session
             $sessionModelRead = $sessionService->isValid($sessionModel);
             
             $sessionModel = $sessionService->logout($sessionModelRead);
-            
+             
         } catch (ModelNotFoundException $e) {
             $this->message = $e->setMessage();
         }

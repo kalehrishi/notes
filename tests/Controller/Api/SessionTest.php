@@ -16,8 +16,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     public function it_should_create_session_with_valid_email_password()
     {
         $data    = '{
-                 
-                "data": {
+                   "data": {
                             "email" : "anusha@gmail.com",
                            "password" :"anushA@h21"
                         }   
@@ -27,11 +26,11 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         
         $sessionController = new Session($request);
         
-        $data1 = $sessionController->post();
+        $response = $sessionController->post();
 
-        $this->assertNotNull($data1);
-         
+        $this->assertNotNull($response);
     }
+
     /**
      * @test
      *
@@ -49,6 +48,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $sessionController = new Session($request);
         
         $response = $sessionController->delete();
+        
         $this->assertNotNull($response);
     }
 
