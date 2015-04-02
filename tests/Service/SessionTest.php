@@ -135,28 +135,19 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'id' => '1',
             'userId' => '1',
-            'expiredOn' => '2015-01-01 01:00:01',
             'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
 
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
-        $sessionModel->setExpiredOn($input['expiredOn']);
         $sessionModel->setIsExpired($input['isExpired']);
 
         $sessionService   = new Session();
 
         $sessionModel    = $sessionService->logout($sessionModel);
-
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Sessions'
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         $this->assertEquals(1, $sessionModel->getId());
         $this->assertEquals(1, $sessionModel->getUserId());
-        $this->assertEquals('2015-01-01 01:00:01', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
@@ -170,15 +161,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input        = array(
             'id' => 1,
-            'createdOn' => '2015-01-29 20:59:59',
-            'expiredOn' => '2015-01-29 20:59:59'
+            'createdOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
 
         $sessionModel->setId($input['id']);
         $sessionModel->setCreatedOn($input['createdOn']);
-        $sessionModel->setExpiredOn($input['expiredOn']);
-
+       
         $sessionService = new Session();
 
         $sessionModel  = $sessionService->logout($sessionModel);
@@ -233,7 +222,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $userInput = array(
             'email' => 'abcd@gmail.com',
-            'password' => 'psdE@454'
+            'password' => 'Joy%hj5487'
         );
         $userModel = new UserModel();
 

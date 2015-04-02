@@ -119,24 +119,17 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $input        = array(
             'id' => '1',
             'userId' => '1',
-            'expiredOn' => '2015-01-01 01:00:01',
             'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
-        $sessionModel->setExpiredOn($input['expiredOn']);
         $sessionModel->setIsExpired($input['isExpired']);
         $SessionDomain   = new Session();
         $sessionModel    = $SessionDomain->delete($sessionModel);
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/session_after_delete.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Sessions'
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        
         $this->assertEquals(1, $sessionModel->getId());
         $this->assertEquals(1, $sessionModel->getUserId());
-        $this->assertEquals('2015-01-01 01:00:01', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
@@ -201,7 +194,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
          $userInput = array(
             'email' => 'abcd@gmail.com',
-            'password' => 'psdE@584'
+            'password' => 'Joy%hj5487'
         );
         
        
