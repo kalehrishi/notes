@@ -43,17 +43,16 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     public function it_should_create_session_with_valid_email_password()
     {
         $userInput = array(
-            'email' => 'anusha@gmail.com',
-            'password' =>'anushA@h21'
-            
-        );
+            'email' => 'pushpa@marade.com',
+            'password' => 'Pushpa@123'
+            );
         
         $sessionModel = new sessionModel();
         $sessionDomain   = new Session();
         $sessionModel    = $sessionDomain->create($userInput);
         
         $this->assertEquals(4, $sessionModel->getId());
-        $this->assertEquals(1, $sessionModel->getUserId());
+        $this->assertEquals(3, $sessionModel->getUserId());
         $this->assertEquals(null, $sessionModel->getExpiredOn());
         $this->assertEquals(0, $sessionModel->getIsExpired());
     }
@@ -194,7 +193,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
          $userInput = array(
             'email' => 'abcd@gmail.com',
-            'password' => 'psd'
+            'password' => 'Joy%hj5487'
         );
         
        

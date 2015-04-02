@@ -40,8 +40,9 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     public function it_should_login_with_valid_email_password()
     {
         $userInput = array(
-            'email' => 'anusha@gmail.com',
-            'password' => 'anushA@h21'
+
+            'email' => 'pushpa@marade.com',
+            'password' => 'Pushpa@123'
         );
         
         $sessionModel   = new sessionModel();
@@ -49,7 +50,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         
         $sessionModel = $sessionService->login($userInput);
         
-        $this->assertEquals(1, $sessionModel->getUserId());
+        $this->assertEquals(3, $sessionModel->getUserId());
         $this->assertEquals(null, $sessionModel->getExpiredOn());
         $this->assertEquals(0, $sessionModel->getIsExpired());
     }
@@ -199,7 +200,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $userInput = array(
             'email' => 'abcd@gmail.com',
-            'password' => 'psd'
+            'password' => 'Joy%hj5487'
         );
         $userModel = new UserModel();
         
