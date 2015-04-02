@@ -10,7 +10,7 @@ use Notes\Model\User as UserModel;
 
 use Notes\Config\Config as Configuration;
 
-//use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 {
@@ -53,7 +53,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
         $sessionModel    = $sessionService->login($userInput);
         
-       $this->assertEquals(1, $sessionModel->getUserId());
+        $this->assertEquals(1, $sessionModel->getUserId());
         $this->assertEquals(null, $sessionModel->getExpiredOn());
         $this->assertEquals(0, $sessionModel->getIsExpired()); 
     }
@@ -80,7 +80,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(2, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals('pqr', $sessionModel->getAuthToken());
-       // $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getCreatedOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     } 
 
@@ -104,7 +103,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(2, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals('pqr', $sessionModel->getAuthToken());
-        //$this->assertEquals('2014-10-29 20:59:59', $sessionModel->getCreatedOn());
+        $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getCreatedOn());
+        $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
 
@@ -115,8 +115,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     public function it_should_logout()
     {
         $input        = array(
-            'id' => '1',
-            'userId' => '1',
+            'id' => '3',
+            'userId' => '2',
             'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
@@ -128,8 +128,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionService   = new Session();
 
         $sessionModel    = $sessionService->logout($sessionModel);
-        $this->assertEquals(1, $sessionModel->getId());
-        $this->assertEquals(1, $sessionModel->getUserId());
+        $this->assertEquals(3, $sessionModel->getId());
+        $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     

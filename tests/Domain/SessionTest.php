@@ -1,6 +1,5 @@
 <?php
 namespace Notes\Domain;
-
 use Notes\Domain\Session as Session;
 
 use Notes\Model\Session as sessionModel;
@@ -117,8 +116,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     public function it_should_delete_session()
     {
         $input        = array(
-            'id' => '1',
-            'userId' => '1',
+            'id' => '3',
+            'userId' => '2',
             'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
@@ -128,8 +127,8 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $SessionDomain   = new Session();
         $sessionModel    = $SessionDomain->delete($sessionModel);
         
-        $this->assertEquals(1, $sessionModel->getId());
-        $this->assertEquals(1, $sessionModel->getUserId());
+        $this->assertEquals(3, $sessionModel->getId());
+        $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     

@@ -26,7 +26,12 @@ class Session
             $sessionService = new SessionService();
             $sessionModel   = new SessionModel();
             $sessionModel   = $sessionService->login($data);
-        } catch (ModelNotFoundException $e) {
+        } 
+
+
+
+
+        catch (ModelNotFoundException $e) {
             $this->message = $e->setMessage();
         }
         $objResponse = new Response(200, $this->message, $sessionModel->toArray());

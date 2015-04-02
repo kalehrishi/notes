@@ -29,7 +29,7 @@
         </row>
          <row>
             <value>3</value>
-            <value>3</value>
+            <value>2</value>
             <value>abc</value>
             <value>2015-01-29 20:59:59</value>
             <value>2015-01-29 20:59:59</value>
@@ -38,7 +38,7 @@
         </row>              
         <row>
             <value>4</value>
-            <value>3</value>
+            <value>1</value>
              <value>f2fb5c85af83c5c2e2eb</value>
             <value>2015-01-29 20:59:59</value>
             <value>NULL</value>

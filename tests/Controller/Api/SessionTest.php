@@ -1,12 +1,10 @@
 <?php
 namespace Notes\Controller\Api;
-
 use Notes\Controller\Api\Session as Session;
 use Notes\Request\Request as Request;
 use Notes\Config\Config as Configuration;
 use Notes\Response\Response as Response;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
-
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -40,7 +38,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $data    = '{
                 "data": {
                             "authToken" : "abc",
-                            "userId" :"1"
+                            "userId" :"2"
                         }   
                 }';
         $request = new Request();
@@ -50,6 +48,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response = $sessionController->delete();
         
         $this->assertNotNull($response);
+        
     }
 
     /**
