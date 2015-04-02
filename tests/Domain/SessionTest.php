@@ -44,7 +44,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $userInput = array(
             'email' => 'pushpa@marade.com',
-            'password' => 'pushpa123'
+            'password' => 'Pushpa@123'
             
         );
         
@@ -194,7 +194,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
          $userInput = array(
             'email' => 'abcd@gmail.com',
-            'password' => 'psd'
+            'password' => 'Joy%hj5487'
         );
         
        

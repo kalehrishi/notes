@@ -1,5 +1,4 @@
 <?php
-
 namespace Notes\Validator;
 
 class InputValidator
@@ -22,6 +21,7 @@ class InputValidator
     }
     public function validNumber($input)
     {
+        
         if (filter_var($input, FILTER_VALIDATE_INT)) {
             return true;
         } else {
@@ -30,6 +30,7 @@ class InputValidator
     }
     public function validEmail($value)
     {
+       
         if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
             return true;
         } else {
@@ -40,6 +41,7 @@ class InputValidator
     
     public function isValidPassword($password)
     {
+       
         $obj   = new PasswordValidator($password);
         $count = $obj->strength();
         if ($count == 4) {
