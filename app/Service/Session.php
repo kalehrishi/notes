@@ -6,11 +6,6 @@ use Notes\Domain\Session as SessionDomain;
 
 class Session
 {
-    public function __construct()
-    {
-        
-    }
-    
     public function login($userInput)
     {
         $sessionDomain = new SessionDomain();

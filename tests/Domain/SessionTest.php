@@ -1,5 +1,6 @@
 <?php
 namespace Notes\Domain;
+
 use Notes\Domain\Session as Session;
 
 use Notes\Model\Session as sessionModel;

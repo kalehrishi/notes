@@ -1,10 +1,12 @@
 <?php
 namespace Notes\Controller\Api;
+
 use Notes\Controller\Api\Session as Session;
 use Notes\Request\Request as Request;
 use Notes\Config\Config as Configuration;
 use Notes\Response\Response as Response;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -70,6 +72,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($response);
         
     }
+
     /**
      * @test
      */
@@ -89,7 +92,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response = $sessionController->delete();
         $this->assertNotNull($response);
     }
-/**
+
+    /**
      * @test
      */
     public function it_should_throw_exception_for_logout_if_user_is_not_login()

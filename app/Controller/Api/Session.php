@@ -20,24 +20,16 @@ class Session
     {
         $data_array = $this->request->getData();
         $data       = $data_array['data'];
-        
-        
         try {
             $sessionService = new SessionService();
             $sessionModel   = new SessionModel();
             $sessionModel   = $sessionService->login($data);
-        } 
-
-
-
-
-        catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             $this->message = $e->setMessage();
         }
         $objResponse = new Response(200, $this->message, $sessionModel->toArray());
         return $objResponse->getResponse();
     }
-    
     
     public function delete()
     {
@@ -53,7 +45,7 @@ class Session
             $sessionModelRead = $sessionService->isValid($sessionModel);
             
             $sessionModel = $sessionService->logout($sessionModelRead);
-             
+            
         } catch (ModelNotFoundException $e) {
             $this->message = $e->setMessage();
         }

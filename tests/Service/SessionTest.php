@@ -3,13 +3,9 @@
 namespace Notes\Service;
 
 use Notes\Service\Session as Session;
-
 use Notes\Model\Session as sessionModel;
-
 use Notes\Model\User as UserModel;
-
 use Notes\Config\Config as Configuration;
-
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class SessionTest extends \PHPUnit_Extensions_Database_TestCase
@@ -38,68 +34,68 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     /**
-    * @test
-    *
-    **/
+     * @test
+     *
+     **/
     public function it_should_login_with_valid_email_password()
     {
         $userInput = array(
             'email' => 'anusha@gmail.com',
-            'password' =>'anushA@h21'
+            'password' => 'anushA@h21'
         );
         
-        $sessionModel = new sessionModel();
-        $sessionService   = new Session();
-
-        $sessionModel    = $sessionService->login($userInput);
+        $sessionModel   = new sessionModel();
+        $sessionService = new Session();
+        
+        $sessionModel = $sessionService->login($userInput);
         
         $this->assertEquals(1, $sessionModel->getUserId());
         $this->assertEquals(null, $sessionModel->getExpiredOn());
-        $this->assertEquals(0, $sessionModel->getIsExpired()); 
+        $this->assertEquals(0, $sessionModel->getIsExpired());
     }
     
-     /**
-    * @test
-    *
-    **/
-   public function it_should_read_session_by_userId_and_authToken()
+    /**
+     * @test
+     *
+     **/
+    public function it_should_read_session_by_userId_and_authToken()
     {
         $input        = array(
             'userId' => 2,
             'authToken' => 'pqr'
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
-
-        $sessionService   = new Session();
-
-        $sessionModel    = $sessionService->isValid($sessionModel);
-
+        
+        $sessionService = new Session();
+        
+        $sessionModel = $sessionService->isValid($sessionModel);
+        
         $this->assertEquals(2, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals('pqr', $sessionModel->getAuthToken());
         $this->assertEquals(1, $sessionModel->getIsExpired());
-    } 
-
+    }
+    
     /**
-    * @test
-    *
-    **/
+     * @test
+     *
+     **/
     public function it_should_read_session_by_id()
     {
         $input        = array(
             'id' => 2
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setId($input['id']);
-
-        $sessionService   = new Session();
-
-        $sessionModel    = $sessionService->read($sessionModel);
-
+        
+        $sessionService = new Session();
+        
+        $sessionModel = $sessionService->read($sessionModel);
+        
         $this->assertEquals(2, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals('pqr', $sessionModel->getAuthToken());
@@ -107,11 +103,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
-
-     /**
-    * @test
-    *
-    **/
+    
+    /**
+     * @test
+     *
+     **/
     public function it_should_logout()
     {
         $input        = array(
@@ -120,20 +116,19 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'isExpired' => '1'
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setIsExpired($input['isExpired']);
-
-        $sessionService   = new Session();
-
-        $sessionModel    = $sessionService->logout($sessionModel);
+        
+        $sessionService = new Session();
+        
+        $sessionModel = $sessionService->logout($sessionModel);
         $this->assertEquals(3, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
-
     /**
      * @test
      * @expectedException         InvalidArgumentException
@@ -146,13 +141,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'createdOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setId($input['id']);
         $sessionModel->setCreatedOn($input['createdOn']);
-       
+        
         $sessionService = new Session();
-
-        $sessionModel  = $sessionService->logout($sessionModel);
+        
+        $sessionModel = $sessionService->logout($sessionModel);
     }
     
     /**
@@ -166,12 +161,12 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 10
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setId($input['id']);
-
+        
         $sessionService = new Session();
-
-        $sessionModel  = $sessionService->read($sessionModel);
+        
+        $sessionModel = $sessionService->read($sessionModel);
     }
     
     /**
@@ -179,22 +174,22 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      * @expectedException         Notes\Exception\ModelNotFoundException
      * @expectedExceptionMessage  Can Not Found Given Model In Database
      */
-   public function it_should_throw_exception_with_invalid_authToken_userId()
+    public function it_should_throw_exception_with_invalid_authToken_userId()
     {
         $input        = array(
             'userId' => 15,
             'authToken' => 'xyz'
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
-
+        
         $sessionService = new Session();
-
-        $sessionModel  = $sessionService->isValid($sessionModel);
-    } 
-
+        
+        $sessionModel = $sessionService->isValid($sessionModel);
+    }
+    
     /**
      * @test
      * @expectedException         Notes\Exception\ModelNotFoundException
@@ -207,11 +202,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'password' => 'psd'
         );
         $userModel = new UserModel();
-
+        
         $userModel->setEmail($userInput['email']);
         $userModel->setPassword($userInput['password']);
-
+        
         $sessionService = new Session();
-        $sessionModel  = $sessionService->login($userInput);
+        $sessionModel   = $sessionService->login($userInput);
     }
 }
