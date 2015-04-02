@@ -17,8 +17,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $data    = '{
                    "data": {
-                            "email" : "anusha@gmail.com",
-                           "password" :"anushA@h21"
+                            "email" : "pushpa@marade.com",
+                           "password" :"Pushpa@123"
                         }   
                 }';
         $request = new Request();
@@ -27,10 +27,11 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $sessionController = new Session($request);
         
         $response = $sessionController->post();
-
+        
         $this->assertNotNull($response);
+        
     }
-
+    
     /**
      * @test
      *
@@ -50,12 +51,11 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response = $sessionController->delete();
         
         $this->assertNotNull($response);
-        
     }
-
+    
     /**
      * @test
-    */
+     */
     public function it_should_throw_exception_with_invalid_email_password()
     {
         
@@ -68,11 +68,10 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setData($data);
         $sessionController = new Session($request);
-        $response = $sessionController->post();
+        $response          = $sessionController->post();
         $this->assertNotNull($response);
-        
     }
-
+    
     /**
      * @test
      */
@@ -92,7 +91,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response = $sessionController->delete();
         $this->assertNotNull($response);
     }
-
+    
     /**
      * @test
      */
@@ -107,7 +106,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setData($data);
         $sessionController = new Session($request);
-        $response = $sessionController->post();
+        $response          = $sessionController->post();
         $this->assertNotNull($response);
     }
 }
