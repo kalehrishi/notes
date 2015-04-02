@@ -1,11 +1,39 @@
 <?php
 
+namespace Notes\Controller\Web;
+
+require_once '../vendor/autoload.php';
+
+use Notes\Request\Request as Request;
+
+$application = new \Slim\Slim(array(
+    'debug' => true
+));
+
+$application->get('/:route', function($route) {
+    $request        = new Request();
+    $request->setUrlParams($route);
+    $homeController = new Home($request);
+    $homeController->get();
+})->conditions(array("route" => "(|home)"));
 
 
-require '../vendor/autoload.php';
+$application->get('/login', function() {
+    $request        = new Request();
+    $sessionController = new Session($request);
+    $sessionController->get();
+});
+$application->post('/login', function() {
+    $request = \Slim\Slim::getInstance()->request();
 
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($request->post());
+    
+    $sessionController = new Session($objRequest);
+    $sessionController->post();
+});
+$application->get('/notes', function() {
+   echo"Login Successfully";
+});
 
-$userService=new Notes\Service\User();
-
-$input=array('firstName'=>'FirstName','lastName'=>'LastName','email'=>'test@notes.com');
-print_r($userService->createUser($input));
+$application->run();
