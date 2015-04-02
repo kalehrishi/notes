@@ -26,8 +26,7 @@ class Session
         $sessionService = new SessionService();
         try {
             $response = $sessionService->login($input);
-        }
-        catch (\InvalidArgumentException $error) {
+        } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
             $objResponse = new Response(200, "ok", "1.0.0", $response);
             //print_r($objResponse->getResponse());
@@ -44,7 +43,7 @@ class Session
         }
         if ($response instanceof SessionModel) {
             header('Location: http://notes.com/notes');
-            exit();
+            exit(0);
         }
     }
 }

@@ -15,6 +15,6 @@ class Home
     {
         $fileName = "Home.php";
         $view     = new View();
-        $view     = $view->render($fileName, $this->request);
+        $view     = $view->render($fileName);
     }
 }

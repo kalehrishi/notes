@@ -1,5 +1,5 @@
 <?php
-  $data=json_decode($response,true);
+$data = json_decode($response, true);
 
 ?>
 <!DOCTYPE html>
@@ -24,14 +24,20 @@
         <td><input type="password" name="password"></input></td> 
       </tr>
       <tr>
-        <?php if(is_string($data['data'])){?>
-        <td>Error :-  </td>
-        <td><div class="error" ><?php echo $data['data'];?></div></td>
-        <?php }?>
+        <?php
+        if (is_string($data['data'])) {
+            ?>
+            <td>Error :-  </td>
+            <td><div class="error" ><?php
+            echo $data['data'];
+            ?></div></td>
+        <?php
+        }
+        ?>
       </tr>
       <tr>
         <td><input type="submit" value="Login" /></td>
-        <td><button>Cancel</button></td> 
+        <td><button>Cancel</button></td>
       </tr>
     </table>
   </form>
