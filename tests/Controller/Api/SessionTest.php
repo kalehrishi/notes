@@ -90,4 +90,21 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response = $sessionController->delete();
         $this->assertNotNull($response);
     }
+/**
+     * @test
+     */
+    public function it_should_throw_exception_for_logout_if_user_is_not_login()
+    {
+        $data    = '{
+                "data": {
+                            "email" : "gauri@bhapkar.com",
+                           "password" :"Gauri@123"
+                        }   
+                }';
+        $request = new Request();
+        $request->setData($data);
+        $sessionController = new Session($request);
+        $response = $sessionController->post();
+        $this->assertNotNull($response);
+    }
 }
