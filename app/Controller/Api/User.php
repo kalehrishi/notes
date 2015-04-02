@@ -38,12 +38,8 @@ class User
             $response    = $userService->createUser($data);
             
         } catch (\ModelNotFoundException $e) {
-            $this->message = $e->getMessage();
-           
-        }
-        catch (\Exception $e) {
-            print_r($this->message = $e->getMessage());
-        
+            $this->message = $e->setMessage();
+            
         }
         
         $objectResponse = new Response(200, $this->message, "1.0.0", $response->toArray());
@@ -67,13 +63,14 @@ class User
             $userService = new UserService();
             $response    = $userService->updateUser($data);
         } catch (\ModelNotFoundException $e) {
-            $response = $e->getMessage();
+            $this->message = $e->setMessage();
             
             if ($e instanceof ModelNotFoundException) {
                 $objectResponse = new Response(404, $this->message, "ResourceNotFound", $response->toArray());
                 return $objectResponse->getResponse();
                 
             }
+            
             
         }
         $objectResponse = new Response(200, $this->message, "1.0.0", $response->toArray());

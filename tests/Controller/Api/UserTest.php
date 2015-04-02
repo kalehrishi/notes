@@ -9,6 +9,8 @@ use Notes\Request\Request as Request;
 
 use Notes\Response\Response as Response;
 
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+
 class UserTest extends \PHPUnit_Framework_TestCase
 {
     
@@ -21,7 +23,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $data    = '{
                 "data": {  
-                            
                            "firstName" :"kirti",
                            "lastName" :"ramani",
                            "email" :"kirti.6@gmail.com",
@@ -33,8 +34,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $request->setData($data);
         
         $userController = new UserController($request);
+
         $response       = $userController->create();
-        
+
         $this->assertNotNull($data, true);
     }
     /**
@@ -59,10 +61,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $request->setData($data);
         
         $userController = new UserController($request);
-        
+
         $response = $userController->update();
-        
+
         $this->assertNotNull($data, true);
+        
         
     }
     
@@ -91,37 +94,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $userController = new UserController($request);
         
-        $response = $userController->update();       
-        $this->assertNotNull($data, false);
-    }
-    
-    /**
-     * @test
-     * @expectedException        Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
-     */
-    public function it_should_throw_exception_when_all_fields_are_invalid()
-    {
-        $data = '{
-                "data": {
-                          
-                           "id"        :"8",
-                           "firstName" :"priyank",
-                           "lastName" :"kumar",
-                           "email" :"kumar.6@gmai.com",
-                           "password" :"sfhsk122"
-                           "createdOn" : "2014-11-29 20:59:60"
-                        }   
-                }';
-        
-        $request = new Request();
-        $request->setData($data);
-        
-        $userController = new UserController($request);
-        
         $response = $userController->update();
         
-        $this->assertResponseStatusCode(404);
+        $this->assertNotNull($data, true);
         
     }
 }
