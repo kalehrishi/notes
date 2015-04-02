@@ -94,7 +94,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         
         $userInput = array(
             'email' => 'anusha@gmail.com',
-            'password' => 'sfhsk1223'
+            'password' => 'sfhA@sk1223'
             
         );
         
@@ -112,16 +112,16 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         ));
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         $this->assertEquals('anusha@gmail.com', $userModel->getEmail());
-        $this->assertEquals('sfhsk1223', $userModel->getPassword());
+        $this->assertEquals('sfhA@sk1223', $userModel->getPassword());
         
         
         
     }
     
-    /**
+     /**
      * @test
-     * @expectedException Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Password Strength is weak
      */
     
     public function it_should_throw_exception_when_username_password_does_not_match()
@@ -152,7 +152,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'firstName' => 'julie',
             'lastName' => 'shah',
             'email' => 'priya@gmail.com',
-            'password' => 'sfhA@k1223',
+            'password' => 'sfhZ@223',
             'createdOn' => '2014-10-29 20:59:59'
             
         );
@@ -178,27 +178,28 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('julie', $userModel->getFirstName());
         $this->assertEquals('shah', $userModel->getLastName());
         $this->assertEquals('priya@gmail.com', $userModel->getEmail());
-        $this->assertEquals('sfhA@k1223', $userModel->getPassword());
+        $this->assertEquals('sfhZ@223', $userModel->getPassword());
         $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
         
     }
     
     
+   
     /**
      * @test
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Password Strength is weak
+     *@expectedException          InvalidArgumentException
+     * @expectedExceptionMessage   Input should be Number
      */
-    
     public function it_should_throw_exceptionwhenupdationfailed()
     {
         
         $userInput     = array(
-            'firstName' => 'priyanka',
-            'lastName' => 'kumar',
-            'email' => 'kumar.6@gmail.com',
-            'password' => 'sfhsk1229'
-            
+             'id' => '',
+            'firstName' => 'julie',
+            'lastName' => 'shah',
+            'email' => 'priya@gmail.com',
+            'password' => 'sfhZ@223',
+            'createdOn' => '2014-10-29 20:59:59'
         );
         $userModel = new UserModel();
         $userModel->setFirstName($userInput['firstName']);

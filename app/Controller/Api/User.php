@@ -64,15 +64,8 @@ class User
             $response    = $userService->updateUser($data);
         } catch (\ModelNotFoundException $e) {
             $this->message = $e->setMessage();
-            
-            if ($e instanceof ModelNotFoundException) {
-                $objectResponse = new Response(404, $this->message, "ResourceNotFound", $response->toArray());
-                return $objectResponse->getResponse();
-                
-            }
-            
-            
         }
+
         $objectResponse = new Response(200, $this->message, "1.0.0", $response->toArray());
         return $objectResponse->getResponse();
         

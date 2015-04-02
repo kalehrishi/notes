@@ -37,6 +37,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $response       = $userController->create();
         $this->assertNotNull($data, true);
     }
+
     /**
      * @test
      *
@@ -46,11 +47,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $data = '{
                 "data": {
-                           "id" : "1",
-                           "firstName" : "julie",
+                          "id"        : "1",
+                           "firstName" :"julie",
                            "lastName" :"shah",
                            "email" :"priya@gmail.com",
-                           "password" :"sfhA@k1223",
+                           "password" :"sfhZ@223",
                            "createdOn" : "2014-10-29 20:59:59"
                         }   
                 }';
@@ -67,20 +68,20 @@ class UserTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @test
-     * @expectedException        Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
+     *@expectedException          InvalidArgumentException
+     * @expectedExceptionMessage  Input should be Number
      */
     public function it_should_throw_exceptionwhenupdationfailed()
     {
         
         $data = '{
                 "data": {
-                            "id"        : "7",
-                            "firstName" : "priyanka",
-                           "lastName" :"kumar",
-                           "email" :"kumar.6@gmail.com",
-                           "password" :"sfhsk1229"
-                           "createdOn" : "2014-10-29 20:59:60"
+                            "id"        : " ",
+                            "firstName" : "julie",
+                           "lastName" :"shah",
+                           "email" :"priya@gmail.com",
+                           "password" :"sfhZ@223",
+                           "createdOn" : "2014-10-29 20:59:59"
                         }   
                 }';
         
