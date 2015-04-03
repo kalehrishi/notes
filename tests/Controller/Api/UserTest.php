@@ -35,9 +35,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $userController = new UserController($request);
         $response       = $userController->create();
+        
         $this->assertNotNull($data, true);
     }
-
+    
     /**
      * @test
      *
@@ -47,12 +48,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $data = '{
                 "data": {
-                          "id"        : "1",
+                           "id"        : "1",
                            "firstName" :"julie",
-                           "lastName" :"shah",
+                           "lastName" :"shh",
                            "email" :"priya@gmail.com",
                            "password" :"sfhZ@223",
-                           "createdOn" : "2014-10-29 20:59:59"
+                           "createdOn" :"2014-10-29 20:59:59"
                         }   
                 }';
         
@@ -60,7 +61,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $request->setData($data);
         
         $userController = new UserController($request);
-        $response = $userController->update();
+        $response       = $userController->update();
         $this->assertNotNull($data, true);
         
         
@@ -68,7 +69,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @test
-     *@expectedException          InvalidArgumentException
+     * @expectedException          InvalidArgumentException
      * @expectedExceptionMessage  Input should be Number
      */
     public function it_should_throw_exceptionwhenupdationfailed()
@@ -76,8 +77,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         
         $data = '{
                 "data": {
-                            "id"        : " ",
-                            "firstName" : "julie",
+                           "id"        : " ",
+                           "firstName" : "julie",
                            "lastName" :"shah",
                            "email" :"priya@gmail.com",
                            "password" :"sfhZ@223",

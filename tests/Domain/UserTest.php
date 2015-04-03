@@ -192,21 +192,20 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
     }
     
     /**
-     * @expectedException        Notes\Exception\ModelNotFoundException
-     * @expectedExceptionMessage Can Not Found Given Model In Database
+     * @test
+     *@expectedException          InvalidArgumentException
+     * @expectedExceptionMessage   Input should be Number
      */
-    
-    public function testUserCanThrowExceptionWhenUpdationFailed()
+    public function it_should_throw_exception_when_id_not_present_for_updating_user()
     {
         
         $input       = array(
-            'id' => 7,
-            'firstName' => 'priyankaa',
-            'lastName' => 'kumara',
-            'email' => 'kumar.6@gmai.com',
+            'id' => '',
+            'firstName' => 'julie',
+            'lastName' => 'shah',
+            'email' => 'priya@gmail.com',
             'password' => 'sfhZ@223',
-            'createdOn' => '2014-10-29 20:59:50'
-            
+            'createdOn' => '2014-10-29 20:59:59'
         );
         $userFactory = new UserFactory();
         $userModel   = $userFactory->create($input);

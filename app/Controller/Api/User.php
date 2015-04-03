@@ -7,18 +7,19 @@ use Notes\Model\User as UserModel;
 
 use Notes\Response\Response as Response;
 
-use Notes\Model\Model as Model;
-
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class User
 {
     
     protected $request;
-    public $message = "Ok";
+    public $message = "OK";
+    public $errormessage = "ResourceNotFound";
+    
     public function __construct($request)
     {
         $this->request = $request;
+        
     }
     
     public function create()
@@ -35,14 +36,19 @@ class User
         
         try {
             $userService = new UserService();
-            $response    = $userService->createUser($data);
+            $userModel   = $userService->createUser($data);
             
         } catch (\ModelNotFoundException $e) {
             $this->message = $e->setMessage();
             
+            if ($e instanceof ModelNotFoundException) {
+                $objectResponse = new Response(404, $this->errormessage, $userModel->toArray());
+                $objectResponse->getResponse();
+            }
+            
         }
         
-        $objectResponse = new Response(200, $this->message, "1.0.0", $response->toArray());
+        $objectResponse = new Response(200, $this->message, $userModel->toArray());
         $objectResponse->getResponse();
         
     }
@@ -61,12 +67,16 @@ class User
         $userModel->setCreatedOn($data['createdOn']);
         try {
             $userService = new UserService();
-            $response    = $userService->updateUser($data);
+            $userModel   = $userService->updateUser($data);
         } catch (\ModelNotFoundException $e) {
             $this->message = $e->setMessage();
+            
+            if ($e instanceof ModelNotFoundException) {
+                $objectResponse = new Response(404, $this->errormessage, $userModel->toArray());
+                $objectResponse->getResponse();
+            }
         }
-
-        $objectResponse = new Response(200, $this->message, "1.0.0", $response->toArray());
+        $objectResponse = new Response(200, $this->message, $userModel->toArray());
         return $objectResponse->getResponse();
         
     }
