@@ -180,7 +180,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                 'isDeleted' => null,
                 'userTag' => array(
                     'id' => null,
-                    'userId' => null,
+                    'userId' => 1,
                     'tag' => 'OOP PHP',
                     'isDeleted' => null
                 )
@@ -204,7 +204,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                 'isDeleted' => null,
                 'userTag' => array(
                     'id' => null,
-                    'userId' => null,
+                    'userId' => 1,
                     'tag' => 'Second Tag',
                     'isDeleted' => null
                 )
@@ -291,7 +291,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                 'isDeleted' => null,
                 'userTag' => array(
                     'id' => null,
-                    'userId' => null,
+                    'userId' => 3,
                     'tag' => 'implode',
                     'isDeleted' => null
                 )
@@ -353,7 +353,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                 'isDeleted' => null,
                 'userTag' => array(
                     'id' => null,
-                    'userId' => null,
+                    'userId' => 1,
                     'tag' => 'PHP5',
                     'isDeleted' => null
                 )
@@ -365,7 +365,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
                 'isDeleted' => null,
                 'userTag' => array(
                     'id' => null,
-                    'userId' => null,
+                    'userId' => 1,
                     'tag' => 'WordPress',
                     'isDeleted' => null
                 )
@@ -434,7 +434,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         }
     }
     
-    public function testCanDelete()
+    /*public function testCanDelete()
     {
         $noteInput         = array(
             'id' => 4,
@@ -461,5 +461,5 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Ajax', $noteModel->getTitle());
         $this->assertEquals('Asynchronous JavaScript and XML', $noteModel->getBody());
         $this->assertEquals(1, $noteModel->getIsDeleted());
-    }
+    }*/
 }
