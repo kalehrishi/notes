@@ -26,6 +26,7 @@ class User
     {
         $userFactory = new UserFactory();
         $userModel   = $userFactory->create($input);
+        $userModel->setCreatedOn(date("Y-m-d H:i:s"));
         $userMapper = new UserMapper();
         $userModel  = $userMapper->create($userModel);
         return $userModel;

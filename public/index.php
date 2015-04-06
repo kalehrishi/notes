@@ -36,4 +36,19 @@ $application->get('/notes', function() {
    echo"Login Successfully";
 });
 
+$application->get('/Register', function() {
+    $request        = new Request();
+    $userController = new User($request);
+    $userController->get();
+});
+$application->post('/Register', function() {
+    $request = \Slim\Slim::getInstance()->request();
+
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($request->post());
+    
+    $userController = new User($objRequest);
+    $userController->post();
+});
+
 $application->run();
