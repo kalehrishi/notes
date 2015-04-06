@@ -3,13 +3,9 @@
 namespace Notes\Service;
 
 use Notes\Service\Session as Session;
-
 use Notes\Model\Session as sessionModel;
-
 use Notes\Model\User as UserModel;
-
 use Notes\Config\Config as Configuration;
-
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class SessionTest extends \PHPUnit_Extensions_Database_TestCase
@@ -36,88 +32,71 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     {
         return $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_seed.xml');
     }
+    
     /**
-    * @test
-    *
-    **/
+     * @test
+     *
+     **/
     public function it_should_login_with_valid_email_password()
     {
         $userInput = array(
+
             'email' => 'pushpa@marade.com',
             'password' => 'Pushpa@123'
-            
         );
         
-        $userModel = new UserModel();
-
-        $userModel->setEmail($userInput['email']);
-        $userModel->setPassword($userInput['password']);
-
-        $sessionModel = new sessionModel();
-        $sessionService   = new Session();
-
-        $sessionModel    = $sessionService->login($userInput);
+        $sessionModel   = new sessionModel();
+        $sessionService = new Session();
         
-        $this->assertEquals(4, $sessionModel->getId());
+        $sessionModel = $sessionService->login($userInput);
+        
         $this->assertEquals(3, $sessionModel->getUserId());
         $this->assertEquals(null, $sessionModel->getExpiredOn());
         $this->assertEquals(0, $sessionModel->getIsExpired());
     }
     
-     /**
-    * @test
-    *
-    **/
+    /**
+     * @test
+     *
+     **/
     public function it_should_read_session_by_userId_and_authToken()
     {
         $input        = array(
             'userId' => 2,
-            'authToken' => 'pqr'
+            'authToken' => 'abc'
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
-
-        $sessionService   = new Session();
-
-        $sessionModel    = $sessionService->isValid($sessionModel);
-
-        $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Sessions'
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals(2, $sessionModel->getId());
+        
+        $sessionService = new Session();
+        
+        $sessionModel = $sessionService->isValid($sessionModel);
+        
+        $this->assertEquals(3, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
-        $this->assertEquals('pqr', $sessionModel->getAuthToken());
-        $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getCreatedOn());
-        $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
-        $this->assertEquals(1, $sessionModel->getIsExpired());
+        $this->assertEquals('abc', $sessionModel->getAuthToken());
+        $this->assertEquals(0, $sessionModel->getIsExpired());
     }
-
+    
     /**
-    * @test
-    *
-    **/
+     * @test
+     *
+     **/
     public function it_should_read_session_by_id()
     {
         $input        = array(
             'id' => 2
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setId($input['id']);
-
-        $sessionService   = new Session();
-
-        $sessionModel    = $sessionService->read($sessionModel);
-
-        $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Sessions'
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        
+        $sessionService = new Session();
+        
+        $sessionModel = $sessionService->read($sessionModel);
+        
         $this->assertEquals(2, $sessionModel->getId());
         $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals('pqr', $sessionModel->getAuthToken());
@@ -125,33 +104,30 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
-
-     /**
-    * @test
-    *
-    **/
+    
+    /**
+     * @test
+     *
+     **/
     public function it_should_logout()
     {
         $input        = array(
-            'id' => '1',
-            'userId' => '1',
-            'isExpired' => '1'
+            'id' => '3',
+            'userId' => '2',
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
-        $sessionModel->setIsExpired($input['isExpired']);
-
-        $sessionService   = new Session();
-
-        $sessionModel    = $sessionService->logout($sessionModel);
-        $this->assertEquals(1, $sessionModel->getId());
-        $this->assertEquals(1, $sessionModel->getUserId());
+        
+        $sessionService = new Session();
+        
+        $sessionModel = $sessionService->logout($sessionModel);
+        $this->assertEquals(3, $sessionModel->getId());
+        $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     
-
     /**
      * @test
      * @expectedException         InvalidArgumentException
@@ -164,13 +140,13 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'createdOn' => '2015-01-29 20:59:59'
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setId($input['id']);
         $sessionModel->setCreatedOn($input['createdOn']);
-       
+        
         $sessionService = new Session();
-
-        $sessionModel  = $sessionService->logout($sessionModel);
+        
+        $sessionModel = $sessionService->logout($sessionModel);
     }
     
     /**
@@ -184,12 +160,12 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'id' => 10
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setId($input['id']);
-
+        
         $sessionService = new Session();
-
-        $sessionModel  = $sessionService->read($sessionModel);
+        
+        $sessionModel = $sessionService->read($sessionModel);
     }
     
     /**
@@ -204,15 +180,15 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'authToken' => 'xyz'
         );
         $sessionModel = new sessionModel();
-
+        
         $sessionModel->setUserId($input['userId']);
         $sessionModel->setAuthToken($input['authToken']);
-
+        
         $sessionService = new Session();
-
-        $sessionModel  = $sessionService->isValid($sessionModel);
+        
+        $sessionModel = $sessionService->isValid($sessionModel);
     }
-
+    
     /**
      * @test
      * @expectedException         Notes\Exception\ModelNotFoundException
@@ -225,11 +201,11 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'password' => 'Joy%hj5487'
         );
         $userModel = new UserModel();
-
+        
         $userModel->setEmail($userInput['email']);
         $userModel->setPassword($userInput['password']);
-
+        
         $sessionService = new Session();
-        $sessionModel  = $sessionService->login($userInput);
+        $sessionModel   = $sessionService->login($userInput);
     }
 }

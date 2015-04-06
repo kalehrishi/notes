@@ -31,7 +31,7 @@
             <value>Pushpa@123</value>
             <value>2015-01-29 20:59:59</value>
         </row> 
-    </table>
+   </table>
     <table name="Sessions">
         <column>id</column>
         <column>userId</column>
@@ -57,7 +57,7 @@
         </row>
         <row>
             <value>3</value>
-            <value>3</value>
+            <value>2</value>
              <value>abc</value>
             <value>2015-01-29 20:59:59</value>
             <value>2015-01-29 20:59:59</value>

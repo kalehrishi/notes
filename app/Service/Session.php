@@ -6,11 +6,6 @@ use Notes\Domain\Session as SessionDomain;
 
 class Session
 {
-    public function __construct()
-    {
-        
-    }
-    
     public function login($userInput)
     {
         $sessionDomain = new SessionDomain();
@@ -25,7 +20,8 @@ class Session
         $sessionDomain = new SessionDomain();
         
         $session = $sessionDomain->delete($sessionModel);
-        
+
+       
         return $session;
     }
     
@@ -41,9 +37,9 @@ class Session
     public function isValid($sessionModel)
     {
         $sessionDomain = new SessionDomain();
-
-        $session = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
         
+        $session = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
+        //print_r($session);
         return $session;
     }
 }

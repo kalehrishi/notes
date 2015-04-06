@@ -45,8 +45,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userInput = array(
             'email' => 'pushpa@marade.com',
             'password' => 'Pushpa@123'
-            
-        );
+            );
         
         $sessionModel = new sessionModel();
         $sessionDomain   = new Session();
@@ -117,19 +116,17 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
     public function it_should_delete_session()
     {
         $input        = array(
-            'id' => '1',
-            'userId' => '1',
-            'isExpired' => '1'
+            'id' => '3',
+            'userId' => '2',
         );
         $sessionModel = new sessionModel();
         $sessionModel->setId($input['id']);
         $sessionModel->setUserId($input['userId']);
-        $sessionModel->setIsExpired($input['isExpired']);
+    
         $SessionDomain   = new Session();
         $sessionModel    = $SessionDomain->delete($sessionModel);
-        
-        $this->assertEquals(1, $sessionModel->getId());
-        $this->assertEquals(1, $sessionModel->getUserId());
+        $this->assertEquals(3, $sessionModel->getId());
+        $this->assertEquals(2, $sessionModel->getUserId());
         $this->assertEquals(1, $sessionModel->getIsExpired());
     }
     

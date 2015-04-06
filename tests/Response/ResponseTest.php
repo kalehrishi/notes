@@ -20,7 +20,6 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $status  = "200";
         $message = "ok";
-        $version = "1.0.1";
         $data    = array(
             'firstName' => 'Joy',
             'lastName' => 'Mock',
@@ -29,7 +28,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
             )
         );
         
-        $response = new Response($status, $message, $version, $data);
+        $response = new Response($status, $message,$data);
         $this->assertJsonStringEqualsJsonFile(__dir__ . '/_files/json.js', $response->getResponse());
     }
 }
