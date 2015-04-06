@@ -1,4 +1,5 @@
 <?php
+
 namespace Notes\Controller\Api;
 
 use Notes\Controller\Api\Session as Session;
@@ -29,7 +30,6 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response = $sessionController->post();
         
         $this->assertNotNull($response);
-        
     }
     
     /**
@@ -89,6 +89,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         
         $response = $sessionController->delete();
         $this->assertNotNull($response);
+        
     }
     
     /**

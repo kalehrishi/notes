@@ -11,11 +11,15 @@ use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 class Session
 {
     protected $request;
-    protected $message = "Ok";
+    public $message = "OK";
+    public $errormessage = "ResourceNotFound";
+    
     public function __construct($request)
     {
         $this->request = $request;
+        
     }
+    
     public function post()
     {
         $data_array = $this->request->getData();
@@ -25,7 +29,12 @@ class Session
             $sessionModel   = new SessionModel();
             $sessionModel   = $sessionService->login($data);
         } catch (ModelNotFoundException $e) {
-            $this->message = $e->setMessage();
+            $this->errormessage = $e->setMessage();
+
+            if ($e instanceof ModelNotFoundException) {
+                $objectResponse = new Response(404, $this->errormessage, $sessionModel->toArray());
+                $objectResponse->getResponse();
+            }
         }
         $objResponse = new Response(200, $this->message, $sessionModel->toArray());
         return $objResponse->getResponse();
@@ -47,7 +56,11 @@ class Session
             $sessionModel = $sessionService->logout($sessionModelRead);
             
         } catch (ModelNotFoundException $e) {
-            $this->message = $e->getMessage();
+            $this->message = $e->setMessage();
+            if ($e instanceof ModelNotFoundException) {
+                $objectResponse = new Response(404, $this->errormessage, $sessionModel->toArray());
+                $objectResponse->getResponse();
+            }
         }
         $objResponse = new Response(200, $this->message, $sessionModel->toArray());
         return $objResponse->getResponse();
