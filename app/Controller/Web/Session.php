@@ -21,7 +21,7 @@ class Session
         $view     = $view->render($fileName);
     }
     public function post()
-    {
+    {   
         $input          = $this->request->getUrlParams();
         $sessionService = new SessionService();
         try {

@@ -14,6 +14,8 @@ $data = json_decode($response, true);
 </head>
 <body>
     <form  method="POST">
+    <fieldset>
+    <legend>Registration Form:</legend>
     <table>
       <tr>
         <td>FirstName:</td>
@@ -45,9 +47,10 @@ $data = json_decode($response, true);
       </tr>
       <tr>
         <td><input type="submit" value="Submit" /></td>
-        <td><button>Cancel</button></td>
+        <td><input type="reset"  value="Reset" /></td>
       </tr>
     </table>
+    </fieldset>
   </form>
 </body>
 </html>

@@ -23,7 +23,6 @@ class User
     public function post()
     {
         $input          = $this->request->getUrlParams();
-        print_r($input);
         $userService = new UserService();
         try {
             $response = $userService->create($input);

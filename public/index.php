@@ -33,15 +33,25 @@ $application->post('/login', function() {
     $sessionController->post();
 });
 $application->get('/notes', function() {
-   echo"Login Successfully";
+    $request        = new Request();
+    $noteController = new Note($request);
+    $noteController->get();
+});
+$application->post('/notes', function() {
+    $request = \Slim\Slim::getInstance()->request();
+
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($request->post());
+    $noteController = new Note($objRequest);
+    $noteController->post();
 });
 
-$application->get('/Register', function() {
+$application->get('/register', function() {
     $request        = new Request();
     $userController = new User($request);
     $userController->get();
 });
-$application->post('/Register', function() {
+$application->post('/register', function() {
     $request = \Slim\Slim::getInstance()->request();
 
     $objRequest        = new Request();

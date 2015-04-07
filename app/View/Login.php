@@ -37,7 +37,7 @@ $data = json_decode($response, true);
       </tr>
       <tr>
         <td><input type="submit" value="Login" /></td>
-        <td><button>Cancel</button></td>
+        <td><input type="reset"  value="Reset" /></td>
       </tr>
     </table>
   </form>
