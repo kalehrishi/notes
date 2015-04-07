@@ -75,6 +75,22 @@ class Collection implements \Iterator
             return false;
         }
     }
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    public function getTotal()
+    {
+        return $this->total;
+    }
+    public function isEmpty($object)
+    {
+        if (!empty($object)) {
+            return true;
+        }
+    }
+    
     public function toArray()
     {
         $object_array = get_object_vars($this);

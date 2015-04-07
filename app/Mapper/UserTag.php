@@ -41,13 +41,7 @@ class UserTag
         );
         $userTagModelbase = new Database();
         $resultset        = $userTagModelbase->get($params);
-        if (!empty($resultset)) {
-            return new UserTagCollection($resultset);
-        } else {
-            $exception = new ModelNotFoundException();
-            $exception->setModel($userTagModel);
-            throw $exception;
-        }
+           return new UserTagCollection($resultset);
     }
     
     public function readTagById($userTagModel)

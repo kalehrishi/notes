@@ -97,23 +97,6 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $userTagCollection->next();
         } 
     }
-    /**
-    * @expectedException         Notes\Exception\ModelNotFoundException
-    * @expectedExceptionMessage  Can Not Found Given Model In Database
-    */
-    public function testUserIdDoesNotExists()
-    {
-        $input        = array(
-            'userId' => 2
-        );
-        $userTagModel = new UserTagModel();
-        $userTagModel->setUserId($input['userId']);
-        
-        
-        $userTagMapper = new UserTag();
-        $userTagModel  = $userTagMapper->readTagsByUserId($userTagModel);
-        
-    }
     
     public function testCanInsertRecord()
     {

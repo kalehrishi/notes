@@ -7,6 +7,9 @@ use Notes\Mapper\NoteTag as NoteTagMapper;
 use Notes\Model\NoteTag as NoteTagModel;
 use Notes\Model\UserTag as UserTagModel;
 
+use Notes\Domain\UserTag as UserTagDomain;
+use Notes\Domain\NoteTag as NoteTagDomain;
+
 use Notes\Config\Config as Configuration;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
@@ -27,8 +30,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
             $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
         
@@ -47,35 +49,41 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
             'userTag' => 'WordPress',
             'isDeleted' => 0
         );
-        
-        $noteTagModel = new NoteTagModel();
-        $noteTagModel->setNoteId($input['noteId']);
-        $noteTagModel->setIsDeleted($input['isDeleted']);
-        
         $userTagModel = new UserTagModel();
         $userTagModel->setTag($input['userTag']);
         $userTagModel->setUserId($input['userId']);
         
-        $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->create($noteTagModel, $userTagModel);
+        $userTagDomain = new UserTagDomain();
+        $userTagModel = $userTagDomain->create($userTagModel);
+
+        $noteTagModel = new NoteTagModel();
+        $noteTagModel->setUserTag($userTagModel);
+        $noteTagModel->setUserTagId($userTagModel->getId());
+        $noteTagModel->setNoteId($input['noteId']);
+        $noteTagModel->setIsDeleted($input['isDeleted']);
+        
+        $noteTagDomain = new NoteTagDomain();
+        $noteTagModel  = $noteTagDomain->create($noteTagModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTagDomain_after_create.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'NoteTags'
         ));
-    
+        
         $this->assertEquals(4, $noteTagModel->getId());
         $this->assertEquals(3, $noteTagModel->getNoteId());
         $this->assertEquals(4, $noteTagModel->getUserTagId());
         $this->assertEquals(0, $noteTagModel->getIsDeleted());
-        $this->assertEquals('WordPress', $noteTagModel->getUserTag());
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
+        $this->assertEquals(4, $noteTagModel->getUserTag()->getId());
+        $this->assertEquals(1, $noteTagModel->getUserTag()->getUserId());
+        $this->assertEquals('WordPress', $noteTagModel->getUserTag()->getTag());
+
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     /**
-     * @expectedException         InvalidArgumentException
-     * @expectedExceptionMessage  Input should not be null
-     */
+     * @expectedException         PDOException
+    */
     public function testThrowsExceptionWhenUserTagIdIsNull()
     {
         $input = array(
@@ -85,10 +93,8 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $noteTagModel = new NoteTagModel();
         $noteTagModel->setNoteId($input['noteId']);
         
-        $userTagModel = new UserTagModel();
-        
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->create($noteTagModel, $userTagModel);
+        $noteTagModel  = $noteTagDomain->create($noteTagModel);
     }
     public function testCanReadNoteTagByNoteId()
     {
@@ -107,15 +113,13 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'NoteTags'
         ));
-        
-        while($noteTagCollection->hasNext()) {
-        $this->assertEquals(3, $noteTagCollection->getRow(0)->getId());
-        $this->assertEquals(2, $noteTagCollection->getRow(0)->getNoteId());
-        $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
-        $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
-        $noteTagCollection->next();
-        } 
-
+        while ($noteTagCollection->hasNext()) {
+            $this->assertEquals(3, $noteTagCollection->getRow(0)->getId());
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getNoteId());
+            $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
+            $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
+            $noteTagCollection->next();
+        }
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
     }
