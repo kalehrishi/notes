@@ -15,7 +15,6 @@ class UserTagCollection extends Collection
             $userTagModel->setUserId($resultset[$i]['userId']);
             $userTagModel->setTag($resultset[$i]['tag']);
             $userTagModel->setIsDeleted($resultset[$i]['isDeleted']);
-            
             $this->add($userTagModel);
         }
     }

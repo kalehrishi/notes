@@ -66,34 +66,34 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(0, $userTagModel->getIsDeleted());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
-    /**
-    * @expectedException         InvalidArgumentException
-    * @expectedExceptionMessage  Input should not be null
-    */
-    public function testThrowsExceptionWhenUserIdIsNull()
-    {
-        $input = array(
-            'tag' => 'Create'
-        );
-        
-        $userTagModel = new UserTagModel();
-        $userTagModel->setTag($input['tag']);
-        
-        $userTagDomain = new UserTag();
-        $userTagModel  = $userTagDomain->create($userTagModel);
-        
-        
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_after_create.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'UserTags'
-        ));
-        
-        $this->assertEquals(4, $userTagModel->getId());
-        $this->assertEquals(3, $userTagModel->getUserId());
-        $this->assertEquals('Create', $userTagModel->getTag());
-        $this->assertEquals(0, $userTagModel->getIsDeleted());
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-    }
+        /**
+        * @expectedException         InvalidArgumentException
+        * @expectedExceptionMessage  Input should not be null
+        */
+        public function testThrowsExceptionWhenUserIdIsNull()
+        {
+            $input = array(
+                'tag' => 'Create'
+            );
+            
+            $userTagModel = new UserTagModel();
+            $userTagModel->setTag($input['tag']);
+            
+            $userTagDomain = new UserTag();
+            $userTagModel  = $userTagDomain->create($userTagModel);
+            
+            
+            $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_after_create.xml');
+            $actualDataSet   = $this->getConnection()->createDataSet(array(
+                'UserTags'
+            ));
+            
+            $this->assertEquals(4, $userTagModel->getId());
+            $this->assertEquals(3, $userTagModel->getUserId());
+            $this->assertEquals('Create', $userTagModel->getTag());
+            $this->assertEquals(0, $userTagModel->getIsDeleted());
+            $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        }
     public function testCanReadTagByUserId()
     {
         $input = array(
@@ -121,24 +121,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         } 
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
-    /**
-    * @expectedException         Notes\Exception\ModelNotFoundException
-    * @expectedExceptionMessage  Can Not Found Given Model In Database
-    */
-    public function testThrowsExceptionWhenUserIdDoesNotExist()
-    {
-        $input = array(
-            'userId' => 54
-        );
-        
-        $userModel = new UserModel();
-        $userModel->setId($input['userId']);
-        
-        
-        $userTagDomain = new UserTag();
-        $userTagCollection  = $userTagDomain->readTagsByUserId($userModel);
-    }
-
+    
     public function testCanReadById()
     {
         $input = array(

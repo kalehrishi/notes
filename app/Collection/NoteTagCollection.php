@@ -1,7 +1,7 @@
 <?php
-
 namespace Notes\Collection;
 
+use Notes\Model\UserTag as UserTagModel;
 use Notes\Model\NoteTag as NoteTagModel;
 
 class NoteTagCollection extends Collection
@@ -13,9 +13,14 @@ class NoteTagCollection extends Collection
             $noteTagModel = new NoteTagModel();
             $noteTagModel->setId($resultset[$i]['id']);
             $noteTagModel->setNoteId($resultset[$i]['noteId']);
-            $noteTagModel->setUserTagId($resultset[$i]['userTagId']);
             $noteTagModel->setIsDeleted($resultset[$i]['isDeleted']);
-            
+            $userTagModel = new UserTagModel();
+            $userTagModel->setId($resultset[$i]['userTag']['id']);
+            $userTagModel->setTag($resultset[$i]['userTag']['tag']);
+            $userTagModel->setUserId($resultset[$i]['userTag']['userId']);
+            $userTagModel->setIsDeleted($resultset[$i]['userTag']['isDeleted']);
+            $noteTagModel->setUserTagId($userTagModel->getId());
+            $noteTagModel->setUserTag($userTagModel);
             $this->add($noteTagModel);
         }
     }

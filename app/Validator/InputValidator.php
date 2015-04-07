@@ -50,6 +50,5 @@ class InputValidator
             throw new \InvalidArgumentException("Password Strength is weak");
             
         }
-        
     }
 }

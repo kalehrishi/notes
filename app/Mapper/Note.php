@@ -1,6 +1,7 @@
 <?php
 namespace Notes\Mapper;
 
+use Notes\Mapper\Note as NoteMapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Database\Database as Database;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
@@ -9,12 +10,12 @@ class Note
 {
     public function create(NoteModel $noteModel)
     {
-        $input     = array(
-            'userId' => $noteModel->userId,
-            'title' => $noteModel->title,
-            'body' => $noteModel->body
-        );
         $query     = "INSERT INTO Notes(userId, title, body) VALUES (:userId, :title, :body)";
+        $input     = array(
+            'userId' => $noteModel->getUserId(),
+            'title' => $noteModel->getTitle(),
+            'body' => $noteModel->getBody()
+        );
         $params    = array(
             'dataQuery' => $query,
             'placeholder' => $input
@@ -28,42 +29,20 @@ class Note
             throw new \PDOException();
         }
     }
-    
-    public function delete(NoteModel $noteModel)
-    {
-        $input  = array(
-            'id' => $noteModel->id,
-            'isDeleted' => $noteModel->isDeleted
-        );
-        $sql    = "UPDATE Notes SET isDeleted=:isDeleted WHERE id=:id";
-        $params = array(
-            'dataQuery' => $sql,
-            'placeholder' => $input
-        );
-        try {
-            $database  = new Database();
-            $resultset = $database->update($params);
-        } catch (\PDOException $e) {
-            $e->getMessage();
-        }
-        if (!empty($resultset)) {
-            $noteModel->id = $resultset['id'];
-            return $noteModel;
-        } else {
-            $obj = new ModelNotFoundException();
-            $obj->setModel($noteModel);
-            throw $obj;
-        }
-    }
-    
+        
     public function update(NoteModel $noteModel)
     {
         $input  = array(
-            'id' => $noteModel->id,
-            'title' => $noteModel->title,
-            'body' => $noteModel->body
+            'id' => $noteModel->getId(),
+            'userId' => $noteModel->getUserId(),
+            'title' => $noteModel->getTitle(),
+            'body' => $noteModel->getBody(),
+            'isDeleted' => $noteModel->getIsDeleted(),
+            'lastUpdateOn' => $noteModel->getLastUpdatedOn()
         );
-        $sql    = "UPDATE Notes SET title=:title, body=:body WHERE id=:id";
+        $sql    = "UPDATE Notes SET 
+                    userId=:userId, title=:title, body=:body, isDeleted=:isDeleted, lastUpdateOn=:lastUpdateOn
+                    WHERE id=:id";
         $params = array(
             'dataQuery' => $sql,
             'placeholder' => $input
@@ -74,9 +53,8 @@ class Note
         } catch (\PDOException $e) {
             $e->getMessage();
         }
-        
-        if (!empty($resultset)) {
-            return "Updated Successfully";
+        if ($resultset == 1) {
+            return $noteModel;
         } else {
             $obj = new ModelNotFoundException();
             $obj->setModel($noteModel);
@@ -88,11 +66,12 @@ class Note
     public function read(NoteModel $noteModel)
     {
         $input = array(
-            'id' => $noteModel->id
-        );
-        
-        $query  = "SELECT id, title, body FROM Notes WHERE id=:id";
-        $params = array(
+                'id' => $noteModel->getId()
+            );
+            $query = "SELECT id, userId, title, body, createdOn, lastUpdateOn, isDeleted
+                        FROM Notes
+                        WHERE id=:id AND isDeleted=0";
+            $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
         );
@@ -102,11 +81,15 @@ class Note
         } catch (\PDOException $e) {
             $e->getMessage();
         }
-        
         if (!empty($resultset)) {
-            $noteModel->id    = $resultset[0]['id'];
-            $noteModel->title = $resultset[0]['title'];
-            $noteModel->body  = $resultset[0]['body'];
+            $noteModel->setId($resultset[0]['id']);
+            $noteModel->setUserId($resultset[0]['userId']);
+            $noteModel->setTitle($resultset[0]['title']);
+            $noteModel->setBody($resultset[0]['body']);
+            $noteModel->setCreatedOn($resultset[0]['createdOn']);
+            $noteModel->setLastUpdatedOn($resultset[0]['lastUpdateOn']);
+            $noteModel->setIsDeleted($resultset[0]['isDeleted']);
+            
             return $noteModel;
         } else {
             $obj = new ModelNotFoundException();

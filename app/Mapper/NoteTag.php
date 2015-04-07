@@ -4,7 +4,9 @@ namespace Notes\Mapper;
 
 use Notes\Database\Database as Database;
 
-use Notes\Collection\NoteTagCollection as NoteTagCollection;
+use Notes\Model\NoteTag as NoteTagModel;
+
+use Notes\Collection\Collection as Collection;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
@@ -32,10 +34,10 @@ class NoteTag
     
     public function read($noteTagModel)
     {
-        $query            = " SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid";
         $placeholder      = array(
             ':noteid' => $noteTagModel->getNoteId()
         );
+        $query            = "SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid and isDeleted=0";
         $params           = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
@@ -43,7 +45,18 @@ class NoteTag
         $noteTagModelbase = new Database();
         $resultset        = $noteTagModelbase->get($params);
         if (!empty($resultset)) {
-            return new NoteTagCollection($resultset);
+            $noteTagcollection = new Collection();
+            for ($i=0; $i < count($resultset); $i++) {
+                $noteTagModel = new NoteTagModel();
+                $noteTagModel->setId($resultset[$i]['id']);
+                $noteTagModel->setNoteId($resultset[$i]['noteId']);
+                $noteTagModel->setUserTagId($resultset[$i]['userTagId']);
+                $noteTagModel->setIsDeleted($resultset[$i]['isDeleted']);
+                
+                $noteTagcollection->add($noteTagModel);
+
+            }
+            return $noteTagcollection;
         } else {
             $exception = new ModelNotFoundException();
             $exception->setModel($noteTagModel);
@@ -53,7 +66,7 @@ class NoteTag
 
     public function update($noteTagModel)
     {
-        $query= " UPDATE NoteTags SET id=:id,noteId=:noteId,userTagId=:userTagId,isDeleted=:isDeleted WHERE id= :id";
+        $query= " UPDATE NoteTags SET id=:id,noteId=:noteId,userTagId=:userTagId,isDeleted=:isDeleted WHERE id=:id";
         $placeholder      = array(
             ':id' => $noteTagModel->getId(),
             ':noteId'=>$noteTagModel->getNoteId(),

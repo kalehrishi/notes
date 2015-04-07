@@ -18,34 +18,38 @@ class UserTag
     }
     public function create($userTagModel)
     {
+        $this->validator->notNull($userTagModel->getUserId());
+        $this->validator->validNumber($userTagModel->getUserId());
+        $this->validator->notNull($userTagModel->getTag());
         
-        if ($this->validator->notNull($userTagModel->getUserId())
-            && $this->validator->validNumber($userTagModel->getUserId())
-            && $this->validator->notNull($userTagModel->getTag())) {
+        if ($userTagModel->getId() == null) {
             $userTagMpper = new UserTagMapper();
             $userTagModel = $userTagMpper->create($userTagModel);
-            return $userTagModel;
         }
+        
+        return $userTagModel;
     }
     public function readTagsByUserId($userModel)
     {
+        $this->validator->notNull($userModel->getId());
+        $this->validator->validNumber($userModel->getId());
         
-        if ($this->validator->notNull($userModel->getId())
-            && $this->validator->validNumber($userModel->getId())) {
-            $userTagModel = new UserTagModel();
-            $userTagModel->setUserId($userModel->getId());
-            $userTagMpper = new UserTagMapper();
-            $userTagCollection = $userTagMpper->readTagsByUserId($userTagModel);
-            return $userTagCollection;
-        }
+        $userTagModel = new UserTagModel();
+        $userTagModel->setUserId($userModel->getId());
+        
+        $userTagMpper      = new UserTagMapper();
+        $userTagCollection = $userTagMpper->readTagsByUserId($userTagModel);
+        
+        return $userTagCollection;
     }
     public function readTagById($userTagModel)
     {
-        if ($this->validator->notNull($userTagModel->getId())
-            && $this->validator->validNumber($userTagModel->getId())) {
-            $userTagMpper = new UserTagMapper();
-            $userTagCollection = $userTagMpper->readTagById($userTagModel);
-            return $userTagCollection;
-        }
+        $this->validator->notNull($userTagModel->getId());
+        $this->validator->validNumber($userTagModel->getId());
+        
+        $userTagMpper      = new UserTagMapper();
+        $userTagCollection = $userTagMpper->readTagById($userTagModel);
+        
+        return $userTagCollection;
     }
 }
