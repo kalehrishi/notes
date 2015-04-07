@@ -31,4 +31,8 @@ class ModelNotFoundException extends \RuntimeException
     {
         return $this->model;
     }
+    public function setMessage()
+    {
+        return $this->message;
+    }
 }
