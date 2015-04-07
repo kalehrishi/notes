@@ -36,7 +36,8 @@ class User
         
         try {
             $userService = new UserService();
-            $userModel   = $userService->createUser($data);
+            $userModel  = $userService->createUser($data);
+        
             
         } catch (\ModelNotFoundException $e) {
             $this->message = $e->setMessage();
@@ -47,7 +48,7 @@ class User
             }
             
         }
-        
+          
         $objectResponse = new Response(200, $this->message, $userModel->toArray());
         $objectResponse->getResponse();
         
@@ -77,7 +78,7 @@ class User
             }
         }
         $objectResponse = new Response(200, $this->message, $userModel->toArray());
-        return $objectResponse->getResponse();
-        
+        $objectResponse->getResponse();
+       
     }
 }

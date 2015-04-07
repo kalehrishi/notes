@@ -50,7 +50,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 "data": {
                            "id"        : "1",
                            "firstName" :"julie",
-                           "lastName" :"shh",
+                           "lastName" :"shah",
                            "email" :"priya@gmail.com",
                            "password" :"sfhZ@223",
                            "createdOn" :"2014-10-29 20:59:59"
@@ -63,6 +63,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userController = new UserController($request);
         $response       = $userController->update();
         $this->assertNotNull($data, true);
+        
         
         
     }
