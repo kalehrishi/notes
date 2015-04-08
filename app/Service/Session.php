@@ -1,10 +1,8 @@
 <?php
-
 namespace Notes\Service;
 
 use Notes\Domain\Session as SessionDomain;
 use Notes\Model\Session as SessionModel;
-
 
 class Session
 {
@@ -46,7 +44,7 @@ class Session
 
         $session = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
         
-        if($session instanceof SessionModel) {
+        if ($session instanceof SessionModel) {
             return true;
         } else {
             return false;

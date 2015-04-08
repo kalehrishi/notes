@@ -22,20 +22,19 @@ class Session
         $view     = $view->render($fileName);
     }
     public function post()
-    {   
+    {
         $input          = $this->request->getUrlParams();
         $sessionService = new SessionService();
         try {
                 $response = $sessionService->login($input);
             
-            } catch (\InvalidArgumentException $error) {
+        } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
             $objResponse = new Response(200, "ok", "1.0.0", $response);
             $fileName    = "Login.php";
             $view        = new View();
             $view        = $view->render($fileName, $objResponse->getResponse());
-        }
-        catch (ModelNotFoundException $error) {
+        } catch (ModelNotFoundException $error) {
             $response    = $error->getMessage();
             $objResponse = new Response(200, "ok", "1.0.0", $response);
             $fileName    = "Login.php";
@@ -44,7 +43,7 @@ class Session
         }
         if ($response instanceof SessionModel) {
             setcookie('userId', $response->getUserId(), time() + (86400 * 30), "/");
-            setcookie('authToken', $response->getAuthToken(), time() + (86400 * 30), "/");       
+            setcookie('authToken', $response->getAuthToken(), time() + (86400 * 30), "/");
             
             header('Location: notes');
             exit();

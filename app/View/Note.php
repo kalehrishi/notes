@@ -37,11 +37,12 @@ $data = json_decode($response, true);
             ?>
             <td>Error :-  </td>
             <td><div class="error" ><?php
-            echo $data['data'];?>
+            echo $data['data'];
+            ?>
             </div></td>
         <?php
         }
-        ?>
+?>
       </tr>
       <tr>
       <td><input type="submit" name='button' value="Submit" /></td>
@@ -57,6 +58,3 @@ $data = json_decode($response, true);
   </form>
 </body>
 </html>
-
-
-

@@ -64,7 +64,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(0, $sessionModel->getIsExpired());
     }
     
-     /**
+    /**
     * @test
     *
     **/
@@ -81,19 +81,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
         $sessionService   = new Session();
 
-        $sessionModel    = $sessionService->isValid($sessionModel);
-
-        $expectedDataSet = $this->createXMLDataSet(dirname(__FILE__) . '/_files/session_read.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Sessions'
-        ));
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        $this->assertEquals(2, $sessionModel->getId());
-        $this->assertEquals(2, $sessionModel->getUserId());
-        $this->assertEquals('pqr', $sessionModel->getAuthToken());
-        $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getCreatedOn());
-        $this->assertEquals('2014-10-29 20:59:59', $sessionModel->getExpiredOn());
-        $this->assertEquals(1, $sessionModel->getIsExpired());
+        $this->assertEquals(true, $sessionService->isValid($sessionModel));       
     }
 
     /**

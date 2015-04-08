@@ -25,17 +25,15 @@ $data = json_decode($response, true);
         <td><input type="password" name="password"></input></td> 
       </tr>
       <tr>
-        <?php
+        <script language="php">
         if (is_string($data['data'])) {
             ?>
             <td>Error :-  </td>
-            <td><div class="error" ><?php
+            <td><div class="error" ><script language="php">
             echo $data['data'];
-            ?></div></td>
-        <?php
         }
-        ?>
-      </tr>
+        </script></div></td>
+       </tr>
       <tr>
         <td><input type="submit" value="Login" /></td>
         <td><input type="reset"  value="Reset" /></td>
