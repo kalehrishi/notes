@@ -1,4 +1,5 @@
 <?php
+session_start();
 $data = json_decode($response, true);
 
 ?>
@@ -19,7 +20,7 @@ $data = json_decode($response, true);
         <td>Email:</td>
         <td><input type="text" name="email"></input></td> 
       </tr>
-      <tr>
+      <tr> 
         <td>Password:</td>
         <td><input type="password" name="password"></input></td> 
       </tr>

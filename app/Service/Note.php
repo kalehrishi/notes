@@ -15,7 +15,7 @@ class Note
     public function create($request)
     {
     	$noteModel=new NoteModel();
-    	$noteModel->setUserId(5);
+    	$noteModel->setUserId($_COOKIE['userId']);
     	$noteModel->setTitle($request['title']);
     	$noteModel->setBody($request['body']);
         $noteDomain=new NoteDomain();

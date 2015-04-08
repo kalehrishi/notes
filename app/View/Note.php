@@ -19,7 +19,7 @@ $data = json_decode($response, true);
 </style>
 </head>
 <body>
-    <form  method="POST">
+    <form action="notes" method="POST">
     <table>
       <tr>
         <td>Title:</td>

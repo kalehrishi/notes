@@ -25,7 +25,7 @@ $application->get('/login', function() {
 });
 $application->post('/login', function() {
     $request = \Slim\Slim::getInstance()->request();
-
+   
     $objRequest        = new Request();
     $objRequest->setUrlParams($request->post());
     
