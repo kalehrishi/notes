@@ -32,21 +32,21 @@ class NoteTag
         }
     }
     
-    public function read($noteTagModel)
+    public function readByNoteId($noteTagModel)
     {
-        $placeholder      = array(
-            ':noteid' => $noteTagModel->getNoteId()
+        $placeholder       = array(
+            ':noteId' => $noteTagModel->getNoteId()
         );
-        $query            = "SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteid and isDeleted=0";
-        $params           = array(
+        $query             = "SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE noteId=:noteId and isDeleted=0";
+        $params            = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $noteTagModelbase = new Database();
-        $resultset        = $noteTagModelbase->get($params);
+        $noteTagModelbase  = new Database();
+        $resultset         = $noteTagModelbase->get($params);
+        $noteTagcollection = new Collection();
         if (!empty($resultset)) {
-            $noteTagcollection = new Collection();
-            for ($i=0; $i < count($resultset); $i++) {
+            for ($i = 0; $i < count($resultset); $i++) {
                 $noteTagModel = new NoteTagModel();
                 $noteTagModel->setId($resultset[$i]['id']);
                 $noteTagModel->setNoteId($resultset[$i]['noteId']);
@@ -54,31 +54,58 @@ class NoteTag
                 $noteTagModel->setIsDeleted($resultset[$i]['isDeleted']);
                 
                 $noteTagcollection->add($noteTagModel);
-
+                
             }
-            return $noteTagcollection;
+            
+        }
+        return $noteTagcollection;
+    }
+    
+    public function readByNoteTagId($noteTagModel)
+    {
+        $placeholder      = array(
+            ':id' => $noteTagModel->getId()
+        );
+        $query            = "SELECT id,noteId,userTagId,isDeleted FROM NoteTags WHERE id=:id and isDeleted=0";
+        $params           = array(
+            'dataQuery' => $query,
+            'placeholder' => $placeholder
+        );
+        $noteTagModelbase = new Database();
+        $resultset        = $noteTagModelbase->get($params);
+        if (!empty($resultset)) {
+            for ($i = 0; $i < count($resultset); $i++) {
+                $noteTagModel->setId($resultset[$i]['id']);
+                $noteTagModel->setNoteId($resultset[$i]['noteId']);
+                $noteTagModel->setUserTagId($resultset[$i]['userTagId']);
+                $noteTagModel->setIsDeleted($resultset[$i]['isDeleted']);
+                return $noteTagModel;
+            }
         } else {
             $exception = new ModelNotFoundException();
             $exception->setModel($noteTagModel);
             throw $exception;
         }
     }
-
+    
+    
     public function update($noteTagModel)
     {
-        $query= " UPDATE NoteTags SET id=:id,noteId=:noteId,userTagId=:userTagId,isDeleted=:isDeleted WHERE id=:id";
-        $placeholder      = array(
+        $query       = " UPDATE NoteTags
+                        SET id=:id,noteId=:noteId,userTagId=:userTagId,isDeleted=:isDeleted 
+                        WHERE id=:id";
+        $placeholder = array(
             ':id' => $noteTagModel->getId(),
-            ':noteId'=>$noteTagModel->getNoteId(),
-            ':userTagId'=>$noteTagModel->getUserTagId(),
-            ':isDeleted'=>$noteTagModel->getIsDeleted(),
+            ':noteId' => $noteTagModel->getNoteId(),
+            ':userTagId' => $noteTagModel->getUserTagId(),
+            ':isDeleted' => $noteTagModel->getIsDeleted()
         );
-        $params           = array(
+        $params      = array(
             'dataQuery' => $query,
             'placeholder' => $placeholder
         );
-        $database = new Database();
-        $result   = $database->post($params);
+        $database    = new Database();
+        $result      = $database->post($params);
         if ($result['rowCount'] == 1) {
             return $noteTagModel;
         } else {

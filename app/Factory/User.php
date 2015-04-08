@@ -30,11 +30,11 @@ class User
         }
         
     }
-    private function doesContainsFirstNameLastNameEmailPasswordAndCreatedOn($input)
+    private function doesContainsFirstNameLastNameEmailAndPassword($input)
     {
         if (isset($input['firstName']) && isset($input['lastName'])
               && isset($input['email']) && isset($input['password'])
-              && isset($input['createdOn']) && !(isset($input['id']))) {
+              && !(isset($input['id']))) {
             $this->validator->validString($input['firstName']);
             $this->validator->validString($input['lastName']);
             $this->validator->validEmail($input['email']);
@@ -51,7 +51,7 @@ class User
     {
         if (isset($input['id']) && isset($input['firstName'])
               && isset($input['lastName']) && isset($input['email'])
-              && isset($input['password']) && isset($input['createdOn'])) {
+              && isset($input['password'])) {
             $this->validator->validNumber($input['id']);
             $this->validator->validString($input['firstName']);
             $this->validator->validString($input['lastName']);
@@ -113,7 +113,7 @@ class User
     public function create($input)
     {
         if ($this->doesContainOnlyId($input)
-              || $this->doesContainsFirstNameLastNameEmailPasswordAndCreatedOn($input)
+              || $this->doesContainsFirstNameLastNameEmailAndPassword($input)
               || $this->doesContainsOnlyEmailAndPassword($input)
               || $this->doesContainsAllProperties($input)) {
             $this->set($input);

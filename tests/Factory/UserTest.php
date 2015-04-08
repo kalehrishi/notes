@@ -174,8 +174,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'firstName' => 'julie',
             'lastName' => "shah",
             'email' => 'priya@gmail.com',
-            'password' => 'sfhZ@223',
-            'createdOn' => '2014-10-29 20:59:59'
+            'password' => 'sfhZ@223'
         );
         $userFactory = new User();
         $userModel   = $userFactory->create($input);
@@ -184,7 +183,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('shah', $userModel->getLastName());
         $this->assertEquals('priya@gmail.com', $userModel->getEmail());
         $this->assertEquals('sfhZ@223', $userModel->getPassword());
-        $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
     }
     
     /**
@@ -198,8 +196,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $input       = array(
             'firstName' => 'julie',
             'email' => 'priya@gmail.com',
-            'password' => 'sfhZ@223',
-            'createdOn' => '2014-10-29 20:59:59'
+            'password' => 'sfhZ@223'
         );
         $userFactory = new User();
         $userModel   = $userFactory->create($input);
@@ -208,7 +205,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('shah', $userModel->getLastName());
         $this->assertEquals('priya@gmail.com', $userModel->getEmail());
         $this->assertEquals('sfhZ@223', $userModel->getPassword());
-        $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
     }
     
     /**
@@ -223,8 +219,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'firstName' => 'julie',
             'lastName' => 'shah',
             'email' => 'priya@gmail.com',
-            'password' => 'sfhZ@223',
-            'createdOn' => '2014-10-29 20:59:59'
+            'password' => 'sfhZ@223'
         );
         $userFactory = new User();
         $userModel   = $userFactory->create($input);
@@ -234,7 +229,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('shah', $userModel->getLastName());
         $this->assertEquals('priya@gmail.com', $userModel->getEmail());
         $this->assertEquals('sfhZ@223', $userModel->getPassword());
-        $this->assertEquals('2014-10-29 20:59:59', $userModel->getCreatedOn());
     }
     /**
      * @test
@@ -249,8 +243,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'firstName' => 'julie',
             'lastName' => 'shah',
             'email' => 'priya@gmail.com',
-            'password' => 'sfhZ@223',
-            'createdOn' => '2014-10-29 20:59:59'
+            'password' => 'sfhZ@223'
         );
         $userFactory = new User();
         $userModel   = $userFactory->create($input);
