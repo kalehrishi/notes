@@ -27,7 +27,7 @@ class NoteTag
         }
         return $noteTagModel;
     }
-    public function readAllTagByNoteId($noteModel)
+    public function findNoteTagsByNoteId($noteModel)
     {
         $this->validator->notNull($noteModel->getId());
         $this->validator->validNumber($noteModel->getId());
@@ -36,7 +36,7 @@ class NoteTag
         $noteTagModel->setNoteId($noteModel->getId());
 
         $noteTagMapper      = new NoteTagMapper();
-        $noteTagCollection = $noteTagMapper->readByNoteId($noteTagModel);
+        $noteTagCollection = $noteTagMapper->findNoteTagsByNoteId($noteTagModel);
         $userTagDomain     = new UserTagDomain();
         
         for ($i = 0; $i <= $noteTagCollection->getTotal(); $i++) {
@@ -47,13 +47,13 @@ class NoteTag
         }
         return $noteTagCollection;
     }
-    public function readByNoteTagId($noteTagModel)
+    public function read($noteTagModel)
     {
         $this->validator->notNull($noteTagModel->getId());
         $this->validator->validNumber($noteTagModel->getId());
 
         $noteTagMapper      = new NoteTagMapper();
-        $noteTagModel = $noteTagMapper->readByNoteTagId($noteTagModel);
+        $noteTagModel = $noteTagMapper->read($noteTagModel);
         
         $userTagDomain     = new UserTagDomain();
         $userTagModel = new UserTagModel();

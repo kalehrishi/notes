@@ -46,7 +46,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagMapper = new NoteTag();
-        $noteTagCollection  = $noteTagMapper->readByNoteId($noteTagModel);
+        $noteTagCollection  = $noteTagMapper->findNoteTagsByNoteId($noteTagModel);
        
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTag_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -77,7 +77,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagMapper = new NoteTag();
-        $noteTagModel  = $noteTagMapper->readByNoteTagId($noteTagModel);
+        $noteTagModel  = $noteTagMapper->read($noteTagModel);
         
     }
     public function testCanInsertRecord()

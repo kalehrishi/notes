@@ -32,7 +32,7 @@ class NoteTag
         }
     }
     
-    public function readByNoteId($noteTagModel)
+    public function findNoteTagsByNoteId($noteTagModel)
     {
         $placeholder       = array(
             ':noteId' => $noteTagModel->getNoteId()
@@ -61,7 +61,7 @@ class NoteTag
         return $noteTagcollection;
     }
     
-    public function readByNoteTagId($noteTagModel)
+    public function read($noteTagModel)
     {
         $placeholder      = array(
             ':id' => $noteTagModel->getId()

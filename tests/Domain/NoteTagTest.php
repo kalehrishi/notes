@@ -109,7 +109,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagDomain = new NoteTag();
-        $noteTagCollection  = $noteTagDomain->readAllTagByNoteId($noteModel);
+        $noteTagCollection  = $noteTagDomain->findNoteTagsByNoteId($noteModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTagDomain_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -141,7 +141,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->readByNoteTagId($noteTagModel);
+        $noteTagModel  = $noteTagDomain->read($noteTagModel);
         
         $this->assertEquals(3, $noteTagModel->getId());
         $this->assertEquals(2, $noteTagModel->getNoteId());
@@ -168,7 +168,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->readByNoteTagId($noteTagModel);
+        $noteTagModel  = $noteTagDomain->read($noteTagModel);
     }
     public function testCanDeleteNoteTag()
     {
