@@ -60,7 +60,6 @@
   <exec executable="php">
    <arg value="${basedir}/build/tools/composer.phar"/>
    <arg value="install"/>
-   <arg value="--prefer-dist"/>
    <arg value="--profile"/>
   </exec>
  </target>
