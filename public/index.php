@@ -33,8 +33,12 @@ $application->post('/login', function() {
     $sessionController->post();
 });
 $application->get('/notes', function() {
-    $request        = new Request();
-    $noteController = new Note($request);
+    $request = \Slim\Slim::getInstance()->request();
+
+    $objRequest        = new Request();
+    $objRequest->setData($request->getBody());
+    $objRequest->setHeaders($request->headers);
+    $noteController = new Note($objRequest);
     $noteController->get();
 });
 $application->post('/notes', function() {
@@ -42,6 +46,8 @@ $application->post('/notes', function() {
 
     $objRequest        = new Request();
     $objRequest->setUrlParams($request->post());
+    $objRequest->setCookies($request->cookies);
+    
     $noteController = new Note($objRequest);
     $noteController->post();
 });

@@ -18,7 +18,7 @@ $data = json_decode($response, true);
     <table>
       <tr>
         <td>Email:</td>
-        <td><input type="text" name="email"></input></td> 
+        <td><input type="text" name="email"></input></td>
       </tr>
       <tr> 
         <td>Password:</td>
@@ -26,10 +26,11 @@ $data = json_decode($response, true);
       </tr>
       <tr>
         <script language="php">
-        if (is_string($data['data'])) {
-            ?>
+        if(is_string($data['data'])) {
+            </script>
             <td>Error :-  </td>
-            <td><div class="error" ><script language="php">
+            <td><div class="error" >
+            <script language="php">
             echo $data['data'];
         }
         </script></div></td>

@@ -11,16 +11,17 @@ use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 class Session
 {
     protected $request;
+    protected $view;
     public function __construct($request)
     {
         $this->request = $request;
+        $this->view= new View();
     }
     public function get()
     {
-        $fileName = "Login.php";
-        $view     = new View();
-        $view     = $view->render($fileName);
+        $this->view->render("Login.php");
     }
+    
     public function post()
     {
         $input          = $this->request->getUrlParams();
@@ -30,21 +31,16 @@ class Session
             
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
-            $objResponse = new Response(200, "ok", "1.0.0", $response);
-            $fileName    = "Login.php";
-            $view        = new View();
-            $view        = $view->render($fileName, $objResponse->getResponse());
+            $objResponse = new Response($response);
+            $this->view->render("Login.php", $objResponse->getResponse());
         } catch (ModelNotFoundException $error) {
             $response    = $error->getMessage();
-            $objResponse = new Response(200, "ok", "1.0.0", $response);
-            $fileName    = "Login.php";
-            $view        = new View();
-            $view        = $view->render($fileName, $objResponse->getResponse());
+            $objResponse = new Response($response);
+            $this->view->render("Login.php", $objResponse->getResponse());
         }
         if ($response instanceof SessionModel) {
             setcookie('userId', $response->getUserId(), time() + (86400 * 30), "/");
             setcookie('authToken', $response->getAuthToken(), time() + (86400 * 30), "/");
-            
             header('Location: notes');
             exit();
         }

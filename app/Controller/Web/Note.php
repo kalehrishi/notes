@@ -17,7 +17,7 @@ class Note
         $this->request = $request;
     }
     public function get()
-    {
+    {      
         $fileName = "Note.php";
         $view     = new View();
         $view     = $view->render($fileName);
@@ -26,9 +26,10 @@ class Note
     {
         $action = $_POST['button'];
         if ($action == "Submit") {
+            $cookies=$this->request->getCookies();
             $sessionModel = new SessionModel();
-            $sessionModel->setUserId($_COOKIE['userId']);
-            $sessionModel->setAuthToken($_COOKIE['authToken']);
+            $sessionModel->setUserId($cookies['userId']);
+            $sessionModel->setAuthToken($cookies['authToken']);
             
             $sessionService = new SessionService();
             if ($sessionService->isValid($sessionModel)) {
