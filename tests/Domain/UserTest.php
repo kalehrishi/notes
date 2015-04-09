@@ -46,26 +46,18 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'firstName' => 'kirti',
             'lastName' => 'ramani',
             'email' => 'kirti.6@gmail.com',
-            'password' => 'abc@$#A123',
-            'createdOn' => '2014-10-31 20:59:59'
+            'password' => 'abc@$#A123'
         );
         $userFactory     = new UserFactory();
         $userModel       = $userFactory->create($input);
         $userDomain      = new User();
         $userModel       = $userDomain->create($input);
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_after_insert.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
-            'Users'
-        ));
-        
+               
         $this->assertEquals(3, $userModel->getId());
         $this->assertEquals('kirti', $userModel->getFirstName());
         $this->assertEquals('ramani', $userModel->getLastName());
         $this->assertEquals('kirti.6@gmail.com', $userModel->getEmail());
         $this->assertEquals('abc@$#A123', $userModel->getPassword());
-        $this->assertEquals('2014-10-31 20:59:59', $userModel->getCreatedOn());
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        
     }
     
     

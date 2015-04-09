@@ -2,12 +2,8 @@
 
 namespace Notes\Service;
 
-use Notes\Mapper\User as UserMapper;
-use Notes\Model\User as UserModel;
+use Notes\Domain\User  as UserDomain;
 
-/**
-*
-*/
 class User
 {
   
@@ -15,17 +11,13 @@ class User
     {
     
     }
-    public function createUser($userInput)
+    public function create($request)
     {
-        $userMapper=new UserMapper();
-        //how to convert user input to mode??
+        $userDomain=new UserDomain();
+        
+        $response=$userDomain->create($request);
 
-        //can we create model here?
-        $user=new UserModel($userInput);
-
-        $userMapper->create($user);
-
-        return $user;
+        return $response;
 
     }
 }

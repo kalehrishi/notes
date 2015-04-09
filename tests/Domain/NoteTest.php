@@ -125,6 +125,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             $noteTagCollection->next();
         }
     }
+
     /**
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should not be null

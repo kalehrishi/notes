@@ -59,7 +59,9 @@
  <target name="composer" depends="clean" unless="composer.noupdate" description="Run composer install">
   <exec executable="php">
    <arg value="${basedir}/build/tools/composer.phar"/>
-   <arg value="dump-autoload"/>
+   <arg value="install"/>
+   <arg value="--prefer-dist"/>
+   <arg value="--profile"/>
   </exec>
  </target>
 

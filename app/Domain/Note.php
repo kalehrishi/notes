@@ -104,11 +104,8 @@ class Note
         $noteMapper = new NoteMapper();
         $noteModel  = $noteMapper->read($noteModel);
         
-        $noteTagModel = new NoteTagModel();
-        $noteTagModel->setNoteId($noteModel->getId());
-        
         $noteTagDomain     = new NoteTagDomain();
-        $noteTagcollection = $noteTagDomain->readAllTag($noteTagModel);
+        $noteTagcollection = $noteTagDomain->findNoteTagsByNoteId($noteModel);
         $noteModel->setNoteTags($noteTagcollection);
         return $noteModel;
     }
