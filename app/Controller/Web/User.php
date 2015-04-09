@@ -10,15 +10,15 @@ use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 class User
 {
     protected $request;
+    protected $view;
     public function __construct($request)
     {
         $this->request = $request;
+        $this->view= new View();
     }
     public function get()
     {
-        $fileName = "Register.php";
-        $view     = new View();
-        $view     = $view->render($fileName);
+        $this->view->render("Register.php");
     }
     public function post()
     {
@@ -28,17 +28,13 @@ class User
             $response = $userService->create($input);
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
-            $objResponse = new Response(200, "ok", "1.0.0", $response);
-            $fileName    = "Register.php";
-            $view        = new View();
-            $view        = $view->render($fileName, $objResponse->getResponse());
+            $objResponse = new Response($response);
+            $this->view->render("Register.php", $objResponse->getResponse());
         }
         catch (ModelNotFoundException $error) {
             $response    = $error->getMessage();
-            $objResponse = new Response(200, "ok", "1.0.0", $response);
-            $fileName    = "Register.php";
-            $view        = new View();
-            $view        = $view->render($fileName, $objResponse->getResponse());
+            $objResponse = new Response($response);
+            $this->view->render("Register.php", $objResponse->getResponse());
         }
         if ($response instanceof UserModel) {
             header('Location: http://notes.com/login');
