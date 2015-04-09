@@ -10,7 +10,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     */
     public function it_should_create_object()
     {
-        $this->assertInstanceOf('Notes\Response\Response', new Response(200, "ok", "1.0.0"));
+        $this->assertInstanceOf('Notes\Response\Response', new Response());
     }
     /**
     * @test
@@ -18,9 +18,6 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     */
     public function it_should_accept_data_and_return_in_json_format()
     {
-        $status  = "200";
-        $message = "ok";
-        $version = "1.0.1";
         $data    = array(
             'firstName' => 'Joy',
             'lastName' => 'Mock',
@@ -29,7 +26,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
             )
         );
         
-        $response = new Response($status, $message, $version, $data);
+        $response = new Response($data);
         $this->assertJsonStringEqualsJsonFile(__dir__ . '/_files/json.js', $response->getResponse());
     }
 }

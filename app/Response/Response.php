@@ -6,11 +6,11 @@ class Response
 {
     private $status;
     private $message;
-    private $version='1.0.0';
+    private $version = '1.0.0';
     private $data;
     private $debugData;
     
-    public function __construct($data = null,$status=200, $message='OK',$debugData = null)
+    public function __construct($data = null, $status = '200', $message = 'OK', $debugData = null)
     {
         $this->status    = $status;
         $this->message   = $message;
