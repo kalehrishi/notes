@@ -46,7 +46,7 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         
         $noteTagMapper = new NoteTag();
-        $noteTagCollection  = $noteTagMapper->read($noteTagModel);
+        $noteTagCollection  = $noteTagMapper->findNoteTagsByNoteId($noteTagModel);
        
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTag_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
@@ -70,10 +70,10 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testNoteTagIdDoesNotExist()
     {
         $input        = array(
-            'noteid' => 122
+            'id' => 122
         );
         $noteTagModel = new NoteTagModel();
-        $noteTagModel->setNoteId($input['noteid']);
+        $noteTagModel->setId($input['id']);
         
         
         $noteTagMapper = new NoteTag();

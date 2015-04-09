@@ -125,6 +125,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             $noteTagCollection->next();
         }
     }
+
     /**
      * @expectedException         InvalidArgumentException
      * @expectedExceptionMessage  Input should not be null
@@ -434,7 +435,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         }
     }
     
-    /*public function testCanDelete()
+    public function testCanDelete()
     {
         $noteInput         = array(
             'id' => 4,
@@ -461,5 +462,5 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Ajax', $noteModel->getTitle());
         $this->assertEquals('Asynchronous JavaScript and XML', $noteModel->getBody());
         $this->assertEquals(1, $noteModel->getIsDeleted());
-    }*/
+    }
 }

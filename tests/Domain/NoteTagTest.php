@@ -7,6 +7,8 @@ use Notes\Mapper\NoteTag as NoteTagMapper;
 use Notes\Model\NoteTag as NoteTagModel;
 use Notes\Model\UserTag as UserTagModel;
 
+use Notes\Model\Note as NoteModel;
+
 use Notes\Domain\UserTag as UserTagDomain;
 use Notes\Domain\NoteTag as NoteTagDomain;
 
@@ -99,29 +101,57 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testCanReadNoteTagByNoteId()
     {
         $input = array(
-            'noteid' => 2
+            'noteId' => 1
         );
         
-        $noteTagModel = new NoteTagModel();
-        $noteTagModel->setNoteId($input['noteid']);
+        $noteModel = new NoteModel();
+        $noteModel->setId($input['noteId']);
         
         
         $noteTagDomain = new NoteTag();
-        $noteTagCollection  = $noteTagDomain->readAllTag($noteTagModel);
+        $noteTagCollection  = $noteTagDomain->findNoteTagsByNoteId($noteModel);
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/noteTagDomain_read.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'NoteTags'
         ));
         while ($noteTagCollection->hasNext()) {
-            $this->assertEquals(3, $noteTagCollection->getRow(0)->getId());
-            $this->assertEquals(2, $noteTagCollection->getRow(0)->getNoteId());
-            $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getUserTagId());
             $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
+
+            $this->assertEquals(2, $noteTagCollection->getRow(0)->getUserTag()->getId());
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTag()->getUserId());
+            $this->assertEquals('Tax', $noteTagCollection->getRow(0)->getUserTag()->getTag());
+
             $noteTagCollection->next();
         }
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
+    }
+    public function testCanReadByNoteTagId()
+    {
+        $input = array(
+            'id' => 3
+        );
+        
+        $noteTagModel = new NoteTagModel();
+        $noteTagModel->setId($input['id']);
+        
+        
+        $noteTagDomain = new NoteTag();
+        $noteTagModel  = $noteTagDomain->read($noteTagModel);
+        
+        $this->assertEquals(3, $noteTagModel->getId());
+        $this->assertEquals(2, $noteTagModel->getNoteId());
+        $this->assertEquals(3, $noteTagModel->getUserTagId());
+            $this->assertEquals(0, $noteTagModel->getIsDeleted());
+
+            $this->assertEquals(3, $noteTagModel->getUserTag()->getId());
+            $this->assertEquals(2, $noteTagModel->getUserTag()->getUserId());
+            $this->assertEquals('People', $noteTagModel->getUserTag()->getTag());
+
     }
     /**
      * @expectedException         Notes\Exception\ModelNotFoundException
@@ -130,15 +160,15 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     public function testThrowsExceptionWhenNoteTagIdDoesNotExist()
     {
         $input = array(
-            'noteid' => 54
+            'id' => 54
         );
         
         $noteTagModel = new NoteTagModel();
-        $noteTagModel->setNoteId($input['noteid']);
+        $noteTagModel->setId($input['id']);
         
         
         $noteTagDomain = new NoteTag();
-        $noteTagModel  = $noteTagDomain->readAllTag($noteTagModel);
+        $noteTagModel  = $noteTagDomain->read($noteTagModel);
     }
     public function testCanDeleteNoteTag()
     {
