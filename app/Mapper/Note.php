@@ -10,11 +10,13 @@ class Note
 {
     public function create(NoteModel $noteModel)
     {
-        $query     = "INSERT INTO Notes(userId, title, body) VALUES (:userId, :title, :body)";
+        $noteModel->setCreatedOn(date("Y-m-d H:i:s"));
+        $query     = "INSERT INTO Notes(userId, title, body, createdOn) VALUES (:userId, :title, :body, :createdOn)";
         $input     = array(
             'userId' => $noteModel->getUserId(),
             'title' => $noteModel->getTitle(),
-            'body' => $noteModel->getBody()
+            'body' => $noteModel->getBody(),
+            'createdOn' => $noteModel->getCreatedOn()
         );
         $params    = array(
             'dataQuery' => $query,
@@ -32,6 +34,7 @@ class Note
         
     public function update(NoteModel $noteModel)
     {
+        $noteModel->setLastUpdatedOn(date("Y-m-d H:i:s"));
         $input  = array(
             'id' => $noteModel->getId(),
             'userId' => $noteModel->getUserId(),

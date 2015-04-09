@@ -72,7 +72,6 @@ class Note
         $this->validator->notNull($noteModel->getBody());
         $noteMapper = new NoteMapper();
         
-        $noteModel->setLastUpdatedOn(date("Y-m-d H:i:s"));
         $noteModel = $noteMapper->update($noteModel);
         
         $noteTagDomain = new NoteTagDomain();
