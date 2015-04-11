@@ -41,8 +41,8 @@ class Session
         if ($response instanceof SessionModel) {
             setcookie('userId', $response->getUserId(), time() + (86400 * 30), "/");
             setcookie('authToken', $response->getAuthToken(), time() + (86400 * 30), "/");
-            header('Location: notes');
-            exit();
+            $app = \Slim\Slim::getInstance();
+            $app->redirect("/notes");
         }
     }
 }

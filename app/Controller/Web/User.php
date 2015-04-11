@@ -37,8 +37,8 @@ class User
             $this->view->render("Register.php", $objResponse->getResponse());
         }
         if ($response instanceof UserModel) {
-            header('Location: http://notes.com/login');
-            exit();
+            $app = \Slim\Slim::getInstance();
+            $app->redirect("/login");
         }
     }
 }
