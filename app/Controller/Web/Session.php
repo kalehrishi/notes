@@ -45,20 +45,4 @@ class Session
             $app->redirect("/notes");
         }
     }
-    
-    public function logout()
-    {
-        $sessionModel = new SessionModel();
-        $sessionModel->setUserId($this->request->getCookies()['userId']);
-        $sessionModel->setAuthToken($this->request->getCookies()['authToken']);
-        
-        $sessionService = new SessionService();
-        if ($sessionService->isValid($sessionModel)) {
-            $sessionModel->setIsExpired(1);
-            $response = $sessionService->logout($sessionModel);
-        }
-        if ($response instanceof SessionModel) {
-            echo '<script language="javascript">location.href="http://notes.com/login";</script>';
-        }
-    }
 }
