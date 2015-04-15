@@ -41,8 +41,5 @@ $data = json_decode($response, true);
       </tr>
     </table>
   </form>
-  <?php 
-  session_unset($_COOKIE['PHPSESSID']);
-  ?>
 </body>
 </html>
