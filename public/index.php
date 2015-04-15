@@ -1,4 +1,5 @@
 <?php
+
 namespace Notes\Controller\Web;
 
 require_once '../vendor/autoload.php';
@@ -42,8 +43,6 @@ $application->get('/notes', function() {
 
     $noteController = new Note($objRequest);
     $noteController->get();
-
-    
 
 });
 $application->get('/logout', function() {
