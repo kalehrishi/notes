@@ -5,6 +5,7 @@ namespace Notes\Mapper;
 use Notes\Model\Note as NoteModel;
 use Notes\Database\Database as Database;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+use Notes\Collection\Collection as Collection;
 use Notes\Collection\NoteCollection as NoteCollection;
 
 class Notes
@@ -27,14 +28,8 @@ class Notes
         } catch (\PDOException $e) {
             $e->getMessage();
         }
+        $noteCollection = new NoteCollection($resultset);
         
-        if (!empty($resultset)) {
-            return new NoteCollection($resultset);
-            
-        } else {
-            $obj = new ModelNotFoundException();
-            $obj->setModel($noteModel);
-            throw $obj;
-        }
+        return $noteCollection;
     }
 }

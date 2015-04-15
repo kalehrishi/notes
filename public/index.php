@@ -1,5 +1,4 @@
 <?php
-
 namespace Notes\Controller\Web;
 
 require_once '../vendor/autoload.php';
@@ -32,15 +31,31 @@ $application->post('/login', function() {
     $sessionController = new Session($objRequest);
     $sessionController->post();
 });
+
 $application->get('/notes', function() {
     $request = \Slim\Slim::getInstance()->request();
 
     $objRequest        = new Request();
     $objRequest->setData($request->getBody());
     $objRequest->setHeaders($request->headers);
+    $objRequest->setCookies($request->cookies);
+
     $noteController = new Note($objRequest);
     $noteController->get();
+
 });
+$application->get('/logout', function() {
+    $request = \Slim\Slim::getInstance()->request();
+
+    $objRequest        = new Request();
+    $objRequest->setData($request->getBody());
+    $objRequest->setHeaders($request->headers);
+    $objRequest->setCookies($request->cookies);
+
+    $logoutController = new Logout($objRequest);
+    $logoutController->get();
+});
+
 $application->post('/notes', function() {
     $request = \Slim\Slim::getInstance()->request();
 

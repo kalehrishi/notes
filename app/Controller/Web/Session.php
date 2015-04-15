@@ -15,7 +15,7 @@ class Session
     public function __construct($request)
     {
         $this->request = $request;
-        $this->view= new View();
+        $this->view    = new View();
     }
     public function get()
     {
@@ -27,7 +27,7 @@ class Session
         $input          = $this->request->getUrlParams();
         $sessionService = new SessionService();
         try {
-                $response = $sessionService->login($input);
+            $response = $sessionService->login($input);
             
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
@@ -43,6 +43,22 @@ class Session
             setcookie('authToken', $response->getAuthToken(), time() + (86400 * 30), "/");
             header('Location: notes');
             exit();
+        }
+    }
+    
+    public function logout()
+    {
+        $sessionModel = new SessionModel();
+        $sessionModel->setUserId($this->request->getCookies()['userId']);
+        $sessionModel->setAuthToken($this->request->getCookies()['authToken']);
+        
+        $sessionService = new SessionService();
+        if ($sessionService->isValid($sessionModel)) {
+            $sessionModel->setIsExpired(1);
+            $response = $sessionService->logout($sessionModel);
+        }
+        if ($response instanceof SessionModel) {
+            echo '<script language="javascript">location.href="http://notes.com/login";</script>';
         }
     }
 }
