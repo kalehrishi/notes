@@ -35,7 +35,6 @@ $I->click('Login');
 $I->seeInCurrentUrl('/login');
 $I->cantSeeInField('email', 'gau@bhapkar.com');
 $I->cantSeeInField('password', 'Gauri');
-//$I->see('Error :-  Password Strength is weak');
 $I->see('Error :-');
 $I->see('Password Strength is weak');
 

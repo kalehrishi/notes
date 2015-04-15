@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox,codeception"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -170,6 +170,19 @@
   </exec>
  </target>
 
+ <target name="codeception" depends="prepare" description="Run Acceptance tests with Codeception">
+  <exec executable="${basedir}/build/tools/codecept.phar">
+   <arg value="run" />
+   <arg value="--config" />
+   <arg value="${basedir}/build/codeception.yml" />
+   <arg value="acceptance" />
+   <arg value="--report" />
+   <arg value="--xml" />
+   <arg value="acceptance.xml" />
+  </exec>
+ </target>
+
+
  <target name="phpunit" depends="prepare,composer" description="Run unit tests with PHPUnit">
   <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
@@ -177,7 +190,7 @@
   </exec>
  </target>
 
- <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
+ <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci,codeception" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>

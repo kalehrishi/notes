@@ -12,3 +12,5 @@ modules:
     config:
         PhpBrowser:
             url: 'http://55.55.55.55/'
+    coverage:
+        enabled: true
