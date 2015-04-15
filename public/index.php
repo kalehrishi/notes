@@ -43,6 +43,8 @@ $application->get('/notes', function() {
     $noteController = new Note($objRequest);
     $noteController->get();
 
+    
+
 });
 $application->get('/logout', function() {
     $request = \Slim\Slim::getInstance()->request();
