@@ -176,7 +176,9 @@
    <arg value="--config" />
    <arg value="${basedir}/build/codeception.yml" />
    <arg value="acceptance" />
-   <arg value="--report" />
+   <arg value="--debug" />
+   <arg value="--html" />
+   <arg value="acceptance.html" />
    <arg value="--xml" />
    <arg value="acceptance.xml" />
   </exec>
