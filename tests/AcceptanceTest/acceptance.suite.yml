@@ -11,6 +11,6 @@ modules:
         - AcceptanceHelper
     config:
         PhpBrowser:
-            url: 'http://55.55.55.55/'
+            url: 'http://localhost/'
     coverage:
         enabled: true

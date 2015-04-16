@@ -15,6 +15,3 @@ modules:
             user: ''
             password: ''
             dump: tests/_data/dump.sql
-config:
-    PhpBrowser:
-        url: 'http://55.55.55.55/'
