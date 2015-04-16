@@ -1,9 +1,9 @@
 actor: Tester
 paths:
-    tests: ../tests/AcceptanceTest/
-    log: logs/
+    tests: tests/AcceptanceTest/
+    log: build/logs/
     data: tests/AcceptanceTest/_data
-    helpers: ../tests/AcceptanceTest/_support
+    helpers: tests/AcceptanceTest/_support
 settings:
     bootstrap: _bootstrap.php
     colors: true

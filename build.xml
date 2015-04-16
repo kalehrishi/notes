@@ -174,7 +174,7 @@
   <exec executable="${basedir}/build/tools/codecept.phar">
    <arg value="run" />
    <arg value="--config" />
-   <arg value="${basedir}/build/codeception.yml" />
+   <arg value="codeception.yml" />
    <arg value="acceptance" />
    <arg value="--debug" />
    <arg value="--html" />
