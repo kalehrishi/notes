@@ -5,6 +5,9 @@ use Notes\View\View as View;
 use Notes\Service\Note as NoteService;
 use Notes\Response\Response as Response;
 use Notes\Request\Request as Request;
+use Notes\Model\User as UserModel;
+use Notes\Service\Session as SessionService;
+use Notes\Model\Session as SessionModel;
 
 class Note
 {
@@ -19,15 +22,14 @@ class Note
     {
         $input = $this->request->getCookies()['userId'];
         
+        $userModel = new UserModel();
+        $userModel->setId($input);
+
         $noteService = new NoteService();
-        $response    = $noteService->get($input);
+        $noteCollection    = $noteService->get($userModel);
         
-        $response = $response->toArray();
-        if (empty($response)) {
-            $response = "Note Not Created Yet!!! Create A New Note";
-        }
-        $objResponse = new Response($response);
-        $this->view->render("Notes.php", $objResponse->getResponse());
+        $notesArray = $noteCollection->toArray();
+        $response = $this->view->render("Notes.php", $notesArray);
         return $response;
     }
 }

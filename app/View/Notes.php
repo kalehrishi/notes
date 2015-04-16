@@ -1,7 +1,3 @@
-<?php
-session_start();
-$data = json_decode($response, true);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,9 +12,11 @@ $data = json_decode($response, true);
     <button type="button" style="margin:20px">Create</button>
     <a href="logout">Logout</a>
     <?php
-    if (is_string($data['data'])) {
-        echo "<h3>" . $data['data'] . "</h3>";
-    } else {
+    if (is_string($response)) { 
+      ?>
+        <h3> <?php echo $response; ?></h3>;
+    <?php
+      } else {
         ?>
         <table border="1" font-size="25px" width="500" style="margin:5px">
           <tr align="center">
@@ -30,9 +28,9 @@ $data = json_decode($response, true);
           <td>Action</td>
           </tr>
       <?php
-          for ($i = 0; $i < count($data['data']); $i++) {
-                $id    = $data['data'][$i]['id'];
-                $title = $data['data'][$i]['title'];
+          for ($i = 0; $i < count($response); $i++) {
+                $id    = $response[$i]['id'];
+                $title = $response[$i]['title'];
               ?>
               <tr align="center">
               <td><?php echo $id;

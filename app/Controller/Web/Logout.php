@@ -26,19 +26,16 @@ class Logout
         
         $sessionService = new SessionService();
         if ($sessionService->isValid($sessionModel)) {
-            $sessionModel->setIsExpired(1);
             try {
                 $response = $sessionService->logout($sessionModel);
-                echo '<script language="javascript">location.href="/login";
-            </script>';
+                $app = \Slim\Slim::getInstance();
+                $app->redirect("/login");
             } catch (ModelNotFoundException $error) {
                 $response    = $error->getMessage();
-                $objResponse = new Response($response);
-                $this->view->render("Notes.php", $objResponse->getResponse());
+                $this->view->render("Notes.php", $response);
             } catch (\InvalidArgumentException $error) {
                 $response    = $error->getMessage();
-                $objResponse = new Response($response);
-                $this->view->render("Notes.php", $objResponse->getResponse());
+                $this->view->render("Notes.php", $response);
             }
         }
     }

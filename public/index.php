@@ -17,7 +17,6 @@ $application->get('/:route', function($route) {
     $homeController->get();
 })->conditions(array("route" => "(|home)"));
 
-
 $application->get('/login', function() {
     $request        = new Request();
     $sessionController = new Session($request);
@@ -37,6 +36,7 @@ $application->get('/notes', function() {
     $request = \Slim\Slim::getInstance()->request();
 
     $objRequest        = new Request();
+    
     $objRequest->setData($request->getBody());
     $objRequest->setHeaders($request->headers);
     $objRequest->setCookies($request->cookies);
@@ -45,6 +45,7 @@ $application->get('/notes', function() {
     $noteController->get();
 
 });
+
 $application->get('/logout', function() {
     $request = \Slim\Slim::getInstance()->request();
 
