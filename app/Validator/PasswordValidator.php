@@ -8,17 +8,14 @@ class PasswordValidator
     {
         $this->password = $password;
     }
-    
     public function getPassWord()
     {
         return $this->password;
     }
-    
     public function calculateLength()
     {
         return strlen($this->password);
     }
-    
     public function isEmpty()
     {
         if (empty($this->password)) {
@@ -27,10 +24,7 @@ class PasswordValidator
             return false;
         }
     }
-    
-    /** This function checks Password length is greater than 6
-     */
-    
+    /** This function checks Password length is greater than 6 */
     public function isLengthLongerThanLimit()
     {
         if (strlen($this->password) >= 6) {
@@ -39,10 +33,7 @@ class PasswordValidator
             return false;
         }
     }
-    
-    /** This function checks whether password has Uppercase letter
-     */
-    
+    /** This function checks whether password has Uppercase letter */
     public function hasUpperCaseCharacter()
     {
         if (preg_match("([A-Z])", $this->password)) {
@@ -51,10 +42,7 @@ class PasswordValidator
             return false;
         }
     }
-    
-    /** This function checks whether digit is present in password
-     */
-    
+    /** This function checks whether digit is present in password */
     public function hasDigit()
     {
         if (preg_match("([0-9])", $this->password)) {
@@ -63,10 +51,7 @@ class PasswordValidator
             return false;
         }
     }
-    
-    /** This function checks whether special characters is present in password
-     */
-    
+    /** This function checks whether special characters is present in password */
     public function hasSpecialCharacter()
     {
         if (preg_match_all("([\W_])", $this->password)) {
@@ -75,10 +60,7 @@ class PasswordValidator
             return false;
         }
     }
-    
-    /** This function checks for common password
-    */
-    
+    /** This function checks for common password */
     public function isCommanPassword()
     {
         $commonPassword = array(
@@ -97,10 +79,7 @@ class PasswordValidator
             return false;
         }
     }
-    
-    /** This function checks Password strength(in numeric(0-5))
-    */
-    
+    /** This function checks Password strength(in numeric(0-5)) */
     public function strength()
     {
         $count = 0;
