@@ -49,18 +49,6 @@ $application->get('/error', function() {
     $errorController = new Error($request);
     $errorController->get();
 });
-$application->get('/notes/:id', function($id) {
-    $request = \Slim\Slim::getInstance()->request();
-    
-    $objRequest        = new Request();
-    $objRequest->setUrlParams($id);
-    $objRequest->setData($request->getBody());
-    $objRequest->setHeaders($request->headers);
-    $objRequest->setCookies($request->cookies);
-
-    $noteController = new Note($objRequest);
-    $noteController->get();
-});
 
 $application->get('/logout', function() {
     $request = \Slim\Slim::getInstance()->request();

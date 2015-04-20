@@ -29,7 +29,7 @@ class Notes
         
         $sessionService = new SessionService();
         try {
-            $response  = $sessionService->isValid($sessionModel);
+            $sessionService->isValid($sessionModel);
             $userModel = new UserModel();
             $userModel->setId($this->request->getCookies()['userId']);
             

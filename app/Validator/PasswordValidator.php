@@ -77,7 +77,6 @@ class PasswordValidator
     }
     
     /** This function checks for common password
-
     */
     
     public function isCommanPassword()
@@ -100,7 +99,6 @@ class PasswordValidator
     }
     
     /** This function checks Password strength(in numeric(0-5))
-
     */
     
     public function strength()
