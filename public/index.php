@@ -34,16 +34,32 @@ $application->post('/login', function() {
 
 $application->get('/notes', function() {
     $request = \Slim\Slim::getInstance()->request();
-
+    
     $objRequest        = new Request();
     
     $objRequest->setData($request->getBody());
     $objRequest->setHeaders($request->headers);
     $objRequest->setCookies($request->cookies);
 
+    $notesController = new Notes($objRequest);
+    $notesController->get();
+});
+$application->get('/error', function() {
+    $request        = new Request();
+    $errorController = new Error($request);
+    $errorController->get();
+});
+$application->get('/notes/:id', function($id) {
+    $request = \Slim\Slim::getInstance()->request();
+    
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($id);
+    $objRequest->setData($request->getBody());
+    $objRequest->setHeaders($request->headers);
+    $objRequest->setCookies($request->cookies);
+
     $noteController = new Note($objRequest);
     $noteController->get();
-
 });
 
 $application->get('/logout', function() {
@@ -65,8 +81,8 @@ $application->post('/notes', function() {
     $objRequest->setUrlParams($request->post());
     $objRequest->setCookies($request->cookies);
     
-    $noteController = new Note($objRequest);
-    $noteController->post();
+    $notesController = new Notes($objRequest);
+    $notesController->post();
 });
 
 $application->get('/register', function() {
@@ -83,5 +99,6 @@ $application->post('/register', function() {
     $userController = new User($objRequest);
     $userController->post();
 });
+
 
 $application->run();

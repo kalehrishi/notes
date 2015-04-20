@@ -34,7 +34,7 @@ class Logout
                 $response    = $error->getMessage();
                 $this->view->render("Notes.php", $response);
             } catch (\InvalidArgumentException $error) {
-                $response    = $error->getMessage();
+                $response = $error->getMessage();
                 $this->view->render("Notes.php", $response);
             }
         }

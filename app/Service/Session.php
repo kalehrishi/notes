@@ -3,6 +3,7 @@ namespace Notes\Service;
 
 use Notes\Domain\Session as SessionDomain;
 use Notes\Model\Session as SessionModel;
+use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
 class Session
 {
@@ -41,13 +42,13 @@ class Session
     public function isValid($sessionModel)
     {
         $sessionDomain = new SessionDomain();
-
-        $session = $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
-        
-        if ($session instanceof SessionModel) {
+        try {
+            $sessionDomain->getSessionByAuthTokenAndUserId($sessionModel);
             return true;
-        } else {
-            return false;
+        } catch (ModelNotFoundException $error) {
+            $obj = new ModelNotFoundException();
+            $obj->setModel($sessionModel);
+            throw $obj;
         }
     }
 }
