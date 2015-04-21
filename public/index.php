@@ -32,14 +32,36 @@ $application->post('/login', function() {
     $sessionController = new Session($objRequest);
     $sessionController->post();
 });
-$application->get('/notes', function() {
+
+$application->get('/logout', function() {
     $request = \Slim\Slim::getInstance()->request();
 
     $objRequest        = new Request();
     $objRequest->setData($request->getBody());
     $objRequest->setHeaders($request->headers);
-    $noteController = new Note($objRequest);
-    $noteController->get();
+    $objRequest->setCookies($request->cookies);
+
+    $logoutController = new Logout($objRequest);
+    $logoutController->get();
+});
+
+$application->get('/notes', function() {
+    $request = \Slim\Slim::getInstance()->request();
+    
+    $objRequest        = new Request();
+    
+    $objRequest->setData($request->getBody());
+    $objRequest->setHeaders($request->headers);
+    $objRequest->setCookies($request->cookies);
+
+    $notesController = new Notes($objRequest);
+    $notesController->get();
+});
+
+$application->get('/error', function() {
+    $request        = new Request();
+    $errorController = new Error($request);
+    $errorController->get();
 });
 $application->post('/notes', function() {
     $request = \Slim\Slim::getInstance()->request();

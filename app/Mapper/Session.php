@@ -25,8 +25,10 @@ class Session
         );
         $database    = new Database();
         $result      = $database->post($params);
-        $sessionModel->setId($result['lastInsertId']);
-        return $sessionModel;
+        if ($result['rowCount'] == 1) {
+            $sessionModel->setId($result['lastInsertId']);
+            return $sessionModel;
+        }
     }
     
     public function read($sessionModel)
