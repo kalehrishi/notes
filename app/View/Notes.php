@@ -45,7 +45,7 @@
                 echo $id;
                 ?>">
           <?php echo $title;
-          ?>
+            ?>
             </a>
             </td>
             <td><a href="">Delete</a></td>
