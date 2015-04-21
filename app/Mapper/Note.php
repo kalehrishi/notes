@@ -31,7 +31,7 @@ class Note
             throw new \PDOException();
         }
     }
-        
+    
     public function update(NoteModel $noteModel)
     {
         $noteModel->setLastUpdatedOn(date("Y-m-d H:i:s"));
@@ -68,13 +68,13 @@ class Note
     
     public function read(NoteModel $noteModel)
     {
-        $input = array(
-                'id' => $noteModel->getId()
-            );
-            $query = "SELECT id, userId, title, body, createdOn, lastUpdateOn, isDeleted
+        $input  = array(
+            'id' => $noteModel->getId()
+        );
+        $query  = "SELECT id, userId, title, body, createdOn, lastUpdateOn, isDeleted
                         FROM Notes
                         WHERE id=:id AND isDeleted=0";
-            $params = array(
+        $params = array(
             'dataQuery' => $query,
             'placeholder' => $input
         );
