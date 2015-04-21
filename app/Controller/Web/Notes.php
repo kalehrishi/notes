@@ -30,7 +30,7 @@ class Notes
         $sessionService = new SessionService();
         try {
             $sessionService->isValid($sessionModel);
-            
+
             $userModel = new UserModel();
             $userModel->setId($this->request->getCookies()['userId']);
             
@@ -38,6 +38,9 @@ class Notes
             $notesCollection = $notesService->get($userModel);
             
             $notesArray = $notesCollection->toArray();
+            $noteCollection = $notesService->get($userModel);
+            
+            $notesArray = $noteCollection->toArray();
             $response   = $this->view->render("Notes.php", $notesArray);
             
             return $response;

@@ -31,23 +31,27 @@
           <td>Title</td>
           <td>Action</td>
           </tr>
-      <?php
-          for ($i = 0; $i < count($response); $i++) {
-              $id    = $response[$i]['id'];
-              $title = $response[$i]['title'];
-              ?>
-              <tr align="center">
-              <td><?php
-              echo $id;
-                ?>
-              </td>
-              <td><a href="/notes/<?php echo $id;?>">
-                    <?php echo $title;?></a>
-              </td> 
-              <td><a href="">Delete</a></td>
-              </tr>
-              <?php
-          }
+        <?php
+        for ($i = 0; $i < count($response); $i++) {
+            $id    = $response[$i]['id'];
+            $title = $response[$i]['title'];
+            ?>
+            <tr align="center">
+            <td><?php
+            echo $id;
+            ?>
+            </td>
+            <td><a href="/notes/<?php
+                echo $id;
+                ?>">
+          <?php
+                echo $title;
+                ?></a>
+                </td>
+                <td><a href="">Delete</a></td>
+                </tr>
+        <?php
+        }
     }
 ?>
 </table>
