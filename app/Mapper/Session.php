@@ -1,5 +1,4 @@
 <?php
-
 namespace Notes\Mapper;
 
 use Notes\Database\Database as Database;
@@ -14,19 +13,21 @@ class Session
         $query       = "INSERT INTO Sessions(userId,authToken,createdOn,expiredOn) VALUES
                         (:userId, :authToken, :createdOn, :expiredOn)";
         $placeholder = array(
-        ':userId'    => $sessionModel->getUserId(),
-        ':authToken' => $sessionModel->getAuthToken(),
-        ':createdOn' => $sessionModel->getCreatedOn(),
-        ':expiredOn' => $sessionModel->getExpiredOn()
+            ':userId' => $sessionModel->getUserId(),
+            ':authToken' => $sessionModel->getAuthToken(),
+            ':createdOn' => $sessionModel->getCreatedOn(),
+            ':expiredOn' => $sessionModel->getExpiredOn()
         );
         $params      = array(
-        'dataQuery'  => $query,
-        'placeholder'=> $placeholder
+            'dataQuery' => $query,
+            'placeholder' => $placeholder
         );
         $database    = new Database();
         $result      = $database->post($params);
-        $sessionModel->setId($result['lastInsertId']);
-        return $sessionModel;
+        if ($result['rowCount'] == 1) {
+            $sessionModel->setId($result['lastInsertId']);
+            return $sessionModel;
+        }
     }
     
     public function read($sessionModel)
@@ -34,23 +35,23 @@ class Session
         if ($sessionModel->getId()) {
             $query       = "select id,userId,authToken,createdOn,expiredOn,isExpired from Sessions where id=:id";
             $placeholder = array(
-                ':id'    => $sessionModel->getId()
+                ':id' => $sessionModel->getId()
             );
         } elseif ($sessionModel->getAuthToken() && $sessionModel->getUserId()) {
-             $query       = "select id,userId,authToken,createdOn,expiredOn,isExpired from 
+            $query       = "select id,userId,authToken,createdOn,expiredOn,isExpired from 
                             Sessions where userId=:userId And authToken = :authToken";
-                            $placeholder = array(
-            'userId'     => $sessionModel->getUserId(),
-            'authToken'  => $sessionModel->getAuthToken()
-            
+            $placeholder = array(
+                'userId' => $sessionModel->getUserId(),
+                'authToken' => $sessionModel->getAuthToken()
+                
             );
         }
-            $params      = array(
-            'dataQuery'  => $query,
-            'placeholder'=> $placeholder
+        $params    = array(
+            'dataQuery' => $query,
+            'placeholder' => $placeholder
         );
-            $database  = new Database();
-            $resultset = $database->get($params);
+        $database  = new Database();
+        $resultset = $database->get($params);
         if (!empty($resultset)) {
             $sessionModel->setId($resultset[0]['id']);
             $sessionModel->setUserId($resultset[0]['userId']);
@@ -71,8 +72,8 @@ class Session
         $query       = "update Sessions set userId=:userId,isExpired=:isExpired,
                         expiredOn=:expiredOn where id=:id";
         $placeholder = array(
-            ':id'    => $sessionModel->getId(),
-            ':userId'=> $sessionModel->getUserId(),
+            ':id' => $sessionModel->getId(),
+            ':userId' => $sessionModel->getUserId(),
             ':expiredOn' => $sessionModel->getExpiredOn(),
             ':isExpired' => $sessionModel->getIsExpired()
         );

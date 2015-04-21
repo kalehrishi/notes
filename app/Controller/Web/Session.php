@@ -15,7 +15,7 @@ class Session
     public function __construct($request)
     {
         $this->request = $request;
-        $this->view= new View();
+        $this->view    = new View();
     }
     public function get()
     {
@@ -27,7 +27,7 @@ class Session
         $input          = $this->request->getUrlParams();
         $sessionService = new SessionService();
         try {
-                $response = $sessionService->login($input);
+            $response = $sessionService->login($input);
             
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();

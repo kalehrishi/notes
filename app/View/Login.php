@@ -1,7 +1,5 @@
 <?php
-session_start();
 $data = json_decode($response, true);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
