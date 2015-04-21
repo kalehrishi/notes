@@ -44,7 +44,7 @@
             <td><a href="/notes/<?php
                 echo $id;
                 ?>">
-          <?php
+            <?php
                 echo $title;
                 ?></a>
                 </td>
