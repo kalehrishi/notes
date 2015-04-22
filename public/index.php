@@ -62,6 +62,23 @@ $application->get('/logout', function() {
     $logoutController->get();
 });
 
+$application->get('/notes/create', function() {
+    $request        = new Request();
+    
+    $createController = new Create($request);
+    $createController->get();
+});
+
+$application->post('/notes/create', function() {
+    $request = \Slim\Slim::getInstance()->request();
+
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($request->post());
+    $objRequest->setCookies($request->cookies);
+    
+    $createController = new Create($objRequest);
+    $createController->post();
+});
 
 $application->post('/notes', function() {
     $request = \Slim\Slim::getInstance()->request();

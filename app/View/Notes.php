@@ -9,7 +9,7 @@
 </style>
 </head>
 <body>       
-    <button type="button" style="margin:20px">Create</button>
+    <button type="button" style="margin:20px"><a href="/notes/create">Create</a></button>
     <a href="logout">Logout</a>
     <?php
     if (empty($response)) {
