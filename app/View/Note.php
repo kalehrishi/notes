@@ -14,6 +14,17 @@
 .title {
   font-weight: bold;
 }
+.label {
+  border: 1px solid black;
+  background-color: yellow;
+  border-radius: 3px;
+  vertical-align: top;
+  font-size: 10px;
+  line-height: 1.8;
+  zoom: 1;
+  padding: 0 3px 0;
+  white-space: normal;
+}
 </style>
 </head>
 <body>
@@ -40,20 +51,25 @@
         <td><?php echo $response['body']; ?></td> 
       </tr>
       <tr>
-        <td>Tags: <?php
+        <td><?php
         if (empty($response['noteTags'])) {
             echo "No Tags";
         } else {
-            echo $response['noteTags'];
+          for ($i=0; $i < count($response['noteTags']); $i++) { 
+            
+            ?>
+            <span class="label"><?php echo $response['noteTags'][$i]['userTag']['tag'];?>
+            </span>
+            <?php
+          }
         }
-
-        ?></td>
+?></td>
       </tr>
-      <tr><td><button type="button">Edit</button></td>
+      <tr><td><button type="button">Update</button>
         <?php
     }
         ?>
-      <td><a href="/notes"><button type="button">Back</button></a></td></tr>
+      <a href="/notes"><button type="button">Back</button></a></td></tr>
 
     </table>
     </fieldset>
