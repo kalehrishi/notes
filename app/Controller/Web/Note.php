@@ -48,8 +48,8 @@ class Note
             $this->view->render("Note.php", $notesArray);
             return $noteModel;
         } catch (ModelNotFoundException $error) {
-            $response    = "Session Is Invalid";
-            $this->view->render("Error.php", $response);
+            $app = \Slim\Slim::getInstance();
+            $app->redirect("/error");
         }
     }
 }
