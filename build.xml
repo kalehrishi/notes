@@ -174,13 +174,12 @@
   <exec executable="${basedir}/build/tools/codecept.phar">
    <arg value="run" />
    <arg value="--config" />
-   <arg value="codeception.yml" />
-   <arg value="acceptance" />
+   <arg value="${basedir}/tests/AcceptanceTest/symfony/codeception.yml" />
    <arg value="--debug" />
    <arg value="--html" />
-   <arg value="acceptance.html" />
+   <arg value="codecept.html" />
    <arg value="--xml" />
-   <arg value="acceptance.xml" />
+   <arg value="codecept.xml" />
   </exec>
  </target>
 
