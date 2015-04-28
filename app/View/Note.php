@@ -55,13 +55,12 @@
         if (empty($response['noteTags'])) {
             echo "No Tags";
         } else {
-          for ($i=0; $i < count($response['noteTags']); $i++) { 
-            
-            ?>
+            for ($i=0; $i < count($response['noteTags']); $i++) {
+                ?>
             <span class="label"><?php echo $response['noteTags'][$i]['userTag']['tag'];?>
             </span>
             <?php
-          }
+            }
         }
 ?></td>
       </tr>
