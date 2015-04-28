@@ -91,4 +91,20 @@ class UserTag
             throw $exception;
         }
     }
+
+    public function searchForKeyword($userTagModel)
+    {
+        $placeholder      = array(
+            ':tag' => $userTagModel->getTag()
+        );
+        $query = "SELECT * from UserTags WHERE tag LIKE ':tag%'";
+
+        $params           = array(
+            'dataQuery' => $query,
+            'placeholder' => $placeholder
+        );
+        $userTagModelbase = new Database();
+        $result           = $userTagModelbase->get($params);
+        return $result;
+    }
 }

@@ -43,8 +43,8 @@ class Note
         $noteTagDomain     = new NoteTagDomain();
         $userTagDomain     = new UserTagDomain();
         if ($noteTagCollection->isEmpty($noteModel->getNoteTags())) {
-            $countTagsLength = $noteModel->getNoteTags()->getCount();
-            for ($i = 0; $i < $countTagsLength; $i++) {
+            $countTagsLength = $noteModel->getNoteTags()->getTotal();
+            for ($i = 0; $i <= $countTagsLength; $i++) {
                 $userTagModel = new UserTagModel();
                 $userTagModel->setId($noteModel->getNoteTags()->getRow($i)->getUserTag()->getId());
                 $userTagModel->setUserId($noteModel->getNoteTags()->getRow($i)->getUserTag()->getUserId());
