@@ -1,5 +1,5 @@
 <?php
-include __dir__ ."/bootstrap.php";
+include "bootstrap.php";
 class GetMethodTest extends LocalWebTestCase
 {
     public function testSayHello()

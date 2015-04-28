@@ -10,6 +10,6 @@ use Notes\Request\Request as Request;
 $application = new \Slim\Slim(array(
     'debug' => true ));
 
-require_once '/vagrant/app/app.php';
+require_once "../app/app.php";
 
 $application->run();
