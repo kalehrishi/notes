@@ -1,5 +1,5 @@
 <?php
-namespace Notes\Demo;
+namespace Notes\Helper;
 
 class WebTestCaseTest extends \PHPUnit_Framework_TestCase
 {

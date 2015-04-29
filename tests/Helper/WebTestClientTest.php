@@ -1,5 +1,5 @@
 <?php
-namespace Notes\Demo;
+namespace Notes\Helper;
 
 // use There4\Slim\Test\WebTestCase;
 // use There4\Slim\Test\WebTestClient;

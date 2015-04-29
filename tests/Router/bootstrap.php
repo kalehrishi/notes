@@ -4,7 +4,7 @@ error_reporting(-1);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 date_default_timezone_set('UTC');
-use Notes\Demo\WebTestCase;
+use Notes\Helper\WebTestCase;
 //define('PROJECT_ROOT', realpath(__DIR__ . '/..'));
 require_once 'vendor/autoload.php';
 // Initialize our own copy of the slim application
@@ -16,7 +16,7 @@ class LocalWebTestCase extends WebTestCase {
           'mode'           => 'testing',
         ));
       // Include our core application file
-      require_once "app/app.php";
+      require_once "app/Router/Routes.php";
       return $application;
     }
 };
