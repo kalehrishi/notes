@@ -16,7 +16,7 @@ class LocalWebTestCase extends WebTestCase {
           'mode'           => 'testing',
         ));
       // Include our core application file
-      require  '/vagrant/app/app.php';
+      require_once "app/app.php";
       return $application;
     }
 };
