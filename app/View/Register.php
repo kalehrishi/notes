@@ -19,19 +19,19 @@ $data = json_decode($response, true);
     <table>
       <tr>
         <td>FirstName:</td>
-        <td><input type="text" name="firstName"></input></td> 
+        <td><input type="text" name="firstName" /></td> 
       </tr>
       <tr>
         <td>LastName:</td>
-        <td><input type="text" name="lastName"></input></td> 
+        <td><input type="text" name="lastName" /></td> 
       </tr>
       <tr>
         <td>Email:</td>
-        <td><input type="text" name="email"></input></td> 
+        <td><input type="text" name="email" /></td> 
       </tr>
       <tr>
         <td>Password:</td>
-        <td><input type="password" name="password"></input></td> 
+        <td><input type="password" name="password" /></td> 
       </tr>
       <tr>
         <?php

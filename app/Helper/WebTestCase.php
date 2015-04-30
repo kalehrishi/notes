@@ -3,7 +3,7 @@ namespace Notes\Helper;
 
 use \Slim\Slim;
 
-class WebTestCase
+class WebTestCase extends \PHPUnit_Framework_TestCase
 {
     protected $app;
     protected $client;
