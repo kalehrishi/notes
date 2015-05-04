@@ -44,6 +44,27 @@ $application->get('/notes', function() {
     $notesController = new Notes($objRequest);
     $notesController->get();
 });
+
+$application->get('/notes/:id', function($id) {
+    $request = \Slim\Slim::getInstance()->request();
+    
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($id);
+    $objRequest->setCookies($request->cookies);
+    $noteController = new Note($objRequest);
+    $noteController->get();
+});
+
+$application->get('/notes/delete/:id', function ($id) {
+    $request = \Slim\Slim::getInstance()->request();
+    
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($id);
+    $objRequest->setCookies($request->cookies);
+    $deleteController = new Delete($objRequest);
+    $deleteController->get();
+});
+
 $application->get('/error', function() {
     $request        = new Request();
     $errorController = new Error($request);

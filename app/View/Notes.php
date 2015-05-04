@@ -7,6 +7,16 @@
  .error { 
   }
 </style>
+<script type="text/javascript">
+function delete_id(id)
+{
+  var ok = confirm("Are you sure you want to delete this Note?");
+ if(ok)
+ {
+    window.location.href='notes/delete/'+id;
+ }
+}
+</script>
 </head>
 <body>       
     <button type="button" style="margin:20px">Create</button>
@@ -48,7 +58,8 @@
                 echo $title;
                 ?></a>
                 </td>
-                <td><a href="">Delete</a></td>
+                <td>
+                <a href="javascript:delete_id(<?php echo $id; ?>)">Delete</a></td>
                 </tr>
         <?php
         }
