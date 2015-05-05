@@ -8,7 +8,7 @@
   }
 </style>
 <script type="text/javascript">
-function delete_id(id)
+function delete_note(id)
 {
   var ok = confirm("Are you sure you want to delete this Note?");
  if(ok)
@@ -45,10 +45,11 @@ function delete_id(id)
         for ($i = 0; $i < count($response); $i++) {
             $id    = $response[$i]['id'];
             $title = $response[$i]['title'];
+            $count = $i + 1;
             ?>
             <tr align="center">
             <td><?php
-            echo $id;
+            echo $count;
             ?>
             </td>
             <td><a href="/notes/<?php
@@ -59,7 +60,7 @@ function delete_id(id)
                 ?></a>
                 </td>
                 <td>
-                <a href="javascript:delete_id(<?php echo $id; ?>)">Delete</a></td>
+                <a href="javascript:delete_note(<?php echo $id; ?>)">Delete</a></td>
                 </tr>
         <?php
         }
