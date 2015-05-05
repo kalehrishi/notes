@@ -17,7 +17,7 @@ class Notes
         );
         $query  = "SELECT id, userId, title, body, createdOn, lastUpdateOn, isDeleted
                     FROM Notes 
-                    WHERE userId=:userId AND isDeleted=0";
+                    WHERE userId=:userId AND isDeleted=0 ORDER BY id DESC";
         $params = array(
             'dataQuery' => $query,
             'placeholder' => $input

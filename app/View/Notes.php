@@ -35,10 +35,11 @@
         for ($i = 0; $i < count($response); $i++) {
             $id    = $response[$i]['id'];
             $title = $response[$i]['title'];
+            $count = $i + 1;
             ?>
             <tr align="center">
             <td><?php
-            echo $id;
+            echo $count;
             ?>
             </td>
             <td><a href="/notes/<?php
