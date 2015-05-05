@@ -1,3 +1,7 @@
+<?php
+use Notes\Collection\Collection as Collection;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,30 +49,36 @@
     } else {
         ?>
       <tr>
-        <td class="title"><?php echo $response['title']; ?></td> 
+        <td class="title"><?php echo $response->getTitle(); ?></td> 
       </tr>
       <tr>
-        <td><?php echo $response['body']; ?></td> 
+        <td><?php echo $response->getBody(); ?></td> 
       </tr>
       <tr>
         <td><?php
-        if (empty($response['noteTags'])) {
+        if ($response->getNoteTags()->getTotal() < 0) {
             echo "No Tags";
         } else {
-            for ($i=0; $i < count($response['noteTags']); $i++) {
-                ?>
-            <span class="label"><?php echo $response['noteTags'][$i]['userTag']['tag'];?>
+            $noteTagCollection = $response->getNoteTags();
+            while ($noteTagCollection->hasNext()) {
+            ?>
+            <span class="label">
+            <?php
+            echo $noteTagCollection->getRow(0)->getUserTag()->getTag();
+            ?>
             </span>
             <?php
+            $noteTagCollection->next();
             }
         }
 ?></td>
       </tr>
       <tr><td><button type="button">Update</button>
+      <a href="/notes"><button type="button">Back</button></a></td></tr>
+
         <?php
     }
         ?>
-      <a href="/notes"><button type="button">Back</button></a></td></tr>
 
     </table>
     </fieldset>

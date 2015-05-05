@@ -30,26 +30,25 @@ class Note
         
         $sessionService = new SessionService();
         try {
-            $response = $sessionService->isValid($sessionModel);
-            
-            $noteId = $this->request->getUrlParams();
-            
-            $noteModel = new NoteModel();
-            $noteModel->setId($noteId);
-
-            $noteService =  new NoteService();
-            try {
-                $noteModel = $noteService->get($noteModel);
-            } catch (ModelNotFoundException $error) {
-                $response    = $error->getMessage();
-                $this->view->render("Note.php", $response);
-            }
-            $notesArray = $noteModel->toArray();
-            $this->view->render("Note.php", $notesArray);
-            return $noteModel;
+            $sessionService->isValid($sessionModel);
         } catch (ModelNotFoundException $error) {
             $app = \Slim\Slim::getInstance();
-            $app->redirect("/error");
+            $app->redirect("/login");
+        }
+        $noteId = $this->request->getUrlParams();
+        
+        $noteModel = new NoteModel();
+        $noteModel->setId($noteId);
+        
+        $noteService = new NoteService();
+        try {
+            $noteModel = $noteService->get($noteModel);
+            $this->view->render("Note.php", $noteModel);
+
+            return $noteModel;
+        } catch (ModelNotFoundException $error) {
+            $response = $error->getMessage();
+            $this->view->render("Note.php", $response);
         }
     }
 }
