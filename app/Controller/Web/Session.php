@@ -12,10 +12,12 @@ class Session
 {
     protected $request;
     protected $view;
+    
     public function __construct($request)
     {
         $this->request = $request;
         $this->view    = new View();
+
     }
     public function get()
     {
@@ -28,11 +30,13 @@ class Session
         $sessionService = new SessionService();
         try {
             $response = $sessionService->login($input);
+         
+            
             if ($response instanceof SessionModel) {
                 setcookie('userId', $response->getUserId(), time() + (86400 * 30), "/");
                 setcookie('authToken', $response->getAuthToken(), time() + (86400 * 30), "/");
                 $app = \Slim\Slim::getInstance();
-                $app->redirect("/notes");
+                $app->redirect('/notes');
             }
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();

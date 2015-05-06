@@ -3,18 +3,19 @@ namespace Notes\Helper;
 
 use \Slim;
 
+
 class WebTestClient
 {
-    public $app;
+    public $application;
     public $request;
     public $response;
         
     public $testingMethods = array('get', 'post', 'patch', 'put', 'delete', 'head');
     
-    public function __construct(Slim\Slim $slim)
+    /*public function __construct(Slim\Slim $slim)
     {   
         $this->app = $slim;
-    }
+    }*/
     // Implement our `get`, `post`, and other http operations
     
     public function __call($method, $arguments)
@@ -40,7 +41,7 @@ class WebTestClient
             'SERVER_NAME' => 'local.dev'
         );
        
-
+         
         if ($method === 'get') {
             $options['QUERY_STRING'] = http_build_query($data);
         } elseif (is_array($data)) {
@@ -49,13 +50,20 @@ class WebTestClient
             $options['slim.input']   = $data;
         }
        
-      
+        //print_r($options);     
         Slim\Environment::mock(array_merge($options, $optionalHeaders));
         
-        $this->request  = $this->app->request();
-        $this->response = $this->app->response();
+        $this->application = new \Slim\Slim(array(
+                            'debug' => true ));
+        
+       // print_r($this->application->request->post());
+        
+        require "app/Router/Routes.php";
 
-        $this->app->run();
+        $this->request  = $this->application->request();
+        $this->response = $this->application->response();
+
+        $this->application->run();
         
         return ob_get_clean(); 
     }

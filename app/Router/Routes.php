@@ -3,21 +3,21 @@ namespace Notes\Controller\Web;
 
 use Notes\Request\Request as Request;
 
-$application->get('/:route', function ($route) {
+$this->application->get('/:route', function ($route) {
     $request = new Request();
     $request->setUrlParams($route);
     $homeController = new Home($request);
     $homeController->get();
 })->conditions(array("route" => "(|home)"));
 
-$application->get('/login', function () {
+$this->application->get('/login', function () {
     $request           = new Request();
     $sessionController = new Session($request);
     $sessionController->get();
 });
 
-$application->post('/login', function () {
-    $request = \Slim\Slim::getInstance()->request();
+$this->application->post('/login', function () {
+    $request = $this->application->request();
     
     $objRequest = new Request();
     $objRequest->setUrlParams($request->post());
@@ -26,7 +26,7 @@ $application->post('/login', function () {
     $sessionController->post();
 });
 
-$application->get('/notes', function () {
+$this->application->get('/notes', function () {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest = new Request();
@@ -39,13 +39,13 @@ $application->get('/notes', function () {
     $notesController->get();
 });
 
-$application->get('/error', function () {
+$this->application->get('/error', function () {
     $request         = new Request();
     $errorController = new Error($request);
     $errorController->get();
 });
 
-$application->get('/logout', function () {
+$this->application->get('/logout', function () {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest = new Request();
@@ -57,7 +57,7 @@ $application->get('/logout', function () {
     $logoutController->get();
 });
 
-$application->post('/notes', function () {
+$this->application->post('/notes', function () {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest = new Request();
@@ -68,18 +68,18 @@ $application->post('/notes', function () {
     $notesController->post();
 });
 
-$application->get('/register', function () {
+$this->application->get('/register', function () {
     $request        = new Request();
     $userController = new User($request);
     $userController->get();
 });
 
-$application->post('/register', function () {
-    $request = \Slim\Slim::getInstance()->request();
+$this->application->post('/register', function () {
+    $request = $this->application->request();
     
     $objRequest = new Request();
     $objRequest->setUrlParams($request->post());
-    
+
     $userController = new User($objRequest);
     $userController->post();
 });
