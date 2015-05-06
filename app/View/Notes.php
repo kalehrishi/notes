@@ -7,6 +7,7 @@
  .error { 
   }
 </style>
+
 </head>
 <body>       
     <button type="button" style="margin:20px">Create</button>
@@ -49,7 +50,12 @@
                 echo $title;
                 ?></a>
                 </td>
-                <td><a href="">Delete</a></td>
+                <td>
+                <form action="notes/<?php echo $id; ?>" method="post">
+                    <input type="hidden" name="_METHOD" value="DELETE"/>
+                    <input type="submit" value="Delete"/>
+                </form>
+                </td>
                 </tr>
         <?php
         }

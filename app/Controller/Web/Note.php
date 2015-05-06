@@ -51,4 +51,38 @@ class Note
             $this->view->render("Note.php", $response);
         }
     }
+    public function delete()
+    {
+        $sessionModel = new SessionModel();
+        $sessionModel->setUserId($this->request->getCookies()['userId']);
+        $sessionModel->setAuthToken($this->request->getCookies()['authToken']);
+        
+        $sessionService = new SessionService();
+        try {
+            $sessionService->isValid($sessionModel);
+        } catch (ModelNotFoundException $error) {
+            $app = \Slim\Slim::getInstance();
+            $app->redirect("/login");
+        }
+        $noteModel = new NoteModel();
+        $noteModel->setId($this->request->getUrlParams());
+        
+        $noteService = new NoteService();
+        try {
+            $noteModel = $noteService->get($noteModel);
+        } catch (ModelNotFoundException $error) {
+            $response = $error->getMessage();
+            $this->view->render("Notes.php", $response);
+        }
+        try {
+            $noteModel = $noteService->delete($noteModel);
+        } catch (ModelNotFoundException $error) {
+            $response = $error->getMessage();
+            $this->view->render("Notes.php", $response);
+        }
+        if ($noteModel instanceof NoteModel) {
+            $app = \Slim\Slim::getInstance();
+            $app->redirect("/notes");
+        }
+    }
 }

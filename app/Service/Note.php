@@ -14,4 +14,11 @@ class Note
         $noteModel = $noteDomain->read($noteModel);
         return $noteModel;
     }
+    public function delete($noteModel)
+    {
+        $noteModel->setIsDeleted('1');
+        $noteDomain = new NoteDomain();
+        $noteModel  = $noteDomain->update($noteModel);
+        return $noteModel;
+    }
 }
