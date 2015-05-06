@@ -21,7 +21,7 @@ $application->post('/login', function () {
     
     $objRequest = new Request();
     $objRequest->setUrlParams($request->post());
-    
+
     $sessionController = new Session($objRequest);
     $sessionController->post();
 });
