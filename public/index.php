@@ -56,14 +56,14 @@ $application->get('/notes/:id', function($id) {
     $noteController->get();
 });
 
-$application->get('/notes/delete/:id', function ($id) {
+$application->delete('/notes/:id', function ($id) {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest        = new Request();
     $objRequest->setUrlParams($id);
     $objRequest->setCookies($request->cookies);
-    $deleteController = new Delete($objRequest);
-    $deleteController->get();
+    $noteController = new Note($objRequest);
+    $noteController->delete();
 });
 
 $application->get('/error', function() {

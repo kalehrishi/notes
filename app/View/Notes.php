@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,16 +7,7 @@
  .error { 
   }
 </style>
-<script type="text/javascript">
-function delete_note(id)
-{
-  var ok = confirm("Are you sure you want to delete this Note?");
- if(ok)
- {
-    window.location.href='notes/delete/'+id;
- }
-}
-</script>
+
 </head>
 <body>       
     <button type="button" style="margin:20px">Create</button>
@@ -60,7 +51,11 @@ function delete_note(id)
                 ?></a>
                 </td>
                 <td>
-                <a href="javascript:delete_note(<?php echo $id; ?>)">Delete</a></td>
+                <form action="notes/<?php echo $id; ?>" method="post">
+                    <input type="hidden" name="_METHOD" value="DELETE"/>
+                    <input type="submit" value="Delete"/>
+                </form>
+                </td>
                 </tr>
         <?php
         }
