@@ -59,11 +59,11 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $noteModel  = $noteDomain->findAllNotesByUserId($userModel);
         
         while ($noteModel->hasNext()) {
-            $this->assertEquals(1, $noteModel->getRow(0)->getId());
+            $this->assertEquals(3, $noteModel->getRow(0)->getId());
             $this->assertEquals(1, $noteModel->getRow(0)->getUserId());
-            $this->assertEquals('RSYNC', $noteModel->getRow(0)->getTitle());
-            $firstBodyText = 'To use sync a folder to the guest machine.';
-            $this->assertEquals($firstBodyText, $noteModel->getRow(0)->getBody());
+            $this->assertEquals('HTML', $noteModel->getRow(0)->getTitle());
+            $thirdBodyText = 'HyperText Markup Language';
+            $this->assertEquals($thirdBodyText, $noteModel->getRow(0)->getBody());
             
             $this->assertEquals(2, $noteModel->getRow(1)->getId());
             $this->assertEquals(1, $noteModel->getRow(1)->getUserId());
@@ -71,11 +71,11 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             $secondBodyText = 'NFS folders do not work on Windows hosts.';
             $this->assertEquals($secondBodyText, $noteModel->getRow(1)->getBody());
             
-            $this->assertEquals(3, $noteModel->getRow(2)->getId());
+            $this->assertEquals(1, $noteModel->getRow(2)->getId());
             $this->assertEquals(1, $noteModel->getRow(2)->getUserId());
-            $this->assertEquals('HTML', $noteModel->getRow(2)->getTitle());
-            $thirdBodyText = 'HyperText Markup Language';
-            $this->assertEquals($thirdBodyText, $noteModel->getRow(2)->getBody());
+            $this->assertEquals('RSYNC', $noteModel->getRow(2)->getTitle());
+            $firstBodyText = 'To use sync a folder to the guest machine.';
+            $this->assertEquals($firstBodyText, $noteModel->getRow(2)->getBody());
             
             $noteModel->next();
         }

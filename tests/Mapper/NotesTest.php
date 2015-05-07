@@ -52,17 +52,22 @@ class NotesTest extends \PHPUnit_Extensions_Database_TestCase
         ));
         
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        
         while ($actualNotesCollection->hasNext()) {
-            $this->assertEquals(1, $actualNotesCollection->getRow(0)->getId());
+            $this->assertEquals(3, $actualNotesCollection->getRow(0)->getId());
             $this->assertEquals(1, $actualNotesCollection->getRow(0)->getUserId());
-            $this->assertEquals('PHP', $actualNotesCollection->getRow(0)->getTitle());
-            $this->assertEquals('Preprocessor Hypertext', $actualNotesCollection->getRow(0)->getBody());
+            $this->assertEquals('Html', $actualNotesCollection->getRow(0)->getTitle());
+            $this->assertEquals('jljlfjldsjfldjl.', $actualNotesCollection->getRow(0)->getBody());
             
             $this->assertEquals(2, $actualNotesCollection->getRow(1)->getId());
             $this->assertEquals(1, $actualNotesCollection->getRow(1)->getUserId());
             $this->assertEquals('PHP5', $actualNotesCollection->getRow(1)->getTitle());
             $this->assertEquals('Server scripting language.', $actualNotesCollection->getRow(1)->getBody());
+            
+            $this->assertEquals(1, $actualNotesCollection->getRow(2)->getId());
+            $this->assertEquals(1, $actualNotesCollection->getRow(2)->getUserId());
+            $this->assertEquals('PHP', $actualNotesCollection->getRow(2)->getTitle());
+            $this->assertEquals('Preprocessor Hypertext', $actualNotesCollection->getRow(2)->getBody());
+            
             $actualNotesCollection->next();
         }
     }
