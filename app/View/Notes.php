@@ -9,9 +9,10 @@
 </style>
 
 </head>
-<body>       
-    <button type="button" style="margin:20px"><a href="/notes/create">Create</a></button>
-    <a href="logout">Logout</a>
+<body>
+  <button type="button"><a href="/notes/create">Create</a></button>
+
+  <a href="logout">Logout</a>
     <?php
     if (empty($response)) {
         ?>
@@ -43,7 +44,7 @@
             echo $count;
             ?>
             </td>
-            <td><a href="/notes/<?php
+            <td><a href="/notes/read/<?php
                 echo $id;
                 ?>">
             <?php

@@ -45,7 +45,7 @@ $application->get('/notes', function() {
     $notesController->get();
 });
 
-$application->get('/notes/:id', function($id) {
+$application->get('/notes/read/:id', function($id) {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest        = new Request();
@@ -85,8 +85,9 @@ $application->get('/logout', function() {
 });
 
 $application->get('/notes/create', function() {
+    $request = \Slim\Slim::getInstance()->request();
     $request        = new Request();
-    
+
     $createController = new Create($request);
     $createController->get();
 });
