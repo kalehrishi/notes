@@ -44,7 +44,7 @@
             echo $count;
             ?>
             </td>
-            <td><a href="/notes/read/<?php
+            <td><a href="/note/read/<?php
                 echo $id;
                 ?>">
             <?php
@@ -52,7 +52,7 @@
                 ?></a>
                 </td>
                 <td>
-                <form action="notes/<?php echo $id; ?>" method="post">
+                <form action="/note/delete/<?php echo $id; ?>" method="post">
                     <input type="hidden" name="_METHOD" value="DELETE"/>
                     <input type="submit" value="Delete"/>
                 </form>

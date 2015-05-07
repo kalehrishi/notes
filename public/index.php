@@ -45,7 +45,7 @@ $application->get('/notes', function() {
     $notesController->get();
 });
 
-$application->get('/notes/read/:id', function($id) {
+$application->get('/note/read/:id', function($id) {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest        = new Request();
@@ -56,7 +56,7 @@ $application->get('/notes/read/:id', function($id) {
     $noteController->get();
 });
 
-$application->delete('/notes/:id', function ($id) {
+$application->delete('/note/delete/:id', function ($id) {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest        = new Request();
