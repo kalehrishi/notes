@@ -29,17 +29,12 @@ $(document).ready( function() {
         var btnDelID = "del" + window.count;
         var div1 = $("#divTest");
         var div2 = $("<div class='div-style'></div>")
-            .append($("<input id='" + txtTagsID+ "' />"
-                + "<a href='#' id='" + btnAddID + "' >Add</a> "
-                + "<a href='#' id='" + btnDelID + "' >Del</a>"));
+            .append($("<input id='" + txtTagsID+ "' name='tag[]' />"
+                + "  <a href='#' id='" + btnDelID + "' >Del</a>"));
         div2.appendTo(div1);
     });
 
     $("a[id^='del']").live("click", null, function () {
-        if (window.count == 0) {
-            alert("You should have one textbox!");
-            return;
-        }
         var li = $(this).parent();
         li.remove();
         window.count--;
@@ -103,7 +98,7 @@ input{
     
     <div>
         <input type="hidden" name="id">
-        <input type="text" name="title" id="title" placeholder="Title">
+        <input type="text" name="title" id="title" placeholder="Title" required="">
     </div>
     
     <div>
@@ -112,9 +107,7 @@ input{
     
     <div id="divTest">
         <div class="div-style">
-            <input id="txtTags0" name = tags[]/>
-            <a href="#" id="add0">Add</a>
-            <a href="#" id="del0">Add</a>
+            <a href="#" id="add0">Add Tags</a>
         </div>
     </div>
     <div><input type="submit" value="Save"></div>
