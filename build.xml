@@ -9,7 +9,7 @@
   <delete dir="${basedir}/build/pdepend"/>
   <delete dir="${basedir}/build/phpdox"/>
   <delete file="${basedir}/composer.lock"/>
-  <!-- <delete dir="${basedir}/vendor"/> -->
+  <delete dir="${basedir}/vendor"/>
   <delete file="${basedir}/app/Config/config.json"/>
   
   <property name="clean.done" value="true"/>
@@ -59,7 +59,7 @@
  <target name="composer" depends="clean" unless="composer.noupdate" description="Run composer install">
   <exec executable="php">
    <arg value="${basedir}/build/tools/composer.phar"/>
-   <arg value="dump-autoload"/>
+   <arg value="install"/>
    <arg value="--profile"/>
   </exec>
  </target>
@@ -174,7 +174,6 @@
   <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
    <arg path="${basedir}/build/phpunit.xml"/>
-   <arg value="--debug"/>
    <arg value="--stderr"/>
   </exec>
  </target>

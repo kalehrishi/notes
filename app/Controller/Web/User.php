@@ -27,15 +27,18 @@ class User
         try {
             $response = $userService->create($input);
             if ($response instanceof UserModel) {
-            $app = \Slim\Slim::getInstance();
-            $app->redirect('/login');
+                $app = \Slim\Slim::getInstance('developer');
+                $app->redirect('/login');
             }
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
             $objResponse = new Response($response);
             $this->view->render("Register.php", $objResponse->getResponse());
-        }
-        catch (ModelNotFoundException $error) {
+        } catch (ModelNotFoundException $error) {
+            $response    = $error->getMessage();
+            $objResponse = new Response($response);
+            $this->view->render("Register.php", $objResponse->getResponse());
+        } catch (\Exception $error) {
             $response    = $error->getMessage();
             $objResponse = new Response($response);
             $this->view->render("Register.php", $objResponse->getResponse());

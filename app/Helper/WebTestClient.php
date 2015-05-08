@@ -3,20 +3,13 @@ namespace Notes\Helper;
 
 use \Slim;
 
-
 class WebTestClient
 {
-    public $application;
+    public $app;
     public $request;
     public $response;
         
     public $testingMethods = array('get', 'post', 'patch', 'put', 'delete', 'head');
-    
-    /*public function __construct(Slim\Slim $slim)
-    {   
-        $this->app = $slim;
-    }*/
-    // Implement our `get`, `post`, and other http operations
     
     public function __call($method, $arguments)
     {
@@ -27,10 +20,7 @@ class WebTestClient
         }
         throw new \BadMethodCallException(strtoupper($method) . ' is not supported');
     }
-    
-    // Abstract way to make a request to SlimPHP, this allows us to mock the
-    // slim environment
-    
+
     private function request($method, $path, $data = array(), $optionalHeaders = array())
     {
         ob_start();
@@ -40,8 +30,7 @@ class WebTestClient
             'PATH_INFO'      => $path,
             'SERVER_NAME' => 'local.dev'
         );
-       
-         
+      
         if ($method === 'get') {
             $options['QUERY_STRING'] = http_build_query($data);
         } elseif (is_array($data)) {
@@ -50,21 +39,22 @@ class WebTestClient
             $options['slim.input']   = $data;
         }
        
-        //print_r($options);     
         Slim\Environment::mock(array_merge($options, $optionalHeaders));
+
+        $application = new \Slim\Slim(array(
+                            'debug' => true,
+                            'mode'=>'test'));
         
-        $this->application = new \Slim\Slim(array(
-                            'debug' => true ));
-        
-       // print_r($this->application->request->post());
+        $application->setName('developer');
         
         require "app/Router/Routes.php";
-
-        $this->request  = $this->application->request();
-        $this->response = $this->application->response();
-
-        $this->application->run();
         
-        return ob_get_clean(); 
+        $this->app=$application;
+        $this->request  = $application->request();
+        $this->response = $application->response();
+
+        $application->run();
+        
+        return ob_get_clean();
     }
 }

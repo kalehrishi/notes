@@ -17,7 +17,6 @@ class Session
     {
         $this->request = $request;
         $this->view    = new View();
-
     }
     public function get()
     {
@@ -30,12 +29,11 @@ class Session
         $sessionService = new SessionService();
         try {
             $response = $sessionService->login($input);
-         
             
             if ($response instanceof SessionModel) {
                 setcookie('userId', $response->getUserId(), time() + (86400 * 30), "/");
                 setcookie('authToken', $response->getAuthToken(), time() + (86400 * 30), "/");
-                $app = \Slim\Slim::getInstance();
+                $app = \Slim\Slim::getInstance('developer');
                 $app->redirect('/notes');
             }
         } catch (\InvalidArgumentException $error) {
@@ -43,6 +41,10 @@ class Session
             $objResponse = new Response($response);
             $this->view->render("Login.php", $objResponse->getResponse());
         } catch (ModelNotFoundException $error) {
+            $response    = $error->getMessage();
+            $objResponse = new Response($response);
+            $this->view->render("Login.php", $objResponse->getResponse());
+        } catch (\Exception $error) {
             $response    = $error->getMessage();
             $objResponse = new Response($response);
             $this->view->render("Login.php", $objResponse->getResponse());
