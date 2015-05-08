@@ -26,19 +26,22 @@ class User
         $userService = new UserService();
         try {
             $response = $userService->create($input);
+            if ($response instanceof UserModel) {
+                $app = \Slim\Slim::getInstance('developer');
+                $app->redirect("/login");
+        }
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
             $objResponse = new Response($response);
             $this->view->render("Register.php", $objResponse->getResponse());
-        }
-        catch (ModelNotFoundException $error) {
+        } catch (ModelNotFoundException $error) {
             $response    = $error->getMessage();
             $objResponse = new Response($response);
             $this->view->render("Register.php", $objResponse->getResponse());
-        }
-        if ($response instanceof UserModel) {
-            $app = \Slim\Slim::getInstance();
-            $app->redirect("/login");
+        } catch (\Exception $error) {
+            $response    = $error->getMessage();
+            $objResponse = new Response($response);
+            $this->view->render("Register.php", $objResponse->getResponse());
         }
     }
 }
