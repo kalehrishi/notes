@@ -40,6 +40,29 @@ $application->get('/notes', function () use ($application) {
     $notesController->get();
 });
 
+$application->get('/notes/:id', function($id) use ($application) {
+    $request = $application->request();
+    
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($id);
+    $objRequest->setCookies($request->cookies);
+
+    $noteController = new Note($objRequest);
+    $noteController->get();
+});
+
+$application->delete('/notes/:id', function ($id) use ($application) {
+    $request = $application->request();
+    
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($id);
+    $objRequest->setCookies($request->cookies);
+    
+    $noteController = new Note($objRequest);
+    $noteController->delete();
+});
+
+
 $application->get('/error', function () use ($application) {
     $request         = new Request();
     $errorController = new Error($request);
