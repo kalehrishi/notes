@@ -7,6 +7,7 @@
  .error { 
   }
 </style>
+
 </head>
 <body>       
     <button type="button" style="margin:20px">Create</button>
@@ -35,10 +36,11 @@
         for ($i = 0; $i < count($response); $i++) {
             $id    = $response[$i]['id'];
             $title = $response[$i]['title'];
+            $count = $i + 1;
             ?>
             <tr align="center">
             <td><?php
-            echo $id;
+            echo $count;
             ?>
             </td>
             <td><a href="/notes/<?php
@@ -48,7 +50,12 @@
                 echo $title;
                 ?></a>
                 </td>
-                <td><a href="">Delete</a></td>
+                <td>
+                <form action="notes/<?php echo $id; ?>" method="post">
+                    <input type="hidden" name="_METHOD" value="DELETE"/>
+                    <input type="submit" value="Delete"/>
+                </form>
+                </td>
                 </tr>
         <?php
         }
