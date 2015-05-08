@@ -32,7 +32,7 @@ class Note
         try {
             $sessionService->isValid($sessionModel);
         } catch (ModelNotFoundException $error) {
-            $app = \Slim\Slim::getInstance();
+            $app = \Slim\Slim::getInstance('developer');
             $app->redirect("/login");
         }
         $noteId = $this->request->getUrlParams();
@@ -44,9 +44,10 @@ class Note
         try {
             $noteModel = $noteService->get($noteModel);
             $this->view->render("Note.php", $noteModel);
-
-            return $noteModel;
         } catch (ModelNotFoundException $error) {
+            $response = $error->getMessage();
+            $this->view->render("Note.php", $response);
+        } catch (\Exception $error) {
             $response = $error->getMessage();
             $this->view->render("Note.php", $response);
         }
@@ -61,28 +62,26 @@ class Note
         try {
             $sessionService->isValid($sessionModel);
         } catch (ModelNotFoundException $error) {
-            $app = \Slim\Slim::getInstance();
+            $app = \Slim\Slim::getInstance('developer');
             $app->redirect("/login");
         }
+
         $noteModel = new NoteModel();
         $noteModel->setId($this->request->getUrlParams());
-        
         $noteService = new NoteService();
         try {
             $noteModel = $noteService->get($noteModel);
-        } catch (ModelNotFoundException $error) {
-            $response = $error->getMessage();
-            $this->view->render("Notes.php", $response);
-        }
-        try {
             $noteModel = $noteService->delete($noteModel);
+            if ($noteModel instanceof NoteModel) {
+                $app = \Slim\Slim::getInstance('developer');
+                $app->redirect("/notes");
+            }
         } catch (ModelNotFoundException $error) {
             $response = $error->getMessage();
             $this->view->render("Notes.php", $response);
-        }
-        if ($noteModel instanceof NoteModel) {
-            $app = \Slim\Slim::getInstance();
-            $app->redirect("/notes");
+        } catch (\Exception $error) {
+            $response = $error->getMessage();
+            $this->view->render("Notes.php", $response);
         }
     }
 }

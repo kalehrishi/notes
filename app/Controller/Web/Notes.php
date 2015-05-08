@@ -45,7 +45,7 @@ class Notes
             
             return $response;
         } catch (ModelNotFoundException $error) {
-            $app = \Slim\Slim::getInstance();
+            $app = \Slim\Slim::getInstance('developer');
             $app->redirect("/error");
         }
     }

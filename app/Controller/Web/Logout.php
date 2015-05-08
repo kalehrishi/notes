@@ -28,12 +28,15 @@ class Logout
         if ($sessionService->isValid($sessionModel)) {
             try {
                 $response = $sessionService->logout($sessionModel);
-                $app = \Slim\Slim::getInstance();
+                $app = \Slim\Slim::getInstance('developer');
                 $app->redirect("/login");
             } catch (ModelNotFoundException $error) {
                 $response    = $error->getMessage();
                 $this->view->render("Notes.php", $response);
             } catch (\InvalidArgumentException $error) {
+                $response = $error->getMessage();
+                $this->view->render("Notes.php", $response);
+            } catch (\Exception $error) {
                 $response = $error->getMessage();
                 $this->view->render("Notes.php", $response);
             }
