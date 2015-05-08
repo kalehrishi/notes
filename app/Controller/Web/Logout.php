@@ -27,7 +27,7 @@ class Logout
         $sessionService = new SessionService();
         if ($sessionService->isValid($sessionModel)) {
             try {
-            	$response = $sessionService->logout($sessionModel);
+                $response = $sessionService->logout($sessionModel);
                 $app = \Slim\Slim::getInstance('developer');
                 $app->redirect("/login");
             } catch (ModelNotFoundException $error) {

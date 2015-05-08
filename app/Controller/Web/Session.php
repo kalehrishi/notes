@@ -33,7 +33,7 @@ class Session
                 setcookie('authToken', $response->getAuthToken(), time() + (86400 * 30), "/");
                 $app = \Slim\Slim::getInstance('developer');
                 $app->redirect("/notes");
-            }            
+            }
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
             $objResponse = new Response($response);

@@ -29,7 +29,7 @@ class User
             if ($response instanceof UserModel) {
                 $app = \Slim\Slim::getInstance('developer');
                 $app->redirect("/login");
-        }
+            }
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
             $objResponse = new Response($response);

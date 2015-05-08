@@ -75,7 +75,7 @@ class Note
             if ($noteModel instanceof NoteModel) {
                 $app = \Slim\Slim::getInstance('developer');
                 $app->redirect("/notes");
-        }
+            }
         } catch (ModelNotFoundException $error) {
             $response = $error->getMessage();
             $this->view->render("Notes.php", $response);
