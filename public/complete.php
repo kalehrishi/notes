@@ -9,7 +9,14 @@
   $i=0;
   while($row=mysqli_fetch_array($result))
   {   
-    $output  = $row['tag'];
+    $output  = array(
+    	'id' => $row['id'],
+    	'userId' => $row['userId'],
+    	'tag'=> $row['tag'],
+    	'isDeleted'=>$row['isDeleted']
+    	);
+    /*$json =  json_encode($output);
+  	echo $json;*/
     array_push($userTags, $output);
   }
   $json =  json_encode($userTags);

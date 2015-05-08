@@ -32,10 +32,10 @@ class Create
     {
         $this->view->render("Create.php");
     }
-
+    
     public function post()
     {
-        $input = $this->request->getUrlParams();
+        $input        = $this->request->getUrlParams();
         $sessionModel = new SessionModel();
         $sessionModel->setUserId($this->request->getCookies()['userId']);
         $sessionModel->setAuthToken($this->request->getCookies()['authToken']);
@@ -43,33 +43,22 @@ class Create
         $sessionService = new SessionService();
         try {
             $sessionService->isValid($sessionModel);
-
-            $noteModel = new NoteModel();
-            $noteModel->setUserId($this->request->getCookies()['userId']);
-            $noteModel->setTitle($input['title']);
-            $noteModel->setBody($input['body']);
-            $noteTagCollection = new Collection();
-
-            for ($i=0; $i < count($input['tags']); $i++) { 
-                $userTagModel = new UserTagModel();
-                $userTagModel->setUserId($this->request->getCookies()['userId']);
-                $userTagModel->setTag($input['tags'][$i]);
-                $noteTagModel = new NoteTagModel();
-                $noteTagModel->setUserTag($userTagModel);
-                $noteTagCollection->add($noteTagModel);
-            }
-            $noteModel->setNoteTags($noteTagCollection);
-            
-            $createService   = new CreateService();
-            $response = $createService->post($noteModel);
-            
-            if ($noteModel instanceof NoteModel) {
-                $app = \Slim\Slim::getInstance();
-                $app->redirect("/notes");
-            }
         } catch (ModelNotFoundException $error) {
             $app = \Slim\Slim::getInstance();
-            $app->redirect("/error");
+            $app->redirect("/login");
         }
+        $noteModel = new NoteModel();
+        $noteModel->setUserId($this->request->getCookies()['userId']);
+        $noteModel->setTitle($input['title']);
+        $noteModel->setBody($input['body']);
+        
+        $createService = new CreateService();
+        $noteModel      = $createService->post($noteModel);
+        
+        if ($noteModel instanceof NoteModel) {
+            $app = \Slim\Slim::getInstance();
+            $app->redirect("/notes");
+        }
+        
     }
 }

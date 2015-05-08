@@ -17,19 +17,35 @@ $(document).ready( function() {
             type: 'GET',
             url: '../complete.php',
             data: 'id=testdata',
-            dataType: 'json',
+            datatype: 'json',
             cache: false,
             success: function(result) {
                 console.log(result);
+                var obj = '{ "userTags" :'  + result +  '}';
+                console.log(obj);
+                obj1 = JSON.parse(obj);
+                var JSONObject =obj1.userTags;
+                var tags = new Array();
+                var ids = new Array();
+                for (var key in JSONObject) {
+                if (JSONObject.hasOwnProperty(key)) {
+                    tags.push(JSONObject[key]["tag"]);
+                    ids.push(JSONObject[key]["id"]);
+                    }
+                }
+                console.log(obj1.userTags[0].tag);
+
                 window.count = 0;
-    $("a[id^='add']").live("click", null, function () {
+    $("a[id^='add']").live("click", null, function (e) {
         window.count++;
         var txtTagsID= "txtTags" + window.count;
         var btnAddID = "add" + window.count;
         var btnDelID = "del" + window.count;
         var div1 = $("#divTest");
+        console.log(e);
         var div2 = $("<div class='div-style'></div>")
-            .append($("<input id='" + txtTagsID+ "' name='tag[]' />"
+            .append($("<input type='hidden' id='" + txtTagsID+ "' name='userTag[]' value='"+obj1.userTags+"' />"
+                + "<input id='" + txtTagsID+ "' name='tag[]' />"
                 + "  <a href='#' id='" + btnDelID + "' >Del</a>"));
         div2.appendTo(div1);
     });
@@ -40,11 +56,9 @@ $(document).ready( function() {
         window.count--;
     });
     
-    
-    
     $("input:text[id^='txtTags']").live("focus.autocomplete", null, function () {
         $(this).autocomplete({
-            source: result,
+            source: tags,
             minLength: 0,
             delay: 0
         });

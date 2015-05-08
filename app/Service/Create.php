@@ -8,7 +8,7 @@ class Create
 {
     public function post(NoteModel $noteModel)
     {
-    	$noteDomain = new NoteDomain();
+        $noteDomain = new NoteDomain();
         $noteModel  = $noteDomain->create($noteModel);
         return $noteModel;
     }
