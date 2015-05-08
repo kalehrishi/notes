@@ -8,3 +8,4 @@ cache.properties
 app/Config/config.json
 .vagrant
 composer.lock
+tests/_output/*
