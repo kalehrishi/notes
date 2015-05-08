@@ -8,6 +8,6 @@ $application = new \Slim\Slim(array(
 
 $application->setName('developer');
 
-require_once "../app/Router/Routes.php";
+require_once "../app/Routes/Routes.php";
 
 $application->run();
