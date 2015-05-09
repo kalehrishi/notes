@@ -15,11 +15,12 @@ $(document).ready( function() {
     
         $.ajax({
             type: 'GET',
-            url: '../complete.php',
+            url: '/notes/searchtag',
             data: 'id=testdata',
             datatype: 'json',
             cache: false,
             success: function(result) {
+                console.log("Hiiii");
                 console.log(result);
                 var obj = '{ "userTags" :'  + result +  '}';
                 console.log(obj);
@@ -34,7 +35,6 @@ $(document).ready( function() {
                     }
                 }
                 console.log(obj1.userTags[0].tag);
-
                 window.count = 0;
     $("a[id^='add']").live("click", null, function (e) {
         window.count++;

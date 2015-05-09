@@ -35,6 +35,7 @@ class Create
     
     public function post()
     {
+        //print_r($this->request->getUrlParams());
         $input        = $this->request->getUrlParams();
         $sessionModel = new SessionModel();
         $sessionModel->setUserId($this->request->getCookies()['userId']);

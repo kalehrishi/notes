@@ -103,6 +103,19 @@ $application->post('/notes/create', function() {
     $createController->post();
 });
 
+$application->get('/notes/searchtag', function() {
+    $request = \Slim\Slim::getInstance()->request();
+    
+    $objRequest        = new Request();
+    
+    $objRequest->setData($request->getBody());
+    $objRequest->setHeaders($request->headers);
+    $objRequest->setCookies($request->cookies);
+
+    $userTagController = new UserTag($objRequest);
+    $userTagController->get();
+});
+
 $application->post('/notes', function() {
     $request = \Slim\Slim::getInstance()->request();
 
