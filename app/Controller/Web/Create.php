@@ -35,8 +35,8 @@ class Create
     
     public function post()
     {
-        //print_r($this->request->getUrlParams());
-        $input        = $this->request->getUrlParams();
+        print_r($this->request->getUrlParams());
+        /*$input        = $this->request->getUrlParams();
         $sessionModel = new SessionModel();
         $sessionModel->setUserId($this->request->getCookies()['userId']);
         $sessionModel->setAuthToken($this->request->getCookies()['authToken']);
@@ -59,7 +59,7 @@ class Create
         if ($noteModel instanceof NoteModel) {
             $app = \Slim\Slim::getInstance();
             $app->redirect("/notes");
-        }
+        }*/
         
     }
 }

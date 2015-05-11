@@ -25,7 +25,7 @@ class UserTag
     }
     public function get()
     {
-       $sessionModel = new SessionModel();
+        $sessionModel = new SessionModel();
         $sessionModel->setUserId($this->request->getCookies()['userId']);
         $sessionModel->setAuthToken($this->request->getCookies()['authToken']);
         

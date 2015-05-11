@@ -27,14 +27,15 @@ $(document).ready( function() {
                 console.log(obj);
                 obj1 = JSON.parse(obj);
                 var JSONObject =obj1.userTags;
+                console.log(JSONObject.length);
                 var tags = new Array();
                 var ids = new Array();
                 for (var key in JSONObject) {
                 if (JSONObject.hasOwnProperty(key)) {
                     tags.push(JSONObject[key]["tag"]);
-                    ids.push(JSONObject[key]["id"]);
                     }
                 }
+                console.log(tags);
                 console.log(obj1.userTags[0].tag);
                 window.count = 0;
     $("a[id^='add']").live("click", null, function (e) {
@@ -43,21 +44,23 @@ $(document).ready( function() {
         var btnAddID = "add" + window.count;
         var btnDelID = "del" + window.count;
         var div1 = $("#divTest");
-        console.log(e);
+       
+        
         var div2 = $("<div class='div-style'></div>")
-            .append($("<input type='hidden' id='" + txtTagsID+ "' name='userTag[]' value='"+obj1.userTags+"' />"
-                + "<input id='" + txtTagsID+ "' name='tag[]' />"
-                + "  <a href='#' id='" + btnDelID + "' >Del</a>"));
+            .append($("<input id='"+txtTagsID+"' name='tag[]'/>"
+                +"  <a href='#' id='" + btnDelID + "' >Del</a>"));
         div2.appendTo(div1);
+       
     });
-
+    
     $("a[id^='del']").live("click", null, function () {
         var li = $(this).parent();
         li.remove();
         window.count--;
     });
     
-    $("input:text[id^='txtTags']").live("focus.autocomplete", null, function () {
+    $("input:text[id^='txtTags']").live("click", null, function (e) {
+         
         $(this).autocomplete({
             source: tags,
             minLength: 0,
@@ -65,8 +68,30 @@ $(document).ready( function() {
         });
 
         $(this).autocomplete("search");
+        var idValue = e.target.attributes.id.value;
+        console.log(idValue);
+        var tag1 = document.getElementById(idValue).value;
+        console.log(tag1);
+        
+        for(var i=0; i<JSONObject.length;i++)
+        {
+            var userTagID = "userTagId" + i;
+            
+            if(JSONObject[i].tag == tag1)
+            {
+                var tagObj = JSONObject[i];
+                var str = JSON.stringify(tagObj);
+                console.log(str);
+                var div1 = $("#divTest1");
+                var div2 = $("<div class='div-style1'></div>")
+            .append($("<input type='hidden' id='"+userTagID+"' name='userTag[]' value='"+str+"'/>"));
+        div2.appendTo(div1);
+               }
+        }
     });
+
     }
+
  });
     
 });
@@ -103,69 +128,6 @@ input{
     * html .ui-autocomplete {
         height: 100px;
     }
-
-/*.container{
-  font-family: 'Lucida Grande', 'Helvetica Neue', sans-serif;
-  font-size: 13px;
-}
-
-#comment_form input, #comment_form textarea {
-  border: 4px solid rgba(0,0,0,0.1);
-  padding: 8px 10px;
-  font-weight: bold;
-  
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  
-  outline: 0;
-}
-
-#comment_form textarea {
-  width: 150px;
-  height: 100px;
-}
-
-#comment_form input[type="submit"] {
-  cursor: pointer;
-  background: -webkit-linear-gradient(top, #efefef, #ddd);
-  background: -moz-linear-gradient(top, #efefef, #ddd);
-  background: -ms-linear-gradient(top, #efefef, #ddd);
-  background: -o-linear-gradient(top, #efefef, #ddd);
-  background: linear-gradient(top, #efefef, #ddd);
-  color: #333;
-  text-shadow: 0px 1px 1px rgba(255,255,255,1);
-  border: 1px solid #ccc;
-}
-
-#comment_form input[type="submit"]:hover {
-  background: -webkit-linear-gradient(top, #eee, #ccc);
-  background: -moz-linear-gradient(top, #eee, #ccc);
-  background: -ms-linear-gradient(top, #eee, #ccc);
-  background: -o-linear-gradient(top, #eee, #ccc);
-  background: linear-gradient(top, #eee, #ccc);
-  border: 1px solid #bbb;
-}
-
-#comment_form input[type="submit"]:active {
-  background: -webkit-linear-gradient(top, #ddd, #aaa);
-  background: -moz-linear-gradient(top, #ddd, #aaa);
-  background: -ms-linear-gradient(top, #ddd, #aaa);
-  background: -o-linear-gradient(top, #ddd, #aaa);
-  background: linear-gradient(top, #ddd, #aaa); 
-  border: 1px solid #999;
-}
-
-#comment_form div {
-  margin-bottom: 8px;
-  margin: 10px;
-}
-.container {
-  width: 300px;
-  border: 1px solid black;
-
-}*/
-
 </style>
 </head>
 <body>
@@ -186,10 +148,19 @@ input{
         <div class="div-style">
             <a href="#" id="add0">Add Tags</a>
         </div>
+
     </div>
+    <div id="divTest1">
+        <div class="div-style1">
+        </div>
+
+    </div>
+    
+
     <div><input type="submit" value="Save"></div>
     
 </div>
 </form>
+
 </body>
 <html>
