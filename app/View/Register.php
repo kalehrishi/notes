@@ -6,7 +6,7 @@ $data = json_decode($response, true);
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Registation Form</title>
   <style>
  .error { 
   }

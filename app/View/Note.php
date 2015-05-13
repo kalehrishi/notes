@@ -1,7 +1,3 @@
-<?php
-use Notes\Collection\Collection as Collection;
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
