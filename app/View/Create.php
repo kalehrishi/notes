@@ -23,112 +23,50 @@ $(document).ready( function() {
             cache: false,
             success: function(result) {
                 console.log(result);
-                var obj = '{ "userTags" :'  + result +  '}';
-                console.log(obj);
-                obj1 = JSON.parse(obj);
-                var JSONObject =obj1.userTags;
-                console.log(JSONObject.length);
-                var tags = new Array();
-                var ids = new Array();
-                for (var key in JSONObject) {
-                if (JSONObject.hasOwnProperty(key)) {
-                    tags.push(JSONObject[key]["tag"]);
-                    }
-                }
-                console.log(tags);
-                console.log(obj1.userTags[0].tag);
-                window.count = 0;
-    $("a[id^='add']").live("click", null, function (e) {
-        window.count++;
-        var txtTagsID= "txtTags" + window.count;
-        var btnAddID = "add" + window.count;
-        var btnDelID = "del" + window.count;
-        var div1 = $("#divTest");
-       
-        
-        var div2 = $("<div class='div-style'></div>")
-            .append($("<input id='"+txtTagsID+"' name='tag[]'/>"
-                +"  <a href='#' id='" + btnDelID + "' >Del</a>"));
-        div2.appendTo(div1);
-       
-    });
-    
-    $("a[id^='del']").live("click", null, function () {
-        var li = $(this).parent();
-        li.remove();
-        window.count--;
-    });
-    
-    $("input:text[id^='txtTags']").live("click", null, function (e) {
-         
-        $(this).autocomplete({
-            source: tags,
-            minLength: 0,
-            delay: 0
-        });
-
-        $(this).autocomplete("search");
-        var idValue = e.target.attributes.id.value;
-        console.log(idValue);
-        var tag1 = document.getElementById(idValue).value;
-        console.log(tag1);
-        
-        for(var i=0; i<JSONObject.length;i++)
-        {
-            var userTagID = "userTagId" + i;
+                
+                var userTagsFromServer = JSON.parse(result);
+             var userTags=document.getElementById('user-tags');
+            for(var i=0;i<userTagsFromServer.length;i++){
+            //create and append tag to tag list 
             
-            if(JSONObject[i].tag == tag1)
-            {
-                var tagObj = JSONObject[i];
-                var str = JSON.stringify(tagObj);
-                console.log(str);
-                var div1 = $("#divTest1");
-                var div2 = $("<div class='div-style1'></div>")
-            .append($("<input type='hidden' id='"+userTagID+"' name='userTag[]' value='"+str+"'/>"));
-        div2.appendTo(div1);
-               }
-        }
+            var tag=document.createElement("LI");
+            tag.setAttribute("class", "inputTags");
+            tag.appendChild(document.createTextNode(userTagsFromServer[i].tag));
+
+            tag.userTagsFromServer=userTagsFromServer[i];
+            
+            tag.addEventListener("click",function(){
+           
+            var noteTags=document.getElementById('note-tags');
+            console.log(this.userTagsFromServer.tag);
+            var tag=document.createElement("LI");
+            tag.appendChild(document.createTextNode(this.userTagsFromServer.tag));
+            tag.userTagsFromServer=JSON.stringify(this.userTagsFromServer);
+            noteTags.appendChild(tag);
+            console.log(tag.userTagsFromServer);
+        },false);
+            userTags.appendChild(tag);
+}
+$("button[id^='addTags']").live("click", null, function (e) {
+            if((document.getElementById("txtTags").value).length == 0) {
+                alert("The textbox should not be empty");
+                return;
+            } 
+            var userTag = document.getElementById("txtTags").value;
+            console.log(userTag);
+            
+            var noteTags=document.getElementById('note-tags');
+            var tag = document.createElement("LI");
+            tag.appendChild(document.createTextNode(userTag));
+            tag.userTag = JSON.stringify(this.userTag);
+            noteTags.appendChild(tag);
+            document.getElementById("txtTags").value = "";      
     });
-
-    }
-
- });
-    
+}
 });
+});
+   
 </script>
-<style type="text/css">
-    .ul-style{
-    max-height:80px; 
-    width:350px; 
-    overflow-x:hidden; 
-    overflow-y:auto
-}
-.li-style{
-    font-size:medium;
-}
-button{
-    width:50px;
-    margin-left:5px;
-}
-input{
-    width:100px;
-}
-
-.ui-autocomplete {
-            max-height: 100px;
-            overflow-y: auto;
-            /* prevent horizontal scrollbar */
-            overflow-x: hidden;
-            /* add padding to account for vertical scrollbar */
-            padding-right: 20px;
-    }
-    /* IE 6 doesn't support max-height
-     * we use height instead, but this forces the menu to always be this tall
-     */
-    * html .ui-autocomplete {
-        height: 100px;
-    }
-</style>
 </head>
 <body>
 <form method="post">
@@ -139,28 +77,20 @@ input{
         <input type="hidden" name="id">
         <input type="text" name="title" id="title" placeholder="Title" required="">
     </div>
-    
     <div>
         <textarea rows="10" name="body" id="body" placeholder="Description"></textarea>
     </div>
-    
+
     <div id="divTest">
-        <div class="div-style">
-            <a href="#" id="add0">Add Tags</a>
-        </div>
+        <ul id="user-tags">
+        <input type="text" id="txtTags"/>
+        <span><button type="button" id="addTags">Add</button></span>
+        </ul>
 
     </div>
-    <div id="divTest1">
-        <div class="div-style1">
-        </div>
-
-    </div>
-    
-
-    <div><input type="submit" value="Save"></div>
-    
+    <div id="note-tags"></div>
+<input type="submit" value="Save">    
 </div>
-</form>
-
+</form>    
 </body>
-<html>
+</html>
