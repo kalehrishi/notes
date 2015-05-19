@@ -26,6 +26,8 @@ $(document).ready( function() {
                 
                 var userTagsFromServer = JSON.parse(result);
              var userTags=document.getElementById('user-tags');
+             var userTagsArray = [];
+
             for(var i=0;i<userTagsFromServer.length;i++){
             //create and append tag to tag list 
             
@@ -35,15 +37,20 @@ $(document).ready( function() {
 
             tag.userTagsFromServer=userTagsFromServer[i];
             
+            
             tag.addEventListener("click",function(){
            
             var noteTags=document.getElementById('note-tags');
+            console.log(noteTags);
             console.log(this.userTagsFromServer.tag);
             var tag=document.createElement("LI");
             tag.appendChild(document.createTextNode(this.userTagsFromServer.tag));
             tag.userTagsFromServer=JSON.stringify(this.userTagsFromServer);
             noteTags.appendChild(tag);
             console.log(tag.userTagsFromServer);
+            userTagsArray.push(tag.userTagsFromServer);
+            document.getElementById("Tags").value = userTagsArray ;
+            console.log(userTagsArray);
         },false);
             userTags.appendChild(tag);
 }
@@ -56,10 +63,22 @@ $("button[id^='addTags']").live("click", null, function (e) {
             console.log(userTag);
             
             var noteTags=document.getElementById('note-tags');
+            console.log(noteTags);
+
             var tag = document.createElement("LI");
+            
             tag.appendChild(document.createTextNode(userTag));
-            tag.userTag = JSON.stringify(this.userTag);
+            
+            //tag.userTag = JSON.stringify(userTag);
+            
             noteTags.appendChild(tag);
+
+
+          
+            userTagsArray.push(userTag);
+            document.getElementById("Tags").value = userTagsArray;
+            console.log(userTagsArray);
+
             document.getElementById("txtTags").value = "";      
     });
 }
@@ -86,9 +105,9 @@ $("button[id^='addTags']").live("click", null, function (e) {
         <input type="text" id="txtTags"/>
         <span><button type="button" id="addTags">Add</button></span>
         </ul>
-
     </div>
     <div id="note-tags"></div>
+    <input type="hidden" id="Tags" name="userTag"/>
 <input type="submit" value="Save">    
 </div>
 </form>    
