@@ -22,13 +22,12 @@ class LoginTest extends \PHPUnit_Framework_TestCase
 		            "version":"1.0.0",
 		            "data":"Invalid Email",
 		            "debugData":null }';
-		require "app/View/Login.php";
+		$fileName= "Login.php";
 
-		$this->assertEquals("Invalid Email" , $data['data']);
-		$this->assertEquals("200" , $data['status']);
-	}
-	public function tearDown()
-	{
-		ob_get_clean();
-	}
+		$this->view->render($fileName, $response);
+        
+        $output=ob_get_clean();
+
+  		$this->assertContains("Invalid Email" , $output);
+    }
 }
