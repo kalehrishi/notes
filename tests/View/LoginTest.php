@@ -3,31 +3,38 @@ namespace Notes\View;
 
 class LoginTest extends \PHPUnit_Framework_TestCase
 {
-	protected $view;
-	public function setUp()
- 	{
- 	   ob_start();
-       $this->view = new View();
-       
-	}
-	
-	/**
-	*@test
-	*
-	**/
-	public function response_data_should_access_in_login_View()
-	{
-		$response = '{"status":"200",
+    protected $view;
+    public function setUp()
+    {
+        ob_start();
+        $this->view = new View();
+        
+    }
+    
+    /**
+     *@test
+     *
+     **/
+    public function response_data_should_access_in_login_View()
+    {
+        $response = '{"status":"200",
 		            "message":"OK",
 		            "version":"1.0.0",
 		            "data":"Invalid Email",
 		            "debugData":null }';
-		$fileName= "Login.php";
-
-		$this->view->render($fileName, $response);
+        require "app/View/Login.php";
         
-        $output=ob_get_clean();
-
-  		$this->assertContains("Invalid Email" , $output);
+        
+        $dom    = new \DOMDocument();
+        $output = ob_get_contents();
+        
+        $dom->loadHTML($output);
+        
+        $element = $dom->getElementsByTagName('div');
+        $this->assertEquals("Invalid Email", $element->item(0)->textContent);
+    }
+    public function tearDown()
+    {
+        ob_end_clean();
     }
 }

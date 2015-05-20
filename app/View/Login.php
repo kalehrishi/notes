@@ -27,9 +27,7 @@ $data = json_decode($response, true);
         if (is_string($data['data'])) {
             </script>
             <td>Error :-  </td>
-            <td><div class="error" >
-            <script language="php">
-            echo $data['data'];
+            <td><div class="error" ><script language="php">echo $data['data'];
         }
         </script></div></td>
        </tr>

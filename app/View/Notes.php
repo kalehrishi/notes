@@ -24,39 +24,31 @@
     } else {
         ?>
         <table border="1" font-size="25px" width="500" style="margin:5px">
-          <tr align="center">
-            <td colspan="3">All Notes</td>
-          </tr>
-          <tr align="center">
-          <td>No.</td>
+        <tr align="center">
+          <td>No</td>
           <td>Title</td>
           <td>Action</td>
-          </tr>
+        </tr>
         <?php
         for ($i = 0; $i < count($response); $i++) {
             $id    = $response[$i]['id'];
             $title = $response[$i]['title'];
             $count = $i + 1;
             ?>
-            <tr align="center">
-            <td><?php
-            echo $count;
-            ?>
-            </td>
-            <td><a href="/notes/<?php
-                echo $id;
-                ?>">
-            <?php
-                echo $title;
-                ?></a>
-                </td>
-                <td>
-                <form action="notes/<?php echo $id; ?>" method="post">
-                    <input type="hidden" name="_METHOD" value="DELETE"/>
-                    <input type="submit" value="Delete"/>
-                </form>
-                </td>
-                </tr>
+        <tr align="center">
+          <td>
+            <?php echo $count; ?>
+          </td>
+          <td>
+            <a href="/notes/<?php echo $id; ?>"><div class="title"><?php echo $title; ?></div></a>
+          </td>
+          <td>
+            <form action="notes/<?php echo $id; ?>" method="post">
+              <input type="hidden" name="_METHOD" value="DELETE"/>
+              <input type="submit" value="Delete"/>
+            </form>
+          </td>
+        </tr>
         <?php
         }
     }
