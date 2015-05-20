@@ -16,20 +16,18 @@ $data = json_decode($response, true);
     <table>
       <tr>
         <td>Email:</td>
-        <td><input type="text" name="email"></input></td>
+        <td><input type="text" name="email" /></td>
       </tr>
       <tr> 
         <td>Password:</td>
-        <td><input type="password" name="password"></input></td> 
+        <td><input type="password" name="password" /></td> 
       </tr>
       <tr>
         <script language="php">
         if (is_string($data['data'])) {
             </script>
             <td>Error :-  </td>
-            <td><div class="error" >
-            <script language="php">
-            echo $data['data'];
+            <td><div class="error" ><script language="php">echo $data['data'];
         }
         </script></div></td>
        </tr>

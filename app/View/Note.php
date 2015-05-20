@@ -1,12 +1,8 @@
-<?php
-use Notes\Collection\Collection as Collection;
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title></title>
   <style>
  .error { 
   }
@@ -18,10 +14,10 @@ use Notes\Collection\Collection as Collection;
 .title {
   font-weight: bold;
 }
-.label {
+.tag {
   border: 1px solid black;
   background-color: yellow;
-  border-radius: 3px;
+  border-radius: 1px;
   vertical-align: top;
   font-size: 10px;
   line-height: 1.8;
@@ -39,47 +35,39 @@ use Notes\Collection\Collection as Collection;
     if (is_string($response)) {
         ?>
     <tr>
-        <td>Error :-  </td>
-            <td><div class="error" >
-            <?php echo $response; ?>
-            </div></td>
-         
-      </tr>
+      <td>Error :-</td>
+      <td><div class="error" ><?php echo $response; ?></div></td>       
+    </tr>
         <?php
     } else {
         ?>
-      <tr>
-        <td class="title"><?php echo $response->getTitle(); ?></td> 
-      </tr>
-      <tr>
-        <td><?php echo $response->getBody(); ?></td> 
-      </tr>
-      <tr>
-        <td><?php
-        if ($response->getNoteTags()->getTotal() < 0) {
-            echo "No Tags";
-        } else {
-            $noteTagCollection = $response->getNoteTags();
-            while ($noteTagCollection->hasNext()) {
+    <tr>
+      <td><div class="title"><?php echo $response->getTitle(); ?></div></td> 
+    </tr>
+    <tr>
+      <td><div class="body"><?php echo $response->getBody(); ?></div></td> 
+    </tr>
+    <tr>
+      <td><div class="tag"><?php if ($response->getNoteTags()->getTotal() < 0) {
+              echo "No Tags";
+} else ?></div>
+            <?php {
+                $noteTagCollection = $response->getNoteTags();
+                while ($noteTagCollection->hasNext()) {
             ?>
-            <span class="label">
-            <?php
-            echo $noteTagCollection->getRow(0)->getUserTag()->getTag();
-            ?>
-            </span>
-            <?php
-            $noteTagCollection->next();
-            }
-        }
-?></td>
-      </tr>
-      <tr><td><button type="button">Update</button>
-      <a href="/notes"><button type="button">Back</button></a></td></tr>
-
-        <?php
+          <div class="tag"><?php echo $noteTagCollection->getRow(0)->getUserTag()->getTag(); ?></div>
+            <?php $noteTagCollection->next();
+                }
+}
     }
-        ?>
-
+            ?>
+      </td>
+    </tr>
+    <tr>
+      <td><button type="button">Update</button>
+      <a href="/notes"><button type="button">Back</button></a>
+      </td>
+    </tr>
     </table>
     </fieldset>
 </body>
