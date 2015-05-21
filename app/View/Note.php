@@ -26,7 +26,8 @@ use Notes\Collection\Collection as Collection;
   font-size: 10px;
   line-height: 1.8;
   zoom: 1;
-  padding: 0 3px 0;
+  margin-left: 3px; 
+  padding: 3px 3px 3px;
   white-space: normal;
 }
 </style>
@@ -60,15 +61,17 @@ use Notes\Collection\Collection as Collection;
             echo "No Tags";
         } else {
             $noteTagCollection = $response->getNoteTags();
+            $i=0;
             while ($noteTagCollection->hasNext()) {
             ?>
             <span class="label">
             <?php
-            echo $noteTagCollection->getRow(0)->getUserTag()->getTag();
+            echo $noteTagCollection->getRow($i)->getUserTag()->getTag();
+            $noteTagCollection->next();
             ?>
             </span>
             <?php
-            $noteTagCollection->next();
+            $i++;
             }
         }
 ?></td>

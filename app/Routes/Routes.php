@@ -40,8 +40,8 @@ $application->get('/notes', function () use ($application) {
     $notesController->get();
 });
 
-$application->get('/notes/:id', function ($id) use ($application) {
-    $request = $application->request();
+$application->get('/note/read/:id', function ($id) use ($application) {
+    $request = \Slim\Slim::getInstance()->request();
     
     $objRequest        = new Request();
     $objRequest->setUrlParams($id);
@@ -51,13 +51,12 @@ $application->get('/notes/:id', function ($id) use ($application) {
     $noteController->get();
 });
 
-$application->delete('/notes/:id', function ($id) use ($application) {
-    $request = $application->request();
+$application->delete('/note/delete/:id', function ($id) use ($application) {
+    $request = \Slim\Slim::getInstance()->request();
     
     $objRequest        = new Request();
     $objRequest->setUrlParams($id);
     $objRequest->setCookies($request->cookies);
-    
     $noteController = new Note($objRequest);
     $noteController->delete();
 });
@@ -90,6 +89,38 @@ $application->post('/notes', function () use ($application) {
     
     $notesController = new Notes($objRequest);
     $notesController->post();
+});
+
+$application->get('/notes/create', function () use ($application) {
+    $request = \Slim\Slim::getInstance()->request();
+    $request        = new Request();
+
+    $createController = new Create($request);
+    $createController->get();
+});
+
+$application->post('/notes/create', function () use ($application) {
+    $request = \Slim\Slim::getInstance()->request();
+
+    $objRequest        = new Request();
+    $objRequest->setUrlParams($request->post());
+    $objRequest->setCookies($request->cookies);
+    
+    $createController = new Create($objRequest);
+    $createController->post();
+});
+
+$application->get('/notes/searchtag', function () use ($application) {
+    $request = \Slim\Slim::getInstance()->request();
+    
+    $objRequest        = new Request();
+    
+    $objRequest->setData($request->getBody());
+    $objRequest->setHeaders($request->headers);
+    $objRequest->setCookies($request->cookies);
+
+    $userTagController = new UserTag($objRequest);
+    $userTagController->get();
 });
 
 $application->get('/register', function () use ($application) {

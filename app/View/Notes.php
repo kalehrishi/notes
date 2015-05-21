@@ -10,7 +10,7 @@
 
 </head>
 <body>       
-    <button type="button" style="margin:20px">Create</button>
+    <button type="button"><a href="/notes/create">Create</a></button>
     <a href="logout">Logout</a>
     <?php
     if (empty($response)) {
@@ -43,7 +43,7 @@
             echo $count;
             ?>
             </td>
-            <td><a href="/notes/<?php
+            <td><a href="/note/read/<?php
                 echo $id;
                 ?>">
             <?php
@@ -51,7 +51,7 @@
                 ?></a>
                 </td>
                 <td>
-                <form action="notes/<?php echo $id; ?>" method="post">
+                <form action="note/delete/<?php echo $id; ?>" method="post">
                     <input type="hidden" name="_METHOD" value="DELETE"/>
                     <input type="submit" value="Delete"/>
                 </form>
