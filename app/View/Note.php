@@ -44,6 +44,7 @@ use Notes\Collection\Collection as Collection;
             <td><div class="error" >
             <?php echo $response; ?>
             </div></td>
+            <tr><td><a href="/notes"><button type="button">Back</button></a></td></tr>
          
       </tr>
         <?php

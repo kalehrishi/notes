@@ -39,7 +39,7 @@ class Create
     {
         $input = $this->request->getUrlParams();
         
-        $arrayOfObjs = json_decode($input['userTag']);
+        $arrayOfUserTagObjs = json_decode($input['userTag']);
         
         $noteTags           = array(
             'id' => null,
@@ -48,13 +48,13 @@ class Create
             'isDeleted' => 0
         );
         $finalNoteTagsArray = array();
-        for ($i = 0; $i < count($arrayOfObjs); $i++) {
-            $arrayOfObjs[$i]->userId = $this->request->getCookies()['userId'];
-            if ($arrayOfObjs[$i]->id == null) {
-                $noteTags['userTag'] = (array) $arrayOfObjs[$i];
+        for ($i = 0; $i < count($arrayOfUserTagObjs); $i++) {
+            $arrayOfUserTagObjs[$i]->userId = $this->request->getCookies()['userId'];
+            if ($arrayOfUserTagObjs[$i]->id == null) {
+                $noteTags['userTag'] = (array) $arrayOfUserTagObjs[$i];
             } else {
-                $noteTags['userTagId'] = $arrayOfObjs[$i]->id;
-                $noteTags['userTag']   = (array) $arrayOfObjs[$i];
+                $noteTags['userTagId'] = $arrayOfUserTagObjs[$i]->id;
+                $noteTags['userTag']   = (array) $arrayOfUserTagObjs[$i];
             }
             array_push($finalNoteTagsArray, $noteTags);
         }
@@ -67,18 +67,19 @@ class Create
         $sessionService = new SessionService();
         try {
             $sessionService->isValid($sessionModel);
+
+            $noteModel = new NoteModel();
+            $noteModel->setUserId($this->request->getCookies()['userId']);
+            $noteModel->setTitle($input['title']);
+            $noteModel->setBody($input['body']);
+            $noteModel->setNoteTags($noteTagCollection);
+        
+            $createService = new CreateService();
+            $noteModel     = $createService->post($noteModel);
         } catch (ModelNotFoundException $error) {
             $app = \Slim\Slim::getInstance();
             $app->redirect("/login");
         }
-        $noteModel = new NoteModel();
-        $noteModel->setUserId($this->request->getCookies()['userId']);
-        $noteModel->setTitle($input['title']);
-        $noteModel->setBody($input['body']);
-        $noteModel->setNoteTags($noteTagCollection);
-        
-        $createService = new CreateService();
-        $noteModel     = $createService->post($noteModel);
         
         if ($noteModel instanceof NoteModel) {
             $app = \Slim\Slim::getInstance();
