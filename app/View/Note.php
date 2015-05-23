@@ -62,17 +62,15 @@ use Notes\Collection\Collection as Collection;
             echo "No Tags";
         } else {
             $noteTagCollection = $response->getNoteTags();
-            $i=0;
             while ($noteTagCollection->hasNext()) {
             ?>
             <span class="label">
             <?php
-            echo $noteTagCollection->getRow($i)->getUserTag()->getTag();
+            echo $noteTagCollection->current()->getUserTag()->getTag();
             $noteTagCollection->next();
             ?>
             </span>
             <?php
-            $i++;
             }
         }
 ?></td>

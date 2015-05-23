@@ -1,6 +1,7 @@
 <?php
 namespace Notes\Controller\Web;
 
+use Notes\Controller\Api\UserTag as UserTag;
 use Notes\Request\Request as Request;
    
 $application->get('/:route', function ($route) use ($application) {
@@ -111,7 +112,7 @@ $application->post('/notes/create', function () use ($application) {
     $noteController->post();
 });
 
-$application->get('/notes/userTag', function () use ($application) {
+$application->get('/notes/api/userTag', function () use ($application) {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest        = new Request();

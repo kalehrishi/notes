@@ -1,3 +1,9 @@
+<?php
+echo $response;
+if (is_string($response)) {
+    echo $response;
+}
+?> 
 <!DOCTYPE html>
 <html>
 <body>
@@ -18,7 +24,7 @@ $(document).ready( function() {
     $.ajax({
         
         type: 'GET',
-        url: '/notes/userTag',
+        url: '/notes/api/userTag',
         data: 'id=testdata',
         datatype: "JSON",
         cache: false,
@@ -122,7 +128,11 @@ $("a[id^='del']").live("click", null, function (e) {
     }
    li.remove();
 });
-}
+},
+error: function(result) {
+     var errorMsg = JSON.parse(result);
+    alert("Message: " + errorMsg);
+  }
 });
 });
 function passUserTagsAndCreateNoteTags(userTagsArray)
@@ -151,7 +161,7 @@ function passNoteTagsAndCreateNoteModel(noteTags)
     var userTagId = document.getElementById("userTagId").value;
     var isDeleted = document.getElementById("isDeleted").value;
         
-    var json = [{"title":title, "body": body,"noteTags": noteTags }];
+    var json = {"title":title, "body": body,"noteTags": noteTags };
     document.getElementById("noteModel").value = JSON.stringify(json);
 }
 function getUserId()
@@ -201,12 +211,6 @@ function getUserId()
     <input type="submit" value="Save">
     <a href="/notes"><button type="button">Back</button></a> 
 </div>
-</form>
-<?php
-echo $response;
-if (is_string($response)) {
-    echo $response;
-}
-?>    
+</form>   
 </body>
 </html>

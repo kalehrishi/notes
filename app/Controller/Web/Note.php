@@ -102,13 +102,13 @@ class Note
             $app->redirect("/login");
         }
         $input = json_decode($params['noteModel'], true);
-        $noteTagCollection = new NoteTagCollection($input[0]['noteTags']);
+        $noteTagCollection = new NoteTagCollection($input['noteTags']);
 
         try {
             $noteModel = new NoteModel();
             $noteModel->setUserId($this->request->getCookies()['userId']);
-            $noteModel->setTitle($input[0]['title']);
-            $noteModel->setBody($input[0]['body']);
+            $noteModel->setTitle($input['title']);
+            $noteModel->setBody($input['body']);
             $noteModel->setNoteTags($noteTagCollection);
         
             $noteService = new NoteService();
