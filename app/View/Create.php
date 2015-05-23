@@ -18,9 +18,9 @@ $(document).ready( function() {
     $.ajax({
         
         type: 'GET',
-        url: '/notes/searchtag',
+        url: '/notes/userTag',
         data: 'id=testdata',
-        datatype: 'json',
+        datatype: "JSON",
         cache: false,
 
         success: function(result) {
@@ -67,7 +67,7 @@ $(document).ready( function() {
             userTagsArray.push(liClickTag.userTagsFromServer);
             console.log(userTagsArray);
 
-            passArrayOfObjectsAndSetTagValues(userTagsArray);
+            passUserTagsAndCreateNoteTags(userTagsArray);
 
         },false);
 userTags.appendChild(li);
@@ -103,7 +103,8 @@ $("button[id^='addTags']").live("click", null, function (e) {
     userTagsArray.push(userTag);
     console.log(userTagsArray);
 
-    passArrayOfObjectsAndSetTagValues(userTagsArray);
+    passUserTagsAndCreateNoteTags(userTagsArray);
+
     document.getElementById("txtTags").value = "";
 });
 
@@ -117,15 +118,58 @@ $("a[id^='del']").live("click", null, function (e) {
     {
         if(tag == userTagsArray[i].tag)
             userTagsArray.splice(i,1);
-        passArrayOfObjectsAndSetTagValues(userTagsArray);
+        passUserTagsAndCreateNoteTags(userTagsArray);
     }
    li.remove();
 });
 }
 });
 });
-function passArrayOfObjectsAndSetTagValues(userTagsArray){
-    document.getElementById("Tags").value = JSON.stringify(userTagsArray);
+function passUserTagsAndCreateNoteTags(userTagsArray)
+{
+    var userId = getUserId();
+    console.log(userId);
+    
+    var noteTags=[];
+    for (var i=0; i< userTagsArray.length; i++) {
+        var userTag = userTagsArray[i];
+        userTag.userId = userId;
+        noteTags[i] = {"id":noteTagId, "noteId":noteId, "userTagId":userTagId,"isDeleted":isDeleted,
+        "userTag": userTag};
+    }
+    console.log(noteTags);
+
+    passNoteTagsAndCreateNoteModel(noteTags);
+}
+function passNoteTagsAndCreateNoteModel(noteTags)
+{
+    var title = document.getElementById("title").value;
+    var body = document.getElementById("body").value;
+
+    var noteTagId = document.getElementById("noteTagId").value;
+    var noteId = document.getElementById("noteId").value;
+    var userTagId = document.getElementById("userTagId").value;
+    var isDeleted = document.getElementById("isDeleted").value;
+        
+    var json = [{"title":title, "body": body,"noteTags": noteTags }];
+    document.getElementById("noteModel").value = JSON.stringify(json);
+}
+function getUserId()
+{
+    var allcookies = document.cookie;
+    console.log(allcookies);
+
+    // Get all the cookies pairs in an array
+    cookiearray  = allcookies.split(';');
+    console.log(cookiearray);
+    
+    // Now take key value pair out of this array
+    for(var i=0; i<cookiearray.length; i++){
+        name = cookiearray[i].split('=')[0].trim();
+        value = cookiearray[i].split('=')[1].trim();
+        if(name == "userId")
+            return value;
+    }
 }
 </script>
 </head>
@@ -135,11 +179,10 @@ function passArrayOfObjectsAndSetTagValues(userTagsArray){
     <div>Create Note :</div>
     
     <div>
-        <input type="hidden" name="id" />
-        <input type="text" name="title" id="title" placeholder="Title" required="">
+        <input type="text" id="title" placeholder="Title" required="">
     </div>
     <div>
-        <textarea rows="10" name="body" id="body" placeholder="Description"></textarea>
+        <textarea rows="10" id="body" placeholder="Description"></textarea>
     </div>
 
     <div id="divTest">
@@ -149,12 +192,21 @@ function passArrayOfObjectsAndSetTagValues(userTagsArray){
         </ul>
     </div>
     <div id="note-tags">
+    <input type="hidden" id="noteTagId"/>
+    <input type="hidden" id="noteId"/>
+    <input type="hidden" id="userTagId"/>
+    <input type="hidden" id="isDeleted"/>
+    <input type="hidden" id="noteModel" name="noteModel"/>
     </div>
-    <div>
-    <input type="hidden" id="Tags" name="userTag"/>
-    </div>
-<input type="submit" value="Save">    
+    <input type="submit" value="Save">
+    <a href="/notes"><button type="button">Back</button></a> 
 </div>
-</form>    
+</form>
+<?php
+echo $response;
+if (is_string($response)) {
+    echo $response;
+}
+?>    
 </body>
 </html>

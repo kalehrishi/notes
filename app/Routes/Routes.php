@@ -100,17 +100,18 @@ $application->get('/notes/create', function () use ($application) {
 });
 
 $application->post('/notes/create', function () use ($application) {
-    $request = \Slim\Slim::getInstance()->request();
+    $request = $application->request();
 
     $objRequest        = new Request();
+    $objRequest->setData($request->getBody());
     $objRequest->setUrlParams($request->post());
     $objRequest->setCookies($request->cookies);
     
-    $createController = new Create($objRequest);
-    $createController->post();
+    $noteController = new Note($objRequest);
+    $noteController->post();
 });
 
-$application->get('/notes/searchtag', function () use ($application) {
+$application->get('/notes/userTag', function () use ($application) {
     $request = \Slim\Slim::getInstance()->request();
     
     $objRequest        = new Request();

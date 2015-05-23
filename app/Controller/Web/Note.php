@@ -12,6 +12,7 @@ use Notes\Model\Note as NoteModel;
 use Notes\Service\Session as SessionService;
 use Notes\Model\Session as SessionModel;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
+use Notes\Collection\NoteTagCollection as NoteTagCollection;
 
 class Note
 {
@@ -83,5 +84,44 @@ class Note
             $response = $error->getMessage();
             $this->view->render("Notes.php", $response);
         }
+    }
+
+    public function post()
+    {
+        $params = $this->request->getUrlParams();
+        
+        $sessionModel      = new SessionModel();
+        $sessionModel->setUserId($this->request->getCookies()['userId']);
+        $sessionModel->setAuthToken($this->request->getCookies()['authToken']);
+        
+        $sessionService = new SessionService();
+        try {
+            $sessionService->isValid($sessionModel);
+        } catch (ModelNotFoundException $error) {
+            $app = \Slim\Slim::getInstance();
+            $app->redirect("/login");
+        }
+        $input = json_decode($params['noteModel'], true);
+        $noteTagCollection = new NoteTagCollection($input[0]['noteTags']);
+
+        try {
+            $noteModel = new NoteModel();
+            $noteModel->setUserId($this->request->getCookies()['userId']);
+            $noteModel->setTitle($input[0]['title']);
+            $noteModel->setBody($input[0]['body']);
+            $noteModel->setNoteTags($noteTagCollection);
+        
+            $noteService = new NoteService();
+            $noteModel     = $noteService->post($noteModel);
+
+        } catch (PDOException $error) {
+            $response    = $error->getMessage();
+            $this->view->render("Create.php", $response);
+        }
+        if ($noteModel instanceof NoteModel) {
+            $app = \Slim\Slim::getInstance();
+            $app->redirect("/notes");
+        }
+        
     }
 }
