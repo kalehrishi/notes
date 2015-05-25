@@ -1,9 +1,3 @@
-<?php
-echo $response;
-if (is_string($response)) {
-    echo $response;
-}
-?> 
 <!DOCTYPE html>
 <html>
 <body>
