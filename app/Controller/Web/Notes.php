@@ -35,7 +35,6 @@ class Notes
             $userModel->setId($this->request->getCookies()['userId']);
             
             $notesService   = new NotesService();
-            $notesCollection = $notesService->get($userModel);
             
             $noteCollection = $notesService->get($userModel);
             
