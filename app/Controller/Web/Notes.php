@@ -37,7 +37,6 @@ class Notes
             $notesService   = new NotesService();
             $notesCollection = $notesService->get($userModel);
             
-            $notesArray = $notesCollection->toArray();
             $noteCollection = $notesService->get($userModel);
             
             $response   = $this->view->render("Notes.php", $noteCollection);

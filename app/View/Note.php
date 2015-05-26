@@ -14,18 +14,6 @@
 .title {
   font-weight: bold;
 }
-.tag {
-  border: 1px solid black;
-  background-color: yellow;
-  border-radius: 1px;
-  vertical-align: top;
-  font-size: 10px;
-  line-height: 1.8;
-  zoom: 1;
-  margin-left: 3px; 
-  padding: 3px 3px 3px;
-  white-space: normal;
-}
 .label {
   border: 1px solid black;
   background-color: yellow;
@@ -77,9 +65,8 @@
       </td>
     </tr>
     <tr>
-      <td><button type="button">Update</button>
-      <a href="/notes"><button type="button">Back</button></a>
-      </td>
+      <td><div><a href="/notes/create">Update</a></div></td>
+      <td><div><a href="/notes"><button type="button">Back</button></a></div></td>
     </tr>
     </table>
     </fieldset>

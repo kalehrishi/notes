@@ -35,7 +35,7 @@
             ?>
           <tr align="center">
           <td>
-            <a href="/note/read/<?php echo $id; ?>"><div class="title"><?php echo $title; ?></div></a>
+            <a href="/note/read/<?php echo $id; ?>"><span  class="title"><?php echo $title; ?></span></a>
           </td>
           <td>
             <form action="note/delete/<?php echo $id; ?>" method="post">
