@@ -10,7 +10,7 @@
 
 </head>
 <body>       
-    <button type="button"><a href="/notes/create">Create</a></button>
+    <a href="/notes/create">Create</a>
     <a href="logout">Logout</a>
     <?php
     if (empty($response)) {
@@ -24,40 +24,28 @@
     } else {
         ?>
         <table border="1" font-size="25px" width="500" style="margin:5px">
-          <tr align="center">
-            <td colspan="3">All Notes</td>
-          </tr>
-          <tr align="center">
-          <td>No.</td>
+        <tr align="center">
           <td>Title</td>
           <td>Action</td>
-          </tr>
+        </tr>
         <?php
-        for ($i = 0; $i < count($response); $i++) {
-            $id    = $response[$i]['id'];
-            $title = $response[$i]['title'];
-            $count = $i + 1;
+        while ($response->hasNext()) {
+            $id    = $response->current()->getId();
+            $title = $response->current()->getTitle();
             ?>
-            <tr align="center">
-            <td><?php
-            echo $count;
-            ?>
-            </td>
-            <td><a href="/note/read/<?php
-                echo $id;
-                ?>">
-            <?php
-                echo $title;
-                ?></a>
-                </td>
-                <td>
-                <form action="note/delete/<?php echo $id; ?>" method="post">
-                    <input type="hidden" name="_METHOD" value="DELETE"/>
-                    <input type="submit" value="Delete"/>
-                </form>
-                </td>
-                </tr>
+          <tr align="center">
+          <td>
+            <a href="/note/read/<?php echo $id; ?>"><div class="title"><?php echo $title; ?></div></a>
+          </td>
+          <td>
+            <form action="note/delete/<?php echo $id; ?>" method="post">
+              <input type="hidden" name="_METHOD" value="DELETE"/>
+              <input type="submit" value="Delete"/>
+            </form>
+          </td>
+        </tr>
         <?php
+        $response->next();
         }
     }
 ?>

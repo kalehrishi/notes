@@ -40,8 +40,7 @@ class Notes
             $notesArray = $notesCollection->toArray();
             $noteCollection = $notesService->get($userModel);
             
-            $notesArray = $noteCollection->toArray();
-            $response   = $this->view->render("Notes.php", $notesArray);
+            $response   = $this->view->render("Notes.php", $noteCollection);
             
             return $response;
         } catch (ModelNotFoundException $error) {

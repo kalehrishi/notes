@@ -7,7 +7,7 @@
 <body>
   <div></div>
 	<h1>Wel-come to Sticky-notes</h1><br>
-	<a href="register">New User:Register</a><br>
-	<a href="login">Login</a>
+	<a href="register" target="Register">New User:Register</a><br>
+	<a href="login" target="Login">Login</a>
 </body>
 </html>
