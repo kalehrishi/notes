@@ -14,15 +14,16 @@
 .title {
   font-weight: bold;
 }
-.tag {
+.label {
   border: 1px solid black;
   background-color: yellow;
-  border-radius: 1px;
+  border-radius: 3px;
   vertical-align: top;
   font-size: 10px;
   line-height: 1.8;
   zoom: 1;
-  padding: 0 3px 0;
+  margin-left: 3px; 
+  padding: 3px 3px 3px;
   white-space: normal;
 }
 </style>
@@ -36,7 +37,7 @@
         ?>
     <tr>
       <td>Error :-</td>
-      <td><div class="error" ><?php echo $response; ?></div></td>       
+      <td><div class="error" ><span><?php echo $response; ?></div></td>       
     </tr>
         <?php
     } else {
@@ -48,14 +49,14 @@
       <td><div class="body"><?php echo $response->getBody(); ?></div></td> 
     </tr>
     <tr>
-      <td><div class="tag"><?php if ($response->getNoteTags()->getTotal() < 0) {
+      <td><span><?php if ($response->getNoteTags()->getTotal() < 0) {
               echo "No Tags";
-} else ?></div>
+} else ?></span>
             <?php {
                 $noteTagCollection = $response->getNoteTags();
                 while ($noteTagCollection->hasNext()) {
             ?>
-          <div class="tag"><?php echo $noteTagCollection->getRow(0)->getUserTag()->getTag(); ?></div>
+          <span class="label"><?php echo $noteTagCollection->current()->getUserTag()->getTag(); ?></span>
             <?php $noteTagCollection->next();
                 }
 }
@@ -64,9 +65,8 @@
       </td>
     </tr>
     <tr>
-      <td><button type="button">Update</button>
-      <a href="/notes"><button type="button">Back</button></a>
-      </td>
+      <td><div><a href="/notes/create">Update</a></div></td>
+      <td><div><a href="/notes"><button type="button">Back</button></a></div></td>
     </tr>
     </table>
     </fieldset>

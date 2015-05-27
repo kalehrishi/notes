@@ -39,7 +39,14 @@ class NoteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("PHP", $element->item(0)->textContent);
         
         $this->assertEquals("Preprocessor Hypertext", $element->item(1)->textContent);
+
+        $this->assertEquals("Update", $element->item(2)->nodeValue);
+
+        $this->assertEquals("Back", $element->item(3)->nodeValue);
         
-        $this->assertEquals("No Tags", $element->item(2)->textContent);
+        $element = $dom->getElementsByTagName('span');
+
+        $this->assertEquals("No Tags", $element->item(0)->textContent);
+
     }
 }

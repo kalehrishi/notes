@@ -1,6 +1,8 @@
 <?php
 namespace Notes\View;
 
+use Notes\Collection\NoteCollection as NoteCollection;
+
 class NotesTest extends \PHPUnit_Framework_TestCase
 {
     protected $view;
@@ -39,26 +41,26 @@ class NotesTest extends \PHPUnit_Framework_TestCase
                 'noteTags' => ' '
             )
         );
+        $noteCollecton = new NoteCollection($response);
         
         $fileName = "Notes.php";
-        $this->view->render($fileName, $response);
+        $this->view->render($fileName, $noteCollecton);
         
         $dom    = new \DOMDocument();
         $output = ob_get_clean();
-        
         $dom->loadHTML($output);
         
         $element = $dom->getElementsByTagName('a');
         
-        $this->assertEquals("Logout", $element->item(0)->nodeValue);
-        $this->assertEquals("Html", $element->item(1)->nodeValue);
-        $this->assertEquals("PHP5", $element->item(2)->nodeValue);
+        $this->assertEquals("Create", $element->item(0)->nodeValue);
+        $this->assertEquals("Logout", $element->item(1)->nodeValue);
         
-        $element = $dom->getElementsByTagName('div');
+        $element = $dom->getElementsByTagName('span');
         $this->assertEquals("Html", $element->item(0)->textContent);
+        $this->assertEquals("PHP5", $element->item(1)->textContent);
+        
         
         $element = $dom->getElementsByTagName('form');
-        $this->assertEquals("notes/3", $element->item(0)->getAttribute('action'));
-        $this->assertEquals("notes/2", $element->item(1)->getAttribute('action'));
+        $this->assertEquals("note/delete/3", $element->item(0)->getAttribute('action'));
     }
 }
