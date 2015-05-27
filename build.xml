@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -170,7 +170,25 @@
   </exec>
  </target>
 
- <target name="phpunit" depends="prepare,composer" description="Run unit tests with PHPUnit">
+<target name="start-selenium-server"  description="selenium-server-starts">
+  
+   <exec executable="xvfb-run" spawn="true">
+    <arg value="java"/>
+    <arg value="-jar"/>
+    <arg value="${basedir}/build/selenium-server-standalone-2.45.0.jar"/>
+    <arg value="-log"/>
+    <arg value="${basedir}/selenium-server.log"/>
+    <arg value="&amp;"/>
+    </exec>
+ </target>
+
+
+<target name="stop-selenium-server" description="selenium-server-stop">
+      <get taskname="selenium-shutdown" dest="" ignoreerrors="true"
+             src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"/>
+</target>
+
+ <target name="phpunit" depends="prepare,composer,start-selenium-server" description="Run unit tests with PHPUnit">
   <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
    <arg path="${basedir}/build/phpunit.xml"/>
@@ -182,4 +200,3 @@
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>
-
