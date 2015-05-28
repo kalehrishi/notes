@@ -3,6 +3,6 @@
         "psr-4": {"Notes\\": "app/"}
     },
     "require": {
-        "slim/slim": "2.*"
+        "slim/slim": "2.6.0"
     }
 }

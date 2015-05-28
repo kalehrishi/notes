@@ -1,11 +1,11 @@
 <?php
 
-class LoginTest extends PHPUnit_Extensions_Selenium2TestCase
+class googleTest extends PHPUnit_Extensions_Selenium2TestCase
 {
     protected function setUp()
     {
         $this->setHost('localhost');
-        $this->setBrowser('firefox');
+        $this->setBrowser('chromium-browser');
         $this->setBrowserUrl('http://localhost/');
     }
 
@@ -20,6 +20,12 @@ class LoginTest extends PHPUnit_Extensions_Selenium2TestCase
         $welcom=$this->byCssSelector('div');
         $this->assertEquals('Login', $this->title());
         //$this->assertEquals('Html', $welcom);
+        
+    }
+    public function testHomeTitle()
+    {
+        $this->url('index.php/');
+        $this->assertEquals('Home', $this->title());
         
     }
 }
