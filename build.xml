@@ -175,7 +175,7 @@
    <exec executable="xvfb-run" spawn="true">
     <arg value="java"/>
     <arg value="-jar"/>
-    <arg value="${basedir}/build/selenium-server-standalone-2.45.0.jar"/>
+    <arg value="${basedir}/build/tools/selenium-server-standalone-2.45.0.jar"/>
     <arg value="-log"/>
     <arg value="${basedir}/build/logs/selenium-server-start.log"/>
     <arg value="&amp;"/>
