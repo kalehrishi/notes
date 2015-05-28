@@ -8,6 +8,8 @@ var DeleteLinkView = function() {};
 
 var UserTagController = function() {};
 
+var NoteTagController = function() {};
+
 function passUserTagsAndCreateNoteTags(userTagsArray) {
     var userId = getUserId();
     console.log(userId);
@@ -168,7 +170,7 @@ UserTagModel.search = function() {
         }
     });
 };
-UserTagController.prototype.loadView = function(txtIdValue) {
+NoteTagController.prototype.loadView = function(txtIdValue) {
     var noteTagView = NoteTagView.addTag(txtIdValue);
     console.log(noteTagView);
 
@@ -183,10 +185,12 @@ $(document).ready(function() {
     var userTagController = new UserTagController;
     userTagController.loadModel();
 
+    var noteTagController = new NoteTagController;
+    
     var addBtnClk = document.getElementById("addBtnClk");
     addBtnClk.addEventListener('click', function() {
         var txtIdValue = document.getElementById("txtTags").value;
-        userTagController.loadView(txtIdValue)
+        noteTagController.loadView(txtIdValue)
     });
 
 });
