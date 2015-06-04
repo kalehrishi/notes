@@ -5,7 +5,7 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
     protected function setUp()
     {
         $this->setHost('localhost');
-        $this->setBrowser('chromium-browser');
+        $this->setBrowser('firefox');
         $this->setBrowserUrl('http://localhost/');
     }
         /**
