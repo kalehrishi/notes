@@ -8,6 +8,9 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->setBrowser('firefox');
         $this->setBrowserUrl('http://localhost/');
     }
+        /**
+    * @large
+    **/
      public function testHomeTitle()
     {
         $this->url('index.php/register');
@@ -26,6 +29,9 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
         
         
     }
+        /**
+    * @large
+    **/
 
     public function testTitle()
     {
