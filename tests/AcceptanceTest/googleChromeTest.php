@@ -8,6 +8,9 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->setBrowser('chromium-browser');
         $this->setBrowserUrl('http://localhost/');
     }
+    /**
+    *@large
+    */
 
     public function testTitle()
     {
@@ -22,6 +25,10 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
         //$this->assertEquals('Html', $welcom);
         
     }
+    /**
+    *@large
+    */
+
     public function testHomeTitle()
     {
         $this->url('index.php/');
