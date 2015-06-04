@@ -8,7 +8,9 @@ class LoginTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->setBrowser('firefox');
         $this->setBrowserUrl('http://localhost/');
     }
-
+    /**
+    * @large
+    **/
     public function testTitle()
     {
         $this->url('index.php/login');
