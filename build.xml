@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,start-selenium-server,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
 
  <target name="clean" depends="stop-selenium-server" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -36,7 +36,7 @@
   <replace file="${basedir}/app/Config/config.json" token="@GIT_BRANCH" value="${env.GIT_BRANCH}"/>
  </target>
 
- <target name="migrate-db" depends="replace-config-dbname,start-selenium-server" unless="migrate-db.done" description="Cleanup db and build from scratch">
+ <target name="migrate-db" depends="replace-config-dbname" unless="migrate-db.done" description="Cleanup db and build from scratch">
        <taskdef uri="antlib:org.flywaydb.ant" resource="org/flywaydb/ant/antlib.xml">
            <classpath>
                <pathelement location="${basedir}/build/tools/flyway-ant-3.1/flyway-core-3.1.jar"/>
