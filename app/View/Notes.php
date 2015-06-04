@@ -6,12 +6,13 @@
   <style>
  .error { 
   }
+ 
 </style>
 
 </head>
 <body>       
-    <a href="/notes/create">Create</a>
-    <a href="logout">Logout</a>
+    <button class="btn"><a href="/notes/create">Create</a></button>
+    <button class="btn"><a href="logout">Logout</a></button>
     <?php
     if (empty($response)) {
         ?>
