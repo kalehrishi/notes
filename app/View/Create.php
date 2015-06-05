@@ -7,7 +7,7 @@
         </script>
         <script type="text/javascript" src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
         
-        <script type="text/javascript" src="../js/View/NoteModelView.js"></script>
+        <script type="text/javascript" src="../js/View/NoteModel.js"></script>
         <script type="text/javascript" src="../js/Model/NoteModel.js"></script>
         <script type="text/javascript" src="../js/Controller/Controller.js"></script>
         

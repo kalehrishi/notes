@@ -12,9 +12,9 @@ function NoteModel () {
 }
 
 NoteModel.prototype.saveBtnOnclick = function() {
-	var saveBtnId = document.getElementById('save');
+	var saveButton = document.getElementById('save');
 	
-	saveBtnId.addEventListener("click", function() {
+	saveButton.addEventListener("click", function() {
 	var title = document.getElementById('title').value;
 	console.log(title);
 		
