@@ -1,4 +1,4 @@
-function NoteModel () {
+function NoteModel (title, description) {
 	this.title = title;
 	this.description = description;
 
@@ -12,9 +12,9 @@ function NoteModel () {
 }
 
 NoteModel.prototype.saveBtnOnclick = function() {
-	var saveButton = document.getElementById('save');
+	var saveBtnId = document.getElementById('save');
 	
-	saveButton.addEventListener("click", function() {
+	saveBtnId.addEventListener("click", function() {
 	var title = document.getElementById('title').value;
 	console.log(title);
 		
@@ -27,7 +27,7 @@ NoteModel.prototype.saveBtnOnclick = function() {
 	console.log(noteModel.getTitle());
 	console.log(noteModel.getDescription());
 
-	NoteModel.prototype.createNoteModel(title, description, noteTags);
+	NoteModel.prototype.createNoteModel(noteModel.getTitle(), noteModel.getDescription(), noteTags);
 	
 	});
 };
