@@ -196,7 +196,7 @@
   </exec>
  </target>
 
- <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
+ <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci,stop-selenium-server" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>
