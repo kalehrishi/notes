@@ -2,7 +2,7 @@
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
  <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
 
- <target name="clean" depends="stop-selenium-server" unless="clean.done" description="Cleanup build artifacts">
+ <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
   <delete dir="${basedir}/build/coverage"/>
   <delete dir="${basedir}/build/logs"/>
@@ -182,12 +182,6 @@
   </exec>
  </target>
 
-
-<target name="stop-selenium-server" description="selenium-server-stop">
-      <get taskname="selenium-shutdown" dest="${basedir}/build/logs/selenium-server-stop.log" ignoreerrors="true"
-             src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"/>
-</target>
-
  <target name="phpunit" depends="prepare,composer" description="Run unit tests with PHPUnit">
   <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
@@ -195,6 +189,11 @@
    <arg value="--stderr" />
   </exec>
  </target>
+
+ <target name="stop-selenium-server" description="selenium-server-stop">
+      <get taskname="selenium-shutdown" dest="${basedir}/build/logs/selenium-server-stop.log" ignoreerrors="true"
+             src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"/>
+</target>
 
  <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci,stop-selenium-server" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
