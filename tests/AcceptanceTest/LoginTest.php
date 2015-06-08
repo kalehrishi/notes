@@ -18,9 +18,9 @@ class LoginTest extends PHPUnit_Extensions_Selenium2TestCase
     /**
     * @large
     **/
-    pulic function testTitle()
+    public function testTitle()
     {
-        $this->url('/$JOB_NAME/public/index.php/login');
+        $this->url('/PHPUNIT/public/index.php/login');
         $this->assertEquals('Login', $this->title());
 
         $this->byName('email')->value("gau@bhapkar.com");
