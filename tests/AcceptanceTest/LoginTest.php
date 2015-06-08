@@ -9,9 +9,16 @@ class LoginTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->setBrowserUrl('http://localhost/');
     }
     /**
+    *@large
+    **/
+    public function testprint()
+    {
+        echo "PHPUNIT";
+    }
+    /**
     * @large
     **/
-    public function testTitle()
+    pulic function testTitle()
     {
         $this->url('/$JOB_NAME/public/index.php/login');
         $this->assertEquals('Login', $this->title());
