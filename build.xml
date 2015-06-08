@@ -8,6 +8,8 @@
      <copy todir="/var/www/${env.JOB_NAME}">
     <fileset dir="/var/lib/jenkins/jobs/${env.JOB_NAME}/workspace"/>
   </copy>
+  <property name="${basedir}" value="/var/www/${env.JOB_NAME}"/>
+<echo>${basedir}</echo>
 </target>
  
  <target name="clean" depends="copy" unless="clean.done" description="Cleanup build artifacts">
