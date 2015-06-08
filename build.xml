@@ -3,13 +3,15 @@
  <target name="build" depends="copy-config,print,replace-config-dbname,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
 
 <target name="copy">
-  <property name="env.GIT_BRANCH" value="${env.GIT_BRANCH}"/>
-   <copy todir="/var/www/env.GIT_BRANCH">
+
+<property environment="env"/>
+<property name="env.GIT_BRANCH" value="${env.GIT_BRANCH}"/> 
+     <copy todir="/var/www/env.GIT_BRANCH">
     <fileset dir="/var/lib/jenkins/jobs/env.GIT_BRANCH/workspace"/>
   </copy>
 </target>
  
- <target name="clean" unless="clean.done" description="Cleanup build artifacts">
+ <target name="clean" depends="copy" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
   <delete dir="${basedir}/build/coverage"/>
   <delete dir="${basedir}/build/logs"/>
@@ -33,11 +35,6 @@
   
  </target>
 
- <target name="print">
-<property environment="env"/>
-<property name="env.GIT_BRANCH" value="${env.GIT_BRANCH}"/> 
-<echo>${env.GIT_BRANCH}</echo> 
- </target>
  
  <target name="replace-config-dbname" depends="copy-config">
   <property environment="env.GIT_BRANCH"/>
