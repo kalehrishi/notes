@@ -6,7 +6,7 @@
 
 <property environment="env"/>
 <property name="env.GIT_BRANCH" value="${env.GIT_BRANCH}"/>
-<echo>env.GIT_BRANCH</echo> 
+<echo>${env.GIT_BRANCH}</echo> 
      <copy todir="/var/www/env.GIT_BRANCH">
     <fileset dir="/var/lib/jenkins/jobs/env.GIT_BRANCH/workspace"/>
   </copy>
