@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
-
+ <target name="build" depends="copy-config,print,replace-config-dbname,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
 
 <target name="copy">
-   <copy todir="/var/www/${env.GIT_BRANCH}">
-    <fileset dir="$JENKINS_HOME/jobs/${env.GIT_BRANCH}/workspace"/>
+  <property name="env.GIT_BRANCH" value="${env.GIT_BRANCH}"/>
+   <copy todir="/var/www/env.GIT_BRANCH">
+    <fileset dir="/var/lib/jenkins/jobs/env.GIT_BRANCH/workspace"/>
   </copy>
 </target>
  
- <target name="clean" depends="copy" unless="clean.done" description="Cleanup build artifacts">
+ <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
   <delete dir="${basedir}/build/coverage"/>
   <delete dir="${basedir}/build/logs"/>
@@ -31,6 +31,12 @@
   <echo message="Configuring app environment to ${env.APP_ENV}."/>
   <copy file="${basedir}/app/Config/config_${env.APP_ENV}.json" tofile="${basedir}/app/Config/config.json"/>
   
+ </target>
+
+ <target name="print">
+<property environment="env"/>
+<property name="env.GIT_BRANCH" value="${env.GIT_BRANCH}"/> 
+<echo>${env.GIT_BRANCH}</echo> 
  </target>
  
  <target name="replace-config-dbname" depends="copy-config">
