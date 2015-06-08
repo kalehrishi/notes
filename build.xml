@@ -2,7 +2,14 @@
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
  <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
 
- <target name="clean" unless="clean.done" description="Cleanup build artifacts">
+
+<target name="copy">
+   <copy todir="/var/www/${env.GIT_BRANCH}">
+    <fileset dir="$JENKINS_HOME/jobs/${env.GIT_BRANCH}/workspace"/>
+  </copy>
+</target>
+ 
+ <target name="clean" depends="copy" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
   <delete dir="${basedir}/build/coverage"/>
   <delete dir="${basedir}/build/logs"/>
