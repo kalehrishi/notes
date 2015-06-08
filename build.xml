@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -25,6 +25,7 @@
   <copy file="${basedir}/app/Config/config_${env.APP_ENV}.json" tofile="${basedir}/app/Config/config.json"/>
   
  </target>
+
  
  <target name="replace-config-dbname" depends="copy-config">
   <property environment="env.GIT_BRANCH"/>
@@ -57,11 +58,23 @@
  </target>
 
  <target name="composer" depends="clean" unless="composer.noupdate" description="Run composer install">
-  <exec executable="php">
+  <exec executable="php">          
    <arg value="${basedir}/build/tools/composer.phar"/>
    <arg value="install"/>
    <arg value="--profile"/>
   </exec>
+ </target>
+
+ <target name="start-selenium-server" depends="clean" description="selenium-server-starts">
+  
+   <exec executable="xvfb-run" spawn="true">
+    <arg value="java"/>
+    <arg value="-jar"/>
+    <arg value="${basedir}/build/tools/selenium-server-standalone-2.45.0.jar"/>
+    <arg value="-log"/>
+    <arg value="${basedir}/build/logs/selenium-server-start.log"/>
+    <arg value="&amp;"/>
+    </exec>
  </target>
 
  <target name="prepare" unless="prepare.done" depends="clean" description="Prepare for build">
@@ -178,8 +191,12 @@
   </exec>
  </target>
 
- <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
+ <target name="stop-selenium-server" description="selenium-server-stop">
+      <get taskname="selenium-shutdown" dest="${basedir}/build/logs/selenium-server-stop.log" ignoreerrors="true"
+             src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"/>
+</target>
+
+ <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci,stop-selenium-server" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>
-

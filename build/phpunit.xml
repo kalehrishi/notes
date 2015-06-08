@@ -4,7 +4,8 @@
          bootstrap="../vendor/autoload.php"
          strict="true"
          verbose="true"
-         timeoutForSmallTests="10">
+         timeoutForSmallTests="10"
+         timeoutForLargeTests="15">
   <testsuites>
     <testsuite name="Notes">
       <directory suffix="Test.php">../tests</directory>
