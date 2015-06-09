@@ -13,7 +13,7 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
     **/
      public function testHomeTitle()
     {
-        $this->url('/$JOB_NAME/public/index.php/register');
+        $this->url('index.php/register');
         
         $this->byName('firstName')->value("jonh");
         $this->byName('lastName')->value("Mock");
@@ -24,7 +24,7 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->byName('email')->value("jonh@mock.com");
         $this->byName('password')->value("Mock@1234");
         $this->byCssSelector('form')->submit();
-        $this->assertEquals('Notes', $this->title());        
+        $this->assertEquals('Notes | Home', $this->title());        
 
         
         
@@ -35,7 +35,7 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
 
     public function testTitle()
     {
-        $this->url('/$JOB_NAME/public/index.php/login');
+        $this->url('index.php/login');
         $this->assertEquals('Login', $this->title());
 
         $this->byName('email')->value("gau@bhapkar.com");
