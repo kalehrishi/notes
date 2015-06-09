@@ -35,7 +35,7 @@
   <property name="" value="master"/>
   <echo message="Using database name notes-${env.GIT_BRANCH} for this build."/>
   <replace file="${basedir}/app/Config/config.json" token="@GIT_BRANCH" value="${env.GIT_BRANCH}"/>
-    <replace file="${basedir}/app/Config/config.json" token="@JOB_NAME" value="${env.GIT_BRANCH}"/>
+  <replace file="${basedir}/build/phpunit.xml" token="@JOB_NAME" value="${env.JOB_NAME}"/>
  </target>
 
  <target name="migrate-db" depends="replace-config-dbname" unless="migrate-db.done" description="Cleanup db and build from scratch">

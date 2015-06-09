@@ -13,8 +13,7 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
     **/
      public function testHomeTitle()
     {
-        $this->url('index.php/register');
-        
+        $this->url('getenv(@JOB_NAME)/public/index.php/register');
         $this->byName('firstName')->value("jonh");
         $this->byName('lastName')->value("Mock");
         $this->byName('email')->value("jonh@mock.com");
