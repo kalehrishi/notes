@@ -4,7 +4,7 @@
 <target name="print">
   <property environment="env"/>
   <echo>${env.JOB_NAME}</echo>
-  <echo>${JOB_NAME}</echo>
+  
 </target>
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -32,13 +32,13 @@
 
  
  <target name="replace-config-dbname" depends="copy-config">
-  <property environment="env.GIT_BRANCH"/>
+  <property environment="env"/>
   <condition property="env.GIT_BRANCH" value="${env.GIT_BRANCH}" else="master">
    <isset property="env.GIT_BRANCH" />
   </condition>
-  <property name="" value="master"/>
   <echo message="Using database name notes-${env.GIT_BRANCH} for this build."/>
   <replace file="${basedir}/app/Config/config.json" token="@GIT_BRANCH" value="${env.GIT_BRANCH}"/>
+  <echo message="Using Job name ${env.JOB_NAME} for this build."/>
   <replace file="${basedir}/build/phpunit.xml" token="@JOB_NAME" value="${env.JOB_NAME}"/>
  </target>
 
