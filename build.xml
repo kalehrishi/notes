@@ -38,6 +38,10 @@
   </condition>
   <echo message="Using database name notes-${env.GIT_BRANCH} for this build."/>
   <replace file="${basedir}/app/Config/config.json" token="@GIT_BRANCH" value="${env.GIT_BRANCH}"/>
+  
+  <condition property="env.JOB_NAME" value="${env.JOB_NAME}" else="">
+   <isset property="env.JOB_NAME" />
+  </condition>
   <echo message="Using Job name ${env.JOB_NAME} for this build."/>
   <replace file="${basedir}/build/phpunit.xml" token="@JOB_NAME" value="${env.JOB_NAME}"/>
  </target>
