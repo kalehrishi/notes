@@ -5,7 +5,7 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
     protected function setUp()
     {
         $this->setHost('localhost');
-        $this->setBrowser('firefox');
+        $this->setBrowser('google-chrome');
         $this->setBrowserUrl('http://localhost/');
     }
     /**
@@ -33,7 +33,7 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
     * @large
     **/
 
-    public function testTitle()
+    public function testLoginTitle()
     {
         $name=getenv("JobName");
         $this->url("$name/public/index.php/login");
@@ -42,9 +42,8 @@ class googleTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->byName('email')->value("gau@bhapkar.com");
         $this->byName('password')->value("Gauri@12");
         $this->byCssSelector('form')->submit();
-        $welcom=$this->byCssSelector('div');
         $this->assertEquals('Login', $this->title());
-        //$this->assertEquals('Html', $welcom);
+        
         
     }
    
