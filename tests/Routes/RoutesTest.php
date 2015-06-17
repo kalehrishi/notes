@@ -58,7 +58,7 @@ class HomePageTest extends \PHPUnit_Framework_TestCase
         $client->post('/register' ,$parameters);
         
         $this->assertEquals(302, $client->response->status());
-        $this->assertEquals('/login', $client->response->getIterator()["Location"]);
+        $this->assertEquals('./login', $client->response->getIterator()["Location"]);
         
     }
 
@@ -105,7 +105,7 @@ class HomePageTest extends \PHPUnit_Framework_TestCase
         $client->post('/login', $parameters);
 
         $this->assertEquals(302, $client->response->status());
-        $this->assertEquals('/notes', $client->response->getIterator()["Location"]);
+        $this->assertEquals('./notes', $client->response->getIterator()["Location"]);
     }
 
     /**
