@@ -11,11 +11,11 @@ class User
     {
     
     }
-    public function create($request)
+    public function create($input)
     {
         $userDomain=new UserDomain();
         
-        $response=$userDomain->create($request);
+        $response=$userDomain->create($input);
 
         return $response;
 

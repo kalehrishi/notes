@@ -21,7 +21,10 @@ $application->post('/login', function () use ($application) {
     $request = $application->request();
     
     $objRequest = new Request();
-    $objRequest->setUrlParams($request->post());
+
+    $objRequest->setData($request->getBody());
+    $objRequest->setHeaders($request->headers);
+    $objRequest->setCookies($request->cookies);
 
     $sessionController = new Session($objRequest);
     $sessionController->post();

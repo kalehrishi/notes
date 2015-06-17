@@ -48,8 +48,6 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
             'email' => 'kirti.6@gmail.com',
             'password' => 'abc@$#A123'
         );
-        $userFactory     = new UserFactory();
-        $userModel       = $userFactory->create($input);
         $userDomain      = new User();
         $userModel       = $userDomain->create($input);
                
@@ -114,7 +112,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $userFactory     = new UserFactory();
         $userModel       = $userFactory->create($input);
         $userDomain      = new User();
-        $userModel       = $userDomain->readByUsernameandPassword($input);
+        $userModel       = $userDomain->readByUsernameandPassword($userModel);
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/user_seed.xml');
         $actualDataSet   = $this->getConnection()->createDataSet(array(
             'Users'
@@ -147,7 +145,7 @@ class UserTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel   = $userFactory->create($input);
 
         $userDomain  = new User();
-        $userModel   = $userDomain->readByUsernameandPassword($input);
+        $userModel   = $userDomain->readByUsernameandPassword($userModel);
         
     }
     

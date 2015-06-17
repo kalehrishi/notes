@@ -76,7 +76,6 @@ class HomePageTest extends \PHPUnit_Framework_TestCase
                     'password' => "AFd@756htrfj");
         
         $client->post('/register' ,$parameters);
-        
         $this->assertEquals(200, $client->response->status());        
     }
 
@@ -100,12 +99,23 @@ class HomePageTest extends \PHPUnit_Framework_TestCase
     public function loginpage_should_be_loaded_after_user_logged_in()
     {
         $client=new ClientRequest();
-        $parameters = array('email' => "William@Edwards.com",
-                    'password' => "AFd@756htrfj");
-        $client->post('/login', $parameters);
+        $parameters = array(
+                    'id' => null,
+                    'firstName' =>null,
+                    'lastName' => null,
+                    'email' => "William@Edwards.com",
+                    'password' => "AFd@756htrfj",
+                    'createdOn' => null
+                    );
+        $data = json_encode($parameters);
+        $client->post('/login', $data);
+        
+        $response = json_decode($client->response->body(), true);
+        
+        $this->assertEquals(1, $response['status']);
+        $this->assertEquals("SUCCESS", $response['message']);
 
-        $this->assertEquals(302, $client->response->status());
-        $this->assertEquals('/notes', $client->response->getIterator()["Location"]);
+        $this->assertEquals(200, $client->response->status());
     }
 
     /**
@@ -115,10 +125,23 @@ class HomePageTest extends \PHPUnit_Framework_TestCase
     public function user_login_failed_and_should_stay_on_same_page()
     {
         $client=new ClientRequest();
-        $parameters = array('email' => "Joy@Edwards.com",
-                    'password' => "AFd756htrfj");
+        $parameters = array(
+                    'id' => null,
+                    'firstName' =>null,
+                    'lastName' => null,
+                    'email' => "Joy@Edwards.com",
+                    'password' => "AFd756htrfj",
+                    'createdOn' => null
+                    );
 
-        $client->post('/login', $parameters);
+        $data = json_encode($parameters);
+        $client->post('/login', $data);
+
+        $response = json_decode($client->response->body(), true);
+        
+        $this->assertEquals(0, $response['status']);
+        $this->assertEquals("FAILURE", $response['message']);
+
         $this->assertEquals(200, $client->response->status());
     }
 }
