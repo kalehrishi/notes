@@ -5,7 +5,7 @@
          strict="true"
          verbose="true"
          timeoutForSmallTests="10"
-         timeoutForLargeTests="15">
+         timeoutForLargeTests="25">
   <testsuites>
     <testsuite name="Notes">
       <directory suffix="Test.php">../tests</directory>
