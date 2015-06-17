@@ -47,10 +47,14 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'password' => 'Pushpa@123'
             
         );
+        $userModel = new UserModel();
+
+        $userModel->setEmail($userInput['email']);
+        $userModel->setPassword($userInput['password']);
         
         $sessionModel = new sessionModel();
         $sessionDomain   = new Session();
-        $sessionModel    = $sessionDomain->create($userInput);
+        $sessionModel    = $sessionDomain->create($userModel);
         
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
@@ -196,7 +200,10 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'email' => 'abcd@gmail.com',
             'password' => 'Joy%hj5487'
         );
-        
+        $userModel = new UserModel();
+
+        $userModel->setEmail($userInput['email']);
+        $userModel->setPassword($userInput['password']);
        
         $input        = array(
             'authToken' => 'pqr',
@@ -210,6 +217,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         
         $sessionDomain = new Session();
         
-        $sessionModel  = $sessionDomain->create($userInput, $sessionModel);
+        $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
     }
 }

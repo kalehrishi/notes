@@ -6,12 +6,19 @@
   <style>
  .error { 
   }
+ 
 </style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
+<script type="text/javascript" src="../js/View/NotesView.js"></script>     
+<script type="text/javascript" src="../js/Controller/NotesController.js"></script>
 </head>
-<body>       
-    <a href="/notes/create">Create</a>
-    <a href="logout">Logout</a>
+<body>
+
+    <button class="btn"><a href="/notes/create">Create</a></button>
+    <button class="btn"><a href="logout">Logout</a></button>
     <?php
     if (empty($response)) {
         ?>

@@ -3,6 +3,7 @@ namespace Notes\Controller\Web;
 
 use Notes\View\View as View;
 use Notes\Service\User as UserService;
+use Notes\Factory\User as UserFactory;
 use Notes\Model\User as UserModel;
 use Notes\Response\Response as Response;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
@@ -23,6 +24,7 @@ class User
     public function post()
     {
         $input          = $this->request->getUrlParams();
+        
         $userService = new UserService();
         try {
             $response = $userService->create($input);
