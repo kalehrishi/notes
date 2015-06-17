@@ -9,7 +9,7 @@
 
         <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/cupertino/jquery-ui.css">
 
-        <link rel="stylesheet" type="text/css" href="../CSS/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
         <script>
             $(document).ready(function() {
                 $.ajax({
