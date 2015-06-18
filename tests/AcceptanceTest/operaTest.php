@@ -1,6 +1,6 @@
 <?php
 
-class googleTest extends PHPUnit_Extensions_Selenium2TestCase
+class operaTest extends PHPUnit_Extensions_Selenium2TestCase
 {
     protected function setUp()
     {
