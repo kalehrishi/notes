@@ -4,7 +4,8 @@
          bootstrap="../vendor/autoload.php"
          strict="true"
          verbose="true"
-         timeoutForSmallTests="10">
+         timeoutForSmallTests="10"
+         timeoutForLargeTests="50">
   <testsuites>
     <testsuite name="Notes">
       <directory suffix="Test.php">../tests</directory>
@@ -24,5 +25,9 @@
       <directory suffix=".php">../app</directory>
       </whitelist>
   </filter>
+  <php>
+      <env name="JobName" value="@JOB_NAME" />
+  </php>
+
 </phpunit>
 

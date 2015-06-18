@@ -28,7 +28,7 @@ class User
             $response = $userService->create($input);
             if ($response instanceof UserModel) {
                 $app = \Slim\Slim::getInstance('developer');
-                $app->redirect("/login");
+                $app->redirect("./login");
             }
         } catch (\InvalidArgumentException $error) {
             $response    = $error->getMessage();
