@@ -1,65 +1,44 @@
-function LoginController() {
+var utils = {
+    post: function(url, request, isSync, onSuccess, onFailure) {
 
+    },
+    get: function(url, request, isSync, onSuccess, onFailure) {
+
+    }
 }
-LoginController.prototype.init = function() {
-    console.log("In init Function..");
 
-    var loginView = new LoginView();
+var loginController = {
+    loginView: null,
+    init: function() {
+        this.loginView = new LoginView(function(e) {
+            loginController.loginView.resetData();
+        }, function(e) {
+            //read data from View
+            var userModel = loginController.loginView.readUserData();
+            console.log(userModel);
 
-    this.setResetClickedHandler(function(e) {
-        loginView.resetData();
-    });
+            //call api
+            var loginModel = new LoginModel();
 
-    this.setLoginClickedHandler(function(e) {
-        //read data from View
-        var userModel = loginView.readUserData();
-        console.log(userModel);
+            var login = '/api/session';
 
+            var Request = new Request(userModel);
 
-        //call api
-        var loginModel = new LoginModel();
+            utils.post('/api/session', request, function(response) {
+                loginController.loginView.hide(response);
+                console.log("OnSuccess Response:", response);
+                //transfer control to notes controller
+                notesController.init();
+            }, function(response) {
+                console.log("OnFailure Response:", response);
+                loginController.loginView.showError(response);
+            });
 
-        var login = '/login';
-        var response = loginModel.callApi(login, userModel, function(postCallbackData) {
-            console.log(postCallbackData);
-
-            if (postCallbackData.status == 0) {
-                var OnLoginerror = loginModel.onFailure(userModel, postCallbackData);
-                console.log(OnLoginerror);
-
-                loginView.showError(OnLoginerror);
-            } else {
-                var onLoginSuccess = loginModel.onSuccess(userModel, postCallbackData);
-                loginView.hide();
-                console.log(onLoginSuccess);
-
-                this.notesView = new NotesView();
-                this.notesView.show(onLoginSuccess);
-            }
         });
-    });
-};
-
-LoginController.prototype.setLoginClickedHandler = function(handler) {
-    console.log("In onLoginClickedHandler...");
-
-    var loginButton = document.getElementById('login');
-
-    loginButton.addEventListener("click", function(e) {
-        handler(e);
-    }, false);
-}
-
-LoginController.prototype.setResetClickedHandler = function(handler) {
-    console.log("In onLogin Reset Clicked Handler..");
-
-    var resetButton = document.getElementById('reset');
-    resetButton.addEventListener("click", function(e) {
-        handler(e);
-    }, false);
+        this.loginView.show();
+    }
 }
 
 $(function() {
-    var loginController = new LoginController();
     loginController.init();
 })

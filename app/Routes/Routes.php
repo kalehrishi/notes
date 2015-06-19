@@ -17,7 +17,7 @@ $application->get('/login', function () use ($application) {
     $sessionController->get();
 });
 
-$application->post('/login', function () use ($application) {
+$application->post('/api/session', function () use ($application) {
     $request = $application->request();
     
     $objRequest = new Request();
