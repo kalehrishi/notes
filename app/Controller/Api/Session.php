@@ -1,5 +1,5 @@
 <?php
-namespace Notes\Controller\Web;
+namespace Notes\Controller\Api;
 
 use Notes\View\View as View;
 use Notes\Service\Session as SessionService;
@@ -28,13 +28,13 @@ class Session
         $input = $this->request->getData();
         
         $userModel = new UserModel();
-        
         $userModel->setId($input['id']);
         $userModel->setFirstName($input['firstName']);
         $userModel->setLastName($input['lastName']);
         $userModel->setEmail($input['email']);
         $userModel->setPassword($input['password']);
         $userModel->setCreatedOn($input['createdOn']);
+        
         $sessionService = new SessionService();
         try {
             $response = $sessionService->login($userModel);

@@ -1,10 +1,8 @@
-function NotesController() {
+var notesController = {
+	notesView: null,
+	init: function() {
+		
+		this.notesView = new NotesView();
+		this.notesView.show()
+	}
 }
-NotesController.prototype.init = function() {
-	console.log("in init");
-}
-
-$(function() {
-    var notesController = new NotesController();
-    notesController.init();
-})

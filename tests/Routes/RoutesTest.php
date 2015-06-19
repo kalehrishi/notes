@@ -108,7 +108,7 @@ class HomePageTest extends \PHPUnit_Framework_TestCase
                     'createdOn' => null
                     );
         $data = json_encode($parameters);
-        $client->post('/login', $data);
+        $client->post('/api/session', $data);
         
         $response = json_decode($client->response->body(), true);
         
@@ -135,7 +135,7 @@ class HomePageTest extends \PHPUnit_Framework_TestCase
                     );
 
         $data = json_encode($parameters);
-        $client->post('/login', $data);
+        $client->post('/api/session', $data);
 
         $response = json_decode($client->response->body(), true);
         

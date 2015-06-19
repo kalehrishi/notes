@@ -1,5 +1,4 @@
-function LoginView(loginClickedHandler, resetClickedHandler) {
-
+function LoginView(resetClickedHandler, loginClickedHandler) {
 
     this.resetData = function() {
         document.getElementById('email').value = "";
@@ -48,13 +47,15 @@ function LoginView(loginClickedHandler, resetClickedHandler) {
         document.getElementById('container').style.display = "none";
     };
 
-    this.showError = function(errorMessage) {
-        console.log(errorMessage);
-        alert(errorMessage.errorMsg);
+    this.showError = function(response) {
+        var errorMessage = response.data;
+        alert(errorMessage);
     };
+
     this.show=function(){
 
     };
+    
     this.setLoginClickedHandler(loginClickedHandler);
     this.setResetClickedHandler(resetClickedHandler);
 
