@@ -18,10 +18,6 @@ class Session
         $this->request = $request;
         $this->view    = new View();
     }
-    public function get()
-    {
-        $this->view->render("Login.php");
-    }
     
     public function post()
     {

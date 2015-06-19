@@ -2,6 +2,8 @@
 namespace Notes\Controller\Web;
 
 use Notes\Controller\Api\UserTag as UserTag;
+use Notes\Controller\Api\Session as Session;
+
 use Notes\Request\Request as Request;
    
 $application->get('/:route', function ($route) use ($application) {
@@ -13,8 +15,8 @@ $application->get('/:route', function ($route) use ($application) {
 
 $application->get('/login', function () use ($application) {
     $request           = new Request();
-    $sessionController = new Session($request);
-    $sessionController->get();
+    $loginController = new Login($request);
+    $loginController->get();
 });
 
 $application->post('/api/session', function () use ($application) {
