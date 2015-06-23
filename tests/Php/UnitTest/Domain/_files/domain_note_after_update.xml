@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="Notes">
+        <column>id</column>
+        <column>title</column>
+        <column>body</column>
+        <row>
+            <value>1</value>
+            <value>Web</value>
+            <value>PHP is a powerful tool for making dynamic Web pages.</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>PHP5</value>
+            <value>Server scripting language.</value>
+        </row>
+    </table>
+</dataset>

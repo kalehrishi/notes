@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="Notes">
+        <column>id</column>
+        <column>userId</column>
+        <column>title</column>
+        <column>body</column>
+        <column>createdOn</column>
+        <column>lastUpdateOn</column>
+        <column>isDeleted</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>PHP</value>
+            <value>Preprocessor Hypertext</value>
+            <value>2015-02-16 08:56:44</value>
+            <value>2015-02-16 08:56:44</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>1</value>
+            <value>PHP5</value>
+            <value>Server scripting language.</value>
+            <value>2015-02-16 10:19:12</value>
+            <value>2015-02-16 10:19:12</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>1</value>
+            <value>Html</value>
+            <value>jljlfjldsjfldjl.</value>
+            <value>2015-02-16 10:19:12</value>
+            <value>2015-02-16 10:19:12</value>
+            <value>0</value>
+        </row>
+    </table>
+    <table name="Users">
+        <column>id</column>
+        <column>firstName</column>
+        <column>lastName</column>
+        <column>email</column>
+        <column>password</column>
+        <column>createdOn</column>
+        <row>
+            <value>1</value>
+            <value>John</value>
+            <value>Dove</value>
+            <value>john@doe.com</value>
+            <value>sfhsk1223</value>
+            <value>2014-10-31 20:59:59</value>
+        </row>
+    </table>
+</dataset>
