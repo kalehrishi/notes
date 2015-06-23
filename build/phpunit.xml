@@ -6,10 +6,16 @@
          verbose="true"
          timeoutForSmallTests="10">
   <testsuites>
-    <testsuite name="Notes">
-      <directory suffix="Test.php">../tests</directory>
+    <testsuite name="Unit">
+      <directory suffix="Test.php">../tests/php/unit/</directory>
+      <directory suffix="Test.php">../tests/js/unit/</directory>
+    </testsuite>
+   <testsuite name="Acceptance">
+      <directory suffix="Test.php">../tests/php/acceptance/</directory>
+      <directory suffix="Test.php">../tests/js/acceptance/</directory>
     </testsuite>
   </testsuites>
+
 
   <logging>
     <log type="coverage-html" target="coverage"/>
