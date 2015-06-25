@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,jasmine-node-test,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -179,8 +179,17 @@
    <arg value="--stderr" />
   </exec>
  </target>
+ 
+ <target name="jasmine-node-test" description="Run javascript unit tests with jsamine-node and runs all tests/js/spec/*Spec.js unit tests.">
+  <exec executable="/usr/local/lib/node_modules/jasmine-node/bin/jasmine-node" failonerror="true">
+    <arg value="--forceexit"/>
+    <arg value="tests/js/spec/"/>
+    <arg value="--junitreport"/>
+    <arg value="--output"/><arg value="${basedir}/build/tools/TEST-javascript-results.xml"/>
+  </exec>
+</target>
 
- <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
+<target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>

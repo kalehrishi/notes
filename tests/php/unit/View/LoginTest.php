@@ -30,7 +30,7 @@ class LoginTest extends \PHPUnit_Framework_TestCase
         
         $dom->loadHTML($output);
         
-        $element = $dom->getElementsByTagName('div');
+        $element = $dom->getElementsByTagName('p');
         $this->assertEquals("Invalid Email", $element->item(0)->textContent);
     }
     public function tearDown()

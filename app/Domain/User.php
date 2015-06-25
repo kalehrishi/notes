@@ -26,7 +26,10 @@ class User
     {
         $userFactory = new UserFactory();
         $userModel   = $userFactory->create($input);
-        $userModel->setCreatedOn(date("Y-m-d H:i:s"));
+        
+        $date = date("Y-m-d H:i:s");
+        $userModel->setCreatedOn($date);
+        
         $userMapper = new UserMapper();
         $userModel  = $userMapper->create($userModel);
         return $userModel;
@@ -44,15 +47,12 @@ class User
         
     }
     
-    public function readByUsernameandPassword($input)
+    public function readByUsernameandPassword($userModel)
     {
+        $userMapper = new UserMapper();
+        $userModel  = $userMapper->read($userModel);
         
-        $userFactory = new UserFactory();
-        $userModel   = $userFactory->create($input);
-
-            $userMapper = new UserMapper();
-            $userModel  = $userMapper->read($userModel);
-            return $userModel;
+        return $userModel;
         
     }
     public function update($input)
@@ -62,7 +62,5 @@ class User
             $userMapper = new UserMapper();
             $userModel  = $userMapper->update($userModel);
             return $userModel;
-        
-        
     }
 }

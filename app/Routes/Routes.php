@@ -2,6 +2,8 @@
 namespace Notes\Controller\Web;
 
 use Notes\Controller\Api\UserTag as UserTag;
+use Notes\Controller\Api\Session as Session;
+
 use Notes\Request\Request as Request;
    
 $application->get('/:route', function ($route) use ($application) {
@@ -13,15 +15,18 @@ $application->get('/:route', function ($route) use ($application) {
 
 $application->get('/login', function () use ($application) {
     $request           = new Request();
-    $sessionController = new Session($request);
-    $sessionController->get();
+    $loginController = new Login($request);
+    $loginController->get();
 });
 
-$application->post('/login', function () use ($application) {
+$application->post('/api/session', function () use ($application) {
     $request = $application->request();
     
     $objRequest = new Request();
-    $objRequest->setUrlParams($request->post());
+
+    $objRequest->setData($request->getBody());
+    $objRequest->setHeaders($request->headers);
+    $objRequest->setCookies($request->cookies);
 
     $sessionController = new Session($objRequest);
     $sessionController->post();
