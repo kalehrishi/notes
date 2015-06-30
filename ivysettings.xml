@@ -1,0 +1,13 @@
+<ivysettings>
+  <settings defaultResolver="nexus"/>
+  <credentials host="22.22.22.22"
+                      realm="Sonatype Nexus Repository Manager"
+                      username="admin" passwd="admin123"/>
+ <property name="nexus-public"
+                   value="http://22.22.22.22:8081/content/groups/public"/>
+  <property name="nexus-releases" value="http://22.22.22.22:8081/nexus/content/repositories/test-host/" />
+  <resolvers>
+      <ibiblio name="nexus" m2compatible="true" root="${nexus-public}"/>
+      <ibiblio name="nexus-releases" m2compatible="true" root="${nexus-releases}"/>
+    </resolvers>
+</ivysettings>

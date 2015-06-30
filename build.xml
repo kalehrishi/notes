@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox,Zip"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox,Zip,publish"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -192,6 +192,13 @@
     <fileset file="${basedir}/composer.json"/>
     <fileset file="${basedir}/build/tools/composer.phar"/> 
  </zip>
+</target>
+
+<target name="publish"  xmlns:ivy="antlib:org.apache.ivy.ant" description="Publish this build into repository">
+    <ivy:resolve/>
+     <ivy:publish resolver="nexus-releases" overwrite="true">
+      <artifacts pattern="${basedir}/[artifact].[ext]" />
+    </ivy:publish>
 </target>
 
 </project>
