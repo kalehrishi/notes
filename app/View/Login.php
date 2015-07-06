@@ -17,12 +17,14 @@ $data = json_decode($response, true);
 <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 
-<script type="text/javascript" src="../js/View/NotesView.js"></script>
-<script type="text/javascript" src="../js/View/LoginView.js"></script>
 <script type="text/javascript" src="../js/Controller/LoginController.js"></script>
 <script type="text/javascript" src="../js/Controller/NotesController.js"></script>
+<script type="text/javascript" src="../js/View/LoginView.js"></script>
+<script type="text/javascript" src="../js/Controller/test.js"></script>
+<script type="text/javascript" src="../js/View/NotesView.js"></script>
 
 </head>
+
 <body>
 <div id="container">
 

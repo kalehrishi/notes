@@ -1,50 +1,46 @@
+/*global $, jQuery, alert, console, require, shortcut*/
+/*jslint browser: true*/
 var utils = {
-    post: function(url, request, isAsync, onSuccess, onFailure) {
-        console.log(request);
-        var data = JSON.stringify(request);
-        
-        var xhr = new XMLHttpRequest();
+    post: function (url, request, isAsync, onSuccess, onFailure) {
+        'use strict';
+        var xhr = new XMLHttpRequest(), data = JSON.stringify(request);
         xhr.open('POST', url, isAsync);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(data);
 
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
 
-            if (xhr.readyState == 4 && xhr.status == 200) {
+            if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
-                console.log("OnXhr Success Response: ", response);
-                if (response.status == 0) {
+                //console.log("OnXhr Success Response: ", response);
+                if (response.status === 0) {
                     onFailure(response);
-                } else { 
+                } else {
                     onSuccess(response);
                 }
             }
-        }
-    },
-    get: function(url, request, isSync, onSuccess, onFailure) {
-
+        };
     }
-}
+};
 
 var loginController = {
-    hello: function() {
-        return "world";
-    },
     loginView: null,
-    init: function() {
-        this.loginView = new LoginView(function(e) {
+    init: function () {
+        'use strict';
+        this.loginView = new LoginView(function (e) {
+            console.log(e);
             loginController.loginView.resetData();
-        }, function(e) {
+        }, function (e) {
+            console.log(e);
             //read data from View
             var userModel = loginController.loginView.readUserData();
-            
             //call api
-            utils.post('/api/session', userModel, true, function(response) {
+            utils.post('/api/session', userModel, true, function (response) {
                 loginController.loginView.hide(response);
                 console.log("OnSuccess Response:", response);
                 //transfer control to notes controller
                 notesController.init();
-            }, function(response) {
+            }, function (response) {
                 console.log("OnFailure Response:", response);
                 loginController.loginView.showError(response);
             });
@@ -52,7 +48,8 @@ var loginController = {
         });
         this.loginView.show();
     }
-}
-$(function() {
+};
+$(function () {
+    'use strict';
     loginController.init();
-})
+});

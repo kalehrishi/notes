@@ -1,19 +1,23 @@
+/*jslint browser: true*/
+/*global $, jQuery, alert, console, require, shortcut*/
+"use strict";
 function LoginView(resetClickedHandler, loginClickedHandler) {
-
-    this.resetData = function() {
+    this.resetData = function () {
+        console.log("in reset fun");
         document.getElementById('email').value = "";
         document.getElementById('password').value = "";
     };
 
-    this.readUserData = function() {
-        var id = document.getElementById('id').value;
-        var firstName = document.getElementById('firstName').value;
-        var lastName = document.getElementById('lastName').value;
-        var createdOn = document.getElementById('createdOn').value;
-        var email = document.getElementById('email').value;
+    this.readUserData = function () {
+        var id, firstName, lastName, createdOn, email, password;
+        id = document.getElementById('id').value;
+        firstName = document.getElementById('firstName').value;
+        lastName = document.getElementById('lastName').value;
+        createdOn = document.getElementById('createdOn').value;
+        email = document.getElementById('email').value;
         console.log(email);
 
-        var password = document.getElementById('password').value;
+        password = document.getElementById('password').value;
         console.log(password);
 
         return {
@@ -26,37 +30,33 @@ function LoginView(resetClickedHandler, loginClickedHandler) {
         };
     };
 
-    this.setLoginClickedHandler = function(handler) {
-        console.log("In onLoginClickedHandler...");
+    this.setLoginClickedHandler = function (handler) {
+       // console.log("In onLoginClickedHandler...");
         var loginButton = document.getElementById('login');
-
-        loginButton.addEventListener("click", function(e) {
+        loginButton.addEventListener("click", function (e) {
             handler(e);
         }, false);
     };
 
-    this.setResetClickedHandler = function(handler) {
+    this.setResetClickedHandler = function (handler) {
         console.log("In onLogin Reset Clicked Handler..");
         var resetButton = document.getElementById('reset');
-        resetButton.addEventListener("click", function(e) {
+        resetButton.addEventListener("click", function (e) {
             handler(e);
         }, false);
     };
 
-    this.hide = function() {
+    this.hide = function () {
         document.getElementById('container').style.display = "none";
     };
 
-    this.showError = function(response) {
+    this.showError = function (response) {
         var errorMessage = response.data;
         alert(errorMessage);
     };
+    /*this.show = function () {
 
-    this.show=function(){
-
-    };
-    
+    };*/
     this.setLoginClickedHandler(loginClickedHandler);
     this.setResetClickedHandler(resetClickedHandler);
-
 }
