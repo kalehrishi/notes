@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,jslint,jshint,consolidate,minify,specs,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,jshint,consolidate,minify,specs,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -179,34 +179,25 @@
    <arg value="--stderr" />
   </exec>
  </target>
-
- <target name="jslint" >
-  <apply dir="${basedir}/public/js/" executable="/usr/local/lib/node_modules/jslint/bin/jslint.js" parallel="false" failonerror="true">
+   <!-- JSHint target, run separately -->
+<target name="jshint">
+  <apply dir="${basedir}/public/js/" executable="/usr/local/lib/node_modules/jshint/bin/jshint" parallel="false" failonerror="true">
     <fileset dir="${basedir}/public/js/">
-      <include name="**/Controller/*.js"/>
       <include name="**/View/*.js"/>
+      <include name="**/Controller/*.js"/>
       <include name="**/Model/*.js"/>
     </fileset>
-  </apply>
-  <echo>JSLint Successful</echo>
- </target>
- 
- <target name="jshint" depends="phpunit">
-  <apply dir="${basedir}/public/js/" executable="/usr/local/bin/phantomjs" parallel="false" failonerror="true">
-    <fileset dir="${basedir}/public/js/">
-      <include name="**/Controller/*.js"/>
-      <include name="**/View/*.js"/>
-    </fileset>
-    <arg line="'${basedir}/tests/js/lib/phantom-jshint-runner.js'" />
-    <arg line="'${basedir}/tests/js/lib/jshint/jshint.js'" />
+    <arg line="--verbose" />
+    <arg line="--config" />
+    <arg line="'${basedir}/jshint.jshintrc'" />
   </apply>
   <echo>JSHint Successful</echo>
- </target>
+</target>
 
  <target name="consolidate" depends="jshint">
   <echo>Consolidating...</echo>
   <concat id="srcfiles" destfile="${basedir}/build/tools/consolidated.js" append="true">
-<fileset dir="${basedir}/public/js/Controller/" includes="**/*.js" excludes="${basedir}/public/js/"/>
+    <fileset dir="${basedir}/public/js/" includes="**/*.js" excludes="${basedir}/public/js/"/>
   </concat>
   <pathconvert pathsep=";" property="files" refid="srcfiles"/>
   <echo>${files}</echo>
@@ -218,21 +209,20 @@
   <exec executable="java" dir="${basedir}/public/js/" failonerror="true">
     <arg line="-jar '${basedir}/build/tools/yuicompressor-2.4.7.jar'" />
     <arg line="--type js" />
-    <arg line="-o 'controller-min.js'" />
+    <arg line="-o 'login-min.js'" />
     <arg line="'${basedir}/build/tools/consolidated.js'" />
   </exec>
   <echo>Finished</echo>
 </target>
 
 <target name="specs" depends="minify">
-  <echo>Running specs...</echo>
-  <exec executable="/usr/local/bin/phantomjs" failonerror="true">
+<echo>Running specs...</echo>
+<exec executable="/usr/local/bin/phantomjs" failonerror="true">
     <arg line="${basedir}/tests/js/lib/phantom-jasmine-runner.js" />
-    <arg line="${basedir}/tests/js/index.html" />
-  </exec>
-  <echo>Finished.</echo>
+    <arg line="${basedir}/tests/js/SpecRunner.html" />
+</exec>
+<echo>Finished.</echo>
 </target>
-
 <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>

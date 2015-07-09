@@ -1,5 +1,3 @@
-/*global $, jQuery, alert, console, require, shortcut*/
-/*jslint browser: true*/
 function NotesView() {
     'use strict';
     this.show = function () {

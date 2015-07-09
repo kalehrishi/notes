@@ -1,8 +1,5 @@
-/*global $, jQuery, alert, console, require, shortcut*/
-/*jslint browser: true*/
 var utils = {
     post: function (url, request, isAsync, onSuccess, onFailure) {
-        'use strict';
         var xhr = new XMLHttpRequest(), data = JSON.stringify(request);
         xhr.open('POST', url, isAsync);
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -26,9 +23,8 @@ var utils = {
 var loginController = {
     loginView: null,
     init: function () {
-        'use strict';
         this.loginView = new LoginView(function (e) {
-            console.log(e);
+            //console.log(e);
             loginController.loginView.resetData();
         }, function (e) {
             console.log(e);
@@ -46,10 +42,9 @@ var loginController = {
             });
 
         });
-        this.loginView.show();
+        //this.loginView.show();
     }
 };
 $(function () {
-    'use strict';
     loginController.init();
 });

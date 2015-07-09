@@ -1,6 +1,3 @@
-/*jslint browser: true*/
-/*global $, jQuery, alert, console, require, shortcut*/
-"use strict";
 function LoginView(resetClickedHandler, loginClickedHandler) {
     this.resetData = function () {
         console.log("in reset fun");
@@ -10,16 +7,14 @@ function LoginView(resetClickedHandler, loginClickedHandler) {
 
     this.readUserData = function () {
         var id, firstName, lastName, createdOn, email, password;
+        
         id = document.getElementById('id').value;
         firstName = document.getElementById('firstName').value;
         lastName = document.getElementById('lastName').value;
         createdOn = document.getElementById('createdOn').value;
         email = document.getElementById('email').value;
-        console.log(email);
-
         password = document.getElementById('password').value;
-        console.log(password);
-
+        
         return {
             id: id,
             firstName: firstName,
@@ -31,7 +26,8 @@ function LoginView(resetClickedHandler, loginClickedHandler) {
     };
 
     this.setLoginClickedHandler = function (handler) {
-       // console.log("In onLoginClickedHandler...");
+        console.log("In onLoginClickedHandler...");
+        
         var loginButton = document.getElementById('login');
         loginButton.addEventListener("click", function (e) {
             handler(e);
@@ -40,10 +36,13 @@ function LoginView(resetClickedHandler, loginClickedHandler) {
 
     this.setResetClickedHandler = function (handler) {
         console.log("In onLogin Reset Clicked Handler..");
+        
         var resetButton = document.getElementById('reset');
-        resetButton.addEventListener("click", function (e) {
+        if(resetButton) {
+            resetButton.addEventListener("click", function (e) {
             handler(e);
         }, false);
+        }
     };
 
     this.hide = function () {
