@@ -189,7 +189,7 @@
 
    <!-- JSHint target, run separately -->
 <target name="jshint">
-  <apply dir="${basedir}/public/js/" executable="/usr/local/lib/node_modules/jshint/bin/jshint" parallel="false" failonerror="true">
+  <apply dir="${basedir}/public/js/" executable="${basedir}/node_modules/jshint/bin/jshint" parallel="false" failonerror="true">
     <fileset dir="${basedir}/public/js/">
       <include name="**/View/*.js"/>
       <include name="**/Controller/*.js"/>
