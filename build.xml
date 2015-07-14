@@ -13,7 +13,6 @@
   <delete file="${basedir}/app/Config/config.json"/>
   <delete file="${basedir}/public/js/consolidated.js"/>
   <delete file="${basedir}/public/js/main-min.js"/>
-  <delete file="${basedir}/npm-debug.log"/>
   
   <property name="clean.done" value="true"/>
  </target>
@@ -207,7 +206,7 @@
 
 <target name="consolidate" depends="jshint">
   <echo>Consolidating...</echo>
-  <concat id="srcfiles" destfile="${basedir}/build/tools/consolidated.js" append="true">
+  <concat id="srcfiles" destfile="${basedir}/public/js/consolidated.js" append="true">
     <fileset dir="${basedir}/public/js/" includes="**/*.js" excludes="${basedir}/public/js/"/>
   </concat>
   <pathconvert pathsep=";" property="files" refid="srcfiles"/>
@@ -221,7 +220,7 @@
     <arg line="-jar '${basedir}/build/tools/yuicompressor-2.4.7.jar'" />
     <arg line="--type js" />
     <arg line="-o 'main-min.js'" />
-    <arg line="'${basedir}/build/tools/consolidated.js'" />
+    <arg line="'${basedir}/public/js/consolidated.js'" />
   </exec>
   <echo>Finished</echo>
 </target>
