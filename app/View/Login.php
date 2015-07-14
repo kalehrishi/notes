@@ -20,7 +20,6 @@ $data = json_decode($response, true);
 <script type="text/javascript" src="../js/Controller/LoginController.js"></script>
 <script type="text/javascript" src="../js/Controller/NotesController.js"></script>
 <script type="text/javascript" src="../js/View/LoginView.js"></script>
-<script type="text/javascript" src="../js/Controller/test.js"></script>
 <script type="text/javascript" src="../js/View/NotesView.js"></script>
 
 </head>
