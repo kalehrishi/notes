@@ -8,3 +8,5 @@ cache.properties
 app/Config/config.json
 .vagrant
 composer.lock
+public/js/consolidated.js
+public/js/main-min.js
