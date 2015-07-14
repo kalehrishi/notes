@@ -22,6 +22,7 @@ var utils = {
 
 var loginController = {
     loginView: null,
+    
     init: function () {
         this.loginView = new LoginView(function (e) {
             //console.log(e);

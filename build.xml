@@ -11,6 +11,9 @@
   <delete file="${basedir}/composer.lock"/>
   <delete dir="${basedir}/vendor"/>
   <delete file="${basedir}/app/Config/config.json"/>
+  <delete file="${basedir}/public/js/consolidated.js"/>
+  <delete file="${basedir}/public/js/main-min.js"/>
+  <delete file="${basedir}/npm-debug.log"/>
   
   <property name="clean.done" value="true"/>
  </target>
@@ -187,9 +190,9 @@
   </exec>
  </target>
 
-   <!-- JSHint target, run separately -->
-<target name="jshint">
-  <apply dir="${basedir}/public/js/" executable="${basedir}/node_modules/jshint/bin/jshint" parallel="false" failonerror="true">
+  <!-- JSHint target, run separately -->
+  <target name="jshint">
+  <apply dir="${basedir}/public/js/" executable="${basedir}/node_modules/jshint/bin/jshint" failonerror="true" resultproperty="specs.results">
     <fileset dir="${basedir}/public/js/">
       <include name="**/View/*.js"/>
       <include name="**/Controller/*.js"/>
@@ -202,7 +205,7 @@
   <echo>JSHint Successful</echo>
 </target>
 
- <target name="consolidate" depends="jshint">
+<target name="consolidate" depends="jshint">
   <echo>Consolidating...</echo>
   <concat id="srcfiles" destfile="${basedir}/build/tools/consolidated.js" append="true">
     <fileset dir="${basedir}/public/js/" includes="**/*.js" excludes="${basedir}/public/js/"/>
@@ -212,27 +215,26 @@
   <echo>Finished.</echo>
 </target>
 
-<target name="minify" depends="jshint">
+<target name="minify" depends="consolidate">
   <echo>Minifying...</echo>
   <exec executable="java" dir="${basedir}/public/js/" failonerror="true">
     <arg line="-jar '${basedir}/build/tools/yuicompressor-2.4.7.jar'" />
     <arg line="--type js" />
-    <arg line="-o 'login-min.js'" />
+    <arg line="-o 'main-min.js'" />
     <arg line="'${basedir}/build/tools/consolidated.js'" />
   </exec>
   <echo>Finished</echo>
 </target>
 
 <target name="specs" depends="minify">
-<echo>Running specs...</echo>
-<exec executable="/usr/local/bin/phantomjs" failonerror="true">
+  <echo>Running specs...</echo>
+  <exec executable="/usr/local/bin/phantomjs" failonerror="true">
     <arg line="${basedir}/tests/js/lib/phantom-jasmine-runner.js" />
     <arg line="${basedir}/tests/js/SpecRunner.html" />
-</exec>
-<echo>Finished.</echo>
+  </exec>
+  <echo>Finished.</echo>
 </target>
 <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>
-
