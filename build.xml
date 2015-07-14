@@ -185,7 +185,6 @@
  <target name="node" depends="clean">
   <exec executable="npm" failonerror="true">
     <arg value="install" />
-    <arg value="--no-bin-link" />
   </exec>
  </target>
 
