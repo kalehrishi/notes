@@ -39,20 +39,21 @@ class Session
         $this->validator->notNull($sessionModel->getUserId());
         $this->validator->validNumber($sessionModel->getUserId());
         $this->validator->notNull($sessionModel->getAuthToken());
-        
-            $sessionMapper = new SessionMapper();
-            $sessionModel  = $sessionMapper->create($sessionModel);
-            return $sessionModel;
+
+        $sessionMapper = new SessionMapper();
+        $sessionModel  = $sessionMapper->create($sessionModel);
+
+        return $sessionModel;
     }
     public function read($sessionModel)
     {
         $this->validator->notNull($sessionModel->getId());
         $this->validator->validNumber($sessionModel->getId());
-            $sessionMapper = new SessionMapper();
-            
-            $sessionModel = $sessionMapper->read($sessionModel);
 
-            return $sessionModel;
+        $sessionMapper = new SessionMapper();
+        $sessionModel = $sessionMapper->read($sessionModel);
+        
+        return $sessionModel;
     }
     
     public function getSessionByAuthTokenAndUserId($sessionModel)
@@ -60,11 +61,11 @@ class Session
         $this->validator->notNull($sessionModel->getUserId());
         $this->validator->validNumber($sessionModel->getUserId());
         $this->validator->notNull($sessionModel->getAuthToken());
-            $sessionMapper = new SessionMapper();
-            
-            $sessionModel = $sessionMapper->read($sessionModel);
 
-            return $sessionModel;
+        $sessionMapper = new SessionMapper();
+        $sessionModel = $sessionMapper->read($sessionModel);
+
+        return $sessionModel;
     }
     
     public function delete($sessionModel)
@@ -73,12 +74,13 @@ class Session
         $this->validator->validNumber($sessionModel->getId());
         $this->validator->notNull($sessionModel->getUserId());
         $this->validator->validNumber($sessionModel->getUserId());
-            $sessionModel->setIsExpired(1);
-            $sessionModel->setExpiredOn(date("Y-m-d H:i:s"));
-            $sessionMapper = new SessionMapper();
-            
-            $sessionModel = $sessionMapper->update($sessionModel);
-            
-            return $sessionModel;
+
+        $sessionModel->setIsExpired(1);
+        $sessionModel->setExpiredOn(date("Y-m-d H:i:s"));
+        
+        $sessionMapper = new SessionMapper();
+        $sessionModel = $sessionMapper->update($sessionModel);
+
+        return $sessionModel;
     }
 }

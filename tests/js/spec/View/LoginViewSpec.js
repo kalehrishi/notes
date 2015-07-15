@@ -1,10 +1,10 @@
 describe("A Click Event", function() {
   it ("is test with Reset button.", function() {
     var spyEvent;
-    spyEvent = spyOnEvent('#reset1', 'click');
-    $('#reset1').trigger( "click" );
+    spyEvent = spyOnEvent('#reset', 'click');
+    $('#reset').trigger( "click" );
        
-    expect('click').toHaveBeenTriggeredOn('#reset1');
+    expect('click').toHaveBeenTriggeredOn('#reset');
     expect(spyEvent).toHaveBeenTriggered();
   });
 
@@ -19,10 +19,11 @@ describe("A Click Event", function() {
   });
 
 });
-describe("Session Object", function(){
-  var spy, loginView, email;
+
+describe("A Function readUserData", function(){
+  var loginView, email;
     beforeEach(function() {
-        loginView = new LoginView();
+        loginView = new Notes.LoginView();
     });
 
     it("is return empty object without click event.", function() {

@@ -11,8 +11,8 @@
   <delete file="${basedir}/composer.lock"/>
   <delete dir="${basedir}/vendor"/>
   <delete file="${basedir}/app/Config/config.json"/>
-  <delete file="${basedir}/public/js/consolidated.js"/>
-  <delete file="${basedir}/public/js/main-min.js"/>
+  <delete file="${basedir}/public/consolidated.js"/>
+  <delete file="${basedir}/public/main-min.js"/>
   
   <property name="clean.done" value="true"/>
  </target>
@@ -181,17 +181,17 @@
    <arg value="--stderr" />
   </exec>
  </target>
- 
+
  <target name="node" depends="clean">
   <exec executable="npm" failonerror="true">
     <arg value="install" />
   </exec>
  </target>
-
-  <!-- JSHint target, run separately -->
+ <!-- JSHint target, run separately -->
   <target name="jshint">
-  <apply dir="${basedir}/public/js/" executable="${basedir}/node_modules/jshint/bin/jshint" failonerror="true" resultproperty="specs.results">
-    <fileset dir="${basedir}/public/js/">
+  <apply dir="${basedir}/app-js/" executable="${basedir}/node_modules/jshint/bin/jshint" failonerror="true" resultproperty="specs.results">
+    <fileset dir="${basedir}/app-js/">
+      <include name="/*.js"/>
       <include name="**/View/*.js"/>
       <include name="**/Controller/*.js"/>
       <include name="**/Model/*.js"/>
@@ -203,10 +203,10 @@
   <echo>JSHint Successful</echo>
 </target>
 
-<target name="consolidate" depends="jshint">
+<target name="consolidate" depends="jshint" description="Concatenate all js files">
   <echo>Consolidating...</echo>
-  <concat id="srcfiles" destfile="${basedir}/public/js/consolidated.js" append="true">
-    <fileset dir="${basedir}/public/js/" includes="**/*.js" excludes="${basedir}/public/js/"/>
+  <concat id="srcfiles" destfile="${basedir}/public/consolidated.js" append="true">
+    <fileset dir="${basedir}/app-js/" includes="**/*.js" excludes="${basedir}/app-js/"/>
   </concat>
   <pathconvert pathsep=";" property="files" refid="srcfiles"/>
   <echo>${files}</echo>
@@ -215,11 +215,11 @@
 
 <target name="minify" depends="consolidate">
   <echo>Minifying...</echo>
-  <exec executable="java" dir="${basedir}/public/js/" failonerror="true">
+  <exec executable="java" dir="${basedir}/public/" failonerror="true">
     <arg line="-jar '${basedir}/build/tools/yuicompressor-2.4.7.jar'" />
     <arg line="--type js" />
     <arg line="-o 'main-min.js'" />
-    <arg line="'${basedir}/public/js/consolidated.js'" />
+    <arg line="'${basedir}/public/consolidated.js'" />
   </exec>
   <echo>Finished</echo>
 </target>

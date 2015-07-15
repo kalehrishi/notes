@@ -1,19 +1,23 @@
-function LoginView(resetClickedHandler, loginClickedHandler) {
+Notes.LoginView = function(resetClickedHandler, loginClickedHandler) {
+    this.hello = function () {
+        return "world";
+    };
+
     this.resetData = function () {
         console.log("in reset fun");
-        document.getElementById('email').value = "";
-        document.getElementById('password').value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
     };
 
     this.readUserData = function () {
         var id, firstName, lastName, createdOn, email, password;
         
-        id = document.getElementById('id').value;
-        firstName = document.getElementById('firstName').value;
-        lastName = document.getElementById('lastName').value;
-        createdOn = document.getElementById('createdOn').value;
-        email = document.getElementById('email').value;
-        password = document.getElementById('password').value;
+        id = document.getElementById("id").value;
+        firstName = document.getElementById("firstName").value;
+        lastName = document.getElementById("lastName").value;
+        createdOn = document.getElementById("createdOn").value;
+        email = document.getElementById("email").value;
+        password = document.getElementById("password").value;
         
         return {
             id: id,
@@ -28,7 +32,7 @@ function LoginView(resetClickedHandler, loginClickedHandler) {
     this.setLoginClickedHandler = function (handler) {
         console.log("In onLoginClickedHandler...");
         
-        var loginButton = document.getElementById('login');
+        var loginButton = document.getElementById("login");
         loginButton.addEventListener("click", function (e) {
             handler(e);
         }, false);
@@ -37,7 +41,7 @@ function LoginView(resetClickedHandler, loginClickedHandler) {
     this.setResetClickedHandler = function (handler) {
         console.log("In onLogin Reset Clicked Handler..");
         
-        var resetButton = document.getElementById('reset');
+        var resetButton = document.getElementById("reset");
         if(resetButton) {
             resetButton.addEventListener("click", function (e) {
             handler(e);
@@ -46,16 +50,14 @@ function LoginView(resetClickedHandler, loginClickedHandler) {
     };
 
     this.hide = function () {
-        document.getElementById('container').style.display = "none";
+        document.getElementById("container").style.display = "none";
     };
 
     this.showError = function (response) {
         var errorMessage = response.data;
         alert(errorMessage);
     };
-    /*this.show = function () {
-
-    };*/
+    
     this.setLoginClickedHandler(loginClickedHandler);
     this.setResetClickedHandler(resetClickedHandler);
 }

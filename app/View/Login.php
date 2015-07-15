@@ -10,17 +10,10 @@ $data = json_decode($response, true);
  .error { 
   }
 </style>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-</script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 
-<script type="text/javascript" src="../js/Controller/LoginController.js"></script>
-<script type="text/javascript" src="../js/Controller/NotesController.js"></script>
-<script type="text/javascript" src="../js/View/LoginView.js"></script>
-<script type="text/javascript" src="../js/View/NotesView.js"></script>
+<script type="text/javascript" src="../main-min.js"></script>
 
 </head>
 
