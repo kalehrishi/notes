@@ -206,6 +206,7 @@
 <target name="consolidate" depends="jshint" description="Concatenate all js files">
   <echo>Consolidating...</echo>
   <concat id="srcfiles" destfile="${basedir}/public/consolidated.js" append="true">
+    <fileset file="${basedir}/app-js/Notes.js"/>
     <fileset dir="${basedir}/app-js/" includes="**/*.js" excludes="${basedir}/app-js/"/>
   </concat>
   <pathconvert pathsep=";" property="files" refid="srcfiles"/>
