@@ -4,12 +4,12 @@ namespace Notes\Model;
 
 class Session extends Model
 {
-    protected $id;
-    protected $userId;
-    protected $authToken;
-    protected $createdOn;
-    protected $expiredOn;
-    protected $isExpired;
+    private $id;
+    private $userId;
+    private $authToken;
+    private $createdOn;
+    private $expiredOn;
+    private $isExpired;
     
     public function setId($id)
     {

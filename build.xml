@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,node,jshint,consolidate,minify,specs,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,npm,bower,jshint,consolidate,minify,specs,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -182,11 +182,18 @@
   </exec>
  </target>
 
- <target name="node" depends="clean">
+ <target name="npm" depends="clean">
   <exec executable="npm" failonerror="true">
     <arg value="install" />
   </exec>
  </target>
+
+  <target name="bower" >
+  <exec executable="bower" failonerror="true">
+    <arg value="install" />
+  </exec>
+ </target>
+
  <!-- JSHint target, run separately -->
   <target name="jshint">
   <apply dir="${basedir}/app-js/" executable="${basedir}/node_modules/jshint/bin/jshint" failonerror="true" resultproperty="specs.results">
