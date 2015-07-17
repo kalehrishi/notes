@@ -2,10 +2,10 @@
   "name":     "Notes ",
   "version":  "1.0.0",
 
-"devDependencies": {
-    "jshint": "2.8.*"
+  "devDependencies": {
+    "jshint": "^2.8.*"
   },
-
+  
   "ignore": [
     "node_modules"
   ]

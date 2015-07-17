@@ -1,12 +1,13 @@
 {
-	"name": "Notes",
-	"Version": "1.0.0",
+    "name": "Notes",
+    "Version": "1.0.0",
 
 	"devDependencies": {
-		"jquery": "~1.11.*"
-	},
-	
-	"ignore": [
-    "bower_components"
-  ]
+		"jquery": "latest",
+		"jquery-ui" : "latest"
+		},
+
+    "ignore": [
+		"bower_components"
+	]
 }
