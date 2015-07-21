@@ -49,7 +49,8 @@ $data = json_decode($response, true);
         <td><input type="submit" value="Login" id="login"/></td>
         <td><input type="reset"  value="Reset" id="reset"/></td>
       </tr>
-    </table>
+      </table>
     </div>
+    <div id="errorMessage"></div>
 </body>
 </html>

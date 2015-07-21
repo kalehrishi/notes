@@ -40,8 +40,16 @@ $(function () {
 Notes.utils = {
     post: function (url, request, isAsync, onSuccess, onFailure) {
         var xhr = new XMLHttpRequest(), data = JSON.stringify(request);
+        console.log(data);
         xhr.open("POST", url, isAsync);
         xhr.setRequestHeader("Content-Type", "application/json");
+        
+        xhr.setRequestHeader("Access-Control-Allow-Credentials", "true");
+        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xhr.setRequestHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT");
+        xhr.setRequestHeader("Access-Control-Allow-Headers", "HTTP_X_REQUESTED_WITH, Content-Type, Accept, Authorization");
+        
+
         xhr.send(data);
 
         xhr.onreadystatechange = function () {
@@ -61,10 +69,6 @@ Notes.utils = {
   var Notes = {};
 }
 Notes.LoginView = function(resetClickedHandler, loginClickedHandler) {
-    this.hello = function () {
-        return "world";
-    };
-
     this.resetData = function () {
         console.log("in reset fun");
         document.getElementById("email").value = "";
@@ -117,7 +121,7 @@ Notes.LoginView = function(resetClickedHandler, loginClickedHandler) {
 
     this.showError = function (response) {
         var errorMessage = response.data;
-        alert(errorMessage);
+        document.getElementById("errorMessage").innerText = errorMessage;
     };
     
     this.setLoginClickedHandler(loginClickedHandler);

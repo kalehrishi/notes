@@ -20,13 +20,13 @@ describe("A Click Event", function() {
 
 });
 
-describe("A Function readUserData", function(){
+describe("In LoginView tests", function(){
   var loginView, email;
     beforeEach(function() {
         loginView = new Notes.LoginView();
     });
 
-    it("is return empty object without click event.", function() {
+    it("A function readUserData is return empty object without click event.", function() {
      var result, object  = {
             id: "",
             firstName: "",
@@ -38,5 +38,31 @@ describe("A Function readUserData", function(){
     result = loginView.readUserData();
     
     expect(object).toEqual(result);
+    });
+
+    it("A function hide should result in form contanier being hidden", function() {
+        loginView.hide();
+        
+        expect($( "#container" )).toBeHidden();
+    });
+
+    it("A function showError should show error message on failure login", function() {
+        var response = {"status":0,"message":"FAILURE","version":"1.0.0","data":"Can Not Found Given Model In Database","debugData":null};
+        loginView.showError(response);
+        
+        expect($( "#errorMessage" )).toHaveText("Can Not Found Given Model In Database");
+    });
+
+    it("A function resetData should reset values of email and password", function() {
+        var email = document.getElementById('email');
+        email.value = "gau@bhapkar.com"
+        
+        var password = document.getElementById('password')
+        password.value = "Gauri@123";
+        
+        loginView.resetData();
+        
+        expect(email).toBeEmpty();
+        expect(password).toBeEmpty();
     });
 });

@@ -23,9 +23,12 @@
   <script src="spec/Controller/LoginControllerSpec.js"></script>
   <script src="spec/View/LoginViewSpec.js"></script>
   
+  </script>
+  
 </head>
 
 <body>
+<div id="container">
 <table>
       <tr>
         <td>Email:</td>
@@ -44,10 +47,14 @@
         <td><input type="hidden" id="createdOn" /></td>
         <td><input type="hidden" id="userModel" /></td>
       </tr>
-        <td><input type="submit" value="Login" id="login"/></td>
+      <tr>
+        <td id="errorMessage"></td>
+      </tr>
+      <td><input type="submit" value="Login" id="login"/></td>
         <td><input type="reset"  value="Reset" id="reset"/></td>
       </tr>
     </table>
-    
+</div>
+<div id="errorMessage"></div>
 </body>
 </html>

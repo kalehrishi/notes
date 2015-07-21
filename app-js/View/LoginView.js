@@ -1,8 +1,4 @@
 Notes.LoginView = function(resetClickedHandler, loginClickedHandler) {
-    this.hello = function () {
-        return "world";
-    };
-
     this.resetData = function () {
         console.log("in reset fun");
         document.getElementById("email").value = "";
@@ -55,7 +51,7 @@ Notes.LoginView = function(resetClickedHandler, loginClickedHandler) {
 
     this.showError = function (response) {
         var errorMessage = response.data;
-        alert(errorMessage);
+        document.getElementById("errorMessage").innerText = errorMessage;
     };
     
     this.setLoginClickedHandler(loginClickedHandler);
