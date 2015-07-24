@@ -203,6 +203,12 @@
       <include name="**/Controller/*.js"/>
       <include name="**/Model/*.js"/>
     </fileset>
+    <fileset dir="${basedir}/tests/js/spec/">
+      <include name="/*.js"/>
+      <include name="**/View/*.js"/>
+      <include name="**/Controller/*.js"/>
+      <include name="**/Model/*.js"/>
+    </fileset>
     <arg line="--verbose" />
     <arg line="--config" />
     <arg line="'${basedir}/jshint.jshintrc'" />
