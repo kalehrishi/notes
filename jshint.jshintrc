@@ -26,7 +26,7 @@
                                 //   "single" : require single quotes
                                 //   "double" : require double quotes
     "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
-    "unused"        : false,     // Unused variables:
+    "unused"        : true,     // Unused variables:
                                 //   true     : all variables, last function parameter
                                 //   "vars"   : all variables only
                                 //   "strict" : all variables, all function parameters
@@ -40,7 +40,7 @@
 
     "white"         : true,
     // Relaxing
-    "asi"           : true,     // true: Tolerate Automatic Semicolon Insertion (no semicolons)
+    "asi"           : false,     // true: Tolerate Automatic Semicolon Insertion (no semicolons)
     "boss"          : true,     // true: Tolerate assignments where comparisons would be expected
     "debug"         : true,     // true: Allow debugger statements e.g. browser breakpoints.
     "eqnull"        : false,     // true: Tolerate use of `== null`
@@ -97,6 +97,7 @@
             "console":true,
             "require": true,
             "exports":true,
+            "spyOnEvent": true,
             "Notes":true
             }       // additional predefined global variables
 }

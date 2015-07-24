@@ -1,8 +1,9 @@
 {
   "name":     "Notes ",
   "version":  "1.0.0",
-
+  
   "devDependencies": {
+    "bower": "^1.*.*",
     "jshint": "^2.8.*"
   },
   
