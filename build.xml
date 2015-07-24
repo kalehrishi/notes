@@ -188,8 +188,8 @@
   </exec>
  </target>
 
-  <target name="bower" >
-  <exec executable="bower" failonerror="true">
+  <target name="bower">
+  <exec executable="node_modules/bower/bin/bower" failonerror="true">
     <arg value="install" />
   </exec>
  </target>
