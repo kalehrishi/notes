@@ -56,4 +56,4 @@ Notes.LoginView = function(resetClickedHandler, loginClickedHandler) {
     
     this.setLoginClickedHandler(loginClickedHandler);
     this.setResetClickedHandler(resetClickedHandler);
-}
+};
