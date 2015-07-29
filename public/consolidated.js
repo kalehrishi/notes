@@ -40,7 +40,7 @@ $(function () {
 Notes.utils = {
     post: function (url, request, isAsync, onSuccess, onFailure) {
         var xhr = new XMLHttpRequest(), data = JSON.stringify(request);
-        
+        console.log(data);
         xhr.open("POST", url, isAsync);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(data);

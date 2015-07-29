@@ -17,7 +17,7 @@ describe("A Click Event", function() {
     expect("click").toHaveBeenTriggeredOn("#login");
     expect(spyEvent).toHaveBeenTriggered();
   });
-
+  
 });
 
 describe("In LoginView tests", function(){

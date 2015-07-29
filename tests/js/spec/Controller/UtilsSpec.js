@@ -15,7 +15,7 @@ describe("Test XHR", function() {
     doneFn = jasmine.createSpy("success");
 		
     xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(args) {
+    xhr.onreadystatechange = function() {
       if (this.readyState == this.DONE) {
         console.log(this.responseText);
         doneFn(this.responseText);
@@ -25,12 +25,13 @@ describe("Test XHR", function() {
     xhr.open("POST", "/api/session");
     xhr.send();
 
+    expect(jasmine.Ajax.requests.mostRecent().method).toEqual("POST");
     expect(jasmine.Ajax.requests.mostRecent().url).toBe("/api/session");
     expect(doneFn).not.toHaveBeenCalled();
 
     jasmine.Ajax.requests.mostRecent().respondWith({
       "status": 200,
-      "contentType": 'text/plain',
+      "contentType": "text/plain",
       "responseText": {"status":1,"message":"SUCCESS","version":"1.0.0","data":[],"debugData":null}
     });
 
