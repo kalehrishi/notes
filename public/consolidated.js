@@ -1,5 +1,5 @@
-if(Notes === undefined) {
-  var Notes = {};
+if (Notes === undefined) {
+    var Notes = {};
 }
 Notes.loginController = {
     loginView: null,
@@ -58,10 +58,10 @@ Notes.utils = {
             }
         };
     }
-};if(Notes === undefined) {
-  var Notes = {};
+};if (Notes === undefined) {
+    var Notes = {};
 }
-Notes.LoginView = function(resetClickedHandler, loginClickedHandler) {
+Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
     this.resetData = function () {
         console.log("in reset fun");
         document.getElementById("email").value = "";
@@ -101,10 +101,10 @@ Notes.LoginView = function(resetClickedHandler, loginClickedHandler) {
         console.log("In onLogin Reset Clicked Handler..");
         
         var resetButton = document.getElementById("reset");
-        if(resetButton) {
+        if (resetButton) {
             resetButton.addEventListener("click", function (e) {
-            handler(e);
-        }, false);
+                handler(e);
+            }, false);
         }
     };
 
