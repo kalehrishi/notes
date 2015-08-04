@@ -42,10 +42,12 @@ module.exports = function(grunt) {
                     'helper': 'jshint.jshintrc',
                     'vendor': [
                               'bower_components/jquery/dist/jquery.min.js',
-                              'tests/js/lib/mock-ajax.js'
+                              'tests/js/lib/mock-ajax.js',
+                              'tests/js/lib/jasmine-jquery.js'
                               ],
                     'specs': 'tests/js/spec/**/*.js'
-                }
+                },
+                summary = true
             }
         },
     });
