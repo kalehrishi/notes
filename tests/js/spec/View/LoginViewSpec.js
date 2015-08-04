@@ -19,12 +19,7 @@ describe("A Click Event", function() {
 });
 
 describe("In LoginView tests", function(){
-  var loginView;
-    beforeEach(function() {
-        loginView = new Notes.LoginView();
-      });
-
-    it("A function readUserData is return empty object without click event.", function() {
+  it("A function readUserData is return empty object without click event.", function() {
      var loginView;
      loginView = new Notes.LoginView();
      var result, object  = {
@@ -41,25 +36,30 @@ describe("In LoginView tests", function(){
     });
 
     it("A function hide should result in form contanier being hidden", function() {
-        loginView.hide();
+      var loginView;
+      loginView = new Notes.LoginView();
+      loginView.hide();
         
         expect($( "#container" )).toBeHidden();
     });
 
     it("A function showError should show error message on failure login", function() {
-        var response = {"status":0,"message":"FAILURE","version":"1.0.0","data":"Can Not Found Given Model In Database","debugData":null};
+        var loginView, response = {"status":0,"message":"FAILURE","version":"1.0.0","data":"Can Not Found Given Model In Database","debugData":null};
+        loginView = new Notes.LoginView();
+        
         loginView.showError(response);
         
         expect($( "#errorMessage" )).toHaveText("Can Not Found Given Model In Database");
     });
 
     it("A function resetData should reset values of email and password", function() {
-        var email = document.getElementById("email");
+        var loginView, email = document.getElementById("email");
         email.value = "gau@bhapkar.com";
         
         var password = document.getElementById("password");
         password.value = "Gauri@123";
         
+        loginView = new Notes.LoginView();
         loginView.resetData();
         
         expect(email).toBeEmpty();
@@ -67,8 +67,9 @@ describe("In LoginView tests", function(){
     });
     
     it("A function setResetClickHandler have been called", function(done) {
-      var dummyHandler = jasmine.createSpy();
-      
+      var loginView, dummyHandler = jasmine.createSpy();
+      loginView = new Notes.LoginView();
+
       var spy = spyOn(loginView, "setResetClickedHandler");
       loginView.setResetClickedHandler(dummyHandler);
       
@@ -77,8 +78,9 @@ describe("In LoginView tests", function(){
     });
 
     it("A function setLoginClickedHandler have been called", function(done) {
-      var dummyHandler = jasmine.createSpy();
-      
+      var loginView, dummyHandler = jasmine.createSpy();
+      loginView = new Notes.LoginView();
+
       var spy = spyOn(loginView, "setLoginClickedHandler");
       loginView.setLoginClickedHandler(dummyHandler);
       
