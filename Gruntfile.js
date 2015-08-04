@@ -35,7 +35,8 @@ module.exports = function(grunt) {
         jasmine: {
             all: {
                 src: [
-                    'public/main-min.js'
+                    'app-js/Notes.js',
+                    'app-js/**/*.js',
                 ],
                 options: {
                     'helper': 'jshint.jshintrc',
