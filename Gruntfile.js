@@ -35,7 +35,7 @@ module.exports = function(grunt) {
         jasmine: {
             all: {
                 src: [
-                    'app-js/Notes.js'
+                    'app-js/Notes.js',
                     'app-js/**/*.js',
                 ],
                 options: {
@@ -44,9 +44,11 @@ module.exports = function(grunt) {
                     'specs': 'tests/js/spec/**/*.js'
                 }
             }
-        }
+        },
     });
-
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // "npm test" runs these tasks
