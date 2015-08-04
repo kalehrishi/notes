@@ -8,7 +8,6 @@ describe("A Click Event", function() {
     expect(spyEvent).toHaveBeenTriggered();
   });
 
-
   it ("is test with Login button.", function() {
     var spyEvent;
     spyEvent = spyOnEvent("#login", "click");
@@ -17,7 +16,6 @@ describe("A Click Event", function() {
     expect("click").toHaveBeenTriggeredOn("#login");
     expect(spyEvent).toHaveBeenTriggered();
   });
-  
 });
 
 describe("In LoginView tests", function(){

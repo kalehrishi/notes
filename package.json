@@ -5,9 +5,16 @@
   "devDependencies": {
     "bower": "^1.*.*",
     "jshint": "^2.8.*",
-    "istanbul": "0.3.*"
+    "grunt-cli": "~0.1.*",
+    "grunt": "~0.4.*",
+    "grunt-contrib-jshint": "^0.11.*",
+    "grunt-contrib-concat": "0.4.*",
+    "grunt-contrib-uglify": "0.4.*",
+    "grunt-contrib-jasmine": "^0.9.*"
   },
-  
+  "scripts": {
+    "test": "./node_modules/grunt-cli/bin/grunt test"
+  },
   "ignore": [
     "node_modules"
   ]

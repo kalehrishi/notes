@@ -1,3 +1,3 @@
-if(Notes === undefined) {
-  var Notes = {};
+if (Notes === undefined) {
+    var Notes = {};
 }
