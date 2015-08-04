@@ -1,5 +1,4 @@
 module.exports = function(grunt) {
-
     // Project configuration.
     grunt.initConfig({
 
@@ -36,15 +35,14 @@ module.exports = function(grunt) {
             all: {
                 src: [
                     'app-js/Notes.js',
-                    'app-js/**/*.js',
+                    'app-js/**/*.js'
                 ],
                 options: {
                     'vendor': [
-                              'bower_components/jquery/dist/jquery.min.js',
-                              'tests/js/lib/mock-ajax.js',
-                              'tests/js/lib/jasmine-jquery.js',
-                              'tests/js/SpecRunner.html'
-                              ],
+                        'bower_components/jquery/dist/jquery.min.js',
+                        'tests/js/lib/mock-ajax.js',
+                        'tests/js/lib/jasmine-jquery.js'
+                    ],
                     'specs': 'tests/js/spec/**/*.js'
                 }
             }
