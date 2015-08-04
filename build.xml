@@ -251,6 +251,8 @@
 
 <target name="gruntfilejs">
   <exec executable="${basedir}/node_modules/grunt-cli/bin/grunt" failonerror="true">
+  <arg value="--verbose" />
+  <arg value="-stack" />
   </exec>
   <echo>Finished.</echo>
 </target>
