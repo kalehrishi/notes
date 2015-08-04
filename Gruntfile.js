@@ -46,8 +46,7 @@ module.exports = function(grunt) {
                               'tests/js/lib/jasmine-jquery.js'
                               ],
                     'specs': 'tests/js/spec/**/*.js'
-                },
-                summary = true
+                }
             }
         },
     });
