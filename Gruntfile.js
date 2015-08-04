@@ -35,9 +35,11 @@ module.exports = function(grunt) {
         jasmine: {
             all: {
                 src: [
+                    'app-js/Notes.js'
                     'app-js/src/**/*.js',
                 ],
                 options: {
+                    'helper': 'jshint.jshintrc',
                     'vendor': 'bower_components/jquery/dist/jquery.min.js',
                     'specs': 'tests/js/spec/**/*.js'
                 }
@@ -48,7 +50,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // "npm test" runs these tasks
-    grunt.registerTask('test', ['jasmine']);
+    grunt.registerTask('test', ['jshint', 'concat', 'uglify', 'jasmine']);
 
     // Default task.
     grunt.registerTask('default', ['test']);
