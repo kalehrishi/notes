@@ -36,7 +36,7 @@ module.exports = function(grunt) {
             all: {
                 src: [
                     'app-js/Notes.js'
-                    'app-js/src/**/*.js',
+                    'app-js/**/*.js',
                 ],
                 options: {
                     'helper': 'jshint.jshintrc',
