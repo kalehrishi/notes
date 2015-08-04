@@ -41,7 +41,8 @@ module.exports = function(grunt) {
                     'vendor': [
                         'bower_components/jquery/dist/jquery.min.js',
                         'tests/js/lib/mock-ajax.js',
-                        'tests/js/lib/jasmine-jquery.js'
+                        'tests/js/lib/jasmine-jquery.js',
+                        'tests/js/include-html.js'
                     ],
                     'specs': 'tests/js/spec/**/*.js'
                 }
