@@ -40,7 +40,10 @@ module.exports = function(grunt) {
                 ],
                 options: {
                     'helper': 'jshint.jshintrc',
-                    'vendor': 'bower_components/jquery/dist/jquery.min.js',
+                    'vendor': [
+                              'bower_components/jquery/dist/jquery.min.js',
+                              'tests/js/lib/mock-ajax.js'
+                              ],
                     'specs': 'tests/js/spec/**/*.js'
                 }
             }
