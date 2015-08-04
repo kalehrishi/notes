@@ -20,10 +20,8 @@ describe("A Click Event", function() {
 
 describe("In LoginView tests", function(){
   var loginView;
-    beforeEach(function() {
-        loginView = new Notes.LoginView();
-      });
-
+    loginView = new Notes.LoginView();
+    
     it("A function readUserData is return empty object without click event.", function() {
      var result, object  = {
             id: "",
