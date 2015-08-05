@@ -16,7 +16,7 @@
  </target>
  
  <target name="copy-config" depends="clean">
-  <property environment="env.APP_ENV"/>
+  <property environment="env"/>
   <condition property="env.APP_ENV" value="${env.APP_ENV}" else="dev">
    <isset property="env.APP_ENV" />
   </condition>
@@ -27,7 +27,7 @@
  </target>
  
  <target name="replace-config-dbname" depends="copy-config">
-  <property environment="env.GIT_BRANCH"/>
+  <property environment="env"/>
   <condition property="env.GIT_BRANCH" value="${env.GIT_BRANCH}" else="master">
    <isset property="env.GIT_BRANCH" />
   </condition>
