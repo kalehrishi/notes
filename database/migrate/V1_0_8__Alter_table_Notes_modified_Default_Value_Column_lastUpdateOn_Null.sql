@@ -1,1 +1,0 @@
-ALTER TABLE Notes modify lastUpdateOn TIMESTAMP DEFAULT NULL;
