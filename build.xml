@@ -5,7 +5,7 @@
  <target name="publish"  xmlns:ivy="antlib:org.apache.ivy.ant" description="Publish this build into repository">
     <ivy:resolve/>
      <ivy:publish resolver="nexus-releases" overwrite="true">
-      
+      <artifacts pattern="/var/lib/jenkins/jobs/notes-CreateArtifact/workspace/[artifact].[ext]" />
     </ivy:publish>
 </target>
 
