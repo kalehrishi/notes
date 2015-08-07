@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-  <info organisation="public" module="test" revision="1.1.2"/>
+  <info organisation="public" module="test" revision="${env.APP_VERSION}"/>
   <publications>
     <artifact  name="project" type="zip" ext="zip"/>
   </publications>
