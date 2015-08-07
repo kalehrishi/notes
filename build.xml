@@ -3,13 +3,11 @@
  <target name="build" depends="publish"/>
 
  <target name="publish"  xmlns:ivy="antlib:org.apache.ivy.ant" description="Publish this build into repository">
- 	 <property environment="env"/>
- 	 <echo>${env.APP_VERSION}</echo>
+    <property environment="env"/>
     <ivy:resolve/>
      <ivy:publish resolver="nexus-releases" overwrite="true">
      	<artifacts pattern="${basedir}/[artifact].[ext]" />
     </ivy:publish>
 </target>
-
 </project>
 
