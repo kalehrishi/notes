@@ -1,6 +1,3 @@
-if (Notes === undefined) {
-    var Notes = {};
-}
 Notes.loginController = {
     loginView: null,
     
@@ -30,14 +27,14 @@ Notes.loginController = {
 };
 $(function () {
     Notes.loginController.init();
-});Notes.notesController = {
+});;Notes.notesController = {
     notesView: null,
     init: function () {
         this.notesView = new Notes.NotesView();
         this.notesView.show();
     }
 };
-Notes.utils = {
+;Notes.utils = {
     post: function (url, request, isAsync, onSuccess, onFailure) {
         var xhr = new XMLHttpRequest(), data = JSON.stringify(request);
         console.log(data);
@@ -58,10 +55,10 @@ Notes.utils = {
             }
         };
     }
-};if (Notes === undefined) {
+};;if (Notes === undefined) {
     var Notes = {};
 }
-Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
+;Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
     this.resetData = function () {
         console.log("in reset fun");
         document.getElementById("email").value = "";
@@ -120,7 +117,7 @@ Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
     this.setLoginClickedHandler(loginClickedHandler);
     this.setResetClickedHandler(resetClickedHandler);
 };
-Notes.NotesView = function () {
+;Notes.NotesView = function () {
     this.show = function () {
         console.log("In notes View");
         window.location.href = "./notes";

@@ -123,7 +123,7 @@
   <exec executable="${basedir}/build/tools/phpmd.phar">
    <arg path="${basedir}/app" />
    <arg value="text" />
-   <arg path="${basedir}/build/phpmd.xml" />
+   <arg path="${basedir}/build/phpm+d.xml" />
   </exec>
  </target>
 
@@ -206,10 +206,9 @@
       <include name="**/Model/*.js"/>
     </fileset>
     <fileset dir="${basedir}/tests/js/spec/">
-      <include name="/*.js"/>
-      <include name="**/View/*.js"/>
-      <include name="**/Controller/*.js"/>
-      <include name="**/Model/*.js"/>
+      <include name="View/*.js"/>
+      <include name="Controller/*.js"/>
+      <include name="Model/*.js"/>
     </fileset>
     <arg line="--verbose" />
     <arg line="--config" />

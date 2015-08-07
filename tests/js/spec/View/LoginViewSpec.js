@@ -1,4 +1,3 @@
-
 describe("A Click Event", function() {
   it ("is test with Reset button.", function() {
     var spyEvent;
@@ -19,7 +18,7 @@ describe("A Click Event", function() {
   });
 });
 
-describe("In LoginView tests", function(){
+describe("In LoginView tests", function() {
   it("A function readUserData is return empty object without click event.", function() {
      var loginView;
      loginView = new Notes.LoginView();
