@@ -21,13 +21,13 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: ['app-js/**/*.js'],
-                dest: 'public/consolidated.js',
+                dest: 'public/consolidated1.js',
             }
         },
         uglify: {
             target: {
                 files: {
-                    'public/main-min.js': ['public/consolidated.js']
+                    'public/main-min1.js': ['public/consolidated1.js']
                 }
             }
         },

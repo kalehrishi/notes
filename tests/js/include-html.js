@@ -12,5 +12,5 @@ $(function () {
                   "<input type='reset'  value='Reset' id='reset'/>"  +   
                   "<div id='errorMessage'></div>"           +
                   "</div>";
-  document.getElementById("specContainer").innerHTML = setupLoginHTML;
+  document.body.innerHTML = setupLoginHTML;
 });
