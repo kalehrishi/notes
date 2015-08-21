@@ -23,8 +23,8 @@ class LoginTest extends \PHPUnit_Framework_TestCase
 		            "data":"Invalid Email",
 		            "debugData":null }';
         require "app/View/Login.php";
-        
-        
+
+
         $dom    = new \DOMDocument();
         $output = ob_get_contents();
         
