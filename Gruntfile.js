@@ -6,10 +6,22 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         // Task configuration.
+        copy: {
+            // makes all src relative to cwd
+            main: {
+                files: [
+                {
+                    expand: true,
+                    cwd: 'bower_components/',
+                    src: ['**'],
+                    dest: 'public/lib/'
+                }
+                ],
+            },
+        },
         jshint: {
             all: [
                 'app-js/**/*.js',
-                'tests/js/spec/**/*.js'
             ],
             options: {
                 jshintrc: './jshint.jshintrc'
@@ -20,42 +32,44 @@ module.exports = function(grunt) {
                 separator: ';',
             },
             dist: {
-                src: ['app-js/**/*.js'],
-                dest: 'public/consolidated1.js',
+                src: ['app-js/Notes.js','app-js/**/*.js'],
+                dest: 'public/lib/consolidated.js',
             }
         },
         uglify: {
             target: {
                 files: {
-                    'public/main-min1.js': ['public/consolidated1.js']
+                    'public/lib/main-min.js': ['public/lib/consolidated.js']
                 }
             }
         },
         jasmine: {
             all: {
                 src: [
-                    'app-js/Notes.js',
-                    'app-js/**/*.js'
+                    'public/lib/main-min.js',
                 ],
                 options: {
                     'vendor': [
-                        'bower_components/jquery/dist/jquery.min.js',
+                        'public/lib/jquery/dist/jquery.min.js',
                         'tests/js/lib/mock-ajax.js',
                         'tests/js/lib/jasmine-jquery.js',
-                        'tests/js/include-html.js'
+                        'public/lib/mustache.js',
+                        'tests/js/TemplateLoader.js',
+                        'tests/js/spec/**/*.js'
                     ],
-                    'specs': 'tests/js/spec/**/*.js'
                 }
             }
         },
     });
+
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // "npm test" runs these tasks
-    grunt.registerTask('test', ['jshint', 'concat', 'uglify', 'jasmine']);
+    grunt.registerTask('test', ['copy', 'jshint', 'concat', 'uglify', 'jasmine']);
 
     // Default task.
     grunt.registerTask('default', ['test']);
