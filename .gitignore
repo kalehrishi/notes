@@ -12,5 +12,5 @@ public/js/consolidated.js
 public/js/main-min.js
 node_modules/
 bower_components/
-public/js/consolidated1.js
-public/js/main-min1.js
+_SpecRunner.html
+.grunt/
