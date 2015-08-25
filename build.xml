@@ -10,7 +10,8 @@
   </condition>
   <property name="env.Group_ID" value=""/>
   <echo message="Configuring app environment to ${env.Group_ID}."/>
-  <copy file="${basedir}/artifact.pp" tofile="/etc/puppetlabs/puppet/environments/production/modules/demo/manifests/artifact.pp" token="@Group_ID" value="${env.Group_ID}"/>
+  <replace file="${basedir}/artifact.pp" token="@Group_ID" value="${env.Group_ID}"/>
+  <copy file="${basedir}/artifact.pp" tofile="/etc/puppetlabs/puppet/environments/production/modules/demo/manifests/artifact.pp"/>
  </target>
 
  </project>
