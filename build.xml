@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,npm,bower,jshint,consolidate,minify,specs,gruntfilejs,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,npm,bower,gruntfilejs,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -11,8 +11,8 @@
   <delete file="${basedir}/composer.lock"/>
   <delete dir="${basedir}/vendor"/>
   <delete file="${basedir}/app/Config/config.json"/>
-  <delete file="${basedir}/public/consolidated.js"/>
-  <delete file="${basedir}/public/main-min.js"/>
+  <delete file="${basedir}/public/lib/consolidated.js"/>
+  <delete file="${basedir}/public/lib/main-min.js"/>
   
   <property name="clean.done" value="true"/>
  </target>
@@ -190,67 +190,14 @@
  </target>
 
   <target name="bower">
-  <exec executable="node_modules/bower/bin/bower" failonerror="true">
+  <exec executable="/usr/local/bin/bower" failonerror="true">
     <arg value="install" />
   </exec>
  </target>
 
- <!-- JSHint target, run separately -->
-  <target name="jshint">
-  <apply dir="${basedir}/app-js/" executable="${basedir}/node_modules/jshint/bin/jshint" failonerror="true" resultproperty="specs.results">
-    <fileset dir="${basedir}/app-js/">
-      <include name="/*.js"/>
-      <include name="**/View/*.js"/>
-      <include name="**/Controller/*.js"/>
-      <include name="**/Model/*.js"/>
-    </fileset>
-    <fileset dir="${basedir}/tests/js/spec/">
-      <include name="View/*.js"/>
-      <include name="Controller/*.js"/>
-      <include name="Model/*.js"/>
-    </fileset>
-    <arg line="--verbose" />
-    <arg line="--config" />
-    <arg line="'${basedir}/jshint.jshintrc'" />
-  </apply>
-  <echo>JSHint Successful</echo>
-</target>
-
-<target name="consolidate" depends="jshint" description="Concatenate all js files">
-  <echo>Consolidating...</echo>
-  <concat id="srcfiles" destfile="${basedir}/public/consolidated.js" append="true">
-    <fileset file="${basedir}/app-js/Notes.js"/>
-    <fileset dir="${basedir}/app-js/" includes="**/*.js" excludes="${basedir}/app-js/"/>
-  </concat>
-  <pathconvert pathsep=";" property="files" refid="srcfiles"/>
-  <echo>${files}</echo>
-  <echo>Finished.</echo>
-</target>
-
-<target name="minify" depends="consolidate">
-  <echo>Minifying...</echo>
-  <exec executable="java" dir="${basedir}/public/" failonerror="true">
-    <arg line="-jar '${basedir}/build/tools/yuicompressor-2.4.7.jar'" />
-    <arg line="--type js" />
-    <arg line="-o 'main-min.js'" />
-    <arg line="'${basedir}/public/consolidated.js'" />
-  </exec>
-  <echo>Finished</echo>
-</target>
-
-<target name="specs" depends="minify">
-  <echo>Running specs...</echo>
-  <exec executable="/usr/local/bin/phantomjs" failonerror="true">
-    <arg line="${basedir}/tests/js/lib/phantom-jasmine-runner.js" />
-    <arg line="${basedir}/tests/js/SpecRunner.html" />
-  </exec>
-  <echo>Finished.</echo>
-</target>
-
 <target name="gruntfilejs">
-  <exec executable="${basedir}/node_modules/grunt-cli/bin/grunt" failonerror="true">
+  <exec executable="/usr/local/bin/grunt" failonerror="true">
   <arg value="--verbose" />
-  <arg value="-stack" />
   </exec>
   <echo>Finished.</echo>
 </target>
