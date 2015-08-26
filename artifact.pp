@@ -25,8 +25,8 @@
 #}
 #
 class  demo::artifact (
-  $gav = '@Group_ID:demo:1.0.0',
-  $repository = 'acceptance',
+  $gav = '@APP_GROUP_ID:@APP_ARTIFACT_NAME:@APP_VERSION',
+  $repository = '@APP_REPOSITORY_ID',
   $output = '/tmp/notes.zip',
   $packaging  = 'zip',
   $classifier = undef,
