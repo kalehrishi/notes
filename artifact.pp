@@ -25,7 +25,7 @@
 #}
 #
 class  demo::artifact (
-  $gav = 'NONE:demo:1.0.0',
+  $gav = '@Group_ID:demo:1.0.0',
   $repository = 'acceptance',
   $output = '/tmp/notes.zip',
   $packaging  = 'zip',
