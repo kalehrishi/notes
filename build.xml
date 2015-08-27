@@ -190,7 +190,7 @@
  </target>
 
   <target name="bower">
-  <exec executable="/usr/local/bin/bower" failonerror="true">
+  <exec executable="node_modules/bower/bin/bower" failonerror="true">
     <arg value="install" />
   </exec>
  </target>
