@@ -196,7 +196,7 @@
  </target>
 
 <target name="gruntfilejs">
-  <exec executable="/usr/local/bin/grunt" failonerror="true">
+  <exec executable="node_modules/grunt-cli/bin/grunt" failonerror="true">
   </exec>
   <echo>Finished.</echo>
 </target>
