@@ -192,7 +192,6 @@
   <target name="bower">
   <exec executable="/usr/local/bin/bower" failonerror="true">
     <arg value="install" />
-    <arg value="--allow-root" />
   </exec>
  </target>
 
