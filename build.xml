@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,replace-url-address,migrate-db,prepare,start-selenium-server,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,stop-selenium-server,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -34,6 +34,15 @@
   <property name="" value="master"/>
   <echo message="Using database name notes-${env.GIT_BRANCH} for this build."/>
   <replace file="${basedir}/app/Config/config.json" token="@GIT_BRANCH" value="${env.GIT_BRANCH}"/>
+ </target>
+
+ <target name="replace-url-address" depends="copy-config">
+  <property environment="env"/>
+  <condition property="env.URL_ADDRESS" value="${env.URL_ADDRESS}" else="http://localhost/">
+   <isset property="env.URL_ADDRESS" />
+  </condition>
+  <echo message="Using URL_ADDRESS ${env.URL_ADDRESS} for this build."/>
+  <replace file="${basedir}/build/phpunit.xml" token="@URL_ADDRESS" value="${env.URL_ADDRESS}"/>
  </target>
 
  <target name="migrate-db" depends="replace-config-dbname" unless="migrate-db.done" description="Cleanup db and build from scratch">
@@ -186,8 +195,6 @@
   <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
    <arg path="${basedir}/build/phpunit.xml"/>
-   <arg value="--testsuite"/>
-   <arg value="Unit"/>
    <arg value="--stderr" />
   </exec>
  </target>

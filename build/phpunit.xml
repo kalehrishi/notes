@@ -30,5 +30,9 @@
       <directory suffix=".php">../app</directory>
       </whitelist>
   </filter>
+
+  <php>
+    <env name="URL_ADDRESS" value="@URL_ADDRESS"/>
+  </php>
 </phpunit>
 
