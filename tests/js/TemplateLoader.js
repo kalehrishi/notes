@@ -1,7 +1,15 @@
-function templateLoader (template) {
-	$.ajax({url:template, async:false, success:function(template) {
-  		console.log(template);
-  		var rendered = Mustache.render(template, {});
-  		$("body").append(rendered);
+function templateLoader(templateUrl) {
+       $.ajax({url:templateUrl, async:false, success:function(container) {
+                var rendered = Mustache.render(container, {});
+                document.body.innerHTML = rendered;
+        },
+        error:function(e){
+        	console.log(JSON.stringify(e));
+        	console.log("Fail XHR");
 	}});
-};
+}
+
+$(function() {
+        var templateUrl = "public/templates/template.mustache";
+        templateLoader(templateUrl);
+});

@@ -192,12 +192,12 @@
   <target name="bower">
   <exec executable="/usr/local/bin/bower" failonerror="true">
     <arg value="install" />
+    <arg value="--allow-root" />
   </exec>
  </target>
 
 <target name="gruntfilejs">
   <exec executable="/usr/local/bin/grunt" failonerror="true">
-  <arg value="--verbose" />
   </exec>
   <echo>Finished.</echo>
 </target>

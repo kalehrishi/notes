@@ -43,24 +43,22 @@ module.exports = function(grunt) {
                 }
             }
         },
-        jasmine: {
-            all: {
-                src: [
-                    'public/lib/main-min.js',
-                ],
-                options: {
-                    'vendor': [
-                        'public/lib/jquery/dist/jquery.min.js',
-                        'tests/js/lib/mock-ajax.js',
-                        'tests/js/lib/jasmine-jquery.js',
-                        'public/lib/mustache.js',
-                        'tests/js/TemplateLoader.js',
-                        'tests/js/spec/**/*.js'
+	jasmine: {
+		src: [
+			'public/lib/main-min.js'
+		     ],
+		options: {
+                    vendor: [
+			'public/lib/jquery/dist/jquery.min.js',
+			'public/lib/mustache.js',
+			'tests/js/TemplateLoader.js',
+			'tests/js/lib/mock-ajax.js',
+			'tests/js/lib/jasmine-jquery.js'
                     ],
+		    specs: ['tests/js/spec/**/*.js']
                 }
-            }
-        },
-    });
+        }
+});
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');

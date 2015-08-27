@@ -1,7 +1,3 @@
-$(function() {
-    var template = "../../template/template.mustache";
-    templateLoader(template);
-
     describe("A Click Event", function() {
         it("is test with Reset button.", function() {
             var spyEvent;
@@ -98,4 +94,3 @@ $(function() {
             done();
         });
     });
-});

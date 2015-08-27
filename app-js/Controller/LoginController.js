@@ -2,7 +2,7 @@ Notes.loginController = {
     loginView: null,
     
     init: function () {
-        this.loginView = new Notes.LoginView(function (e) {
+	this.loginView = new Notes.LoginView(function (e) {
             console.log(e);
             Notes.loginController.loginView.resetData();
         }, function (e) {

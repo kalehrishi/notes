@@ -26,9 +26,9 @@ Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
     };
 
     this.setLoginClickedHandler = function (handler) {
-        console.log("In onLoginClickedHandler...");
+        console.log("In onLoginClickedHandler...");       
         
-        var loginButton = document.getElementById("login");
+	var loginButton = document.getElementById("login");
         loginButton.addEventListener("click", function (e) {
             handler(e);
         }, false);
