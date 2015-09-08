@@ -56,7 +56,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $sessionModel = new sessionModel();
         $sessionService   = new Session();
 
-        $sessionModel    = $sessionService->login($userInput);
+        $sessionModel    = $sessionService->login($userModel);
         
         $this->assertEquals(4, $sessionModel->getId());
         $this->assertEquals(3, $sessionModel->getUserId());
@@ -218,6 +218,6 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
         $userModel->setPassword($userInput['password']);
 
         $sessionService = new Session();
-        $sessionModel  = $sessionService->login($userInput);
+        $sessionModel  = $sessionService->login($userModel);
     }
 }

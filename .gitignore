@@ -8,3 +8,9 @@ cache.properties
 app/Config/config.json
 .vagrant
 composer.lock
+public/js/consolidated.js
+public/js/main-min.js
+_SpecRunner.html
+.grunt/
+public/lib/*
+tests/js/lib/*

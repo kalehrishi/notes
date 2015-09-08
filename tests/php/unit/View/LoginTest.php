@@ -23,14 +23,14 @@ class LoginTest extends \PHPUnit_Framework_TestCase
 		            "data":"Invalid Email",
 		            "debugData":null }';
         require "app/View/Login.php";
-        
-        
+
+
         $dom    = new \DOMDocument();
         $output = ob_get_contents();
         
         $dom->loadHTML($output);
         
-        $element = $dom->getElementsByTagName('div');
+        $element = $dom->getElementsByTagName('p');
         $this->assertEquals("Invalid Email", $element->item(0)->textContent);
     }
     public function tearDown()

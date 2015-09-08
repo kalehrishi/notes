@@ -3,6 +3,7 @@
         "psr-4": {"Notes\\": "app/"}
     },
     "require": {
-        "slim/slim": "2.*"
+        "slim/slim": "2.*",
+        "mustache/mustache": "~2.5"
     }
 }

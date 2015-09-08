@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,phpdox"/>
+   <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,gruntfilejs,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -11,6 +11,8 @@
   <delete file="${basedir}/composer.lock"/>
   <delete dir="${basedir}/vendor"/>
   <delete file="${basedir}/app/Config/config.json"/>
+  <delete file="${basedir}/public/lib/consolidated.js"/>
+  <delete file="${basedir}/public/lib/main-min.js"/>
   
   <property name="clean.done" value="true"/>
  </target>
@@ -121,7 +123,7 @@
   <exec executable="${basedir}/build/tools/phpmd.phar">
    <arg path="${basedir}/app" />
    <arg value="text" />
-   <arg path="${basedir}/build/phpmd.xml" />
+   <arg path="${basedir}/build/phpm+d.xml" />
   </exec>
  </target>
 
@@ -147,7 +149,7 @@
 
  <target name="phpcs-ci" depends="prepare" description="Find coding standard violations using PHP_CodeSniffer and log result in XML format">
   <exec executable="${basedir}/build/tools/phpcs.phar" output="/dev/null">
-   <arg value="--report=checkstyle" />
+     <arg value="--report=checkstyle" />
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
    <arg value="--standard=PSR2" />
    <arg value="--extensions=php" />
@@ -156,21 +158,21 @@
   </exec>
  </target>
 
- <target name="phpcpd" description="Find duplicate code using PHPCPD">
+<target name="phpcpd" description="Find duplicate code using PHPCPD">
   <exec executable="${basedir}/build/tools/phpcpd.phar">
    <arg path="${basedir}/app" />
   </exec>
  </target>
 
- <target name="phpcpd-ci" depends="prepare" description="Find duplicate code using PHPCPD and log result in XML format">
+<target name="phpcpd-ci" depends="prepare" description="Find duplicate code using PHPCPD and log result in XML format">
   <exec executable="${basedir}/build/tools/phpcpd.phar">
    <arg value="--log-pmd" />
    <arg path="${basedir}/build/logs/pmd-cpd.xml" />
    <arg path="${basedir}/app" />
   </exec>
  </target>
-
- <target name="phpunit" depends="prepare,composer" description="Run unit tests with PHPUnit">
+ 
+<target name="phpunit" depends="prepare,composer" description="Run unit tests with PHPUnit">
   <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
    <arg path="${basedir}/build/phpunit.xml"/>
@@ -179,9 +181,13 @@
    <arg value="--stderr" />
   </exec>
  </target>
-
- <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
+ 
+<target name="gruntfilejs">
+  <exec executable="node_modules/grunt-cli/bin/grunt" failonerror="true">
+  </exec>
+  <echo>Finished.</echo>
+</target>
+  <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>
-

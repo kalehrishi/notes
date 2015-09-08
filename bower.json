@@ -1,0 +1,17 @@
+{
+    "name": "Notes",
+    "Version": "1.0.0",
+
+	"devDependencies": {
+		"jquery": "latest",
+		"jquery-ui" : "latest",
+		"jasmine": "latest",
+		"jasmine-jquery": "latest",
+		"jasmine-ajax": "latest",
+		"mustache": "latest"
+		},
+
+    "ignore": [
+		"bower_components"
+	]
+}
