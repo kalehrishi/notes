@@ -24,8 +24,10 @@ module.exports = function(grunt) {
                 'app-js/**/*.js',
             ],
             options: {
-                jshintrc: './jshint.jshintrc'
-            }
+                jshintrc: './jshint.jshintrc',
+                reporter: require("jshint-junit-reporter"),
+                reporterOutput: 'build/logs/jshint-checkstyle.xml'
+                } 
         },
         concat: {
             options: {

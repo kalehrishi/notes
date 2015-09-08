@@ -10,7 +10,6 @@ app/Config/config.json
 composer.lock
 public/js/consolidated.js
 public/js/main-min.js
-node_modules/
 bower_components/
 _SpecRunner.html
 .grunt/
