@@ -25,8 +25,8 @@ module.exports = function(grunt) {
             ],
             options: {
                 jshintrc: './jshint.jshintrc',
-                reporter: require("jshint-junit-reporter"),
-                reporterOutput: 'build/logs/js-checkstyle.xml'
+                reporter: 'jslint',
+                reporterOutput: 'build/logs/checkstyle-js.xml'
                 } 
         },
         concat: {
