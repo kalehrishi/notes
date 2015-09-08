@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
- <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,npm,bower,gruntfilejs,phpdox"/>
+ <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,gruntfilejs,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -171,7 +171,7 @@
    <arg path="${basedir}/app" />
   </exec>
  </target>
-
+ 
  <target name="phpunit" depends="prepare,composer" description="Run unit tests with PHPUnit">
   <exec executable="${basedir}/build/tools/phpunit.phar" failonerror="true">
    <arg value="--configuration"/>
@@ -181,28 +181,13 @@
    <arg value="--stderr" />
   </exec>
  </target>
-
- <target name="npm" depends="clean">
-  <exec executable="npm" failonerror="true">
-    <arg value="install" />
-    <arg value="--no-bin-links" />
-  </exec>
- </target>
-
-  <target name="bower">
-  <exec executable="node_modules/bower/bin/bower" failonerror="true">
-    <arg value="install" />
-  </exec>
- </target>
-
-<target name="gruntfilejs">
+ 
+ <target name="gruntfilejs">
   <exec executable="node_modules/grunt-cli/bin/grunt" failonerror="true">
   </exec>
   <echo>Finished.</echo>
 </target>
-
-
-<target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
+  <target name="phpdox" depends="phploc-ci,phpcs-ci,phpmd-ci" description="Generate API documentation using phpDox">
   <exec executable="${basedir}/build/tools/phpdox.phar" dir="${basedir}/build"/>
  </target>
 </project>

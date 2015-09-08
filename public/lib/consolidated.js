@@ -5,7 +5,7 @@ if (Notes === undefined) {
     loginView: null,
     
     init: function () {
-        this.loginView = new Notes.LoginView(function (e) {
+	this.loginView = new Notes.LoginView(function (e) {
             console.log(e);
             Notes.loginController.loginView.resetData();
         }, function (e) {
@@ -30,7 +30,8 @@ if (Notes === undefined) {
 };
 $(function () {
     Notes.loginController.init();
-});;Notes.notesController = {
+});
+;Notes.notesController = {
     notesView: null,
     init: function () {
         this.notesView = new Notes.NotesView();
@@ -86,9 +87,9 @@ $(function () {
     };
 
     this.setLoginClickedHandler = function (handler) {
-        console.log("In onLoginClickedHandler...");
+        console.log("In onLoginClickedHandler...");       
         
-        var loginButton = document.getElementById("login");
+	var loginButton = document.getElementById("login");
         loginButton.addEventListener("click", function (e) {
             handler(e);
         }, false);
