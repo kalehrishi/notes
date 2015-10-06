@@ -3,6 +3,7 @@ namespace Notes\Controller\Web;
 
 use Notes\View\View as View;
 use Notes\Request\Request as Request;
+use Notes\Factory\Layout as Layout;
 
 class Login
 {
@@ -12,9 +13,5 @@ class Login
     {
         $this->request = $request;
         $this->view    = new View();
-    }
-    public function get()
-    {
-        $this->view->render("Login.php");
     }
 }

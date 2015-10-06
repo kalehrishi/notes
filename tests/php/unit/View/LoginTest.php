@@ -10,28 +10,26 @@ class LoginTest extends \PHPUnit_Framework_TestCase
         $this->view = new View();
         
     }
-    
     /**
      *@test
      *
      **/
-    public function response_data_should_access_in_login_View()
-    {
-        $response = '{"status":"200",
-		            "message":"OK",
-		            "version":"1.0.0",
-		            "data":"Invalid Email",
-		            "debugData":null }';
-        require "app/View/Login.php";
+    public function Home_page_loaded()
+    {  
+       $homeLayout = array('login' => 'Login');
+        
+        $contentTemplateName = 'login';
 
+        $output  = $this->view->renderContent($contentTemplateName, $homeLayout);
+        
 
         $dom    = new \DOMDocument();
-        $output = ob_get_contents();
         
         $dom->loadHTML($output);
         
-        $element = $dom->getElementsByTagName('p');
-        $this->assertEquals("Invalid Email", $element->item(0)->textContent);
+        $element = $dom->getElementsByTagName('h1');
+        
+        $this->assertEquals("Login", $element->item(0)->nodeValue);
     }
     public function tearDown()
     {

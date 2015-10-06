@@ -49,7 +49,7 @@ class UserTag
         } catch (ModelNotFoundException $error) {
             $response = $error->getMessage();
             echo json_encode($response);
+        
         }
-
     }
 }

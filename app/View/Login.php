@@ -54,4 +54,3 @@ $data = json_decode($response, true);
     <div id="errorMessage"></div>
 </body>
 </html>
-

@@ -1,0 +1,29 @@
+<div id="notes-container">
+  <a href="/notes/create"><span id="create">{{ create }}</span></a>
+  <a href="/"><span id="logout">{{ logout }}</span></a>
+  
+  <h3></h3>
+  
+  <table border="1" font-size="25px" width="500" style="margin:5px">
+    
+    <tr align="center">
+      <td>Title</td>
+      <td>Action</td>
+    </tr>
+
+    {{#title}}
+    <tr align="center">
+      <td>
+        <a href="#"><span  class="title">{{title}}</span></a>
+      </td>
+      <td>
+        <form action="note/delete/{{id}}" method="post">
+          <input type="hidden" name="_METHOD" value="DELETE"/>
+          <input type="submit" value="Delete"/>
+        </form>
+      </td>
+    </tr>
+    {{/title}}
+  
+  </table>
+</div>

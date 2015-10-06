@@ -130,6 +130,10 @@ $application->get('/notes/api/userTag', function () use ($application) {
     $userTagController->get();
 });
 
+$application->get('/notes1/api1/userTag', function () use ($application) {
+echo "find";
+});
+
 $application->get('/register', function () use ($application) {
     $request        = new Request();
     $userController = new User($request);

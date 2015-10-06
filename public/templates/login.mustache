@@ -1,0 +1,30 @@
+<div id="container">
+  <a href="#"><span id="home">Home</span></a>
+  <h1>{{ login }}</h1>
+  <table>
+    <tr>
+      <td>Email:</td>
+      <td><input type="email" id="email" required/></td>
+    </tr>
+    <tr>
+      <td>Password:</td>
+      <td><input type="password" id="password" required="required"/></td>
+    </tr>
+    <tr>
+      <td>
+        <input type="hidden" id="id"/>
+        <input type="hidden" id="firstName"/>
+        <input type="hidden" id="lastName"/>
+      </td>
+    </tr>
+    <tr>
+      <td><input type="hidden" id="createdOn" /></td>
+      <td><input type="hidden" id="userModel" /></td>
+    </tr>
+    <tr>
+      <td><input type="submit" value="Login" id="login"/></td>
+      <td><input type="reset"  value="Reset" id="reset"/></td>
+    </tr>
+  </table>
+</div>
+<div id="errorMessage"></div>
