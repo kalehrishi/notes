@@ -1,9 +1,10 @@
 Notes.HomeView = function (registerClickedHandler, loginClickedHandler) {
 	
 	this.create = function () {
-		var templateName = $("#hiddenHomeView").html();
-	    this.view = new Notes.View();
-	    this.view.render(templateName, {});
+		var template = $("#hiddenHomeView").html();
+	    
+        this.view = new Notes.View(template, {});
+	    this.view.render();
 	};
 
 	this.setRegisterClickedHandler = function (handler) {

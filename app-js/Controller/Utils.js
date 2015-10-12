@@ -9,6 +9,7 @@ Notes.utils = {
         xhr.onreadystatechange = function () {
 
             if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr);
                 var response = JSON.parse(xhr.responseText);
                 console.log("OnXhr Success Response: ", response);
                 if (response.status === 0) {

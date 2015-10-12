@@ -22,5 +22,4 @@ describe("In HomeView tests", function() {
 		expect(spy).toHaveBeenCalled();
 		done();
 	});
-
 });

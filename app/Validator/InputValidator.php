@@ -41,7 +41,7 @@ class InputValidator
     
     public function isValidPassword($password)
     {
-       
+        
         $obj   = new PasswordValidator($password);
         $count = $obj->strength();
         if ($count == 4) {

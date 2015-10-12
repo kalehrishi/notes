@@ -1,11 +1,9 @@
 <?php
-
 namespace Notes\Controller\Web;
 
 use Notes\View\View as View;
 use Notes\Request\Request as Request;
 use Notes\Factory\Layout as Layout;
-
 
 class Home
 {

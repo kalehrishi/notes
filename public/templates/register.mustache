@@ -1,31 +1,31 @@
-<form  method="POST">
+<div>
   <fieldset>
     <legend>{{ title }}:</legend>
     <table>
       <tr>
         <td>FirstName:</td>
-        <td><input type="text" name="firstName" /></td>
+        <td><input type="text" name="firstName" id="firstName"/></td>
       </tr>
       <tr>
         <td>LastName:</td>
-        <td><input type="text" name="lastName" /></td>
+        <td><input type="text" name="lastName" id="lastName"/></td>
       </tr>
       <tr>
         <td>Email:</td>
-        <td><input type="text" name="email" /></td>
+        <td><input type="text" name="email" id="email"/></td>
       </tr>
       <tr>
         <td>Password:</td>
-        <td><input type="password" name="password" /></td>
+        <td><input type="password" name="password" id="password"/></td>
       </tr>
       <tr>
-        <td>Error :-  </td>
-        <td><div class="error" >{{ Error }}</div></td>
+        <td id="error"></td>
+        <td><div id="errormsg"></div></td>
       </tr>
       <tr>
-        <td><input type="submit" value="Submit" /></td>
-        <td><input type="reset"  value="Reset" /></td>
+        <td><input type="submit" value="Submit" id="register"/></td>
+        <td><input type="reset" value="Reset" id="clear"/></td>
       </tr>
     </table>
   </fieldset>
-</form>
+</div>

@@ -1,15 +1,5 @@
-Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
+Notes.LoginView = function () {
     
-    this.show = function () {
-        console.log("in showView function");
-
-        var templateName = $("#hiddenLoginView").html();
-        var data = {"login": "Login Form"};
-
-        this.view = new Notes.View();
-        this.view.render(templateName, data);
-    };
-
     this.resetData = function () {
         console.log("in reset fun");
         document.getElementById("email").value = "";
@@ -40,12 +30,12 @@ Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
         console.log("In onLoginClickedHandler...");       
     (function(self){
 	var loginButton = document.getElementById("login");
+    console.log("login Button==",loginButton);
         if(loginButton) {
             
                 loginButton.addEventListener("click", function (e) {
                     handler(e, self);
                 }, false);
-            
         }
     })(this);
     };
@@ -54,7 +44,7 @@ Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
         console.log("In onLogin Reset Clicked Handler..");
         (function(self){
                 var resetButton = document.getElementById("reset");
-                console.log(resetButton);
+                console.log("reset Button==",resetButton);
                 if (resetButton) {
                     resetButton.addEventListener("click", function (e) {
                     console.log(e);
@@ -72,28 +62,17 @@ Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
         var errorMsg = response.data;
         document.getElementById("errorMessage").innerText = errorMsg;
     };
-    
-    this.create = function (templateUrl) {
-       console.log("in create function");
-       console.log("templateUrl===> ",templateUrl);
-            $.ajax({url:templateUrl, async:true, success:function(container) {
-                console.log("success");
-                
-                console.log(container); 
-                var rendered = Mustache.render(container, {});
-                console.log(rendered);
-                document.body.innerHTML = rendered;
-            },
-            error:function(e) {
-                console.log(JSON.stringify(e));
-                console.log("Fail XHR");
-            }});
-    };
 
-    this.destroy = function () {
-        document.body.innerHTML = "";
-    };
+    this.create = function () {
+        console.log("in showView function");
+        
+        var data = {"login": "Login Form"};
+        var template = $("#hiddenLoginView").html();
+        
+        Mustache.parse(template);
+        var rendered = Mustache.render(template, data);
 
-    this.setLoginClickedHandler(loginClickedHandler);
-    this.setResetClickedHandler(resetClickedHandler);
+        var view = new Notes.View();
+        view.show(rendered);
+    };
 };
