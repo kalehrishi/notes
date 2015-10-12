@@ -17,16 +17,12 @@ class Home
     public function get()
     {
         $homeLayout = array(
-            'meta' => array('title' => 'Home' ),
+            'meta' => array('title' => 'Home'),
             'style' => array(),
             'hidden' => array(),
             'script' => array(),
             'header' => array(),
-            'content' => array(
-                'h1' => 'Wel-come to Sticky-notes',
-                'register' => 'New User:Register',
-                'login' => 'Login'
-                ),
+            'content' => array(),
             'footer' => array('year' => '2015', 'appName' => 'Notes')
             );
         

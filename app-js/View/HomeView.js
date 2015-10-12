@@ -1,10 +1,12 @@
-Notes.HomeView = function (registerClickedHandler, loginClickedHandler) {
+Notes.HomeView = function () {
 	
 	this.create = function () {
 		var template = $("#hiddenHomeView").html();
-	    
-        this.view = new Notes.View(template, {});
-	    this.view.render();
+        Mustache.parse(template);
+        var rendered = Mustache.render(template, {});
+        
+        this.view = new Notes.View();
+	    this.view.show(rendered);
 	};
 
 	this.setRegisterClickedHandler = function (handler) {
@@ -12,12 +14,10 @@ Notes.HomeView = function (registerClickedHandler, loginClickedHandler) {
     	(function(self){
 		
 		var register = document.getElementById("registerForm");
-        
         if(register) {
-            
-                register.addEventListener("click", function (e) {
-                    handler(e, self);
-                }, false);
+            register.addEventListener("click", function (e) {
+                handler(e, self);
+            }, false);
         }
     	})(this);
     };
@@ -29,16 +29,10 @@ Notes.HomeView = function (registerClickedHandler, loginClickedHandler) {
 		var login = document.getElementById("loginForm");
         
         if(login) {
-            
-                login.addEventListener("click", function (e) {
-                    handler(e, self);
-                }, false);
-            
+            login.addEventListener("click", function (e) {
+                handler(e, self);
+            }, false);
         }
-
     	})(this);
     };
-
-	this.setRegisterClickedHandler(registerClickedHandler);
-    this.setLoginClickedHandler(loginClickedHandler);
 };

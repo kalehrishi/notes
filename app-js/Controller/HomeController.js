@@ -1,17 +1,26 @@
 Notes.HomeController = {
     homeView: null,
-    view: null,
 
     init: function() {
         console.log("in home HomeController");
-        this.homeView = new Notes.HomeView(
-        	function(e, self) {
-                console.log("call to RegisterController");
-                Notes.RegisterController.init();
-            },
+        var homeContent = document.getElementById("homeContent");
+
+        this.homeView = new Notes.HomeView();
+        if(homeContent === null) {
+            //Create HomeView
+            this.homeView.create();
+        }
+
+        this.homeView.setRegisterClickedHandler(
             function(e, self) {
-            	Notes.loginController.init();
-            }
-        );
+            console.log("call to RegisterController");
+            Notes.RegisterController.init();
+        });
+
+        this.homeView.setLoginClickedHandler(
+            function(e, self) {
+            Notes.loginController.init();
+        });
+        
     }
 };
