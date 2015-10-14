@@ -24,7 +24,7 @@ class User
         try {
             $response = $userService->create($input);
             if ($response instanceof UserModel) {
-                $app = \Slim\Slim::getInstance('developer');
+                
                 
                 $objResponse = new Response($response->toArray(), 1, "SUCCESS");
                 echo $objResponse->getResponse();
