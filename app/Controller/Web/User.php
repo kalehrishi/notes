@@ -16,7 +16,7 @@ class User
         $this->request = $request;
         $this->view= new View();
     }
-    
+
     public function post()
     {
         $input          = $this->request->getData();
@@ -24,8 +24,6 @@ class User
         try {
             $response = $userService->create($input);
             if ($response instanceof UserModel) {
-                
-                
                 $objResponse = new Response($response->toArray(), 1, "SUCCESS");
                 echo $objResponse->getResponse();
             }
