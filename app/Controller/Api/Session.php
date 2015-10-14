@@ -47,6 +47,10 @@ class Session
             $response    = $error->getMessage();
             $objResponse = new Response($response, 0, "FAILURE");
             echo $objResponse->getResponse();
+        } catch (\InvalidArgumentException $error) {
+            $response    = $error->getMessage();
+            $objResponse = new Response($response, 0, "FAILURE");
+            echo $objResponse->getResponse();
         }
     }
 }

@@ -22,6 +22,10 @@ class Session
     
     public function create($userModel)
     {
+        $this->validator->notNull($userModel->getEmail());
+        $this->validator->validEmail($userModel->getEmail());
+        $this->validator->notNull($userModel->getPassword());
+        
         $sessionModel  = new sessionModel();
         $userDomain    = new UserDomain();
         $userModelRead = $userDomain->readByUserNameAndPassword($userModel);
