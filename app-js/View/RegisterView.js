@@ -3,14 +3,11 @@ Notes.RegisterView = function () {
 	this.create = function () {
         console.log("in showView function");
 
-        var data = {title: "User Registration",test: "Registation Form"};
+        var data = {formTitle: "User Registation Form"};
         var template = $("#hiddenRegisterView").html();
         
-        Mustache.parse(template);
-        var rendered = Mustache.render(template, data);
+        Notes.View.show(template, data);
         
-        var view = new Notes.View();
-        view.show(rendered);
     };
 
 	this.resetData = function () {
@@ -65,6 +62,19 @@ Notes.RegisterView = function () {
 	        }
 	    })(this);
 	};
+
+	this.setHomeClickedHandler = function (handler) {
+        console.log("In onLogin Reset Clicked Handler..");
+        (function(self){
+                var homeHref = document.getElementById("home");
+                console.log("home Href==",homeHref);
+                if (homeHref) {
+                    homeHref.addEventListener("click", function (e) {
+                    handler(e, self);
+                }, false);
+                }
+        })(this);
+    };
 
 	this.showError = function (response) {
         var errorMessage = response.data;

@@ -10,11 +10,7 @@ Notes.HomeView = function () {
                     login: "Login"
                 };
 
-        var rendered = Mustache.render(template, data);
-        
-        console.log("rendered====",rendered);
-        
-        $("#content").html(rendered);
+        Notes.View.show(template, data);
 	};
 
 	this.setRegisterClickedHandler = function (handler) {

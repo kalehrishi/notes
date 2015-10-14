@@ -14,23 +14,22 @@ class RegisterTest extends \PHPUnit_Framework_TestCase
     *@test
     *
     **/
-    public function response_data_should_access_in_register_View()
+    public function Register_page_loaded()
     {
-        $response = '{"status":"200",
-		            "message":"OK",
-		            "version":"1.0.0",
-		            "data":"Input should be string",
-		            "debugData":null }';
-
-        require "app/View/Register.php";
+        $registerLayout = array(
+            "formTitle"=> "User Registration Form"
+        );
         
-        $dom = new \DOMDocument();
-        $htmlData=ob_get_contents();
-        
-        $dom->loadHTML($htmlData);
+        $contentTemplateName = 'register';
 
-        $element = $dom->getElementsByTagName('div');
-        $this->assertEquals("Input should be string", $element->item(0)->textContent);
+        $output  = $this->view->renderContent($contentTemplateName, $registerLayout);
+        
+        $dom    = new \DOMDocument();
+        
+        $dom->loadHTML($output);
+
+        $element = $dom->getElementsByTagName('legend');
+        $this->assertEquals("User Registration Form:", $element->item(0)->nodeValue);
     }
     public function tearDown()
     {

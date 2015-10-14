@@ -4,11 +4,11 @@
   <table>
     <tr>
       <td>Email:</td>
-      <td><input type="email" id="email" required/></td>
+      <td><input type="email" id="email"/></td>
     </tr>
     <tr>
       <td>Password:</td>
-      <td><input type="password" id="password" required="required"/></td>
+      <td><input type="password" id="password"/></td>
     </tr>
     <tr>
       <td>
@@ -22,9 +22,12 @@
       <td><input type="hidden" id="userModel" /></td>
     </tr>
     <tr>
+        <td id="error"></td>
+        <td><div id="errorMessage"></div></td>
+      </tr>
+    <tr>
       <td><input type="submit" value="Login" id="login"/></td>
       <td><input type="reset"  value="Reset" id="reset"/></td>
     </tr>
   </table>
 </div>
-<div id="errorMessage"></div>

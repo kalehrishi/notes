@@ -1,7 +1,8 @@
-Notes.View = function () {
-
-	this.show = function (template) {
-		
-		document.getElementById("content").innerHTML = template;
-	};
+Notes.View = {
+	show: function (template, data) {
+		console.log("In Show View");
+		var rendered = Mustache.render(template, data);
+        
+        $("#content").html(rendered);
+	}
 };

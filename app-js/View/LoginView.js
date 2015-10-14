@@ -54,25 +54,35 @@ Notes.LoginView = function () {
         })(this);
     };
 
+    this.setHomeClickedHandler = function (handler) {
+        console.log("In onLogin Reset Clicked Handler..");
+        (function(self){
+                var homeHref = document.getElementById("home");
+                console.log("home Href==",homeHref);
+                if (homeHref) {
+                    homeHref.addEventListener("click", function (e) {
+                    handler(e, self);
+                }, false);
+                }
+        })(this);
+    };
+
     this.hide = function () {
         document.getElementById("container").style.display = "none";
     };
 
     this.showError = function (response) {
         var errorMsg = response.data;
+        document.getElementById("error").innerText = "Error: ";
         document.getElementById("errorMessage").innerText = errorMsg;
     };
 
     this.create = function () {
-        console.log("in showView function");
+        console.log("in Login Create function");
         
-        var data = {"login": "Login Form"};
         var template = $("#hiddenLoginView").html();
-        
-        Mustache.parse(template);
-        var rendered = Mustache.render(template, data);
+        var data = {"login": "Login Form"};
 
-        var view = new Notes.View();
-        view.show(rendered);
+        Notes.View.show(template, data);
     };
 };

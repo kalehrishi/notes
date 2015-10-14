@@ -33,58 +33,9 @@ Notes.RegisterController = {
         });
 		});
 
-
-            /*,
-            function (e, self) {
-				console.log("before reset call");
-				self.resetData();
-			},
-	        function (e, self) {
-	            console.log(e);
-	            
-	            //read data from View
-	            var userModel = self.readUserData();
-	        
-	            //call api
-	            Notes.utils.post("/register", userModel, true, function (response) {
-		        console.log("OnSuccess Response:", response);
-		            
-		        //transfer control to login controller
-		        Notes.loginController.init();
-	        },
-	        function (response) {
-	            console.log("OnFailure Response:", response);
-	            self.showError(response);
-	        });
-			});*/
-		/*this.registerView = new Notes.RegisterView(
-			{
-				title: "User Registration",
-				test: "Registation Form"
-			},
-			function (e, self) {
-				console.log("before reset call");
-				self.resetData();
-			},
-	        function (e, self) {
-	            console.log(e);
-	            
-	            //read data from View
-	            var userModel = self.readUserData();
-	        
-	            //call api
-	            Notes.utils.post("/register", userModel, true, function (response) {
-		        console.log("OnSuccess Response:", response);
-		            
-		        //transfer control to login controller
-		        Notes.loginController.init();
-	        },
-	        function (response) {
-	            console.log("OnFailure Response:", response);
-	            self.showError(response);
-	        });
-	        }
-	    );/
-	    this.registerView.show();*/
+		//assign home clicked Handler
+        this.registerView.setHomeClickedHandler(function (e, self) {
+                Notes.HomeController.init();
+            });
 	}
 };

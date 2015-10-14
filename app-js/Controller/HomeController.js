@@ -20,8 +20,7 @@ Notes.HomeController = {
 
         this.homeView.setLoginClickedHandler(
             function(e, self) {
-            Notes.loginController.init();
+            Notes.LoginController.init();
         });
-        
     }
 };

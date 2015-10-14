@@ -1,7 +1,7 @@
 /*
  * @name Notes.loginController
 */
-Notes.loginController = {
+Notes.LoginController = {
     loginView: null,
     view: null,
     homeView: null,
@@ -25,7 +25,7 @@ Notes.loginController = {
                 
                 //read data from View
                 var userModel = self.readUserData();
-                console.log("USerModel====",userModel);
+                console.log("UserModel====",userModel);
                 //call api
                 Notes.utils.post("/api/session", userModel, true, function (response) {
                 self.hide(response);
@@ -39,6 +39,11 @@ Notes.loginController = {
                 self.showError(response);
             }
             );
+        });
+
+        //assign home clicked Handler
+        this.loginView.setHomeClickedHandler(function (e, self) {
+                Notes.HomeController.init();
             });
     }
 };

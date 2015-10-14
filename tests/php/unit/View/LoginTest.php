@@ -14,7 +14,7 @@ class LoginTest extends \PHPUnit_Framework_TestCase
      *@test
      *
      **/
-    public function Home_page_loaded()
+    public function Login_page_loaded()
     {  
        $homeLayout = array('login' => 'Login');
         
