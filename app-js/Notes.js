@@ -1,3 +1,4 @@
-if (Notes === undefined) {
-    var Notes = {};
-}
+/**
+ * @Notes
+ */
+var Notes = Notes || {};

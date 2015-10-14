@@ -98,6 +98,7 @@
             "require": true,
             "exports":true,
             "spyOnEvent": true,
-            "Notes":true
+            "Notes":true,
+            "Mustache": true
             }       // additional predefined global variables
 }

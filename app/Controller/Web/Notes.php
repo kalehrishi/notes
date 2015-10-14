@@ -12,6 +12,8 @@ use Notes\Service\Session as SessionService;
 use Notes\Model\Session as SessionModel;
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
+use Notes\Factory\Layout as Layout;
+
 class Notes
 {
     protected $request;
@@ -38,9 +40,26 @@ class Notes
             
             $noteCollection = $notesService->get($userModel);
             
-            $response   = $this->view->render("Notes.php", $noteCollection);
+            $toArray = $noteCollection->toArray();
             
-            return $response;
+            $notesLayout = array(
+            'meta' => array('title' => 'Notes | Home' ),
+            'style' => array(),
+            'hidden' => array(),
+            'script' => array(),
+            'header' => array(),
+            'content' => array(
+                'create' => 'Create',
+                'logout' => 'Logout',
+                'title' => $toArray
+                ),
+            'footer' => array('year' => '2015', 'appName' => 'Notes')
+            );
+
+            $contentTemplateName = 'notes';
+            
+            echo $this->view->renderPage($contentTemplateName, $notesLayout);
+
         } catch (ModelNotFoundException $error) {
             $app = \Slim\Slim::getInstance('developer');
             $app->redirect("/error");

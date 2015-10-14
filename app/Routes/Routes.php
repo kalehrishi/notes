@@ -13,12 +13,6 @@ $application->get('/:route', function ($route) use ($application) {
     $homeController->get();
 })->conditions(array("route" => "(|home)"));
 
-$application->get('/login', function () use ($application) {
-    $request           = new Request();
-    $loginController = new Login($request);
-    $loginController->get();
-});
-
 $application->post('/api/session', function () use ($application) {
     $request = $application->request();
     
@@ -140,8 +134,8 @@ $application->post('/register', function () use ($application) {
     $request =$application->request();
    
     $objRequest = new Request();
-    $objRequest->setUrlParams($request->post());
-
+    $objRequest->setData($request->getBody());
+    
     $userController = new User($objRequest);
     $userController->post();
 

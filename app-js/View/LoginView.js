@@ -1,4 +1,5 @@
-Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
+Notes.LoginView = function () {
+    
     this.resetData = function () {
         console.log("in reset fun");
         document.getElementById("email").value = "";
@@ -27,22 +28,43 @@ Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
 
     this.setLoginClickedHandler = function (handler) {
         console.log("In onLoginClickedHandler...");       
-        
+    (function(self){
 	var loginButton = document.getElementById("login");
-        loginButton.addEventListener("click", function (e) {
-            handler(e);
-        }, false);
+    console.log("login Button==",loginButton);
+        if(loginButton) {
+            
+                loginButton.addEventListener("click", function (e) {
+                    handler(e, self);
+                }, false);
+        }
+    })(this);
     };
 
     this.setResetClickedHandler = function (handler) {
         console.log("In onLogin Reset Clicked Handler..");
-        
-        var resetButton = document.getElementById("reset");
-        if (resetButton) {
-            resetButton.addEventListener("click", function (e) {
-                handler(e);
-            }, false);
-        }
+        (function(self){
+                var resetButton = document.getElementById("reset");
+                console.log("reset Button==",resetButton);
+                if (resetButton) {
+                    resetButton.addEventListener("click", function (e) {
+                    console.log(e);
+                    handler(e, self);
+                }, false);
+                }
+        })(this);
+    };
+
+    this.setHomeClickedHandler = function (handler) {
+        console.log("In onLogin Reset Clicked Handler..");
+        (function(self){
+                var homeHref = document.getElementById("home");
+                console.log("home Href==",homeHref);
+                if (homeHref) {
+                    homeHref.addEventListener("click", function (e) {
+                    handler(e, self);
+                }, false);
+                }
+        })(this);
     };
 
     this.hide = function () {
@@ -50,10 +72,17 @@ Notes.LoginView = function (resetClickedHandler, loginClickedHandler) {
     };
 
     this.showError = function (response) {
-        var errorMessage = response.data;
-        document.getElementById("errorMessage").innerText = errorMessage;
+        var errorMsg = response.data;
+        document.getElementById("error").innerText = "Error: ";
+        document.getElementById("errorMessage").innerText = errorMsg;
     };
-    
-    this.setLoginClickedHandler(loginClickedHandler);
-    this.setResetClickedHandler(resetClickedHandler);
+
+    this.create = function () {
+        console.log("in Login Create function");
+        
+        var template = $("#hiddenLoginView").html();
+        var data = {"login": "Login Form"};
+
+        Notes.View.show(template, data);
+    };
 };
