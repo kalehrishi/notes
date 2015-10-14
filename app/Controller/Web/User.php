@@ -16,10 +16,7 @@ class User
         $this->request = $request;
         $this->view= new View();
     }
-    public function get()
-    {
-        $this->view->render("Register.php");
-    }
+    
     public function post()
     {
         $input          = $this->request->getData();

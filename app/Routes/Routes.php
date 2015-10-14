@@ -13,12 +13,6 @@ $application->get('/:route', function ($route) use ($application) {
     $homeController->get();
 })->conditions(array("route" => "(|home)"));
 
-$application->get('/login', function () use ($application) {
-    $request           = new Request();
-    $loginController = new Login($request);
-    $loginController->get();
-});
-
 $application->post('/api/session', function () use ($application) {
     $request = $application->request();
     
