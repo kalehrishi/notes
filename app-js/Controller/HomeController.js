@@ -8,6 +8,7 @@ Notes.HomeController = {
         this.homeView = new Notes.HomeView();
         if(homeContent === null) {
             //Create HomeView
+            console.log("in if");
             this.homeView.create();
         }
 

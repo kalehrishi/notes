@@ -1,12 +1,20 @@
 Notes.HomeView = function () {
 	
 	this.create = function () {
-		var template = $("#hiddenHomeView").html();
-        Mustache.parse(template);
-        var rendered = Mustache.render(template, {});
+		
+        var template = $("#hiddenHomeView").html();
+
+        var data = {
+                    h1: "Wel-come to Sticky-notes",
+                    register: "New User:Register",
+                    login: "Login"
+                };
+
+        var rendered = Mustache.render(template, data);
         
-        this.view = new Notes.View();
-	    this.view.show(rendered);
+        console.log("rendered====",rendered);
+        
+        $("#content").html(rendered);
 	};
 
 	this.setRegisterClickedHandler = function (handler) {

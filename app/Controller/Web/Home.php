@@ -16,13 +16,27 @@ class Home
 
     public function get()
     {
+        $path = __DIR__ . '/../../../public/templates/';
+        
+        $home = file_get_contents($path.'home.mustache');
+        $register = file_get_contents($path.'register.mustache');
+        $login = file_get_contents($path.'login.mustache');
+        
         $homeLayout = array(
             'meta' => array('title' => 'Home'),
             'style' => array(),
-            'hidden' => array(),
+            'hidden' => array(
+                            'home' => $home,
+                            'register'=> $register,
+                            'login'=> $login
+                            ),
             'script' => array(),
             'header' => array(),
-            'content' => array(),
+            'content' => array(
+                "h1"=> "Wel-come to Sticky-notes",
+                "register"=> "New User:Register",
+                "login"=> "Login"
+                ),
             'footer' => array('year' => '2015', 'appName' => 'Notes')
             );
         

@@ -56,8 +56,8 @@ class View
     
     public function renderPage($contentTemplateName, $layout)
     {
-        return $this->renderEngine->render('layout.mustache', array(
-            
+        return  $this->renderEngine->render('layout.mustache', array(
+
             'meta' => $this->renderMeta($layout['meta']),
             'style' => $this->renderStyle($layout['style']),
             'hidden' => $this->renderHidden($layout['hidden']),
