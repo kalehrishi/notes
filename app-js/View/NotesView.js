@@ -1,30 +1,21 @@
 /*
  * @name Notes.NotesView
 */
-Notes.NotesView = function (logoutClickedHandler) {
-	/*
-	 * @method Function show() redirects to next notes api
-	*/
-    this.show = function () {
-        console.log("In notes View");
-        window.location.href = "./notes";
+Notes.NotesView = function (response, logoutClickedHandler, createClickedHandler) {
+	
+    var responseData = response.data;
+    var data = {
+        create: "create",
+        logout: "Logout",
+        titles: responseData
     };
-
-    this.logout = function () {
-    	console.log("in logout");
-    	var template = $("#hiddenLoginView").html();
-        var data = {"login": "Login Form"};
-        
-        Notes.LoginView.render(template, data);
-    };
+    var template = $("#hiddenNotesView").html();
+    Notes.View.show(template, data);
 
     this.setLogoutClickedHandler = function (handler) {
     	console.log("In logout Clicked Handler");
     	
     	(function(self){
-        
-        setTimeout(function() {
-        
         var logoutElement = document.getElementById("logout");
     	console.log(logoutElement);
         
@@ -34,9 +25,25 @@ Notes.NotesView = function (logoutClickedHandler) {
                 handler(e, self);
             }, false);
         }
-    }, 6000);
     })(this);
 	};
 
-	this.setLogoutClickedHandler(logoutClickedHandler);
+    this.setCreateNoteClickedHandler = function (handler) {
+        console.log("In logout Clicked Handler");
+        
+        (function(self){
+        var crateNoteElement = document.getElementById("create");
+        console.log(crateNoteElement);
+        
+        if (crateNoteElement) {
+            crateNoteElement.addEventListener("click", function (e) {
+                console.log(e);
+                handler(e, self);
+            }, false);
+        }
+    })(this);
+    };
+
+    this.setLogoutClickedHandler(logoutClickedHandler);
+    this.setCreateNoteClickedHandler(createClickedHandler);
 };

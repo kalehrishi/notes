@@ -1,6 +1,6 @@
 <div id="notes-container">
-  <a href="/notes/create"><span id="create">{{ create }}</span></a>
-  <a href="/"><span id="logout">{{ logout }}</span></a>
+  <a href="#"><span id="create">{{ create }}</span></a>
+  <a href="#"><span id="logout">{{ logout }}</span></a>
   
   <h3></h3>
   
@@ -11,7 +11,7 @@
       <td>Action</td>
     </tr>
 
-    {{#title}}
+    {{#titles}}
     <tr align="center">
       <td>
         <a href="#"><span  class="title">{{title}}</span></a>
@@ -23,7 +23,7 @@
         </form>
       </td>
     </tr>
-    {{/title}}
+    {{/titles}}
   
   </table>
 </div>

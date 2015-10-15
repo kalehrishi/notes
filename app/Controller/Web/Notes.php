@@ -42,24 +42,9 @@ class Notes
             
             $toArray = $noteCollection->toArray();
             
-            $notesLayout = array(
-            'meta' => array('title' => 'Notes | Home' ),
-            'style' => array(),
-            'hidden' => array(),
-            'script' => array(),
-            'header' => array(),
-            'content' => array(
-                'create' => 'Create',
-                'logout' => 'Logout',
-                'title' => $toArray
-                ),
-            'footer' => array('year' => '2015', 'appName' => 'Notes')
-            );
-
-            $contentTemplateName = 'notes';
-            
-            echo $this->view->renderPage($contentTemplateName, $notesLayout);
-
+            $objResponse = new Response($toArray, 1, "SUCCESS");
+                
+            echo $objResponse->getResponse();
         } catch (ModelNotFoundException $error) {
             $app = \Slim\Slim::getInstance('developer');
             $app->redirect("/error");

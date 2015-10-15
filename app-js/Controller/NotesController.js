@@ -13,14 +13,25 @@ Notes.notesController = {
     init: function () {
         console.log("In notesController");
         
-        this.notesView = new Notes.NotesView();
-        this.notesView.show();
-        
-
-        console.log("after show");
-        this.notesView = new Notes.NotesView(function (e, self) {
-            self.logout();
-        });
-
+        Notes.utils.get("/notes", true, function (response) {
+                console.log("OnSuccess Response:", response);
+                this.notesView = new Notes.NotesView(
+                    response,
+                    function(e, self){
+                        console.log("call to LogoutController");
+                        Notes.LogoutController.init();
+                    },
+                    function(e, self){
+                        console.log("call to CreateNoteController");
+                        Notes.CreateNoteController.init();
+                    },
+                    function(e, self) {
+                        console.log("call to View NoteController");
+                        Notes.NoteController.init();
+                    });
+            },
+            function (response) {
+                console.log("OnFailure Response:", response);
+            });
     }
 };
