@@ -21,6 +21,8 @@ class Home
         $home = file_get_contents($path.'home.mustache');
         $register = file_get_contents($path.'register.mustache');
         $login = file_get_contents($path.'login.mustache');
+        $notes = file_get_contents($path.'notes.mustache');
+        $createNote = file_get_contents($path.'createNote.mustache');
         
         $homeLayout = array(
             'meta' => array('title' => 'Home'),
@@ -28,7 +30,9 @@ class Home
             'hidden' => array(
                             'home' => $home,
                             'register'=> $register,
-                            'login'=> $login
+                            'login'=> $login,
+                            'notes' => $notes,
+                            'createNote' => $createNote
                             ),
             'script' => array(),
             'header' => array(),
