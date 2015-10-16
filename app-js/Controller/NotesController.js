@@ -25,13 +25,14 @@ Notes.notesController = {
                         console.log("call to CreateNoteController");
                         Notes.CreateNoteController.init();
                     },
-                    function(e, self) {
+                    function(e, self, noteId) {
                         console.log("call to View NoteController");
-                        Notes.NoteController.init();
+                        Notes.NoteController.init(noteId);
                     });
             },
             function (response) {
                 console.log("OnFailure Response:", response);
+                this.notesView = new Notes.NotesView(response);
             });
     }
 };

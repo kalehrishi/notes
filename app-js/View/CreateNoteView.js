@@ -6,4 +6,4 @@ Notes.CreateNoteView = function () {
         var data = {noteTitle: "Create New Note"};
         Notes.View.show(template, data);
 	};
-}
+};

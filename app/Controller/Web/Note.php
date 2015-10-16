@@ -44,13 +44,22 @@ class Note
         $noteService = new NoteService();
         try {
             $noteModel = $noteService->get($noteModel);
-            $this->view->render("Note.php", $noteModel);
+            $objResponse = new Response($noteModel->toArray(), 1, "SUCCESS");
+                
+            echo $objResponse->getResponse();
+
         } catch (ModelNotFoundException $error) {
             $response = $error->getMessage();
-            $this->view->render("Note.php", $response);
+            $objResponse = new Response($response, 0, "FAILURE");
+                
+            echo $objResponse->getResponse();
+
         } catch (\Exception $error) {
             $response = $error->getMessage();
-            $this->view->render("Note.php", $response);
+            $objResponse = new Response($response, 0, "FAILURE");
+                
+            echo $objResponse->getResponse();
+            
         }
     }
     public function delete()

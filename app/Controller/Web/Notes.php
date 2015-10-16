@@ -46,8 +46,10 @@ class Notes
                 
             echo $objResponse->getResponse();
         } catch (ModelNotFoundException $error) {
-            $app = \Slim\Slim::getInstance('developer');
-            $app->redirect("/error");
+            $response = $error->getMessage();
+            $objResponse = new Response($response, 0, "FAILURE");
+                
+            echo $objResponse->getResponse();
         }
     }
 }

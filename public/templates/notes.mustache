@@ -1,9 +1,10 @@
 <div id="notes-container">
-  <a href="#"><span id="create">{{ create }}</span></a>
-  <a href="#"><span id="logout">{{ logout }}</span></a>
+  <a href="#"><span id="create">Create</span></a>
+  <a href="#"><span id="logout">Logout</span></a>
   
-  <h3></h3>
+  <div id="noNote">{{newNote}}</div>
   
+  <div id="allNotes">
   <table border="1" font-size="25px" width="500" style="margin:5px">
     
     <tr align="center">
@@ -11,10 +12,10 @@
       <td>Action</td>
     </tr>
 
-    {{#titles}}
+    {{#notesCollection}}
     <tr align="center">
       <td>
-        <a href="#"><span  class="title">{{title}}</span></a>
+        <a href="#"><span class="title" id="note_title_{{id}}" value="{{id}}">{{title}}</span></a>
       </td>
       <td>
         <form action="note/delete/{{id}}" method="post">
@@ -23,7 +24,8 @@
         </form>
       </td>
     </tr>
-    {{/titles}}
+    {{/notesCollection}}
   
   </table>
+  </div>
 </div>
