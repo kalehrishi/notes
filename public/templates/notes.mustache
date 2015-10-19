@@ -15,13 +15,12 @@
     {{#notesCollection}}
     <tr align="center">
       <td>
-        <a href="#"><span class="title" id="note_title_{{id}}" value="{{id}}">{{title}}</span></a>
+        <a href="#"><span id="note_title_{{id}}" value="{{id}}">{{title}}</span>
+        </a>
       </td>
       <td>
-        <form action="note/delete/{{id}}" method="post">
-          <input type="hidden" name="_METHOD" value="DELETE"/>
-          <input type="submit" value="Delete"/>
-        </form>
+        <a href="#"><span id="note_delete_{{id}}" value="{{id}}">Delete</span>
+        </a>
       </td>
     </tr>
     {{/notesCollection}}

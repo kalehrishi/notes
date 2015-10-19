@@ -1,7 +1,7 @@
 /*
  * @name Notes.NotesView
 */
-Notes.NotesView = function (response, logoutClickedHandler, createClickedHandler, titleClickedHandler) {
+Notes.NotesView = function (response, logoutClickedHandler, createClickedHandler, titleClickedHandler,deleteClickedHandler) {
 	
     var notesViewTemplate = $("#hiddenNotesView").html();
     console.log("notesViewTemplate========",notesViewTemplate);
@@ -74,7 +74,29 @@ Notes.NotesView = function (response, logoutClickedHandler, createClickedHandler
     })(this);
     };
 
+    this.setDeleteClickedHandler = function (handler) {
+        console.log("Delete Clicked Handler");
+        (function(self){
+            if(notesData.length > 0) {
+            for (var i = 0; i< data.notesCollection.length; i++) {
+                console.log("data.notesCollection[i]======",data.notesCollection[i]);
+                var deleteId = "note_delete_"+data.notesCollection[i].id;
+                console.log("Id======",deleteId);
+
+                var deleteElement = document.getElementById(deleteId);
+                deleteElement.addEventListener("click", function (e) {
+                    console.log("e.target======",e.target);
+                    var noteId = e.target.getAttribute("value");
+
+                    handler(e, self,noteId);
+            }, false);
+        }
+        }
+    })(this);
+    };
+
     this.setLogoutClickedHandler(logoutClickedHandler);
     this.setCreateNoteClickedHandler(createClickedHandler);
     this.setTitleClickedHandler(titleClickedHandler);
+    this.setDeleteClickedHandler(deleteClickedHandler);
 };

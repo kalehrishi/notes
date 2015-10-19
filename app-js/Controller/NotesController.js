@@ -1,7 +1,7 @@
 /*
  * @name Notes.notesController
 */
-Notes.notesController = {
+Notes.NotesController = {
 	/*
 	 * @property {null}
 	*/
@@ -28,6 +28,10 @@ Notes.notesController = {
                     function(e, self, noteId) {
                         console.log("call to View NoteController");
                         Notes.NoteController.init(noteId);
+                    },
+                    function (e, self, noteId) {
+                        console.log("call to Delete Controller");
+                        Notes.DeleteController.init(noteId);
                     });
             },
             function (response) {

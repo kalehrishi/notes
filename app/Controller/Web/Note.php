@@ -83,15 +83,18 @@ class Note
             $noteModel = $noteService->get($noteModel);
             $noteModel = $noteService->delete($noteModel);
             if ($noteModel instanceof NoteModel) {
-                $app = \Slim\Slim::getInstance('developer');
-                $app->redirect("/notes");
+                $objResponse = new Response($noteModel->toArray(), 1, "SUCCESS");
+                
+                echo $objResponse->getResponse();
             }
         } catch (ModelNotFoundException $error) {
-            $response = $error->getMessage();
-            $this->view->render("Notes.php", $response);
+            $response    = $error->getMessage();
+            $objResponse = new Response($response, 0, "FAILURE");
+            echo $objResponse->getResponse();
         } catch (\Exception $error) {
-            $response = $error->getMessage();
-            $this->view->render("Notes.php", $response);
+            $response    = $error->getMessage();
+            $objResponse = new Response($response, 0, "FAILURE");
+            echo $objResponse->getResponse();
         }
     }
 
