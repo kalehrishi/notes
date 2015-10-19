@@ -33,6 +33,7 @@ Notes.LoginController = {
                 
                 //transfer control to notes controller
                 Notes.NotesController.init();
+                
             },
             function (response) {
                 console.log("OnFailure Response:", response);
