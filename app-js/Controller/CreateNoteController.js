@@ -6,7 +6,7 @@ Notes.CreateNoteController = {
 		this.createNoteView.create();
 
 		this.createNoteView.setBackButtonClickedHandler(function (e, self) {
-			Notes.BackController.init();
+			Notes.NotesController.init();
 		});
 	}
 };

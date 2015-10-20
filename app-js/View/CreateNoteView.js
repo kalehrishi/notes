@@ -1,4 +1,4 @@
-Notes.CreateNoteView = function (backButtonClickedHandler) {
+Notes.CreateNoteView = function () {
 	
 	this.create = function () {
 		
@@ -22,6 +22,4 @@ Notes.CreateNoteView = function (backButtonClickedHandler) {
         }
     })(this);
 	};
-
-	this.setBackButtonClickedHandler(backButtonClickedHandler);
 };

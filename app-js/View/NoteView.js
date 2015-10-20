@@ -1,13 +1,16 @@
-Notes.NoteView = function (response, backButtonClickedHandler) {
+Notes.NoteView = function () {
 	
-	var noteViewtemplate = $("#hiddenNoteView").html();
-	var noteModel = response.data;
-	if(noteModel.noteTags.length === 0)
-	{
-		noteModel.noteTags = [{tag: "No Tags"}];
-	}
+	this.create = function (response) {
+		var noteViewtemplate = $("#hiddenNoteView").html();
+		var noteModel = response.data;
+		
+		if(noteModel.noteTags.length === 0)
+		{
+			noteModel.noteTags = [{tag: "No Tags"}];
+		}
 	
-	new Notes.View.show(noteViewtemplate, noteModel);
+		new Notes.View.show(noteViewtemplate, noteModel);
+	};
 
 	this.setBackButtonClickedHandler = function (handler) {
     	console.log("In Back Button Clicked Handler");
@@ -24,6 +27,4 @@ Notes.NoteView = function (response, backButtonClickedHandler) {
         }
     })(this);
 	};
-
-	this.setBackButtonClickedHandler(backButtonClickedHandler);
 };

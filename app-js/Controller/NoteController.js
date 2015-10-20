@@ -6,10 +6,11 @@ Notes.NoteController = {
 		
 		Notes.utils.get("/note/read/" + noteId, true, function (response) {
 			console.log("OnSuccess Response:", response);
-			this.noteView = new Notes.NoteView(response);
-
+			this.noteView = new Notes.NoteView();
+			this.noteView.create(response);
+			
 			this.noteView.setBackButtonClickedHandler(function (e, self) {
-				Notes.BackController.init();
+				Notes.NotesController.init();
 			});
             },
             function (response) {
