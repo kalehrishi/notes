@@ -3,7 +3,6 @@ console.log("in templateLoader.js");
 function templateLoader(templateUrl) {
        $.ajax({url:templateUrl, async:false, success:function(container) {
                 var rendered = Mustache.render(container, {});
-                console.log(rendered);
                 
                 var div = document.createElement("div");
                 div.id = "content";
@@ -28,5 +27,11 @@ $(function() {
         templateLoader(templateUrl);
 
         var templateUrl = "public/templates/login.mustache";
+        templateLoader(templateUrl);
+
+        var templateUrl = "public/templates/createNote.mustache";
+        templateLoader(templateUrl);
+
+        var templateUrl = "public/templates/notes.mustache";
         templateLoader(templateUrl);
 });

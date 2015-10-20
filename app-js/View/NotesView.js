@@ -1,23 +1,25 @@
 /*
  * @name Notes.NotesView
 */
-Notes.NotesView = function (response, logoutClickedHandler, createClickedHandler, titleClickedHandler,deleteClickedHandler) {
+Notes.NotesView = function () {
 	
-    var notesViewTemplate = $("#hiddenNotesView").html();
-    console.log("notesViewTemplate========",notesViewTemplate);
-    var data, notesData = response.data;
-    console.log("notesCollection====",notesData);
-    data = { notesCollection: notesData };
-    console.log("data====",data);
-    
-    if(data.notesCollection.length === 0) {
-        console.log("In if");
-        data = { newNote: "Note Not Create Yet!!! Create A note" };
-        console.log("data========",data);
-        notesViewTemplate = $("#hiddenNoNotesView").html();
-    }
+    this.create = function (response) {
+        var data, notesData, notesViewTemplate = $("#hiddenNotesView").html();
+        
+        notesData = response.data;
+        console.log("notesCollection====",notesData);
+        data = { notesCollection: notesData };
+        console.log("data====",data);
+        
+        if(data.notesCollection.length === 0) {
+            console.log("In if");
+            data = { newNote: "Note Not Create Yet!!! Create A note" };
+            console.log("data========",data);
+            notesViewTemplate = $("#hiddenNoNotesView").html();
+        }
 
-    Notes.View.show(notesViewTemplate, data);
+        Notes.View.show(notesViewTemplate, data);
+    };
 
     this.setLogoutClickedHandler = function (handler) {
     	console.log("In logout Clicked Handler");
@@ -51,13 +53,14 @@ Notes.NotesView = function (response, logoutClickedHandler, createClickedHandler
     })(this);
     };
 
-    this.setTitleClickedHandler = function (handler) {
+    this.setTitleClickedHandler = function (response, handler) {
         console.log("In Title Clicked Handler");
+        var notesData = response.data;
         (function(self){
             if(notesData.length > 0) {
-                for (var i = 0; i< data.notesCollection.length; i++) {
-            console.log("data.notesCollection[i]======",data.notesCollection[i]);
-            var id = "note_title_"+data.notesCollection[i].id;
+                for (var i = 0; i< notesData.length; i++) {
+            console.log("data.notesCollection[i]======",notesData[i]);
+            var id = "note_title_"+notesData[i].id;
             console.log("Id======",id);
 
             var titleElement = document.getElementById(id);            
@@ -74,13 +77,14 @@ Notes.NotesView = function (response, logoutClickedHandler, createClickedHandler
     })(this);
     };
 
-    this.setDeleteClickedHandler = function (handler) {
+    this.setDeleteClickedHandler = function (response, handler) {
         console.log("Delete Clicked Handler");
+        var notesData = response.data;
         (function(self){
             if(notesData.length > 0) {
-            for (var i = 0; i< data.notesCollection.length; i++) {
-                console.log("data.notesCollection[i]======",data.notesCollection[i]);
-                var deleteId = "note_delete_"+data.notesCollection[i].id;
+            for (var i = 0; i< notesData.length; i++) {
+                console.log("data.notesCollection[i]======",notesData[i]);
+                var deleteId = "note_delete_"+notesData[i].id;
                 console.log("Id======",deleteId);
 
                 var deleteElement = document.getElementById(deleteId);
@@ -94,9 +98,4 @@ Notes.NotesView = function (response, logoutClickedHandler, createClickedHandler
         }
     })(this);
     };
-
-    this.setLogoutClickedHandler(logoutClickedHandler);
-    this.setCreateNoteClickedHandler(createClickedHandler);
-    this.setTitleClickedHandler(titleClickedHandler);
-    this.setDeleteClickedHandler(deleteClickedHandler);
 };
