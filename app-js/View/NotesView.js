@@ -98,4 +98,9 @@ Notes.NotesView = function () {
         }
     })(this);
     };
+
+    this.showError = function (response) {
+        var errorMsg = response.data;
+        alert(errorMsg);
+    };
 };

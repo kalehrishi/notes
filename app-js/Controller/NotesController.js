@@ -41,7 +41,8 @@ Notes.NotesController = {
             },
             function (response) {
                 console.log("OnFailure Response:", response);
-                this.notesView = new Notes.NotesView(response);
+                this.notesView = new Notes.NotesView();
+                this.notesView.showError(response);
             });
     }
 };
