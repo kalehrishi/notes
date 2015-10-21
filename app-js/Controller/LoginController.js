@@ -28,11 +28,11 @@ Notes.LoginController = {
                 console.log("UserModel====",userModel);
                 //call api
                 Notes.utils.post("/api/session", userModel, true, function (response) {
-                self.hide(response);
                 console.log("OnSuccess Response:", response);
                 
                 //transfer control to notes controller
-                Notes.notesController.init();
+                Notes.NotesController.init();
+                
             },
             function (response) {
                 console.log("OnFailure Response:", response);

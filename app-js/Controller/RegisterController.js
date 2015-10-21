@@ -25,7 +25,7 @@ Notes.RegisterController = {
 	        console.log("OnSuccess Response:", response);
 	            
 	        //transfer control to login controller
-	        Notes.LoginController.init();
+	        Notes.NotesController.init();
         },
         function (response) {
             console.log("OnFailure Response:", response);

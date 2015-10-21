@@ -1,0 +1,29 @@
+<div id="createNote" class="container">
+    <div>{{noteTitle}}:</div>
+    
+    <div>
+        <input type="text" id="title" placeholder="Title" required="">
+    </div>
+    
+    <div>
+        <textarea rows="10" id="body" placeholder="Description"></textarea>
+    </div>
+    
+    <div id="divTest">
+        <ul id="user-tags">
+            <input type="text" id="txtTags" />
+            <span><button type="button" onclick="addTag()">Add</button></span>
+        </ul>
+    </div>
+    <div id="note-tags">
+        <input type="hidden" id="noteTagId" />
+        <input type="hidden" id="noteId" />
+        <input type="hidden" id="userTagId" />
+        <input type="hidden" id="isDeleted" />
+        <input type="hidden" id="noteModel" name="noteModel" />
+    </div>
+    <input type="submit" value="Save">
+    <a href="#">
+        <span id="back"><button type="button">Back</button></span>
+    </a>
+</div>

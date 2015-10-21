@@ -20,33 +20,27 @@ class NoteTest extends \PHPUnit_Framework_TestCase
      **/
     public function response_data_should_access_in_Note_View()
     {
-        $noteModel = new NoteModel();
-        $noteModel->setId(1);
-        
-        $noteService = new NoteService();
-        $response    = $noteService->get($noteModel);
-        
-        $fileName = "Note.php";
-        $this->view->render($fileName, $response);
-        
-        $dom = new \DOMDocument();
-        
-        $htmlData = ob_get_clean();
-        
-        $dom->loadHTML($htmlData);
-        $element = $dom->getElementsByTagName('div');
-        
-        $this->assertEquals("PHP", $element->item(0)->textContent);
-        
-        $this->assertEquals("Preprocessor Hypertext", $element->item(1)->textContent);
+        $note = array(
+                "title" =>"PHP",
+                "body" => "Preprocessor Hypertext"
+                    );     
+        $contentTemplateName = 'note';
 
-        $this->assertEquals("Update", $element->item(2)->nodeValue);
-
-        $this->assertEquals("Back", $element->item(3)->nodeValue);
+        $output  = $this->view->renderContent($contentTemplateName, $note);
+        
+        $dom    = new \DOMDocument();
+        
+        $dom->loadHTML($output);
         
         $element = $dom->getElementsByTagName('span');
+        
+        $this->assertEquals("PHP", $element->item(1)->nodeValue);
+        
+        $this->assertEquals("Preprocessor Hypertext", $element->item(2)->nodeValue);
+    }
 
-        $this->assertEquals("No Tags", $element->item(0)->textContent);
-
+    public function tearDown()
+    {
+        ob_end_clean();
     }
 }

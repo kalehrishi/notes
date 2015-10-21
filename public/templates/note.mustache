@@ -1,0 +1,32 @@
+<div id="noteContainer">
+	<fieldset class = "fieldset">
+    <legend>Note</legend>
+    <table class="tbl">
+    <tr>
+      <td><div id="error" ><span>{{error}}</span></div></td>       
+    </tr>
+    <tr>
+      <td><div class="title"><span>{{title}}</span></div></td> 
+    </tr>
+    <tr>
+      <td><div class="body"><span>{{body}}</span></div></td> 
+    </tr>
+    {{#noteTags}}
+    <tr>
+      <td><span class="label">{{tag}}</span>
+      </td>
+    </tr>
+    {{/noteTags}}
+    <tr>
+      <td><div><a href="/notes/create">Update</a></div></td>
+      <td>
+      	<div>
+      		<a href="#">
+      			<span id="back"><button type="button">Back</button></span>
+      		</a>
+      	</div>
+      </td>
+    </tr>
+    </table>
+    </fieldset>
+</div>

@@ -1,7 +1,7 @@
 /*
  * @name Notes.notesController
 */
-Notes.notesController = {
+Notes.NotesController = {
 	/*
 	 * @property {null}
 	*/
@@ -13,14 +13,36 @@ Notes.notesController = {
     init: function () {
         console.log("In notesController");
         
-        this.notesView = new Notes.NotesView();
-        this.notesView.show();
-        
+        Notes.utils.get("/notes", true, function (response) {
+                console.log("OnSuccess Response:", response);
+                this.notesView = new Notes.NotesView();
+                this.notesView.create(response);
+                
+                this.notesView.setLogoutClickedHandler(function(e, self){
+                    console.log("call to LogoutController");
+                    Notes.LogoutController.init();
+                });
+                
+                this.notesView.setCreateNoteClickedHandler(function(e, self){
+                    console.log("call to CreateNoteController");
+                    Notes.CreateNoteController.init();
+                });
 
-        console.log("after show");
-        this.notesView = new Notes.NotesView(function (e, self) {
-            self.logout();
-        });
+                this.notesView.setTitleClickedHandler(response,function(e, self, noteId) {
+                    console.log("call to View NoteController");
+                    Notes.NoteController.init(noteId);
+                });
+                
+                this.notesView.setDeleteClickedHandler(response, function (e, self, noteId) {
+                    console.log("call to Delete Controller");
+                    Notes.DeleteController.init(noteId);
+                });
 
+            },
+            function (response) {
+                console.log("OnFailure Response:", response);
+                this.notesView = new Notes.NotesView();
+                this.notesView.showError(response);
+            });
     }
 };
