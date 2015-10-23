@@ -53,7 +53,7 @@
        <property name="flyway.user" value="developer"/>
        <property name="flyway.password" value="test123"/>
        <property name="flyway.schemas" value="notes-${env.GIT_BRANCH}"/>
-       <property name="flyway.url" value="jdbc:mysql://localhost:3306"/>
+       <property name="flyway.url" value="jdbc:mysql://${env.MYSQL_SERVICE_PORT_3306_TCP_ADDR}:3306"/>
        <flyway:clean/>
        <flyway:migrate/>
  </target>
