@@ -100,7 +100,7 @@ class Note
 
     public function post()
     {
-        $params = $this->request->getUrlParams();
+        $input = $this->request->getData();
         
         $sessionModel      = new SessionModel();
         $sessionModel->setUserId($this->request->getCookies()['userId']);
@@ -113,7 +113,7 @@ class Note
             $app = \Slim\Slim::getInstance();
             $app->redirect("/login");
         }
-        $input = json_decode($params['noteModel'], true);
+        
         $noteTagCollection = new NoteTagCollection($input['noteTags']);
 
         try {
@@ -126,14 +126,18 @@ class Note
             $noteService = new NoteService();
             $noteModel     = $noteService->post($noteModel);
 
+            $objResponse = new Response($noteModel->toArray(), 1, "SUCCESS");
+                
+            echo $objResponse->getResponse();
+
         } catch (PDOException $error) {
             $response    = $error->getMessage();
-            $this->view->render("Create.php", $response);
+            $objResponse = new Response($response, 0, "FAILURE");
+            echo $objResponse->getResponse();
+        } catch (\InvalidArgumentException $error) {
+            $response    = $error->getMessage();
+            $objResponse = new Response($response, 0, "FAILURE");
+            echo $objResponse->getResponse();
         }
-        if ($noteModel instanceof NoteModel) {
-            $app = \Slim\Slim::getInstance();
-            $app->redirect("/notes");
-        }
-        
     }
 }

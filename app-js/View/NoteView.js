@@ -8,7 +8,8 @@ Notes.NoteView = function () {
 		{
 			noteModel.noteTags = [{tag: "No Tags"}];
 		}
-	
+		console.log("noteModel====",noteModel);
+		
 		new Notes.View.show(noteViewtemplate, noteModel);
 	};
 

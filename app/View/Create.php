@@ -53,6 +53,7 @@
             var userTagsArray = [];
 
             function setTags(userTagsFromServer) {
+                console.log("userTagsFromServer==",userTagsFromServer);
                 var userTags = document.getElementById('user-tags');
                 for (var i = 0; i < userTagsFromServer.length; i++) {
                     //create and append tag to tag list

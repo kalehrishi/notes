@@ -14,7 +14,7 @@ Notes.NotesController = {
         console.log("In notesController");
         
         Notes.utils.get("/notes", true, function (response) {
-                console.log("OnSuccess Response:", response);
+                console.log("OnSuccess Notes Response:", response);
                 this.notesView = new Notes.NotesView();
                 this.notesView.create(response);
                 
