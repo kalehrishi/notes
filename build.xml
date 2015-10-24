@@ -36,6 +36,7 @@
   <property name="" value="master"/>
   <echo message="Using database name notes-${env.GIT_BRANCH} for this build."/>
   <replace file="${basedir}/app/Config/config.json" token="@GIT_BRANCH" value="${env.GIT_BRANCH}"/>
+  <replace file="${basedir}/app/Config/config.json" token="@MYSQL_SERVICE_SERVICE_HOST" value="${env.MYSQL_SERVICE_SERVICE_HOST}"/>
  </target>
 
  <target name="migrate-db" depends="replace-config-dbname" unless="migrate-db.done" description="Cleanup db and build from scratch">
@@ -53,7 +54,7 @@
        <property name="flyway.user" value="developer"/>
        <property name="flyway.password" value="test123"/>
        <property name="flyway.schemas" value="notes-${env.GIT_BRANCH}"/>
-       <property name="flyway.url" value="jdbc:mysql://${env.MYSQL_SERVICE_PORT_3306_TCP_ADDR}:3306"/>
+       <property name="flyway.url" value="jdbc:mysql://${env.MYSQL_SERVICE_SERVICE_HOST}:3306"/>
        <flyway:clean/>
        <flyway:migrate/>
  </target>

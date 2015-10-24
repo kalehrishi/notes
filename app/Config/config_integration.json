@@ -1,5 +1,5 @@
 {
-        "dbHost":"localhost",
+        "dbHost":"${MYSQL_SERVICE_SERVICE_HOST}",
         "dbName":"notes-@GIT_BRANCH",
         "dbUser":"developer",
         "dbPassword":"test123"
