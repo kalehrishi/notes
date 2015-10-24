@@ -1,5 +1,5 @@
-<div id="createNote" class="container">
-    <div>{{noteTitle}}:</div>
+<div id="comment_form" class="container">
+    <div>Create Note:</div>
     
     <div>
         <input type="text" id="title" placeholder="Title" required="">
@@ -10,19 +10,20 @@
     </div>
     
     <div id="divTest">
-        <ul id="user-tags">
-            <input type="text" id="txtTags" />
-            <span><button type="button" onclick="addTag()">Add</button></span>
-        </ul>
+    <ul id="user-tags">
+        <input type="text" id="enteredTagValue" />
+        <span><button type="button" id="addBtn">Add</button></span>
+        
+        {{#userTags}}
+            <li class="inputTags" id="userTag_{{id}}" value="">{{tag}}</li>
+        {{/userTags}}    
+    </ul>
+    <div id="noteTags">
     </div>
-    <div id="note-tags">
-        <input type="hidden" id="noteTagId" />
-        <input type="hidden" id="noteId" />
-        <input type="hidden" id="userTagId" />
-        <input type="hidden" id="isDeleted" />
-        <input type="hidden" id="noteModel" name="noteModel" />
+    <div><span id="error"></span><span id="errorMessage"></span></div>
     </div>
-    <input type="submit" value="Save">
+    <input type="hidden" id="noteModel" name="noteModel" />
+    <input type="submit" value="Save" id="save">
     <a href="#">
         <span id="back"><button type="button">Back</button></span>
     </a>
