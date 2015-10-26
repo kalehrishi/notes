@@ -9,19 +9,17 @@
         <textarea rows="10" id="body" placeholder="Description"></textarea>
     </div>
     
-    <div id="divTest">
-    <ul id="user-tags">
-        <input type="text" id="enteredTagValue" />
+    <div>
+    <input type="text" id="enteredTagValue" />
         <span><button type="button" id="addBtn">Add</button></span>
-        
-        {{#userTags}}
-            <li class="inputTags" id="userTag_{{id}}" value="">{{tag}}</li>
-        {{/userTags}}    
-    </ul>
-    <div id="noteTags">
     </div>
+
+    <div id="userTags" style="display:none;"></div>
+    
+    <div id="noteTags"></div>
+    
     <div><span id="error"></span><span id="errorMessage"></span></div>
-    </div>
+    
     <input type="hidden" id="noteModel" name="noteModel" />
     <input type="submit" value="Save" id="save">
     <a href="#">

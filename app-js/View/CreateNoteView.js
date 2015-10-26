@@ -1,10 +1,12 @@
 Notes.CreateNoteView = function () {
-	//var userTagsArray = [];
-	this.create = function (userTags) {
+	
+	this.create = function () {
 		
         var template = $("#hiddenCreateNoteView").html();
-        var data = {userTags: userTags};
+        var data = {};
         Notes.View.show(template, data);
+
+        $("#userTags").show();
 	};
 
 	this.setBackButtonClickedHandler = function (handler) {
@@ -18,30 +20,6 @@ Notes.CreateNoteView = function () {
 
                     handler(e, self);
                 }, false);
-            }
-        })(this);
-    };
-
-    this.setUserTagsClickedHandler = function (userTagsArray, handler) {
-        console.log("User Select Tag Clicked Handler");
-        (function(self){
-            if(userTagsArray.length > 0) {
-                for (var i = 0; i< userTagsArray.length; i++) {
-
-                    var userTagElementId = "userTag_"+userTagsArray[i].id;
-                    var userTagElementRef = document.getElementById(userTagElementId);
-                    
-                    userTagElementRef.setAttribute("value", JSON.stringify(userTagsArray[i]));
-                    
-                    if (userTagElementRef) {
-                        userTagElementRef.addEventListener("click", function (e) {
-                            //var selectedTag = e.target.getAttribute("value");
-                            var userSelectedTag = JSON.parse(e.target.getAttribute("value"));
-
-                            handler(e, self,userSelectedTag);
-                        }, false);
-                    }
-                }
             }
         })(this);
     };
