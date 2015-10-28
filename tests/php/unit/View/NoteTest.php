@@ -23,7 +23,7 @@ class NoteTest extends \PHPUnit_Framework_TestCase
         $note = array(
                 "title" =>"PHP",
                 "body" => "Preprocessor Hypertext"
-                    );     
+                    );
         $contentTemplateName = 'note';
 
         $output  = $this->view->renderContent($contentTemplateName, $note);

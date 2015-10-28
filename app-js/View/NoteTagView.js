@@ -1,8 +1,9 @@
 Notes.NoteTagView = function () {
 
-	this.create = function (userTagsArray) {
+	this.create = function (userSelectedTagsArray) {
+
 		var template = $("#hiddenNoteTagView").html();
-		var data = {userTags: userTagsArray};
+		var data = {selectedUserTags: userSelectedTagsArray};
         
        	var rendered = Mustache.render(template, data);
 
@@ -13,27 +14,23 @@ Notes.NoteTagView = function () {
 	this.setDeleteSelectedTagClickedHandler = function (userTagsArray, handler) {
 		(function(self){
 			if(userTagsArray.length > 0) {
-				for (var i = 0; i< userTagsArray.length; i++) {
-					var id = "del_"+i;
-		          	var anchorEleRef = document.getElementsByTagName("a")[i];
-		          	console.log("a==",anchorEleRef);
-		          
-		          	anchorEleRef.setAttribute("id", id);
-		            var deleteTagEleRef = document.getElementById(id);
+			for (var i = 0; i< userTagsArray.length; i++) {
+				var tagToBeDeleted, anchorEleRef, deleteTagFromArray, tagToBedeleted,
+				id = "del_"+i;
+		       	anchorEleRef = document.getElementsByTagName("a")[i];
+		        anchorEleRef.setAttribute("value", JSON.stringify(userTagsArray[i]));
 
-		          	console.log(deleteTagEleRef);
+		        if (anchorEleRef) {
+		            anchorEleRef.addEventListener("click", function (e) {
+		                tagToBeDeleted = e.target.parentElement.parentElement;
+	                    tagToBeDeleted.remove();
 
-		          	deleteTagEleRef.setAttribute("value", JSON.stringify(userTagsArray[i]));
-		          	if (deleteTagEleRef) {
-		                deleteTagEleRef.addEventListener("click", function (e) {
-		                	console.log("e.target======",e.target);
-	                    	var deletedTag = JSON.parse(e.target.getAttribute("value"));
-	                    	
-	                    	handler(e, self,deletedTag);
-		                }, false);
-		            }
-	        	}
-    		}
+		                deleteTagFromArray = JSON.parse(e.target.getAttribute("value"));
+	                    handler(e, self, deleteTagFromArray);
+		            }, false);
+		        }
+	        }
+    	}
         })(this);
     };
 };

@@ -203,5 +203,4 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
 
         $noteMapper->update($noteModel);
     }
-    
 }

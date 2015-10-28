@@ -3,12 +3,16 @@
     <input type="hidden" id="noteId" />
     <input type="hidden" id="userTagId" />
     <input type="hidden" id="isDeleted" />
-    {{#userTags}}
-            <li id="" value="">
+
+    {{#selectedUserTags}}
+    	<ul>
+            <li id="noteTagli">
             	{{tag}} 
             			<span id="" value="">
-            				<a href="#" id="" value="">Delete</a>
+            				<a href="#" id="" value="{{.}}">Delete</a>
             			</span>
             </li>
-    {{/userTags}} 
+        </ul>
+    {{/selectedUserTags}} 
+
 </div>

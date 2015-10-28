@@ -199,24 +199,24 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
          $userInput = array(
             'email' => 'abcd@gmail.com',
             'password' => 'Joy%hj5487'
-        );
-        $userModel = new UserModel();
+         );
+         $userModel = new UserModel();
 
-        $userModel->setEmail($userInput['email']);
-        $userModel->setPassword($userInput['password']);
+         $userModel->setEmail($userInput['email']);
+         $userModel->setPassword($userInput['password']);
        
-        $input        = array(
+         $input        = array(
             'authToken' => 'pqr',
             'createdOn' => '2015-01-29 20:59:59',
             'expiredOn' => '2015-01-29 20:59:59'
-        );
-        $sessionModel = new sessionModel();
-        $sessionModel->setAuthToken($input['authToken']);
-        $sessionModel->setCreatedOn($input['createdOn']);
-        $sessionModel->setExpiredOn($input['expiredOn']);
+         );
+         $sessionModel = new sessionModel();
+         $sessionModel->setAuthToken($input['authToken']);
+         $sessionModel->setCreatedOn($input['createdOn']);
+         $sessionModel->setExpiredOn($input['expiredOn']);
         
-        $sessionDomain = new Session();
+         $sessionDomain = new Session();
         
-        $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
+         $sessionModel  = $sessionDomain->create($userModel, $sessionModel);
     }
 }

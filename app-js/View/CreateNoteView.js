@@ -5,16 +5,12 @@ Notes.CreateNoteView = function () {
         var template = $("#hiddenCreateNoteView").html();
         var data = {};
         Notes.View.show(template, data);
-
-        $("#userTags").show();
 	};
 
 	this.setBackButtonClickedHandler = function (handler) {
     	console.log("In Back Button Clicked Handler");
-    	
     	(function(self){
             var backButtonElement = document.getElementById("back");
-
             if (backButtonElement) {
                 backButtonElement.addEventListener("click", function (e) {
 
@@ -59,17 +55,15 @@ Notes.CreateNoteView = function () {
         document.getElementById("errorMessage").innerText = errorMsg;
     };
 
-    this.readUserData = function (userTagsArray) {
-        var userId, title, body, noteTagId, noteId, userTagId, isDeleted, noteTags = [];
+    this.getInputValues = function (userSelectedTagsArray) {
+        var noteTags = [], userId, title, body, noteTagId, noteId, userTagId, isDeleted;
 
         title = document.getElementById("title").value;
         body = document.getElementById("body").value;
-        
-        userId = this.getUserId();
 
-        for (var i = 0; i < userTagsArray.length; i++) {
-            var userTag = userTagsArray[i];
-            userTag.userId = userId;
+        for (var i = 0; i < userSelectedTagsArray.length; i++) {
+            var userTag = userSelectedTagsArray[i];
+            
             noteTags[i] = {
                 "id": document.getElementById("noteTagId").value,
                 "noteId": document.getElementById("noteId").value,
@@ -98,23 +92,5 @@ Notes.CreateNoteView = function () {
                 }, false);
             }
         })(this);
-    };
-    
-    this.getUserId = function () {
-        var name, value, cookiearray, allcookies = document.cookie;
-        console.log(allcookies);
-
-        // Get all the cookies pairs in an array
-        cookiearray = allcookies.split(";");
-        console.log(cookiearray);
-
-        // Now take key value pair out of this array
-        for (var i = 0; i < cookiearray.length; i++) {
-            name = cookiearray[i].split("=")[0].trim();
-            value = cookiearray[i].split("=")[1].trim();
-            if (name == "userId") {
-                return value;
-            }
-        }
     };
 };

@@ -18,8 +18,8 @@ class UserTag
     }
     public function create($userTagModel)
     {
-        $this->validator->notNull($userTagModel->getUserId());
-        $this->validator->validNumber($userTagModel->getUserId());
+        //$this->validator->notNull($userTagModel->getUserId());
+        //$this->validator->validNumber($userTagModel->getUserId());
         $this->validator->notNull($userTagModel->getTag());
         
         if ($userTagModel->getId() == null) {
