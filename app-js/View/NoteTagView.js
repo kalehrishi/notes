@@ -1,10 +1,10 @@
-Notes.NoteTagView = function () {
+Notes.NoteTagsView = function () {
 
 	this.create = function (userSelectedTag) {
 		var template, data, rendered, html;
 
 		template = $("#hiddenNoteTagView").html();
-		data = {selectedUserTags: userSelectedTag};
+		data = {selectedUserTag: userSelectedTag};
         
        	rendered = Mustache.render(template, data);
 
