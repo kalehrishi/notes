@@ -14,9 +14,18 @@
         <span><button type="button" id="addBtn">Add</button></span>
     </div>
 
-    <div id="userTags"></div>
+    <input type="hidden" id="noteTagId" />
+    <input type="hidden" id="noteId" />
+    <input type="hidden" id="userTagId" />
+    <input type="hidden" id="isDeleted" />
+
+    <div id="tagsList">
+    <ul id="userTags" display="style:none;"></ul>
+    </div>
     
-    <div id="noteTags"></div>
+    <div id="selectedTagList">
+    <ul id="noteTags" display="style:none;"></ul>
+    </div>
     
     <div><span id="error"></span><span id="errorMessage"></span></div>
     

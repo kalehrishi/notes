@@ -1,9 +1,9 @@
 Notes.NoteTagsController = {
 	noteTagView: null,
-	init: function (userTagsArray) {
+	init: function (userSelectedTag, userTagsArray) {
 
 		this.noteTagView = new Notes.NoteTagView();
-		this.noteTagView.create(userTagsArray);
+		this.noteTagView.create(userSelectedTag);
 		
 		this.noteTagView.setDeleteSelectedTagClickedHandler(userTagsArray, function (e, self,tagToBeDeleted) {
 			console.log("deleteSelectedTag===",tagToBeDeleted);

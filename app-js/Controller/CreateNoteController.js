@@ -4,29 +4,36 @@ Notes.CreateNoteController = {
 	init: function () {
 		var userSelectedTagsArray = [];
 
+		// call to UserTagsController
+		Notes.UserTagsController.init(function (e, userSelectedTag) {
+			var flag = false;
+			for (var i = 0; i < userSelectedTagsArray.length; i++) {
+				if(userSelectedTagsArray[i].tag === userSelectedTag.tag)
+				{	
+					flag = true;
+					alert("You have already selected...");
+					return;
+				}
+			}
+			if(flag === false) {
+				userSelectedTagsArray.push(userSelectedTag);
+				console.log("after push userSelectedTagsArray===",userSelectedTagsArray);
+				Notes.NoteTagsController.init(userSelectedTag, userSelectedTagsArray);
+				$("#noteTags").show();
+			}
+		});
+
 		// Show Create View 
 		this.createNoteView = new Notes.CreateNoteView();
 		this.createNoteView.create();
-
-		// call to UserTagsController
-		Notes.UserTagsController.init(function (e, userSelectedTag) {
-			
-			for (var i = 0; i < userSelectedTagsArray.length; i++) {
-				if(userSelectedTagsArray[i].tag === userSelectedTag.tag)
-				{
-					alert("You have already selected...");
-					userSelectedTagsArray.splice(i, 1);
-				}
-			}
-			userSelectedTagsArray.push(userSelectedTag);
-			Notes.NoteTagsController.init(userSelectedTagsArray);
-		});
+		$("#userTags").show();
 
 		// get tag from text input
 		this.createNoteView.setAddButtonClickedHandler(function (e, self, userSelectedTag) {
 			userSelectedTagsArray.push(userSelectedTag);
 			
-			Notes.NoteTagsController.init(userSelectedTagsArray);
+			Notes.NoteTagsController.init(userSelectedTag, userSelectedTagsArray);
+			$("#noteTags").show();
 		});
 
 		this.createNoteView.setBackButtonClickedHandler(function (e, self) {

@@ -1,13 +1,15 @@
 Notes.NoteTagView = function () {
 
-	this.create = function (userSelectedTagsArray) {
+	this.create = function (userSelectedTag) {
+		var template, data, rendered, html;
 
-		var template = $("#hiddenNoteTagView").html();
-		var data = {selectedUserTags: userSelectedTagsArray};
+		template = $("#hiddenNoteTagView").html();
+		data = {selectedUserTags: userSelectedTag};
         
-       	var rendered = Mustache.render(template, data);
+       	rendered = Mustache.render(template, data);
 
-        $("#noteTags").html(rendered);
+        html = $.parseHTML(rendered);
+		$("#noteTags").append(html);
 	};
 
 
@@ -18,10 +20,13 @@ Notes.NoteTagView = function () {
 				var tagToBeDeleted, anchorEleRef, deleteTagFromArray, tagToBedeleted,
 				id = "del_"+i;
 		       	anchorEleRef = document.getElementsByTagName("a")[i];
-		        anchorEleRef.setAttribute("value", JSON.stringify(userTagsArray[i]));
+
+		       	anchorEleRef.setAttribute("value", JSON.stringify(userTagsArray[i]));
+		        console.log("anchorEleRef====",anchorEleRef);
 
 		        if (anchorEleRef) {
 		            anchorEleRef.addEventListener("click", function (e) {
+		            	console.log("e.target=====",e.target);
 		                tagToBeDeleted = e.target.parentElement.parentElement;
 	                    tagToBeDeleted.remove();
 

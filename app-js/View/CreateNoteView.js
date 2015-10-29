@@ -19,7 +19,7 @@ Notes.CreateNoteView = function () {
             }
         })(this);
     };
-
+    
     this.setAddButtonClickedHandler = function (handler) {
         console.log("In Back Button Clicked Handler");
         var addButtonElement, enteredTagValue, userTag;

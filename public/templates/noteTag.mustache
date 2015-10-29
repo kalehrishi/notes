@@ -1,18 +1,6 @@
-<div>
-    <input type="hidden" id="noteTagId" />
-    <input type="hidden" id="noteId" />
-    <input type="hidden" id="userTagId" />
-    <input type="hidden" id="isDeleted" />
-
-    {{#selectedUserTags}}
-    	<ul>
-            <li id="noteTagli">
-            	{{tag}} 
-            			<span id="" value="">
-            				<a href="#" id="" value="{{.}}">Delete</a>
-            			</span>
-            </li>
-        </ul>
-    {{/selectedUserTags}} 
-
-</div>
+<li>
+    	{{selectedUserTags.tag}} 
+        <span id="" value="">
+        	<a href="#" id="" value="">Delete</a>
+        </span>
+</li>
