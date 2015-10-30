@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
-   <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,gruntfilejs,phpdox"/>
+   <target name="build" depends="mysql,copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,gruntfilejs,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -13,9 +13,23 @@
   <delete file="${basedir}/app/Config/config.json"/>
   <delete file="${basedir}/public/lib/consolidated.js"/>
   <delete file="${basedir}/public/lib/main-min.js"/>
-  
   <property name="clean.done" value="true"/>
  </target>
+
+
+<target name="mysql" description="Create mysql-database pod/container">
+ <exec executable="curl">
+    <arg value="https://172.17.41.99:443/api/v1/namespaces/default/pods" />
+    <arg value="--cacert"/>
+    <arg value="${basedir}/build/ca.pem"/>
+    <arg value="-H"/> 
+    <arg value="Authorization: Bearer test123"/>
+    <arg value="--request"/>
+    <arg value="POST"/>
+    <arg value="--data"/>
+    <arg value="@${basedir}/build/mysql-rc.json"/>
+</exec>
+</target>
  
  <target name="copy-config" depends="clean">
   <property environment="env"/>
