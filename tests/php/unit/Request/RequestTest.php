@@ -46,7 +46,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
                         'Cache-Control' => 'no-cache',
                         'Origin' => 'chrome-extension://mkhojklkhkdaghjjfdnphfphiaiohkef',
                         'Client-Header' => 'Header Test',
-                        'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
+                        'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64)
+                                        AppleWebKit/537.36 (KHTML, like Gecko)
+                                        Chrome/41.0.2272.89 Safari/537.36',
                         'Content-Type' => 'text/plain',
                         'charset'=>'UTF-8' ,
                         'Accept-Encoding' => 'gzip, deflate'
@@ -64,9 +66,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request->setUrlParams($urlParams);
         $request->setCookies($cookies);
 
-        $this->assertEquals($headers,$request->getHeaders());
-        $this->assertEquals($urlParams,$request->getUrlParams());
-        $this->assertEquals($cookies,$request->getCookies());
+        $this->assertEquals($headers, $request->getHeaders());
+        $this->assertEquals($urlParams, $request->getUrlParams());
+        $this->assertEquals($cookies, $request->getCookies());
 
     }
     

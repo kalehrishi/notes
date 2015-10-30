@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Notes" default="build" xmlns:flyway="antlib:org.flywaydb.ant">
-   <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci,phpunit,gruntfilejs,phpdox"/>
+   <target name="build" depends="copy-config,replace-config-dbname,migrate-db,prepare,composer,lint,phploc-ci,pdepend,phpmd,phpmd-ci,phpcs,phpcs-ci,phpcpd-ci,phpunit,gruntfilejs,phpdox"/>
 
  <target name="clean" unless="clean.done" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>

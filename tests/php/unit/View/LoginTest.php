@@ -14,19 +14,15 @@ class LoginTest extends \PHPUnit_Framework_TestCase
      *@test
      *
      **/
-    public function Login_page_loaded()
-    {  
-       $homeLayout = array('login' => 'Login');
-        
+    public function login_page_loaded()
+    {
+        $homeLayout = array('login' => 'Login');
         $contentTemplateName = 'login';
 
         $output  = $this->view->renderContent($contentTemplateName, $homeLayout);
-        
-
         $dom    = new \DOMDocument();
         
         $dom->loadHTML($output);
-        
         $element = $dom->getElementsByTagName('h1');
         
         $this->assertEquals("Login", $element->item(0)->nodeValue);

@@ -402,11 +402,8 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals('Web', $noteModel->getTitle());
         $this->assertEquals('PHP is a powerful tool for making dynamic Web pages.', $noteModel->getBody());
         
-        
         $noteTagCollection = $noteModel->getNoteTags();
         while ($noteTagCollection->hasNext()) {
-            
-            
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTagId());

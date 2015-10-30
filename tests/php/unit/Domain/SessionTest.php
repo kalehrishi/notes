@@ -196,12 +196,12 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
      */
     public function it_should_throw_exception_with_invalid_email_password()
     {
-         $userInput = array(
+        $userInput = array(
             'email' => 'abcd@gmail.com',
             'password' => 'Joy%hj5487'
-        );
-        $userModel = new UserModel();
+            );
 
+        $userModel = new UserModel();
         $userModel->setEmail($userInput['email']);
         $userModel->setPassword($userInput['password']);
        
@@ -209,7 +209,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
             'authToken' => 'pqr',
             'createdOn' => '2015-01-29 20:59:59',
             'expiredOn' => '2015-01-29 20:59:59'
-        );
+            );
         $sessionModel = new sessionModel();
         $sessionModel->setAuthToken($input['authToken']);
         $sessionModel->setCreatedOn($input['createdOn']);

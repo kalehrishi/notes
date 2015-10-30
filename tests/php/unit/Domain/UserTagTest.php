@@ -28,11 +28,9 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
             $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
-        
     }
     
     public function getDataSet()
@@ -53,6 +51,34 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         $userTagDomain = new UserTag();
         $userTagModel  = $userTagDomain->create($userTagModel);
+
+        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_after_create.xml');
+        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            'UserTags'
+        ));
+        
+        $this->assertEquals(4, $userTagModel->getId());
+        $this->assertEquals(3, $userTagModel->getUserId());
+        $this->assertEquals('Create', $userTagModel->getTag());
+        $this->assertEquals(0, $userTagModel->getIsDeleted());
+        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+    }
+
+    /**
+    * @expectedException         InvalidArgumentException
+    * @expectedExceptionMessage  Input should not be null
+    */
+    public function testThrowsExceptionWhenUserIdIsNull()
+    {
+        $input = array(
+            'tag' => 'Create'
+        );
+        
+        $userTagModel = new UserTagModel();
+        $userTagModel->setTag($input['tag']);
+        
+        $userTagDomain = new UserTag();
+        $userTagModel  = $userTagDomain->create($userTagModel);
         
         
         $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_after_create.xml');
@@ -66,34 +92,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(0, $userTagModel->getIsDeleted());
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
-        /**
-        * @expectedException         InvalidArgumentException
-        * @expectedExceptionMessage  Input should not be null
-        */
-        public function testThrowsExceptionWhenUserIdIsNull()
-        {
-            $input = array(
-                'tag' => 'Create'
-            );
-            
-            $userTagModel = new UserTagModel();
-            $userTagModel->setTag($input['tag']);
-            
-            $userTagDomain = new UserTag();
-            $userTagModel  = $userTagDomain->create($userTagModel);
-            
-            
-            $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_after_create.xml');
-            $actualDataSet   = $this->getConnection()->createDataSet(array(
-                'UserTags'
-            ));
-            
-            $this->assertEquals(4, $userTagModel->getId());
-            $this->assertEquals(3, $userTagModel->getUserId());
-            $this->assertEquals('Create', $userTagModel->getTag());
-            $this->assertEquals(0, $userTagModel->getIsDeleted());
-            $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-        }
+
     public function testCanReadTagByUserId()
     {
         $input = array(
@@ -112,13 +111,13 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             'UserTags'
         ));
         
-        while($userTagCollection->hasNext()) {
-        $this->assertEquals(3, $userTagCollection->getRow(0)->getId());
-        $this->assertEquals(2, $userTagCollection->getRow(0)->getUserId());
-        $this->assertEquals('People', $userTagCollection->getRow(0)->getTag());
-        $this->assertEquals(0, $userTagCollection->getRow(0)->getIsDeleted());
-        $userTagCollection->next();
-        } 
+        while ($userTagCollection->hasNext()) {
+            $this->assertEquals(3, $userTagCollection->getRow(0)->getId());
+            $this->assertEquals(2, $userTagCollection->getRow(0)->getUserId());
+            $this->assertEquals('People', $userTagCollection->getRow(0)->getTag());
+            $this->assertEquals(0, $userTagCollection->getRow(0)->getIsDeleted());
+            $userTagCollection->next();
+        }
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
     
