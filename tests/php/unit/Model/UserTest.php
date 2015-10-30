@@ -1,5 +1,5 @@
 <?php
-namespace Notes\Model;
+    namespace Notes\Model;
 
 use Notes\Model\User as UserModel;
 
@@ -11,7 +11,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
     **/
     public function it_should_set_multiple_properties()
     {
-        
         $userInput     = array(
             'id' => 1,
             'firstName' => 'anusha',
@@ -74,7 +73,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userModel->setPassword($userInput['password']);
         $userModel->setCreatedOn($userInput['createdOn']);
         
-        
-        $this->assertEquals($userInput,$userModel->toArray());
+        $this->assertEquals($userInput, $userModel->toArray());
     }
 }

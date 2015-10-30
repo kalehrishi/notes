@@ -21,9 +21,9 @@ class NoteTest extends \PHPUnit_Framework_TestCase
     public function response_data_should_access_in_Note_View()
     {
         $note = array(
-                "title" =>"PHP",
-                "body" => "Preprocessor Hypertext"
-                    );     
+            "title" =>"PHP",
+            "body" => "Preprocessor Hypertext"
+            );
         $contentTemplateName = 'note';
 
         $output  = $this->view->renderContent($contentTemplateName, $note);

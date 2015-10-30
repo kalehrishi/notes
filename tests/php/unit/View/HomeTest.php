@@ -16,8 +16,8 @@ class HomeTest extends \PHPUnit_Framework_TestCase
      *
      **/
     public function Home_page_loaded()
-    {  
-       $homeLayout = array(
+    {
+        $homeLayout = array(
             "h1"=> "Wel-come to Sticky-notes",
             "register"=> "New User:Register",
             "login"=> "Login"
