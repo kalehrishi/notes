@@ -4,38 +4,35 @@ Notes.NoteTagsView = function () {
 		var template, data, rendered, html;
 
 		template = $("#hiddenNoteTagView").html();
-		data = {selectedUserTag: userSelectedTag};
+		data = {
+			tag: userSelectedTag.tag,
+			selectedUserTag: JSON.stringify(userSelectedTag)};
         
        	rendered = Mustache.render(template, data);
 
         html = $.parseHTML(rendered);
-		$("#noteTags").append(html);
+		return html;
 	};
 
 
-	this.setDeleteSelectedTagClickedHandler = function (userTagsArray, handler) {
-		(function(self){
-			if(userTagsArray.length > 0) {
-			for (var i = 0; i< userTagsArray.length; i++) {
-				var tagToBeDeleted, anchorEleRef, deleteTagFromArray, tagToBedeleted,
-				id = "del_"+i;
-		       	anchorEleRef = document.getElementsByTagName("a")[i];
-
-		       	anchorEleRef.setAttribute("value", JSON.stringify(userTagsArray[i]));
-		        console.log("anchorEleRef====",anchorEleRef);
-
-		        if (anchorEleRef) {
-		            anchorEleRef.addEventListener("click", function (e) {
-		            	console.log("e.target=====",e.target);
+	this.setDeleteSelectedTagClickedHandler = function (view, handler) {
+		var tagToBeDeleted, deleteTagFromArray;
+		for (var i = 0; i < view.length; i++) {
+			if(view[i].nodeName === "LI") {
+				var liElementRef = view[i];
+				console.log("liElementRef===",liElementRef);
+				if (liElementRef) {
+        			
+        			liElementRef.addEventListener("click", function (e) {
+	        			console.log("e.target=====",e.target);
 		                tagToBeDeleted = e.target.parentElement.parentElement;
 	                    tagToBeDeleted.remove();
 
 		                deleteTagFromArray = JSON.parse(e.target.getAttribute("value"));
-	                    handler(e, self, deleteTagFromArray);
-		            }, false);
-		        }
-	        }
-    	}
-        })(this);
+	                    handler(e, deleteTagFromArray);
+	                }, false);
+	    		}
+			}
+		}
     };
 };

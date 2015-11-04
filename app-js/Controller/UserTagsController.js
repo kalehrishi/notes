@@ -3,9 +3,8 @@ Notes.UserTagsController = {
 	userTagViewTemplate: null,
 
 	init: function (handler) {
-		
-		var userSelectedTagsArray = [];
-
+		var selectedTag, userSelectedTagsArray = [],view;
+		var userTagsContainer  = document.createElement("div");
 		// get all tags from database
 		Notes.utils.get("/notes/api/userTag", true,
 			function (response) {
@@ -15,32 +14,16 @@ Notes.UserTagsController = {
 				console.log("api result of userTagsArray====",userTagsArray);
 
 				this.userTagView = new Notes.UserTagView();
-				var template = this.userTagView.create(userTagsArray);
+				var view = this.userTagView.create(userTagsArray);
+				console.log("view===========",view);
 
-				var liEleRef = document.getElementsByTagName("li");
-            	
-            	for (var i = 0; i < userTagsArray.length; i++) {
-
-	                console.log("in for loop");
-	                var userSelectTagEleRef = liEleRef[i];
-
-	            	userSelectTagEleRef.setAttribute("value", JSON.stringify(userTagsArray[i]));
-	            	console.log("userSelectTagEleRef===",userSelectTagEleRef);
-
-	                if (userSelectTagEleRef) {
-	                	userSelectTagEleRef.addEventListener("click", function (e) {
-	                			console.log("after click assign...");
-	                            var userSelectedTag = JSON.parse(e.target.getAttribute("value"));
-	                            console.log("userSelectedTag===",userSelectedTag);
-
-	                            handler(e, userSelectedTag);
-	                        }, false);
-	                }
-	            }
-	           
+				$(userTagsContainer).append(view);
+				
+				this.userTagView.setTagsClickedHandler(view, userTagsArray, handler);
 			},
             function (response) {
                 console.log("OnFailure Response:", response);
-            });	
+            });		
+		return userTagsContainer;
 	}
 };
