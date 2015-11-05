@@ -12,6 +12,11 @@ Notes.NoteController = {
 			this.noteView.setBackButtonClickedHandler(function (e, self) {
 				Notes.NotesController.init();
 			});
+
+			this.noteView.setUpdateButtonClickedHandler(function (e, self, target) {
+				console.log("Update view call");
+			});
+
             },
             function (response) {
                 console.log("OnFailure Response:", response);

@@ -28,4 +28,22 @@ Notes.NoteView = function () {
         }
     })(this);
 	};
+
+	this.setUpdateButtonClickedHandler = function (handler) {
+    	console.log("In Update Button Clicked Handler");
+    	
+    	(function(self){
+        var updateButtonElement = document.getElementById("update");
+    	console.log(updateButtonElement);
+        
+        if (updateButtonElement) {
+            updateButtonElement.addEventListener("click", function (e) {
+            	console.log(e);
+            	var target = e.target;
+                handler(e, self, target);
+            }, false);
+        }
+    })(this);
+	};
+
 };
