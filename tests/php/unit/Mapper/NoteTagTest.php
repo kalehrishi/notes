@@ -112,8 +112,8 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input        = array(
             'id'=>1,
-            'noteId'=>4,
-            'userTagId' =>3,
+            'noteId'=>1,
+            'userTagId' =>1,
             'isDeleted'=>1
         );
         $noteTagModel = new NoteTagModel();
@@ -130,8 +130,8 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
             'NoteTags'
         ));
         $this->assertEquals(1, $noteTagModel->getId());
-        $this->assertEquals(4, $noteTagModel->getNoteId());
-        $this->assertEquals(3, $noteTagModel->getUserTagId());
+        $this->assertEquals(1, $noteTagModel->getNoteId());
+        $this->assertEquals(1, $noteTagModel->getUserTagId());
         $this->assertEquals(1, $noteTagModel->getIsDeleted());
     
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
