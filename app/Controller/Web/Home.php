@@ -25,6 +25,8 @@ class Home
         $createNote = file_get_contents($path.'createNote.mustache');
         $showNote = file_get_contents($path.'note.mustache');
         $noNotesView = file_get_contents($path.'noNotesView.mustache');
+        $noteTag = file_get_contents($path.'noteTag.mustache');
+        $userTags = file_get_contents($path.'userTags.mustache');
 
         $homeLayout = array(
             'meta' => array('title' => 'Home'),
@@ -36,7 +38,9 @@ class Home
                             'notes' => $notes,
                             'createNote' => $createNote,
                             'note' => $showNote,
-                            'noNotesView' => $noNotesView
+                            'noNotesView' => $noNotesView,
+                            'noteTagView' => $noteTag,
+                            'userTagsView' => $userTags
                             ),
             'script' => array(),
             'header' => array(),

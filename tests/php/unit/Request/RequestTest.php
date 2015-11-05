@@ -64,10 +64,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request->setUrlParams($urlParams);
         $request->setCookies($cookies);
 
-        $this->assertEquals($headers,$request->getHeaders());
-        $this->assertEquals($urlParams,$request->getUrlParams());
-        $this->assertEquals($cookies,$request->getCookies());
+        $this->assertEquals($headers, $request->getHeaders());
+        $this->assertEquals($urlParams, $request->getUrlParams());
+        $this->assertEquals($cookies, $request->getCookies());
 
     }
-    
 }

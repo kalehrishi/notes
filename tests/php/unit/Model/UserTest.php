@@ -75,6 +75,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userModel->setCreatedOn($userInput['createdOn']);
         
         
-        $this->assertEquals($userInput,$userModel->toArray());
+        $this->assertEquals($userInput, $userModel->toArray());
     }
 }

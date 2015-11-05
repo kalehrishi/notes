@@ -8,7 +8,6 @@ use Notes\Config\Config as Configuration;
 
 use Notes\Exception\ModelNotFoundException as ModelNotFoundException;
 
-
 class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
 {
     private $connection;
@@ -89,13 +88,13 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
        
-        while($userTagCollection->hasNext()) {
-        $this->assertEquals(1, $userTagCollection->getRow(0)->getId());
-        $this->assertEquals(1, $userTagCollection->getRow(0)->getUserId());
-        $this->assertEquals('Import package', $userTagCollection->getRow(0)->getTag());
-        $this->assertEquals(0, $userTagCollection->getRow(0)->getIsDeleted());
-        $userTagCollection->next();
-        } 
+        while ($userTagCollection->hasNext()) {
+            $this->assertEquals(1, $userTagCollection->getRow(0)->getId());
+            $this->assertEquals(1, $userTagCollection->getRow(0)->getUserId());
+            $this->assertEquals('Import package', $userTagCollection->getRow(0)->getTag());
+            $this->assertEquals(0, $userTagCollection->getRow(0)->getIsDeleted());
+            $userTagCollection->next();
+        }
     }
     
     public function testCanInsertRecord()

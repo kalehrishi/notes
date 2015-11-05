@@ -81,7 +81,7 @@ class SessionTest extends \PHPUnit_Extensions_Database_TestCase
 
         $sessionService   = new Session();
 
-        $this->assertEquals(true, $sessionService->isValid($sessionModel));       
+        $this->assertEquals(true, $sessionService->isValid($sessionModel));
     }
 
     /**

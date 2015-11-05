@@ -55,13 +55,13 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
         
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         
-        while($noteTagCollection->hasNext()) {
-        $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
-        $this->assertEquals(4, $noteTagCollection->getRow(0)->getNoteId());
-        $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
-        $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
-        $noteTagCollection->next();
-        } 
+        while ($noteTagCollection->hasNext()) {
+            $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
+            $this->assertEquals(4, $noteTagCollection->getRow(0)->getNoteId());
+            $this->assertEquals(3, $noteTagCollection->getRow(0)->getUserTagId());
+            $this->assertEquals(0, $noteTagCollection->getRow(0)->getIsDeleted());
+            $noteTagCollection->next();
+        }
     }
     /**
     * @expectedException         Notes\Exception\ModelNotFoundException
@@ -112,8 +112,8 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
     {
         $input        = array(
             'id'=>1,
-            'noteId'=>4,
-            'userTagId' =>3,
+            'noteId'=>1,
+            'userTagId' =>1,
             'isDeleted'=>1
         );
         $noteTagModel = new NoteTagModel();
@@ -130,8 +130,8 @@ class NoteTagTest extends \PHPUnit_Extensions_Database_TestCase
             'NoteTags'
         ));
         $this->assertEquals(1, $noteTagModel->getId());
-        $this->assertEquals(4, $noteTagModel->getNoteId());
-        $this->assertEquals(3, $noteTagModel->getUserTagId());
+        $this->assertEquals(1, $noteTagModel->getNoteId());
+        $this->assertEquals(1, $noteTagModel->getUserTagId());
         $this->assertEquals(1, $noteTagModel->getIsDeleted());
     
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);

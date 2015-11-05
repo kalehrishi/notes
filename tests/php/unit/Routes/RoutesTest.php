@@ -24,7 +24,7 @@ class HomePageTest extends \PHPUnit_Framework_TestCase
         $client=new ClientRequest();
         $parameters = array('home');
         
-        $client->get('/' ,$parameters);
-        $this->assertEquals(200, $client->response->status());        
+        $client->get('/', $parameters);
+        $this->assertEquals(200, $client->response->status());
     }
 }

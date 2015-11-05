@@ -255,7 +255,7 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
             $this->assertEquals(4, $noteTagCollection->getRow(1)->getUserTagId());
             
             $this->assertEquals(4, $noteTagCollection->getRow(1)->getUserTag()->getId());
-            $this->assertEquals(2, $noteTagCollection->getRow(1)->getUserTag()->getUserId());
+            $this->assertEquals(1, $noteTagCollection->getRow(1)->getUserTag()->getUserId());
             $this->assertEquals('Javascript', $noteTagCollection->getRow(1)->getUserTag()->getTag());
             
             $this->assertEquals(9, $noteTagCollection->getRow(2)->getId());
@@ -405,8 +405,6 @@ class NoteTest extends \PHPUnit_Extensions_Database_TestCase
         
         $noteTagCollection = $noteModel->getNoteTags();
         while ($noteTagCollection->hasNext()) {
-            
-            
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getNoteId());
             $this->assertEquals(1, $noteTagCollection->getRow(0)->getUserTagId());

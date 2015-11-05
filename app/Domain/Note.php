@@ -47,7 +47,7 @@ class Note
             for ($i = 0; $i < $countTagsLength; $i++) {
                 $userTagModel = new UserTagModel();
                 $userTagModel->setId($noteModel->getNoteTags()->getRow($i)->getUserTag()->getId());
-                $userTagModel->setUserId($noteModel->getNoteTags()->getRow($i)->getUserTag()->getUserId());
+                $userTagModel->setUserId($noteModel->getUserId());
                 $userTagModel->setTag($noteModel->getNoteTags()->getRow($i)->getUserTag()->getTag());
                 
                 $userTagModel = $userTagDomain->create($userTagModel);

@@ -34,4 +34,7 @@ $(function() {
 
         var templateUrl = "public/templates/notes.mustache";
         templateLoader(templateUrl);
+
+        var templateUrl = "public/templates/noteTag.mustache";
+        templateLoader(templateUrl);
 });

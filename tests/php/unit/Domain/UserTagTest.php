@@ -28,8 +28,7 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             $this->connection = new \PDO($hostString, $configData['dbUser'], $configData['dbPassword']);
             $this->connection->exec("set foreign_key_checks=0");
             return $this->createDefaultDBConnection($this->connection, $dbName);
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
         
@@ -67,8 +66,8 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
     }
         /**
-        * @expectedException         InvalidArgumentException
-        * @expectedExceptionMessage  Input should not be null
+        * @expectedException         PDOException
+        * @expectedExceptionMessage  SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'userId' cannot be null
         */
         public function testThrowsExceptionWhenUserIdIsNull()
         {
@@ -94,57 +93,57 @@ class UserTagTest extends \PHPUnit_Extensions_Database_TestCase
             $this->assertEquals(0, $userTagModel->getIsDeleted());
             $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
         }
-    public function testCanReadTagByUserId()
-    {
-        $input = array(
+        public function testCanReadTagByUserId()
+        {
+            $input = array(
             'userId' => 2
-        );
+            );
         
-        $userModel = new UserModel();
-        $userModel->setId($input['userId']);
+            $userModel = new UserModel();
+            $userModel->setId($input['userId']);
         
         
-        $userTagDomain = new UserTag();
-        $userTagCollection  = $userTagDomain->readTagsByUserId($userModel);
+            $userTagDomain = new UserTag();
+            $userTagCollection  = $userTagDomain->readTagsByUserId($userModel);
            
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_read.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_read.xml');
+            $actualDataSet   = $this->getConnection()->createDataSet(array(
             'UserTags'
-        ));
+            ));
         
-        while($userTagCollection->hasNext()) {
-        $this->assertEquals(3, $userTagCollection->getRow(0)->getId());
-        $this->assertEquals(2, $userTagCollection->getRow(0)->getUserId());
-        $this->assertEquals('People', $userTagCollection->getRow(0)->getTag());
-        $this->assertEquals(0, $userTagCollection->getRow(0)->getIsDeleted());
-        $userTagCollection->next();
-        } 
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-    }
+            while ($userTagCollection->hasNext()) {
+                $this->assertEquals(3, $userTagCollection->getRow(0)->getId());
+                $this->assertEquals(2, $userTagCollection->getRow(0)->getUserId());
+                $this->assertEquals('People', $userTagCollection->getRow(0)->getTag());
+                $this->assertEquals(0, $userTagCollection->getRow(0)->getIsDeleted());
+                $userTagCollection->next();
+            }
+            $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        }
     
-    public function testCanReadById()
-    {
-        $input = array(
+        public function testCanReadById()
+        {
+            $input = array(
             'id' => 1
-        );
+            );
         
-        $userTagModel = new UserTagModel();
-        $userTagModel->setId($input['id']);
+            $userTagModel = new UserTagModel();
+            $userTagModel->setId($input['id']);
         
         
-        $userTagDomain = new UserTag();
-        $userTagResultSet  = $userTagDomain->readTagById($userTagModel);
+            $userTagDomain = new UserTag();
+            $userTagResultSet  = $userTagDomain->readTagById($userTagModel);
         
-        $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_read.xml');
-        $actualDataSet   = $this->getConnection()->createDataSet(array(
+            $expectedDataSet = $this->createXmlDataSet(dirname(__FILE__) . '/_files/userTagDomain_read.xml');
+            $actualDataSet   = $this->getConnection()->createDataSet(array(
             'UserTags'
-        ));
+            ));
         
-        $this->assertEquals(1, $userTagResultSet->getId());
-        $this->assertEquals(1, $userTagResultSet->getUserId());
-        $this->assertEquals('Import package', $userTagResultSet->getTag());
-        $this->assertEquals(0, $userTagResultSet->getIsDeleted());
+            $this->assertEquals(1, $userTagResultSet->getId());
+            $this->assertEquals(1, $userTagResultSet->getUserId());
+            $this->assertEquals('Import package', $userTagResultSet->getTag());
+            $this->assertEquals(0, $userTagResultSet->getIsDeleted());
         
-        $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
-    }
+            $this->assertDataSetsEqual($expectedDataSet, $actualDataSet);
+        }
 }
